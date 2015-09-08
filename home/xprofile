@@ -1,0 +1,52 @@
+# IME settings
+export XMODIFIERS=@im=fcitx
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+
+# Locale
+export LANG=zh_CN.UTF8
+export LC_ALL=zh_CN.UTF-8
+
+# Install directory
+export INSTALLDIR="$HOME/Software"
+
+# Default editor
+export EDITOR=vim
+export VISUAL=$EDITOR
+
+# Used for virtualbox
+export VBOX_USB=usbfs
+
+# Nasm environment
+export NASMENV="-i /home/aetf/Develop/ASM/inc"
+export NASM=$NASMENV
+
+# Predefined variables to Java runtime
+export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+
+# Ccache directory
+export CCACHE_DIR=/opt/.ccache
+export CCACHE_COMPRESS
+
+# XDG variables
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# More PATH
+## Prepend user's bin directory to PATH
+PATH="$HOME/bin:$PATH"
+## more in INSTALLDIR
+for dir in $INSTALLDIR/*; do
+    if [ -d "$dir" -a `basename $dir` != "src" ]; then
+        PATH="$PATH:$dir"
+        if [ -d "$dir/bin" ]; then
+            PATH="$PATH:$dir/bin"
+        fi
+    fi
+done
+## Node.js executable
+PATH="$PATH:$HOME/.node_modules/bin"
+
+export PATH
+
+# SSH-Agent
+eval $(ssh-agent)
