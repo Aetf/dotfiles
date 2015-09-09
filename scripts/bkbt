@@ -1,0 +1,7 @@
+#! /bin/sh
+BKPATH='/home/aetf/Backup/qbittorrent'
+rm -rf "$BKPATH"
+mkdir -p "$BKPATH"
+cd "$BKPATH"
+cp -a ~/.local/share/data/qBittorrent/BT_backup/ backup
+cp -a ~/.config/qBittorrent config
