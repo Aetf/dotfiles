@@ -1,0 +1,110 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""
+" vim-plug plugin manager section
+call plug#begin('~/.vim/plugged')
+
+" vim colorscheme with neovim in mind
+Plug 'freeo/vim-kalisi'
+
+" syntax checking using external checkers
+Plug 'scrooloose/syntastic'
+
+
+" Finally add plugins to &runtimepath
+call plug#end()
+"""""""""""""""""""""""""""""""""""""""""""""""""
+
+" For multi-byte character support (CJK support, for example)
+set fileencodings=ucs-bom,utf-8,cp936,big5,euc-jp,euc-kr,gb18030,latin1
+
+filetype plugin on
+filetype plugin indent on
+
+" Copy indent from current line when starting a new line
+set autoindent
+
+" Number of spaces that a <Tab> in the file counts for.
+set tabstop=8
+
+" Insert 4 spaces when tab is pressed
+set softtabstop=4
+
+" Always use spaces instead of tabs
+set expandtab
+
+" Number of spaces to use for each step of (auto)indent.
+set shiftwidth=4
+
+" When on, a <Tab> in front of a line inserts blanks
+" according to 'shiftwidth'. 'tabstop' is used in other
+" places. A <BS> will delete a 'shiftwidth' worth of space
+" at the start of the line.
+set smarttab
+
+" Show (partial) command in status line.
+set showcmd
+
+" Show hybrid line numbers.
+set relativenumber
+set number
+
+" When a bracket is inserted, briefly jump to the matching
+" one. The jump is only done if the match can be seen on the
+" screen. The time to show the match can be set with 'matchtime'.
+set showmatch
+
+" Ignore case in search patterns.
+set ignorecase
+" Override the 'ignorecase' option if the search pattern
+" contains upper case characters.
+set smartcase
+
+
+" Maximum width of text that is being inserted. A longer
+" line will be broken after white space to get this width.
+set textwidth=180
+
+" This is a sequence of letters which describes how
+" automatic formatting is to be done.
+"
+" letter    meaning when present in 'formatoptions'
+" ------    ---------------------------------------
+"  c         Auto-wrap comments using textwidth, inserting
+"            the current comment leader automatically.
+"  q         Allow formatting of comments with "gq".
+"  r         Automatically insert the current comment leader
+"            after hitting <Enter> in Insert mode. 
+"  t         Auto-wrap text using textwidth (does not apply
+"            to comments)
+set formatoptions=c,q,r
+
+set wrapscan
+set whichwrap=b,s,<,>,[,]
+
+syntax on
+
+" Set backup directory 
+set backupdir=/tmp/backvimup
+
+" Set Color scheme
+colorscheme kalisi
+set background=dark
+set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+
+" Change cursor shape
+let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
+
+" Statusline provided by powerline
+"set g:powerline_pycmd=py3
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
+
+" Always display the statusline in all windows
+set laststatus=2
+set noshowmode " Hide the default mode text (e.g. -- INSERT -- )
+
+" Press space to clear search highlighting and any messagealready displayed
+nnoremap <silent> <Space> :silent noh<Bar>echo<CR>
