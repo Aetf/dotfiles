@@ -1,0 +1,33 @@
+[user]
+	email = aetf@unlimitedcodeworks.xyz
+	name = Aetf
+[push]
+	default = simple
+[color]
+	ui = true
+[alias]
+	co = checkout
+	ci = commit
+	st = status
+	br = branch
+	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+	type = cat-file -t
+	dump = cat-file -p
+	mgtree = merge -s subtree --squash --no-commit
+	sm = submodule
+[merge]
+	tool = extMerge
+[mergetool "extMerge"]
+	cmd = extMerge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	trustExitCode = false
+[diff]
+#	external = extDiff
+[diff]
+	submodule = log
+[http]
+	proxy = 
+[https]
+	proxy = 
+[core]
+	quotepath = off
