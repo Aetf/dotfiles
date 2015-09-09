@@ -8,7 +8,7 @@ export LANG=zh_CN.UTF8
 export LC_ALL=zh_CN.UTF-8
 
 # Install directory
-export INSTALLDIR="$HOME/Software"
+export INSTALLDIR="$HOME/software"
 
 # Default editor
 export EDITOR=vim
@@ -33,16 +33,18 @@ export XDG_CONFIG_HOME="$HOME/.config"
 
 # More PATH
 ## Prepend user's bin directory to PATH
-PATH="$HOME/bin:$PATH"
+PATH="$HOME/customizations/scripts:$PATH"
 ## more in INSTALLDIR
-for dir in $INSTALLDIR/*; do
-    if [ -d "$dir" -a `basename $dir` != "src" ]; then
-        PATH="$PATH:$dir"
-        if [ -d "$dir/bin" ]; then
-            PATH="$PATH:$dir/bin"
+if [ -d $INSTALLDIR ]; then
+    for dir in $INSTALLDIR/*; do
+        if [ -d "$dir" -a `basename $dir` != "src" ]; then
+            PATH="$PATH:$dir"
+            if [ -d "$dir/bin" ]; then
+                PATH="$PATH:$dir/bin"
+            fi
         fi
-    fi
-done
+    done
+fi
 ## Node.js executable
 PATH="$PATH:$HOME/.node_modules/bin"
 
