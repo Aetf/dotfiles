@@ -1,0 +1,11 @@
+# GDB Config file
+#add-auto-load-safe-path /opt/firefox-build/mozilla-central/js/src/shell
+#add-auto-load-safe-path /opt/firefox-build/mozilla-central/js/src/debug-build/js/src/shell
+
+source /home/aetf/.gdb/kde-devel-gdb
+python 
+import sys
+sys.path.insert(0, '/opt/stlPrettyPrinter')
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers(None)
+end
