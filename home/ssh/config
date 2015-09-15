@@ -1,0 +1,27 @@
+Host github
+	User git
+	HostName github.com
+	ForwardX11 no
+	ControlMaster auto
+	ControlPath ~/.ssh/%r@%h:%p
+	ControlPersist yes
+Host vpsfs
+        User aetf
+        HostName files.unlimitedcodeworks.xyz
+        ForwardX11 no
+        IdentityFile ~/.ssh/id_rsa
+        IdentitiesOnly yes
+        RequestTTY force
+	ControlMaster auto
+	ControlPath ~/.ssh/%r@%h:%p
+	ControlPersist yes
+Host vps
+        User aetf
+        HostName vps.unlimitedcodeworks.xyz
+        ForwardX11 no
+        IdentityFile ~/.ssh/id_rsa
+        IdentitiesOnly yes
+        RequestTTY force
+	ControlMaster auto
+	ControlPath ~/.ssh/%r@%h:%p
+	ControlPersist yes
