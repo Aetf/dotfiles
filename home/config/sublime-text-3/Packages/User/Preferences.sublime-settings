@@ -20,9 +20,9 @@
 	"highlight_line": true,
 	"ignored_packages":
 	[
-		"Vintage",
 		"CSS",
-		"Markdown"
+		"Markdown",
+		"Vintage"
 	],
 	"match_brackets_content": true,
 	"match_selection": false,
