@@ -3,7 +3,7 @@
     /// Debug
     ////////////////////////////////////////////////////////////////////////
     // Set to true to disable cache and enable debug output.
-    "debug": true
+    "debug": true,
     // Set to true to run tests on startup,
     "run_tests": false,
 
