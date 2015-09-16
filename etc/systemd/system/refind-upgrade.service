@@ -3,4 +3,4 @@ Description=rEFInd boot manager upgrade
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/refind-upgrade
+ExecStart=/usr/local/bin/refind-upgrade.sh

@@ -1,17 +1,21 @@
 #! /bin/sh
 
-# Make sure /boot isn't a mount point
-umount /boot || true
+function mountPathForBoot() {
+    findmnt -n -o SOURCE -T /boot | sed -r 's/^.*\[(.*)\].*$/\1/'
+}
 
-# Mount ESP on /boot
-mount /dev/disk/by-uuid/67E3-17ED /boot
+#echo "Umount anything on /boot"
+#while umount /boot; do continue; done
 
-# Install refind
+echo "Mount ESP on /boot"
+mount -o bind /esp /boot
+
+echo "Install refind"
 /usr/bin/refind-install
 
-# Restore /boot bind to /esp
+echo "Restore /boot previous mount status"
 umount /boot
-mount --bind /esp/EFI/archlinux /boot
+#mount -o bind /esp/EFI/archlinux /boot
 
-# Remove unneeded conf file
-rm /esp/*.conf
+echo "Remove unneeded conf file"
+rm -f /esp/*.conf
