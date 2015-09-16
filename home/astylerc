@@ -1,0 +1,138 @@
+###Brackets Options
+# Base brackets style : "One True Brace Style"
+#    *Break from namespaces, classes, and function definitions.
+#    *Attach to everything else including statements within a function, arrays, structs and enums.
+#    *Add brackets to unbracketd one line conditional statements.
+#
+#     Example:
+#     int Foo(bool isBar)
+#     {
+#         if (isFoo) {
+#             bar();
+#             return 1;
+#         } else {
+#             return 0;
+#         }
+#     }
+--style=1tbs
+# Fine tune of base style
+#    *Break struct
+#
+#     Example:
+#     struct struFoo
+#     {
+#         ...
+#     }
+--break-structs
+#    *Attach to namespaces
+#
+#     Example:
+#     namespace FooName {
+#     ...
+#     }
+--attach-namespaces
+#    *Add brackets to unbracketed one line conditional satements.
+#
+#     Example:
+#     if (isFoo)
+#         isFoo = false;
+#
+#     becomes
+#
+#     if (isFoo) {
+#         isFoo = false;
+#     }
+--add-brackets
+#    *Don't break one-line blocks.
+#
+#     Example:
+#     if (isFoo)
+#     { isFoo = false; cout << isFoo << endl; }
+#     remains unchanged.
+--keep-one-line-blocks
+
+
+###Indent Options
+# Base style: using 4 spaces
+#
+#     Example:
+#     void Foo() {
+#     ....if (isBar1
+#     ............&& isBar2) // indent of this line can be changed with min-conditional-indent
+#     ........bar();
+#     }
+--indent=spaces=4
+# Fine tune of base style
+#    *Converts tabs into spaces in the non-indentation part of the line.
+--convert-tabs
+#    *Add extra indentation to labels so they appear 1 indent less than the current indentation
+#
+#     Example:
+#     void Foo() {
+#         while (isFoo) {
+#             if (isFoo)
+#                 goto error;
+#             ...
+#         error:
+#             ...
+#         }
+#     }
+--indent-labels
+#    *Indent C++ comments begining in column one with the code.
+#
+#     Example:
+#     void Foo()
+#     {
+#         // comment
+#         if (isFoo)
+#             bar();
+#     }
+--indent-col1-comments
+#    *1 minimal indent for conditional headers
+--min-conditional-indent=1
+#    *Set maximum of 80 spaces to indent a continuation line.
+--max-instatement-indent=80
+
+###Padding Options
+#    *Padding around operators
+#
+#     Example:
+#     if (foo == 2)
+#         a = bar((b - c) * a, d--);
+--pad-oper
+#    *Insert space padding after paren headers only (e.g. 'if', 'for', 'while'...)
+#
+#     Example:
+#     if (isFoo((a+2), b))
+#         bar(a, b);
+--pad-header
+#    *Remove extra space padding which not been requested by other options
+#
+#     Example:
+#     if ( isFoo( ( a+2 ), b ) )
+#         bar ( a, b );
+#
+#     becomes
+#
+#     if (isFoo((a+2), b))
+#         bar(a, b);
+--unpad-paren
+#    *Closes whitespace in the angle brackets of template definitions.
+#
+#    Example:
+#    Stack<int,List<int>> stack1;
+--close-templates
+#    *Attach a pointer or reference operator (*, &, or ^) to variable name (right)
+#
+#     Example:
+#     char *foo1;
+#     char &foo2;
+#     String ^s1;
+--align-pointer=name
+#    *Break a line if the code excedds 90 characters. Will break on a logical conditional, comma, paren, semicolon, or
+#     space
+--max-code-length=90
+
+###Other options
+#    *Force use linux line end style.
+--lineend=linux
