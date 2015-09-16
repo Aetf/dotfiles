@@ -136,3 +136,5 @@
 ###Other options
 #    *Force use linux line end style.
 --lineend=linux
+#    Don't create a backup file
+--suffix=none
