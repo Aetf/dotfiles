@@ -19,3 +19,7 @@ umount /boot
 
 echo "Remove unneeded conf file"
 rm -f /esp/*.conf
+if diff -q /esp/EFI/refind/icons /esp/EFI/refind/icons-backup > /dev/null; then
+    echo "Remove identical icons-backup"
+    rm -rf /esp/EFI/refind/icons-backup
+fi
