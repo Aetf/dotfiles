@@ -22,7 +22,7 @@
 [mergetool]
 	trustExitCode = false
 [diff]
-	external = extDiff
+#	external = extDiff
 [diff]
 	submodule = log
 [http]
