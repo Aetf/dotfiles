@@ -21,6 +21,7 @@
 	"ignored_packages":
 	[
 		"CSS",
+		"Makefile",
 		"Markdown",
 		"Vintage"
 	],
