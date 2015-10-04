@@ -42,6 +42,6 @@
 	"spell_check": false,
 	"tabs_small": true,
 	"theme": "Numix Dark.sublime-theme",
-	"translate_tabs_to_spaces": true,
+	"translate_tabs_to_spaces": false,
 	"trim_trailing_white_space_on_save": false
 }
