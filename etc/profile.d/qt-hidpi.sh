@@ -1,1 +1,0 @@
-export QT_DEVICE_PIXEL_RATIO=2
