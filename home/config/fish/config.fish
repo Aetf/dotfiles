@@ -7,13 +7,13 @@ if not status -i; exit; end
 
 # Some environment variables
 ## More colorful
-if test $TERM != "screen-256color";
-    set TERM xterm-256color
+if test $TERM != "screen-256color" -a $TERM != "linux";
+    set TERM "xterm-256color"
 end
 
 ## Only set these if we don't have DISPLAY
 ## otherwise, these've been set in $HOME/.xprofile
-if test $DISPLAYx = "x";
+if test "$DISPLAYx" = "x";
     ## Install directory
     set -x INSTALLDIR ~/Software
     ## Default editor
@@ -38,7 +38,7 @@ if test $DISPLAYx = "x";
         begin
             set PATH $PATH "$dir";
             if [ -d "$dir/bin" ];
-        	    set PATH $PATH "$dir/bin";
+                set PATH $PATH "$dir/bin";
             end
         end
     end
@@ -74,19 +74,20 @@ I/O\n\
 # grepc='grep --color=always'
 
 # Prompt line hook provided by powerline
-if test $TERM = 'xterm';
-	powerline-setup;
-else if test $TERM = 'xterm-256color';
-	powerline-setup;
-else if test $TERM = 'screen-256color';
+switch $TERM
+    case 'xterm' 'xterm-256color'
+        powerline-setup
+    case 'linux'
+        echo "linux and setup powerline"
+        powerline-setup
+    case 'screen-256color'
         set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
-	powerline-setup;
-else
-    function fish_prompt
-        fallback_prompt
-    end
+        powerline-setup
+    case '*'
+        function fish_prompt
+            fallback_prompt
+        end
 end
-
 
 # Fix KeeAgent enviroment variable
 #set _ssh_socket_dir '/tmp/ssh-agent-lib-sock'
