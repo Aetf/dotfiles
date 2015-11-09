@@ -1,5 +1,5 @@
 #! /bin/sh
-# /home/aetf/bin/jarwrapper - the wrapper for binfmt_misc/java
+# javawrapper - the wrapper for binfmt_misc/java
 
 if [ -z "$1" ]; then
     exec 1>&2
@@ -83,5 +83,5 @@ fi
 
 shift
 
-JAVA_PATH="/home/aetf/bin/normaljava.sh"
+JAVA_PATH="normaljava.sh"
 $JAVA_PATH $FQCLASS "$@"

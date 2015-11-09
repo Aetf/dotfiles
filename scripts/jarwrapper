@@ -1,5 +1,5 @@
 #! /bin/sh
-# /home/aetf/bin/jarwrapper - the wrapper for binfmt_misc/jar
+# jarwrapper - the wrapper for binfmt_misc/jar
 
-JAVA_PATH="/home/aetf/bin/normaljava.sh"
+JAVA_PATH="normaljava.sh"
 exec $JAVA_PATH -jar "$@"
