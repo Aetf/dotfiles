@@ -47,6 +47,8 @@ if [ -d $INSTALLDIR ]; then
 fi
 ## Node.js executable
 PATH="$PATH:$HOME/.node_modules/bin"
+## Local bin directory
+PATH="$PATH:$HOME/.local/bin"
 
 export PATH
 
