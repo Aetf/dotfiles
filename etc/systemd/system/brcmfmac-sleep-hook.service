@@ -1,0 +1,13 @@
+[Unit]
+Description=Unload brcmfmac kernel module when suspend and load it upon resume
+Before=sleep.target
+StopWhenUnneeded=yes
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/bin/rmmod brcmfmac
+ExecStop=/usr/bin/modprobe brcmfmac
+
+[Install]
+WantedBy=sleep.target
