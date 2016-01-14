@@ -7,7 +7,7 @@ StopWhenUnneeded=yes
 Type=oneshot
 RemainAfterExit=yes
 ExecStart=/usr/bin/rmmod brcmfmac
-ExecStop=/usr/bin/modprobe brcmfmac
+ExecStop=/usr/bin/sh -c 'modprobe brcmfmac; udevadm test /sys/devices/pci0000:00/0000:00:1c.2/0000:03:00.0'
 
 [Install]
 WantedBy=sleep.target
