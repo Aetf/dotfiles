@@ -6,6 +6,7 @@
 			"selector": "text, source, meta, string, punctuation, constant"
 		}
 	],
+	"bold_folder_labels": true,
 	"caret_extra_width": 1,
 	"caret_style": "phase",
 	"close_windows_when_empty": false,

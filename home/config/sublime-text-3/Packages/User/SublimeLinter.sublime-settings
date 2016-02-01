@@ -3,7 +3,7 @@
         "debug": false,
         "delay": 0.25,
         "error_color": "D02000",
-        "gutter_theme": "Packages/SublimeLinter/gutter-themes/Default/Default.gutter-theme",
+        "gutter_theme": "Packages/SublimeLinter/gutter-themes/Circle/Circle.gutter-theme",
         "gutter_theme_excludes": [],
         "lint_mode": "background",
         "linters": {
@@ -19,9 +19,16 @@
                 "excludes": [],
                 "std": []
             },
+            "eslint": {
+                "@disable": false,
+                "args": [],
+                "excludes": []
+            },
             "jslint": {
                 "@disable": false,
-                "args": ["--edition es6"],
+                "args": [
+                    "--edition es6"
+                ],
                 "excludes": []
             },
             "pylint": {
@@ -36,15 +43,19 @@
             }
         },
         "mark_style": "outline",
-        "no_column_highlights_line": false,
+        "no_column_highlights_line": true,
         "passive_warnings": false,
         "paths": {
-            "linux": ["/home/aetf/.node_modules/bin"],
+            "linux": [
+                "/home/aetf/.node_modules/bin"
+            ],
             "osx": [],
             "windows": []
         },
         "python_paths": {
-            "linux": [],
+            "linux": [
+                "/usr/bin/python"
+            ],
             "osx": [],
             "windows": []
         },
