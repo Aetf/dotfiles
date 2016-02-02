@@ -1,0 +1,19 @@
+{
+    "phantasms": [
+        {
+            "name": "etc",
+            "type": "ucw.realitymarble.Phantasm",
+            "joint_path": "/etc/"
+        },
+        {
+            "name": "home",
+            "type": "ucw.realitymarble.NoHiddenPhantasm",
+            "joint_path": "/home/aetf/"
+        },
+        {
+            "name": "scripts",
+            "type": "ucw.realitymarble.ScriptsPhantasm",
+            "joint_path": "/home/aetf/.local/bin"
+        }
+    ]
+}
