@@ -78,7 +78,7 @@ switch $TERM
     case 'xterm' 'xterm-256color'
         powerline-setup
     case 'linux'
-        echo "linux and setup powerline"
+        set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
         powerline-setup
     case 'screen-256color'
         set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
