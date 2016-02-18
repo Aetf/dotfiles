@@ -1,0 +1,2 @@
+# disable auto sleep for Nexus 6P, ATTR{power/control} does't work
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idProduct}=="4ee2", RUN+="/home/aetf/.local/bin/delaywrite on /sys/$devpath/power/control"

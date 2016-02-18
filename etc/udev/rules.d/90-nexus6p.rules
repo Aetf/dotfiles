@@ -1,2 +1,0 @@
-# disable auto sleep for Nexus 6P
-SUBSYSTEM=="usb", ATTR{product}=="Nexus 6P", ATTR{manufacturer}=="Huawei", ATTR{power/control}="on"
