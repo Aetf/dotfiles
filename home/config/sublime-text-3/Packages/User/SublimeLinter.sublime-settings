@@ -24,13 +24,6 @@
                 "args": [],
                 "excludes": []
             },
-            "jslint": {
-                "@disable": false,
-                "args": [
-                    "--edition es6"
-                ],
-                "excludes": []
-            },
             "pylint": {
                 "@disable": false,
                 "args": [],
