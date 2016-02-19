@@ -2,17 +2,17 @@
     "phantasms": [
         {
             "name": "etc",
-            "type": "ucw.realitymarble.Phantasm",
+            "type": "realitymarble.Phantasm",
             "joint_path": "/etc/"
         },
         {
             "name": "home",
-            "type": "ucw.realitymarble.NoHiddenPhantasm",
+            "type": "realitymarble.NoHiddenPhantasm",
             "joint_path": "/home/aetf/"
         },
         {
             "name": "scripts",
-            "type": "ucw.realitymarble.ScriptsPhantasm",
+            "type": "realitymarble.ScriptsPhantasm",
             "joint_path": "/home/aetf/.local/bin"
         }
     ]
