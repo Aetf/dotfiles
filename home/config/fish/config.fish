@@ -96,3 +96,7 @@ end
 #    set -x SSH_AGENT_PID (echo "$_ssh_socket" | sed 's/[^.]*\.//')
 #    set -x SSH_AUTH_SOCK "$_ssh_socket"
 #end
+
+# Silence 'Picked up _JAVA_OPTIONS' message on command line
+set _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
+set -e _JAVA_OPTIONS
