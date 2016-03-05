@@ -98,5 +98,5 @@ end
 #end
 
 # Silence 'Picked up _JAVA_OPTIONS' message on command line
-set _SILENT_JAVA_OPTIONS="$_JAVA_OPTIONS"
+set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
 set -e _JAVA_OPTIONS
