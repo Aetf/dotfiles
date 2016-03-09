@@ -1,0 +1,6 @@
+[Unit]
+Description=Sync systemd files in dotfiles
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sync-etc-systemd.sh '/home/aetf/customizations/etc/systemd/system' '/etc/systemd/system'
