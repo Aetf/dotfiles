@@ -7,8 +7,9 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
+JAVA_PATH="java"
 CLASS=$1
-FQCLASS=`/home/aetf/bin/javaclassname $1`
+FQCLASS=`javaclassname $1`
 FQCLASSN=`echo $FQCLASS | sed -e 's/^.*\.\([^.]*\)$/\1/'`
 FQCLASSP=`echo $FQCLASS | sed -e 's-\.-/-g' -e 's-^[^/]*$--' -e 's-/[^/]*$--'`
 
@@ -83,5 +84,4 @@ fi
 
 shift
 
-JAVA_PATH="normaljava.sh"
 $JAVA_PATH $FQCLASS "$@"
