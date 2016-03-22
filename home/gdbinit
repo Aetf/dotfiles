@@ -1,6 +1,0 @@
-# GDB Config file
-#add-auto-load-safe-path /opt/firefox-build/mozilla-central/js/src/shell
-#add-auto-load-safe-path /opt/firefox-build/mozilla-central/js/src/debug-build/js/src/shell
-
-# marcos for printing Qt objects
-source /home/aetf/.gdb/kde-devel-gdb

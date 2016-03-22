@@ -1,8 +1,0 @@
-[Unit]
-Description=Path monitor for syncing systemd files in dotfiles
-
-[Path]
-PathChanged=/home/aetf/customizations/etc/systemd/system
-
-[Install]
-WantedBy=multi-user.target
