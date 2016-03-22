@@ -25,6 +25,22 @@ Host vps
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
     ControlPersist yes
+Host clarity25
+    User peifeng
+    HostName clarity25.eecs.umich.edu
+    ForwardX11 no
+    RequestTTY force
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
+Host clarity26
+    User peifeng
+    HostName clarity26.eecs.umich.edu
+    ForwardX11 no
+    RequestTTY force
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
 Host vps-trans
     User aetf
     HostName vps.unlimitedcodeworks.xyz
