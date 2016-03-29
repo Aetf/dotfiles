@@ -1,37 +1,35 @@
 [Appearance]
-TerminalHighlightOnManualActivation=true
+Skin=breeze-thin-dark
 Translucency=true
 
 [AutoOpen]
 PollMouse=true
 
 [Desktop Entry]
-DefaultProfile=Shell.profile
+DefaultProfile=Yakuake Shell.profile
+
+[Dialogs]
+FirstRun=false
 
 [Favorite Profiles]
 Favorites=
 
 [Shortcuts]
 close-active-terminal=Ctrl+Shift+R
-close-session=Ctrl+W
-decrease-window-height=Alt+Shift+Up
-decrease-window-width=Alt+Shift+Left
+close-session=Ctrl+Shift+W
 file_quit=Ctrl+Shift+Q
 grow-terminal-bottom=Ctrl+Alt+Down
 grow-terminal-left=Ctrl+Alt+Left
 grow-terminal-right=Ctrl+Alt+Right
 grow-terminal-top=Ctrl+Alt+Up
-increase-window-height=Alt+Shift+Down
-increase-window-width=Alt+Shift+Right
 move-session-left=Ctrl+Shift+Left
 move-session-right=Ctrl+Shift+Right
 new-session=Ctrl+T
 next-session=Ctrl+Tab
 next-terminal=Ctrl+Shift+Down
-options_configure=Meta+Alt+P
 previous-session=Ctrl+Shift+Tab
 previous-terminal=Ctrl+Shift+Up
-rename-session=Ctrl+Alt+S
+rename-session=Alt+Shift+R
 split-left-right=Ctrl+(
 split-top-bottom=Ctrl+)
 toggle-session-monitor-activity=Ctrl+Shift+A
@@ -40,7 +38,5 @@ view-full-screen=Ctrl+Shift+F11
 
 [Window]
 DynamicTabTitles=true
-Height=25
+Height=53
 KeepOpen=false
-Position=4
-Width=45
