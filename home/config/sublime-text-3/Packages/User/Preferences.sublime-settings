@@ -10,7 +10,7 @@
 	"caret_extra_width": 1,
 	"caret_style": "phase",
 	"close_windows_when_empty": false,
-	"color_scheme": "Packages/User/SublimeLinter/predawn (SL).tmTheme",
+	"color_scheme": "Packages/User/SublimeLinter/base16-eighties.dark (SL).tmTheme",
 	"copy_with_empty_selection": false,
 	"drag_text": false,
 	"draw_minimap_border": true,
@@ -42,7 +42,7 @@
 	"show_full_path": false,
 	"spell_check": false,
 	"tabs_small": true,
-	"theme": "Numix Dark.sublime-theme",
+	"theme": "Spacegray Eighties.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": false
 }
