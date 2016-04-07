@@ -152,7 +152,7 @@ WindowSnapZone=10
 
 [org.kde.kdecoration2]
 BorderSize=NoSides
-ButtonsOnLeft=XAIM
+ButtonsOnLeft=XIAM
 ButtonsOnRight=F
 CloseOnDoubleClickOnMenu=false
 library=org.kde.breeze
