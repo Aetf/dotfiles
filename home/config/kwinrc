@@ -92,7 +92,7 @@ TextOnly=false
 
 [TabBox]
 ActivitiesMode=1
-ApplicationsMode=0
+ApplicationsMode=1
 BorderActivate=9
 BorderAlternativeActivate=9
 DesktopMode=1
