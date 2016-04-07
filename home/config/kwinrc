@@ -29,6 +29,9 @@ BorderActivateSphere=9
 [Effect-DesktopGrid]
 BorderActivate=1
 
+[Effect-DimInactive]
+Strength=10
+
 [Effect-FlipSwitch]
 TabBox=false
 TabBoxAlternative=false
@@ -74,6 +77,7 @@ coverswitchEnabled=true
 cubeEnabled=true
 cubeslideEnabled=false
 desktopchangeosdEnabled=true
+diminactiveEnabled=true
 dimscreenEnabled=true
 glideEnabled=true
 highlightwindowEnabled=true
