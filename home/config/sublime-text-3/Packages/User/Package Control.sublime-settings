@@ -33,6 +33,8 @@
 		"Makefile Improved",
 		"Markdown Preview",
 		"MarkdownEditing",
+		"Materialize",
+		"Materialize-Appbar",
 		"Numix Theme",
 		"OpenCL",
 		"Package Control",
@@ -52,7 +54,6 @@
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-cppcheck",
 		"SublimeLinter-pylint",
-		"Sublimerge Pro",
 		"Theme - Spacegray",
 		"Vintageous"
 	],
