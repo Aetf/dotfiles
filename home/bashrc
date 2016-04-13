@@ -39,3 +39,10 @@ fi
 
 # Extra Path
 export PATH=/home/peifeng/.local/bin:$PATH
+
+# Alias
+alias ls='ls --color'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -al'
+
