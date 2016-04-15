@@ -51,6 +51,3 @@ PATH="$PATH:$HOME/.node_modules/bin"
 PATH="$PATH:$HOME/.local/bin"
 
 export PATH
-
-# SSH-Agent
-eval $(ssh-agent)
