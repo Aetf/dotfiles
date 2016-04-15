@@ -14,8 +14,6 @@ end
 ## Only set these if we don't have DISPLAY
 ## otherwise, these've been set in $HOME/.xprofile
 if test "$DISPLAYx" = "x";
-    ## Install directory
-    set -x INSTALLDIR ~/Software
     ## Default editor
     set -x EDITOR vim
     ## Used for virtualbox
@@ -43,7 +41,9 @@ if test "$DISPLAYx" = "x";
         end
     end
     ## ruby gem executable
-    set PATH $PATH ~/.gem/ruby/2.2.0/bin
+    for p in ~/.gem/ruby/*/bin
+        set PATH $PATH $p
+    end
 end
 
 # Make time output more informations
