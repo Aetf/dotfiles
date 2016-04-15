@@ -100,3 +100,9 @@ end
 # Silence 'Picked up _JAVA_OPTIONS' message on command line
 set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
 set -e _JAVA_OPTIONS
+
+
+# Start ssh-agent if we havn't done so
+if test "$SSH_AUTH_SOCK"x = "x";
+    exec ssh-agent fish
+end
