@@ -55,6 +55,9 @@ Plug 'freeo/vim-kalisi'
 " syntax checking using external checkers
 Plug 'scrooloose/syntastic'
 
+" support for editing fish scripts
+Plug 'dag/vim-fish'
+
 " Finally add plugins to &runtimepath
 call plug#end()
 
@@ -70,6 +73,12 @@ let g:syntastic_check_on_wq = 0
 
 let g:syntastic_cpp_checkers = ['cppcheck']
 let g:syntastic_aggregate_errors = 1
+
+" Settings for vim-fish
+"     Let :make to use fish for syntax checking
+autocmd FileType fish compiler fish
+"     Enable folding of block structures in fish
+autocmd FileType fish setlocal foldmethod=expr
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -217,6 +226,10 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+
+" Show tabs, trailing space and nbsp
+set list
+set listchars=tab:➪\ ,trail:␣,nbsp:☠
 
 
 """"""""""""""""""""""""""""""
