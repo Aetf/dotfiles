@@ -1,4 +1,4 @@
-function cdmk --description 'Create a directory and set CWD'
+function cdmk --description 'Create a directory and set CWD' -w cd
 	command mkdir $argv
 	if test $status = 0
 		if not match "-*" $argv[-1]
