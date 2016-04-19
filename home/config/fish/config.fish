@@ -106,3 +106,8 @@ set -e _JAVA_OPTIONS
 if test "$SSH_AUTH_SOCK"x = "x";
     exec ssh-agent fish
 end
+
+# Map Ctrl+C to discard current command line content
+function fish_user_key_bindings
+    bind \cc 'commandline ""'
+end
