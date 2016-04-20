@@ -66,6 +66,7 @@
 	"spacegray_tabs_font_large": true,
 	"spacegray_tabs_xlarge": true,
 	"spell_check": false,
+	"tab_size": 4,
 	"theme": "Material Spacegray Eighties.sublime-theme",
 	"translate_tabs_to_spaces": true,
 	"trim_trailing_white_space_on_save": false
