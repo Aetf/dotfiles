@@ -16,7 +16,7 @@ Favorites=
 
 [Shortcuts]
 close-active-terminal=Ctrl+Shift+R
-close-session=Ctrl+Shift+W
+close-session=Ctrl+Alt+W
 file_quit=Ctrl+Shift+Q
 grow-terminal-bottom=Ctrl+Alt+Down
 grow-terminal-left=Ctrl+Alt+Left
