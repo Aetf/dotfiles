@@ -34,6 +34,14 @@ Host vps-trans
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h-trans:%p
     ControlPersist yes
+Host clarity24
+    User peifeng
+    HostName clarity24.eecs.umich.edu
+    ForwardX11 yes
+    RequestTTY force
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
 Host clarity25
     User peifeng
     HostName clarity25.eecs.umich.edu
@@ -49,6 +57,13 @@ Host clarity26
     RequestTTY force
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
+Host clarity24-trans
+    User peifeng
+    HostName clarity24.eecs.umich.edu
+    ForwardX11 no
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h-trans:%p
     ControlPersist yes
 Host clarity25-trans
     User peifeng
