@@ -41,7 +41,7 @@ fi
 export PATH=/home/peifeng/.local/bin:$PATH
 
 # Alias
-alias ls='ls --color'
+alias ls='ls --color=auto -v --indicator-style=classify'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
