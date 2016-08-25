@@ -3,9 +3,12 @@ function venv --description 'Create python virtualenv in ~/.local/venvs'
     if test $argc -eq 0
         echo helptext
     else
-        set venv_path ~/.local/venvs/$argv[-1]
+        set venv_path $argv[-1]
         set -e argv[-1]
-        if test -d $venv_path
+        if not test -f $venv_path/bin/activate.fish
+            set venv_path ~/.local/venvs/$argv[-1]
+        end
+        if test -f $venv_path/bin/activate.fish
             #fish -c ". $venv_path/bin/activate.fish; exec fish"
             # hacky workaround for virtualenv nonsense cleanup
             env _OLD_VIRTUAL_PATH= _OLD_VIRTUAL_PYTHONHOME= _OLD_FISH_PROMPT_OVERRIDE= fish -c ". $venv_path/bin/activate.fish; exec fish"
