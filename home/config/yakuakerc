@@ -3,7 +3,7 @@ Skin=breeze-thin-dark
 Translucency=true
 
 [AutoOpen]
-PollMouse=true
+PollMouse=false
 
 [Desktop Entry]
 DefaultProfile=Yakuake Shell.profile
