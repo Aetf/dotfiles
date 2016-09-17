@@ -1,16 +1,34 @@
-function venv --description 'Create python virtualenv in ~/.local/venvs'
+function venv --description 'Python virtualenv wrapper for fish. Start virtualenv in subshell'
     set argc (count $argv)
     if test $argc -eq 0
-        echo helptext
+        echo "Usage:  venv [OPTIONS] VENVPATH"
+        echo "Activate virtual environment at VENVPATH in a subshell. Creating new one if necessary."
+        echo "You can deactivate it by directly type exit or type ctrl+D in the subshell."
+        echo "OPTIONS are directly passed to the virtualenv command."
+        echo ""
+        echo "The actual path to the virtual environment is decided in the followling order:"
+        echo "    1. If VENVPATH/bin/activate.fish exists, stop"
+        echo "    2. If VENVPATH is absolute path (starts with /), stop"
+        echo "    3. VENVPATH=~/.local/venvs/VENVPATH/bin/activate.fish"
+        echo "    4. If VENVPATH/bin/activate.fish exists, stop"
+        echo "If stopped without found activate.fish, prompt to create the virtual environment at VENVPATH."
     else
-        set venv_path $argv[-1]
+        set orig_path $argv[-1]
+        set venv_path $orig_path
         set -e argv[-1]
+
+        # Search for the specified venv_path
         if not test -f "$venv_path/bin/activate.fish"
-            set venv_path ~/.local/venvs/$venv_path
+            switch "$venv_path"
+                case '/*'
+                    # nothing
+                case '*'
+                    set venv_path ~/.local/venvs/$venv_path
+            end
         end
 
         if not test -f "$venv_path/bin/activate.fish"
-            if confirm "Virtualenv $venv_path not found. Create?"
+            if confirm "Virtualenv \"$orig_path\" not found. Create at $venv_path?"
                 virtualenv $argv $venv_path
             else
                 return
