@@ -3,7 +3,7 @@ function venv --description 'Python virtualenv wrapper for fish. Start virtualen
     if test $argc -eq 0
         echo "Usage:  venv [OPTIONS] VENVPATH"
         echo "Activate virtual environment at VENVPATH in a subshell. Creating new one if necessary."
-        echo "You can deactivate it by directly type exit or type ctrl+D in the subshell."
+        echo "You can deactivate it by simply typing exit or ctrl+D in the subshell."
         echo "OPTIONS are directly passed to the virtualenv command."
         echo ""
         echo "The actual path to the virtual environment is decided in the followling order:"
