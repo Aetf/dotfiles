@@ -38,14 +38,39 @@ if ! shopt -oq posix; then
 fi
 
 # Extra Path
-export PATH=/home/peifeng/.local/bin:$PATH
+export PATH=$HOME/.local/bin:$PATH
+
+# Extra installations in tools
+export TOOLS_PATH=$HOME/tools
+
+for pkg in $TOOLS_PATH/*; do
+    case $pkg in
+        *.skip)
+            continue;;
+        */caffe-recurrent)
+            continue;;
+    esac
+    bin_dir=$pkg/bin
+    lib_dir=$pkg/lib
+    if [ -d $pkg/stage ]; then
+        bin_dir=$pkg/stage/bin
+        lib_dir=$pkg/stage/lib
+    fi
+    if [ -d $bin_dir ]; then
+        PATH=$bin_dir:$PATH
+    fi
+    if [ -d $lib_dir ]; then
+        LD_LIBRARY_PATH=$lib_dir:$LD_LIBRARY_PATH
+    fi
+done
+export PATH
+export LD_LIBRARY_PATH
 
 # Alias
-alias ls='ls --color=auto -v -h --indicator-style=classify'
+alias ls='ls --color=auto -h -v --indicator-style=classify'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
 
 # Editor
 export EDITOR=vim
-
