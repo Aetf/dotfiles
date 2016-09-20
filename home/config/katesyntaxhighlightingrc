@@ -44,7 +44,7 @@ Control Flow=ff31363b,ffeff0f1,1,,,,-,-,,---
 Data Type=ff2980b9,fffdbc4b,,,,,-,-,,---
 Decimal/Value=fff67400,fff67400,,,,,-,-,,---
 Documentation=ffda4453,ffda4453,,,,,-,-,,---
-Error=d3d0c8,d3d0c8,0,0,0,0,,,---
+Error=ffd3d0c8,ffd3d0c8,0,0,0,,-,-,,---
 Extension=ff0095ff,ffeff0f1,1,,,,-,-,,---
 Floating Point=fff67400,fff67400,,,,,-,-,,---
 Function=fff67400,fff67400,,,,,-,-,,---
@@ -77,6 +77,7 @@ Control Flow=ff31363b,ffeff0f1,1,,,,-,-,,---
 Data Type=ff2980b9,fffdbc4b,,,,,-,-,,---
 Decimal/Value=fff67400,fff67400,,,,,-,-,,---
 Documentation=ffda4453,ffda4453,,,,,-,-,,---
+Error=ffda4453,ffda4453,,,,,-,-,,---
 Extension=ff0095ff,ffeff0f1,1,,,,-,-,,---
 Floating Point=fff67400,fff67400,,,,,-,-,,---
 Function=fff67400,fff67400,,,,,-,-,,---
@@ -94,6 +95,9 @@ String=ffda4453,ffda4453,,,,,-,-,,---
 Variable=ff2980b9,fffdbc4b,,,,,-,-,,---
 Verbatim String=ffda4453,ffda4453,,,,,-,-,,---
 Warning=ffda4453,ffda4453,,,,,-,-,,---
+
+[Default Item Styles - Schema Solarized (dark)]
+Error=ffda4453,ffda4453,,,,,-,-,,---
 
 [Default Item Styles - Schema Solarized (light)]
 Annotation=ff7f8c8d,ffbdc3c7,,,,,-,-,,---
@@ -158,6 +162,84 @@ ISO C++:Boost Stuff=7,,,,,,,,,,---
 ISO C++:CONSTS/MACROS=0,,,,,,,,,,---
 ISO C++:Char=10,,,,,,,,,,---
 ISO C++:Comment=21,,,,,,,,,,---
+ISO C++:Data Members (m_*)=3,,,,,,,,,,---
+ISO C++:Data Type=16,,,,,,,,,,---
+ISO C++:Decimal=17,,,,,,,,,,---
+ISO C++:Error=30,,,,,,,,,,---
+ISO C++:Float=19,,,,,,,,,,---
+ISO C++:Globals (g_*)=3,,,,,,,,,,---
+ISO C++:Hex=18,,,,,,,,,,---
+ISO C++:Internals=0,ff808080,ff808080,,,,,,,,---
+ISO C++:Keyword=1,,,,,,,,,,---
+ISO C++:Normal Text=0,,,,,,,,,,---
+ISO C++:Octal=18,,,,,,,,,,---
+ISO C++:Prep. Lib=15,,,,,,,,,,---
+ISO C++:Preprocessor=8,,,,,,,,,,---
+ISO C++:Region Marker=25,,,,,,,,,,---
+ISO C++:Separator Symbol=0,,,,,,,,,,---
+ISO C++:Standard Attribute=9,,,0,1,,,,,,---
+ISO C++:Standard Classes=6,,,,,,,,,,---
+ISO C++:Standard Macros=29,,,,,,,,,,---
+ISO C++:Statics (s_*)=3,,,,,,,,,,---
+ISO C++:String=12,,,,,,,,,,---
+ISO C++:String Char=11,,,,,,,,,,---
+ISO C++:Symbol=0,,,,,,,,,,---
+ISO C++:Type Modifiers=9,,,,,,,,,,---
+ISO C++:Types (*_t/*_type)=16,,,,,,,,,,---
+Modelines:Comment=21,,,,,,,,,,---
+Modelines:Keyword=1,,,,,,,,,,---
+Modelines:Number=17,,,,,,,,,,---
+Modelines:Option OFF=29,,,,,,,,,,---
+Modelines:Option ON=29,,,,,,,,,,---
+Modelines:String=12,,,,,,,,,,---
+Modelines:Value=29,,,,,,,,,,---
+Modelines:Variable=2,,,,,,,,,,---
+
+[Highlighting C++ - Schema KDE]
+Alerts:Alert Level 1=28,ffe85848,ffe85848,,,,,ff451e1a,,,---
+Alerts:Alert Level 2=28,ffca9219,ffca9219,,,,,ff451e1a,,,---
+Alerts:Alert Level 3=28,ff81ca2d,ff81ca2d,,,,,,,,---
+Alerts:Normal Text=0,,,,,,,,,,---
+Alerts:Region Marker=25,,,,,,,,,,---
+C++:Normal Text=0,,,,,,,,,,---
+C++:Qt4 Classes=7,,,,,,,,,,---
+C++:Qt4 Functions=2,,,,,,,,,,---
+C++:Qt4 Macros=7,,,1,0,,,,,,---
+C++:Qt4 Types=7,,,,,,,,,,---
+Doxygen:Attention=23,,,1,0,,,,,,---
+Doxygen:Code=21,,,,,,,,,,---
+Doxygen:Comment=21,,,,,,,,,,---
+Doxygen:Custom Tags=23,,,,,,,,,,---
+Doxygen:Description=22,,,,,,,,,,---
+Doxygen:Dot Graph=21,ff00a000,ffffffff,,1,,,,,,---
+Doxygen:Entities=29,ff4086c0,,1,1,,,,,,---
+Doxygen:Formulas=21,ff00a000,ffffffff,,1,,,,,,---
+Doxygen:HTML Comment=21,,,,,,,,,,---
+Doxygen:HTML Tag=1,ff000000,,1,0,,,,,,---
+Doxygen:Identifier=29,,,,,,,,,,---
+Doxygen:Message Sequence Chart=21,ff00a000,ffffffff,,1,,,,,,---
+Doxygen:Normal Text=0,,,,,,,,,,---
+Doxygen:Note=26,,,1,0,,,,,,---
+Doxygen:Region=25,,,,,,,,,,---
+Doxygen:Tags=23,,,1,,,,,,,---
+Doxygen:Todo=23,,,1,0,,,,,,---
+Doxygen:Types=16,,,,,,,,,,---
+Doxygen:Verbatim=21,,,,,,,,,,---
+Doxygen:Warning=27,,,1,0,,,,,,---
+Doxygen:Word=24,,,1,0,,,,,,---
+GCCExtensions:GNU Extensions=7,,,,1,,,,,,---
+GCCExtensions:GNU Functions=2,,,,,,,,,,---
+GCCExtensions:GNU Macros=29,,,,,,,,,,---
+GCCExtensions:GNU Types=16,,,,,,,,,,---
+GCCExtensions:Normal Text=0,,,,,,,,,,---
+GCCExtensions:String=12,,,,,,,,,,---
+ISO C++:Attribute=9,,,0,1,,,,,,---
+ISO C++:Binary=18,,,,,,,,,,---
+ISO C++:Boost Stuff=7,,,,,,,,,,---
+ISO C++:CONSTS/MACROS=0,,,,,,,,,,---
+ISO C++:Char=10,,,,,,,,,,---
+ISO C++:Comment=21,,,,,,,,,,---
+ISO C++:Control Flow=4,,,,,,,,,,---
 ISO C++:Data Members (m_*)=3,,,,,,,,,,---
 ISO C++:Data Type=16,,,,,,,,,,---
 ISO C++:Decimal=17,,,,,,,,,,---
@@ -482,6 +564,9 @@ Modelines:Variable=2,,,,,,,,,,---
 JavaScript:Objects=0,f2777a,f2777a,0,0,0,0,,,---
 
 [Highlighting None - Schema Base16 Eighties Dark]
+普通文本=0,,,,,,,,,,---
+
+[Highlighting None - Schema KDE]
 普通文本=0,,,,,,,,,,---
 
 [Highlighting None - Schema Solarized (dark)]
