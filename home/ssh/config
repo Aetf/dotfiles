@@ -38,6 +38,7 @@ Host clarity24
     User peifeng
     HostName clarity24.eecs.umich.edu
     ForwardX11 yes
+    ForwardX11Trusted yes
     RequestTTY force
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
