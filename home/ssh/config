@@ -40,6 +40,8 @@ Host clarity24
     ForwardX11 yes
     ForwardX11Trusted yes
     RequestTTY force
+    Compression yes
+    Ciphers blowfish-cbc,arcfour
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
     ControlPersist yes
@@ -48,6 +50,8 @@ Host clarity25
     HostName clarity25.eecs.umich.edu
     ForwardX11 yes
     RequestTTY force
+    Compression yes
+    Ciphers blowfish-cbc,arcfour
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
     ControlPersist yes
@@ -56,6 +60,8 @@ Host clarity26
     HostName clarity26.eecs.umich.edu
     ForwardX11 yes
     ForwardX11Trusted yes
+    Compression yes
+    Ciphers blowfish-cbc,arcfour
     RequestTTY force
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
