@@ -26,9 +26,6 @@ if test "$DISPLAYx" = "x";
     ## Ccache directory
     set -x CCACHE_DIR /opt/.ccache
     set -x CCACHE_COMPRESS
-    ## MATLAB
-    set -x MATLAB_JAVA /usr/lib/jvm/java-7-jre/jre/
-    set -x MATLABPATH "$HOME/develop/matlab"
     ## XDG variables
     set -x XDG_CONFIG_HOME "$HOME/.config"
 

@@ -28,10 +28,6 @@ export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 export CCACHE_DIR=/opt/.ccache
 export CCACHE_COMPRESS
 
-# MATLAB
-export MATLAB_JAVA=/usr/lib/jvm/java-7-jre/jre/
-export MATLABPATH="$HOME/develop/matlab"
-
 # XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
 
