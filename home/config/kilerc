@@ -14,6 +14,18 @@ bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=true
 kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-XeLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test.tex]
@@ -21,56 +33,56 @@ bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_bib.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_index.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_plain.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-zSGozZ/test.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-zSGozZ/test_bib.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-zSGozZ/test_index.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-zSGozZ/test_plain.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+kile_livePreviewTool=LivePreview-XeLaTeX
 
 [Editor Ext]
 InsertSpecialCharacters=true
@@ -92,6 +104,7 @@ listViewIconSize=0
 [Files]
 CleanUpAfterClose=true
 LastDocument[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
+SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
@@ -104,8 +117,8 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr
 [Geometries]
 MainwindowHeight=769
 MainwindowWidth=1280
-horizontalSplitterLeft=28
-horizontalSplitterRight=574
+horizontalSplitterLeft=198
+horizontalSplitterRight=456
 verticalSplitterBottom=142
 verticalSplitterTop=541
 
@@ -115,8 +128,8 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=450
-Recent Files[$e]=eecs551hw1.kilepr,file:$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr
-Recent URLs[$e]=file:$HOME/develop/latex/EECS551HW2/
+Recent Files[$e]=eecs551hw1.kilepr,file:$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
+Recent URLs[$e]=file:$HOME/develop/latex/EECS551HW2/,file:$HOME/develop/latex/xjtuthesis/solutions/,file:$HOME/develop/latex/
 Width 1280=720
 
 [KileConfigDialog]
@@ -163,20 +176,22 @@ dvipng=true
 previewTask=XeLaTeX ---> PDF (Okular)
 
 [Recent Files]
-File1[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
-Name1[$e]=homework.solution.tex
+File1[$e]=$HOME/develop/latex/xjtuthesis/solutions/master.tex
+File2[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
+Name1[$e]=master.tex
+Name2[$e]=homework.solution.tex
 
 [Scripting]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex
-Saved Documents=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
+Documents=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex
+Saved Documents=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
 
 [Show]
 BottomBarSize=110
-SelectedLeftView=-1
-SideBarSize=128
+SelectedLeftView=1
+SideBarSize=170
 SystemCheckLastVersionRunForAtStartUp=2.9.60
 
 [Tool/Archive/Tar]
@@ -1301,6 +1316,13 @@ CursorLine=0
 JumpList=
 TextFolding=[]
 ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
+CursorColumn=0
+CursorLine=43
+JumpList=
+TextFolding=[]
+ViMarks=.,43,4,[,43,4,],43,4,^,43,4
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-xTeD2Q/test.tex]
 CursorColumn=0
