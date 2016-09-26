@@ -92,14 +92,6 @@ switch $TERM
         end
 end
 
-# Fix KeeAgent enviroment variable
-#set _ssh_socket_dir '/tmp/ssh-agent-lib-sock'
-#set _ssh_socket (find "$_ssh_socket_dir" -maxdepth 1 -mindepth 1 -type s -print)
-#if test -S "$_ssh_socket";
-#    set -x SSH_AGENT_PID (echo "$_ssh_socket" | sed 's/[^.]*\.//')
-#    set -x SSH_AUTH_SOCK "$_ssh_socket"
-#end
-
 # Silence 'Picked up _JAVA_OPTIONS' message on command line
 set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
 set -e _JAVA_OPTIONS
@@ -110,7 +102,18 @@ if test "$SSH_AUTH_SOCK"x = "x";
     exec ssh-agent fish
 end
 
+
 # Map Ctrl+C to discard current command line content
 function fish_user_key_bindings
     bind \cc 'commandline ""'
+end
+
+
+# Programmable shell title
+function fish_title
+    if test "$_" = "ssh"
+        echo (string split " " $argv[1])[-1]
+    else
+        echo (prompt_pwd)": $_"
+    end
 end
