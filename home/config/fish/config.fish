@@ -109,8 +109,8 @@ end
 # Programmable shell title
 function fish_title
     if test "$_" = "ssh"
-        echo (string split " " $argv[1])[-1]": $_"
+        echo "$_: "(string split " " $argv[1])[-1]
     else
-        echo (prompt_pwd)": $_"
+        echo "$_: "(prompt_pwd)
     end
 end
