@@ -113,8 +113,8 @@ nmap <leader>w :w!<cr>
 set relativenumber
 set number
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Set 3 lines to the cursor - when moving vertically using j/k
+set so=3
 
 " Turn on the WiLd menu
 set wildmenu
