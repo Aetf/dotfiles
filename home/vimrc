@@ -61,6 +61,9 @@ Plug 'dag/vim-fish'
 " a Git wrapper so awesome
 Plug 'tpope/vim-fugitive'
 
+" view images from within vim
+Plug 'ashisha/image.vim'
+
 " Finally add plugins to &runtimepath
 call plug#end()
 
