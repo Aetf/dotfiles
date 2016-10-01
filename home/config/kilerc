@@ -16,6 +16,18 @@ kile_livePreviewEnabled=true
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-XeLaTeX
 
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
 Bookmarks=
 Highlighting=LaTeX
@@ -103,22 +115,22 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
+LastDocument[$e]=$HOME/develop/latex/EECS551HW3/homework.solution.tex
 SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
-DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
+DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW3/homework.solution.tex
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
 NoDOOS=1
 NoPOOS=1
-ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr
+ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW3/eecs551hw3.kilepr
 
 [Geometries]
 MainwindowHeight=769
 MainwindowWidth=1280
-horizontalSplitterLeft=198
-horizontalSplitterRight=456
+horizontalSplitterLeft=28
+horizontalSplitterRight=591
 verticalSplitterBottom=142
 verticalSplitterTop=541
 
@@ -128,8 +140,8 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=450
-Recent Files[$e]=eecs551hw1.kilepr,file:$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
-Recent URLs[$e]=file:$HOME/develop/latex/EECS551HW2/,file:$HOME/develop/latex/xjtuthesis/solutions/,file:$HOME/develop/latex/
+Recent Files[$e]=eecs551hw1.kilepr,file:$HOME/develop/latex/EECS551HW3/eecs551hw3.kilepr,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
+Recent URLs[$e]=file:$HOME/develop/latex/xjtuthesis/solutions/,file:$HOME/develop/latex/,file:$HOME/develop/latex/EECS551HW3/
 Width 1280=720
 
 [KileConfigDialog]
@@ -137,10 +149,10 @@ Height 800=786
 Width 1280=882
 
 [KileMainWindow]
-Height 800=700
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAGK/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADFf////8AAAAAAAAAAA==
+Height 800=769
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHp/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADdP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
-Width 1280=1180
+Width 1280=730
 Window-Maximized 800x1280=true
 
 [KileMainWindow][Toolbar OkularViewerToolBar]
@@ -163,12 +175,12 @@ IconSize=22
 IconSize=22
 
 [MostFrequentlyUsedSymbols]
-counts=7,1
-paths=/usr/share/kile/mathsymbols/relation/img008relation.png,/usr/share/kile/mathsymbols/operators/img001operators.png
+counts=7,1,1,2,1,1,1
+paths=/usr/share/kile/mathsymbols/relation/img008relation.png,/usr/share/kile/mathsymbols/operators/img001operators.png,/usr/share/kile/mathsymbols/relation/img026relation.png,/usr/share/kile/mathsymbols/misc-text/img031misc-text.png,/usr/share/kile/mathsymbols/misc-text/img029misc-text.png,/usr/share/kile/mathsymbols/misc-text/img028misc-text.png,/usr/share/kile/mathsymbols/misc-text/img030misc-text.png
 
 [Projects]
-File1[$e]=$HOME/develop/latex/EECS551HW2/eecs551hw2.kilepr
-Name1[$e]=eecs551hw2.kilepr
+File1[$e]=$HOME/develop/latex/EECS551HW3/eecs551hw3.kilepr
+Name1[$e]=eecs551hw3.kilepr
 
 [QuickPreview]
 convert=true
@@ -177,21 +189,23 @@ previewTask=XeLaTeX ---> PDF (Okular)
 
 [Recent Files]
 File1[$e]=$HOME/develop/latex/xjtuthesis/solutions/master.tex
-File2[$e]=$HOME/develop/latex/EECS551HW2/homework.solution.tex
+File2[$e]=$HOME/develop/latex/EECS551HW3/homework.solution.tex
+File3[$d]
 Name1[$e]=master.tex
 Name2[$e]=homework.solution.tex
+Name3[$d]
 
 [Scripting]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex
-Saved Documents=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
+Documents=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex
+Saved Documents=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
 
 [Show]
 BottomBarSize=110
-SelectedLeftView=1
-SideBarSize=170
+SelectedLeftView=-1
+SideBarSize=308
 SystemCheckLastVersionRunForAtStartUp=2.9.60
 
 [Tool/Archive/Tar]
@@ -565,7 +579,7 @@ type=Process
 autoRun=yes
 checkForRoot=no
 class=LaTeXLivePreview
-command=pdflatex
+command=xelatex
 from=
 jumpToFirstError=yes
 options=-synctex=1 -interaction=nonstopmode -output-directory=%dir_target %source
@@ -1311,6 +1325,13 @@ DocumentClassOptions=letter,10pt
 RCVersion=7
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex]
 CursorColumn=0
 CursorLine=0
 JumpList=
