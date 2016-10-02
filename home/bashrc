@@ -66,6 +66,8 @@ done
 export PATH
 export LD_LIBRARY_PATH
 
+export PYTHONPATH=$PYTHONPATH:$HOME/tools/caffe-master/stage/python
+
 # Alias
 alias ls='ls --color=auto -h -v --indicator-style=classify'
 alias ll='ls -l'
@@ -77,3 +79,7 @@ alias lla='ls -al'
 
 # Select GPU
 export CUDA_VISIBLE_DEVICES=3,4
+
+# HiDPI settings used by ForwardingX11 to MacBook Pro
+export GDK_DPI_SCALE=0.5
+export GDK_SCALE=2
