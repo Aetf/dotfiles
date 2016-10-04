@@ -100,9 +100,17 @@ if test "$SSH_AUTH_SOCK"x = "x";
 end
 
 
-# Map Ctrl+C to discard current command line content
+# Default command for fzf
+set -x FZF_DEFAULT_COMMAND 'locate -r "^"(pwd)'
+set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+set -x FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
+
+# Custom key bindings
 function fish_user_key_bindings
+    # Map Ctrl+C to discard current command line content
     bind \cc 'commandline ""'
+    # Enable fzf keybindings
+    fzf_key_bindings
 end
 
 
@@ -114,3 +122,4 @@ function fish_title
         echo "$_: "(prompt_pwd)
     end
 end
+
