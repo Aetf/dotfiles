@@ -34,6 +34,26 @@ Host vps-trans
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h-trans:%p
     ControlPersist yes
+Host ccgpu
+    User cc
+    HostName 129.114.108.86
+    ForwardX11 no
+    ForwardX11Trusted no
+    RequestTTY force
+    Compression yes
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
+Host cc
+    User cc
+    HostName 129.114.108.89
+    ForwardX11 no
+    ForwardX11Trusted no
+    RequestTTY force
+    Compression yes
+    ControlMaster auto
+    ControlPath ~/.ssh/%r@%h:%p
+    ControlPersist yes
 Host clarity24
     User peifeng
     HostName clarity24.eecs.umich.edu
