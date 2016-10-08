@@ -37,8 +37,48 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# Helper function
+uniqappend () {
+    varname=$1
+    x=$2
+    case ":${!varname}:" in
+        *":$x:"*) :;; # already there
+        *) eval $varname=\"\$$varname:\$x\";;
+    esac
+    eval $varname=\"\$\{$varname\#:\}\"
+}
+uniqprepend () {
+    varname=$1
+    x=$2
+    case ":${!varname}:" in
+        *":$x:"*) :;; # already there
+        *) eval $varname=\"\$x:\$$varname\";;
+    esac
+    eval $varname=\"\$\{$varname\%:\}\"
+}
+
+# Remove duplicate entries
+if [ -n "$PATH" ]; then
+    old_PATH=$PATH:; PATH=
+    while [ -n "$old_PATH" ]; do
+        x=${old_PATH%%:*}       # the first remaining entry
+        uniqappend PATH $x
+        old_PATH=${old_PATH#*:}
+    done
+    unset old_PATH x
+fi
+if [ -n "$LD_LIBRARY_PATH" ]; then
+    old_PATH=$LD_LIBRARY_PATH:; LD_LIBRARY_PATH=
+    while [ -n "$old_PATH" ]; do
+        x=${old_PATH%%:*}       # the first remaining entry
+        uniqappend LD_LIBRARY_PATH $x
+        old_PATH=${old_PATH#*:}
+    done
+    unset old_PATH x
+fi
+
 # Extra Path
-export PATH=$HOME/.local/bin:$PATH
+uniqprepend PATH $HOME/.local/bin
 
 # Extra installations in tools
 export TOOLS_PATH=$HOME/tools
@@ -52,15 +92,18 @@ for pkg in $TOOLS_PATH/*; do
     esac
     bin_dir=$pkg/bin
     lib_dir=$pkg/lib
+    if ! [ -d $lib_dir ]; then
+        lib_dir=$pkg/lib64
+    fi
     if [ -d $pkg/stage ]; then
         bin_dir=$pkg/stage/bin
         lib_dir=$pkg/stage/lib
     fi
     if [ -d $bin_dir ]; then
-        PATH=$bin_dir:$PATH
+        uniqprepend PATH $bin_dir
     fi
     if [ -d $lib_dir ]; then
-        LD_LIBRARY_PATH=$lib_dir:$LD_LIBRARY_PATH
+        uniqprepend LD_LIBRARY_PATH $lib_dir
     fi
 done
 export PATH
