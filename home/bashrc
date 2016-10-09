@@ -78,7 +78,9 @@ if [ -n "$LD_LIBRARY_PATH" ]; then
 fi
 
 # Extra Path
-uniqprepend PATH $HOME/.local/bin
+if [ -d $HOME/.local/bin ]; then
+    uniqprepend PATH $HOME/.local/bin
+fi
 
 # Extra installations in tools
 export TOOLS_PATH=$HOME/tools
@@ -90,24 +92,27 @@ for pkg in $TOOLS_PATH/*; do
         */caffe-recurrent)
             continue;;
     esac
+    inc_dir=$pkg/include
     bin_dir=$pkg/bin
     lib_dir=$pkg/lib
     if ! [ -d $lib_dir ]; then
         lib_dir=$pkg/lib64
     fi
-    if [ -d $pkg/stage ]; then
-        bin_dir=$pkg/stage/bin
-        lib_dir=$pkg/stage/lib
+    if [ -d $inc_dir ]; then
+        uniqprepend INCLUDE $inc_dir
     fi
     if [ -d $bin_dir ]; then
         uniqprepend PATH $bin_dir
     fi
     if [ -d $lib_dir ]; then
         uniqprepend LD_LIBRARY_PATH $lib_dir
+        uniqprepend LIB $lib_dir
     fi
 done
 export PATH
 export LD_LIBRARY_PATH
+export INCLUDE
+export LIB
 
 # Alias
 alias ls='ls --color=auto -h -v --indicator-style=classify'
