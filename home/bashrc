@@ -18,12 +18,14 @@ uniqprepend () {
     eval $varname=\"\$\{$varname\%:\}\"
 }
 
-# Remove duplicate entries
+# Remove duplicate and nonexist entries
 if [ -n "$PATH" ]; then
     old_PATH=$PATH:; PATH=
     while [ -n "$old_PATH" ]; do
         x=${old_PATH%%:*}       # the first remaining entry
-        uniqappend PATH $x
+        if [ -d "$x" ]; then
+            uniqappend PATH $x
+        fi
         old_PATH=${old_PATH#*:}
     done
     unset old_PATH x
@@ -32,7 +34,9 @@ if [ -n "$LD_LIBRARY_PATH" ]; then
     old_PATH=$LD_LIBRARY_PATH:; LD_LIBRARY_PATH=
     while [ -n "$old_PATH" ]; do
         x=${old_PATH%%:*}       # the first remaining entry
-        uniqappend LD_LIBRARY_PATH $x
+        if [ -d "$x" ]; then
+            uniqappend LD_LIBRARY_PATH $x
+        fi
         old_PATH=${old_PATH#*:}
     done
     unset old_PATH x
