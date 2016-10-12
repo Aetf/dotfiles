@@ -44,6 +44,12 @@ Host ccgpu
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
     ControlPersist yes
+Host ccgpu-trans
+    User cc
+    HostName 129.114.108.86
+    ForwardX11 no
+    ForwardX11Trusted no
+    Compression yes
 Host cc
     User cc
     HostName 129.114.108.89
