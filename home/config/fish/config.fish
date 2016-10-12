@@ -22,7 +22,7 @@ if test "$DISPLAYx" = "x";
     set -x NASMENV "-i /home/aetf/Develop/ASM/inc"
     set -x NASM $NASMENV
     ## Predefined variables to Java runtime
-    set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+    set -x _JAVA_OPTIONS "swing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
     ## Ccache directory
     set -x CCACHE_DIR /opt/.ccache
     set -x CCACHE_COMPRESS
@@ -101,9 +101,11 @@ end
 
 
 # Default command for fzf
-set -x FZF_DEFAULT_COMMAND 'locate -r "^"(pwd)'
+set -x FZF_DEFAULT_COMMAND 'plocate "^"(pwd)'
+## paste the selected entry onto command line
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-set -x FZF_ALT_C_COMMAND $FZF_DEFAULT_COMMAND
+## cd into directory
+set -x FZF_ALT_C_COMMAND 'plocate -t dir "^"(pwd)'
 
 # Custom key bindings
 function fish_user_key_bindings
