@@ -2,7 +2,7 @@
 uniqappend () {
     varname=$1
     x=$2
-    case ":${!varname:=}:" in
+    case ":${!varname}:" in
         *":$x:"*) :;; # already there
         *) eval $varname=\"\$$varname:\$x\";;
     esac
@@ -11,7 +11,7 @@ uniqappend () {
 uniqprepend () {
     varname=$1
     x=$2
-    case ":${!varname:=}:" in
+    case ":${!varname}:" in
         *":$x:"*) :;; # already there
         *) eval $varname=\"\$x:\$$varname\";;
     esac
@@ -53,6 +53,10 @@ if [ -d $HOME/.local/bin ]; then
 fi
 
 # Detect extra installations in tools
+INCLUDE=${INCLUDE:-}
+LIB=${LIB:-}
+LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}
+PATH=${PATH:-}
 for pkg in $TOOL_DIR/*; do
     case $pkg in
         *.skip)
