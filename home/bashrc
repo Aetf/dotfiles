@@ -2,7 +2,7 @@
 uniqappend () {
     varname=$1
     x=$2
-    case ":${!varname}:" in
+    case ":${!varname:=}:" in
         *":$x:"*) :;; # already there
         *) eval $varname=\"\$$varname:\$x\";;
     esac
@@ -11,7 +11,7 @@ uniqappend () {
 uniqprepend () {
     varname=$1
     x=$2
-    case ":${!varname}:" in
+    case ":${!varname:=}:" in
         *":$x:"*) :;; # already there
         *) eval $varname=\"\$x:\$$varname\";;
     esac
