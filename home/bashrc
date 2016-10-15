@@ -30,7 +30,7 @@ if [ -n "$PATH" ]; then
     done
     unset old_PATH x
 fi
-if [ -n "$LD_LIBRARY_PATH" ]; then
+if [ -n "${LD_LIBRARY_PATH:=}" ]; then
     old_PATH=$LD_LIBRARY_PATH:; LD_LIBRARY_PATH=
     while [ -n "$old_PATH" ]; do
         x=${old_PATH%%:*}       # the first remaining entry
