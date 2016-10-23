@@ -1,6 +1,6 @@
 ---
 Language:        Cpp
-# BasedOnStyle:  LLVM
+BasedOnStyle:  LLVM
 AccessModifierOffset: -4
 AlignAfterOpenBracket: true
 AlignConsecutiveAssignments: false
@@ -15,6 +15,7 @@ AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 BinPackArguments: true
@@ -71,6 +72,8 @@ PenaltyBreakString: 1000
 PenaltyExcessCharacter: 10000
 PenaltyReturnTypeOnItsOwnLine: 10000
 PointerAlignment: Right
+ReflowComments:  true
+SortIncludes:    true
 SpaceAfterCStyleCast: true
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
@@ -85,3 +88,4 @@ Standard:        Cpp11
 TabWidth:        4
 UseTab:          Never
 ...
+
