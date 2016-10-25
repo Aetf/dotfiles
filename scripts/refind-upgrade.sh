@@ -16,7 +16,7 @@ info() {
 }
 err() {
     echo "[ERROR]: $@" >&2
-    SOMETHING_WRING=1
+    SOMETHING_WRONG=1
 }
 warning() {
     echo "[WARN]: $@" >&2
@@ -91,7 +91,7 @@ main() {
     tryInstall
     clean
 
-    if [ -n $SOMETHING_WRONG ]; then
+    if ! [ "${SOMETHING_WRONG}x" = "x" ]; then
         return 1
     fi
 }
