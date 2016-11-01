@@ -48,10 +48,16 @@ clean() {
 
     info "Remove unneeded conf file"
     rm -f /esp/*.conf
+    # We are using /esp/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
+    rm -rf /esp/EFI/archlinux/refind_linux.conf
+
+    # Remove back icons if identical
     if [ -d /esp/EFI/refind/icons-backup ]; then
         if diff -q /esp/EFI/refind/icons /esp/EFI/refind/icons-backup > /dev/null; then
             info "Remove identical icons-backup"
             rm -rf /esp/EFI/refind/icons-backup
+        else
+            warning "Detected updated icons, check and remove /esp/EFI/refind/icons-backup if needed"
         fi
     fi
 }
