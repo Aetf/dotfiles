@@ -40,6 +40,7 @@ Host ccgpu
     ForwardX11 no
     ForwardX11Trusted no
     RequestTTY force
+    LocalForward 8888 localhost:8888
     Compression yes
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
