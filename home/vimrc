@@ -46,6 +46,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Load plugins early so we can use them.
 
+" Set bash as shell, because fish is not compatible to vim-plug
+set shell=/usr/bin/bash
+
 " Activate plugin Manager vim-plug
 call plug#begin('~/.vim/plugged')
 
