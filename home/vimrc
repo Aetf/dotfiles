@@ -65,6 +65,9 @@ Plug 'dag/vim-fish'
 " Rust language support
 Plug 'rust-lang/rust.vim'
 
+" CtrlP for fuzzy finder
+Plug 'ctrlpvim/ctrlp.vim'
+
 " YouCompleteMe
 function! BuildYCM(info)
     " info is a dictionary with 3 fields
@@ -90,6 +93,7 @@ if has('nvim')
     let g:airline_theme='kalisi'
     let g:airline_powerline_fonts=1
     let g:airline#extensions#tabline#enabled = 1
+    let g:airline#extensions#tabline#show_tabs = 0
 endif
 
 " Finally add plugins to &runtimepath
@@ -118,6 +122,11 @@ autocmd FileType fish setlocal foldmethod=expr
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Settings for CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -306,30 +315,18 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
+map <leader>bd :Bclose<cr>
 
 " Close all the buffers
 map <leader>ba :bufdo bd<cr>
 
 " Move between buffers
-map <leader>j :bnext<cr>
-map <leader>k :bprevious<cr>
+map <M-h> :bnext<cr>
+map <M-l> :bprevious<cr>
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
-map <leader>t<leader> :tabnext
-
-" Let 'tl' toggle between this and the last accessed tab
-let g:lasttab = 1
-map <Leader>tl :exe "tabn ".g:lasttab<CR>
-au TabLeave * let g:lasttab = tabpagenr()
-
-" Opens a new tab with the current buffer's path
+" Opens a new buffer with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map <leader>te :edit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
