@@ -1,9 +1,0 @@
-{
-  "NotebookApp": {
-    "nbserver_extensions": {
-      "themysto.nbextensions_injector": true,
-      "themysto.nbextensions_configurator": true
-    }
-  },
-  "version": 1
-}
