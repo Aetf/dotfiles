@@ -8,7 +8,9 @@ if not status -i; exit; end
 # Some environment variables
 ## More colorful
 if test $TERM != "screen-256color" -a $TERM != "linux";
-    set TERM "xterm-256color"
+    set TERM "konsole"
+    # explicitly enable 256color in fish
+    set fish_term256 1
 end
 
 ## Only set these if we don't have DISPLAY
@@ -75,7 +77,7 @@ I/O\n\
 
 # Prompt line hook provided by powerline
 switch $TERM
-    case 'xterm' 'xterm-256color'
+    case 'xterm*' 'konsole*'
         powerline-setup
     case 'linux'
         set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
