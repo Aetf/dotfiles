@@ -37,6 +37,7 @@
 "    -> vimgrep searching and cope displaying
 "    -> Spell checking
 "    -> Misc
+"    -> Neovim specific
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -61,9 +62,6 @@ Plug 'scrooloose/syntastic'
 " support for editing fish scripts
 Plug 'dag/vim-fish'
 
-" view images from within vim
-Plug 'ashisha/image.vim'
-
 " Rust language support
 Plug 'rust-lang/rust.vim'
 
@@ -78,6 +76,21 @@ function! BuildYCM(info)
     endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'javascript', 'rust'], 'do': function('BuildYCM')}
+
+" vim-airline for neovim, which can't use powerline
+if has('nvim')
+    Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
+    let g:airline_detect_modified=1
+    let g:airline_detect_paste=1
+    let g:airline_detect_crypt=1
+    let g:airline_detect_spell=1
+    let g:airline_detect_iminsert=0
+    let g:airline_inactive_collapse=1
+    let g:airline_theme='kalisi'
+    let g:airline_powerline_fonts=1
+    let g:airline#extensions#tabline#enabled = 1
+endif
 
 " Finally add plugins to &runtimepath
 call plug#end()
@@ -104,6 +117,7 @@ autocmd FileType fish setlocal foldmethod=expr
 " Settings for YouCompleteMe
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_completion = 1
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -127,6 +141,9 @@ let g:mapleader = ","
 " Fast saving
 nmap <leader>w :w!<cr>
 
+" :W sudo saves the file
+command W w !sudo tee % > /dev/null
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
@@ -142,7 +159,7 @@ set so=3
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 
 "Always show current position
 set ruler
@@ -186,6 +203,8 @@ set novisualbell
 set t_vb=
 set tm=500
 
+" Add a bit extra margin to the left
+set foldcolumn=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -287,16 +306,26 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+map <leader>bd :Bclose<cr>:tabclose<cr>gT
 
 " Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+map <leader>ba :bufdo bd<cr>
+
+" Move between buffers
+map <leader>j :bnext<cr>
+map <leader>k :bprevious<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
+map <leader>t<leader> :tabnext
+
+" Let 'tl' toggle between this and the last accessed tab
+let g:lasttab = 1
+map <Leader>tl :exe "tabn ".g:lasttab<CR>
+au TabLeave * let g:lasttab = tabpagenr()
 
 " Opens a new tab with the current buffer's path
 " Super useful when editing files in the same directory
@@ -317,6 +346,7 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -324,11 +354,12 @@ set viminfo^=%
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
-" Statusline provided by powerline
-let g:powerline_pycmd = 'py3'
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
+" Statusline provided by powerline,
+if !has('nvim')
+    python3 from powerline.vim import setup as powerline_setup
+    python3 powerline_setup()
+    python3 del powerline_setup
+endif
 
 " Always show the status line
 set laststatus=2
@@ -424,12 +455,30 @@ map <leader>s? z=
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
+map <leader>q :e /tmp/workspace<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Neovim specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    " Use true colors
+    set termguicolors
+    " Change cursor shape between modes
+    :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+    " Load Archlinux specific vimfiles
+    set runtimepath^=/usr/share/vim/vimfiles
+    " ESC for exit terminal mode
+    tnoremap <Esc> <C-\><C-n>
+    " Window navigation in terminal mode
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
