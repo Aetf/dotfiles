@@ -71,6 +71,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Git gutter
 Plug 'airblade/vim-gitgutter'
 
+if !has('nvim')
+    " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
+    " natively supported in neovim
+    Plug 'ConradIrwin/vim-bracketed-paste'
+endif
+
 " YouCompleteMe
 function! BuildYCM(info)
     " info is a dictionary with 3 fields
