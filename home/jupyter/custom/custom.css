@@ -1,0 +1,9 @@
+/*
+Placeholder for custom user CSS
+
+mainly to be overridden in profile/static/custom/custom.css
+
+This will always be an empty file in IPython
+*/
+.CodeMirror { font-family: "Dejavu Sans Mono"; font-size: 12pt }
+.output * { font-family: "Dejavu Sans Mono" !important;}
