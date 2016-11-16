@@ -64,6 +64,18 @@ kile_livePreviewEnabled=true
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/cv/resume/resume.tex]
 Bookmarks=
 Highlighting=LaTeX
@@ -144,6 +156,13 @@ kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-XeLaTeX
 
+[Document-Settings,URL=file://:@/tmp/workspace/slides.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
 [Document-Settings,URL=file://:@/tmp/workspace/test.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
@@ -182,22 +201,22 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/EECS551HW7/homework.solution.tex
+LastDocument[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
 SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
-DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW7/homework.solution.tex
+DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
 NoDOOS=1
 NoPOOS=1
-ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW7/eecs551hw7.kilepr
+ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW8/eecs551hw8.kilepr
 
 [Geometries]
 MainwindowHeight=769
 MainwindowWidth=1280
 horizontalSplitterLeft=28
-horizontalSplitterRight=612
+horizontalSplitterRight=549
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -207,8 +226,8 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=450
-Recent Files[$e]=file:$HOME/develop/latex/EECS551HW7/eecs551hw7.kilepr,file:///tmp/workspace/eecs551hw5.kilepr,file:$HOME/develop/latex/cv/resume/resume.tex,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
-Recent URLs[$e]=file:$HOME/develop/latex/,file:$HOME/develop/latex/cv/,file:///tmp/workspace/,file:$HOME/develop/latex/EECS551HW7/,file:$HOME/develop/latex/cv/resume/,file:$HOME/develop/
+Recent Files[$e]=file:$HOME/develop/latex/cv/resume/resume.tex,file:$HOME/develop/latex/EECS551HW9/eecs551hw9.kilepr,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
+Recent URLs[$e]=file:$HOME/develop/latex/,file:$HOME/develop/latex/cv/,file:///tmp/workspace/,file:$HOME/develop/latex/cv/resume/,file:$HOME/develop/,file:$HOME/develop/latex/EECS551HW9/
 Width 1280=720
 
 [KileConfigDialog]
@@ -233,7 +252,7 @@ livePreviewCompileOnlyAfterSaving=true
 
 [MainWindow]
 Height 800=700
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAA=
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHp/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADdP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1280=1180
 Window-Maximized 800x1280=true
@@ -255,10 +274,10 @@ width=458
 
 [Projects]
 File1[$e]=$HOME/develop/latex/cv/resume/resume.tex
-File2[$e]=$HOME/develop/latex/EECS551HW7/eecs551hw7.kilepr
+File2[$e]=$HOME/develop/latex/EECS551HW8/eecs551hw8.kilepr
 File3[$d]
 Name1[$e]=resume.tex
-Name2[$e]=eecs551hw7.kilepr
+Name2[$e]=eecs551hw8.kilepr
 Name3[$d]
 
 [QuickPreview]
@@ -270,7 +289,7 @@ previewTask=XeLaTeX ---> PDF (Okular)
 File1[$e]=$HOME/develop/latex/xjtuthesis/solutions/master.tex
 File2[$e]=/usr/share/texmf-dist/tex/latex/minted/minted.sty
 File3[$e]=$HOME/develop/latex/cv/resume/resume.tex
-File4[$e]=$HOME/develop/latex/EECS551HW7/homework.solution.tex
+File4[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
 File5[$d]
 Name1[$e]=master.tex
 Name2[$e]=minted.sty
@@ -282,13 +301,13 @@ Name5[$d]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/home/aetf/develop/latex/cv/resume/resume.tex
-Saved Documents=file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
+Documents=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex
+Saved Documents=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
 
 [Show]
 BottomBarSize=120
 SelectedLeftView=-1
-SideBarSize=157
+SideBarSize=303
 SystemCheckLastVersionRunForAtStartUp=2.9.60
 
 [Tool/Archive/Tar]
@@ -1442,6 +1461,13 @@ JumpList=
 TextFolding=[]
 ViMarks=
 
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/cv/resume/resume.tex]
 CursorColumn=96
 CursorLine=116
@@ -1512,6 +1538,13 @@ JumpList=
 TextFolding=[]
 ViMarks=
 
+[View-Settings,View=0,URL=file://:@/tmp/workspace/slides.tex]
+CursorColumn=6
+CursorLine=58
+JumpList=
+TextFolding=[]
+ViMarks=.,56,43,[,56,43,],57,0,^,47,33
+
 [View-Settings,View=0,URL=file://:@/tmp/workspace/test.tex]
 CursorColumn=12
 CursorLine=16
@@ -1527,4 +1560,4 @@ TextFolding=[]
 ViMarks=
 
 [default]
-NewFileWizardSelectedIconLaTeX=Article
+NewFileWizardSelectedIconLaTeX=Beamer
