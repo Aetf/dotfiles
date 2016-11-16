@@ -48,7 +48,7 @@
 " Load plugins early so we can use them.
 
 " Set bash as shell, because fish is not compatible to vim-plug
-set shell=/usr/bin/bash
+"set shell=/usr/bin/bash
 
 " Activate plugin Manager vim-plug
 call plug#begin('~/.vim/plugged')
@@ -67,6 +67,9 @@ Plug 'rust-lang/rust.vim'
 
 " CtrlP for fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
+
+" Git gutter
+Plug 'airblade/vim-gitgutter'
 
 " YouCompleteMe
 function! BuildYCM(info)
@@ -94,15 +97,17 @@ if has('nvim')
     let g:airline_powerline_fonts=1
     let g:airline#extensions#tabline#enabled = 1
     let g:airline#extensions#tabline#show_tabs = 0
+    let g:airline#extensions#tabline#buffers_label = 'Buffers'
 endif
 
 " Finally add plugins to &runtimepath
 call plug#end()
 
 " Settings for syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" this is handled by vim-airline
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
@@ -475,6 +480,10 @@ if has('nvim')
     tnoremap <C-j> <C-\><C-n><C-w>j
     tnoremap <C-k> <C-\><C-n><C-w>k
     tnoremap <C-l> <C-\><C-n><C-w>l
+    " ShaDa
+    set shada='1000,f1,<500,:100,/100,h,%
+    " Turn off list mode in terminal
+    autocmd TermOpen * setlocal nolist
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
