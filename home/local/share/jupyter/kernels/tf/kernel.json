@@ -1,0 +1,5 @@
+{
+    "argv": ["/home/aetf/.local/venvs/tf/bin/python", "-m", "ipykernel", "--profile", "notebook", "-f", "{connection_file}"],
+    "display_name": "Python 3 (venv: tf)",
+    "language": "python"
+}
