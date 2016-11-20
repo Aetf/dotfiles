@@ -201,22 +201,22 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
+LastDocument[$e]=$HOME/develop/latex/EECS551HW9/homework.solution.tex
 SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
-DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
+DocsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW9/homework.solution.tex
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
 NoDOOS=1
 NoPOOS=1
-ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW8/eecs551hw8.kilepr
+ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW9/eecs551hw9.kilepr
 
 [Geometries]
 MainwindowHeight=769
 MainwindowWidth=1280
 horizontalSplitterLeft=28
-horizontalSplitterRight=549
+horizontalSplitterRight=640
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -252,7 +252,7 @@ livePreviewCompileOnlyAfterSaving=true
 
 [MainWindow]
 Height 800=700
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHp/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADdP////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAA=
 ToolBarsMovable=Disabled
 Width 1280=1180
 Window-Maximized 800x1280=true
@@ -274,10 +274,10 @@ width=458
 
 [Projects]
 File1[$e]=$HOME/develop/latex/cv/resume/resume.tex
-File2[$e]=$HOME/develop/latex/EECS551HW8/eecs551hw8.kilepr
+File2[$e]=$HOME/develop/latex/EECS551HW9/eecs551hw9.kilepr
 File3[$d]
 Name1[$e]=resume.tex
-Name2[$e]=eecs551hw8.kilepr
+Name2[$e]=eecs551hw9.kilepr
 Name3[$d]
 
 [QuickPreview]
@@ -289,7 +289,7 @@ previewTask=XeLaTeX ---> PDF (Okular)
 File1[$e]=$HOME/develop/latex/xjtuthesis/solutions/master.tex
 File2[$e]=/usr/share/texmf-dist/tex/latex/minted/minted.sty
 File3[$e]=$HOME/develop/latex/cv/resume/resume.tex
-File4[$e]=$HOME/develop/latex/EECS551HW8/homework.solution.tex
+File4[$e]=$HOME/develop/latex/EECS551HW9/homework.solution.tex
 File5[$d]
 Name1[$e]=master.tex
 Name2[$e]=minted.sty
@@ -302,7 +302,7 @@ ScriptNameColumnWidth=100
 
 [Session Settings]
 Documents=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex
-Saved Documents=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
+Saved Documents=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_plain.tex
 
 [Show]
 BottomBarSize=120
