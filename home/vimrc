@@ -56,6 +56,9 @@ call plug#begin('~/.vim/plugged')
 " vim colorscheme with neovim in mind
 Plug 'freeo/vim-kalisi'
 
+" Transparent background
+Plug 'miyakogi/seiya.vim'
+
 " syntax checking using external checkers
 Plug 'scrooloose/syntastic'
 
@@ -139,6 +142,9 @@ let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 
+" Settings for Seiya.vim
+let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
+let g:seiya_auto_enable=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
