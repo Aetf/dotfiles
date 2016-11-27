@@ -31,10 +31,11 @@
 	cmd = extMerge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
 [mergetool]
 	trustExitCode = false
-[diff]
-#    external = extDiff
+[difftool]
+	prompt = false
 [diff]
 	submodule = log
+	tool = vimdiff
 [http]
 	proxy =
 [https]
