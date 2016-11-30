@@ -36,7 +36,11 @@ function venv --description 'Python virtualenv wrapper for fish. Start virtualen
         end
 
         #fish -c ". $venv_path/bin/activate.fish; exec fish"
-        # hacky workaround for virtualenv nonsense cleanup
-        env _OLD_VIRTUAL_PATH= _OLD_VIRTUAL_PYTHONHOME= _OLD_FISH_PROMPT_OVERRIDE= fish -c ". $venv_path/bin/activate.fish; exec fish"
+        # hacky workaround for virtualenv nonsense cleanup, and disable crazy prompt rewrite
+        env _OLD_VIRTUAL_PATH= \
+            _OLD_VIRTUAL_PYTHONHOME= \
+            _OLD_FISH_PROMPT_OVERRIDE= \
+            VIRTUAL_ENV_DISABLE_PROMPT=1 \
+            fish -c ". $venv_path/bin/activate.fish; exec fish"
     end
 end
