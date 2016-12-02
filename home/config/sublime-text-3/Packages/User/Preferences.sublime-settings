@@ -61,6 +61,7 @@
 	"show_full_path": false,
 	"show_line_endings": true,
 	"spacegray_color_expanded_folder": true,
+	"spacegray_fileicons": true,
 	"spacegray_sidebar_font_large": true,
 	"spacegray_sidebar_tree_large": true,
 	"spacegray_tabs_font_large": true,
