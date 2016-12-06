@@ -39,6 +39,8 @@ Host ccgpu
     HostName 129.114.108.89
     ForwardX11 no
     ForwardX11Trusted no
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
     RequestTTY force
     LocalForward 9999 localhost:8888
     Compression yes
@@ -50,12 +52,16 @@ Host ccgpu-trans
     HostName 129.114.108.89
     ForwardX11 no
     ForwardX11Trusted no
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
     Compression yes
 Host cc
     User cc
     HostName 129.114.108.86
     ForwardX11 no
     ForwardX11Trusted no
+    UserKnownHostsFile /dev/null
+    StrictHostKeyChecking no
     RequestTTY force
     Compression yes
     ControlMaster auto
