@@ -38,7 +38,7 @@
 		},
 
 		"time": {
-			"before": "⌚ "
+			"before": ""
 		},
 
 		"powerline.segments.common.net.network_load": {
@@ -53,13 +53,13 @@
 		"powerline.segments.common.bat.battery": {
 			"args": {
 				"full_heart": "♥",
-				"empty_heart": "♥",
-				"online": "⚡︎",
+				"empty_heart": "♡",
+				"online": "🔌",
 				"offline": " "
 			}
 		},
 		"powerline.segments.common.sys.uptime": {
-			"before": "⇑  "
+			"before": "☯ "
 		},
 		"powerline.segments.common.mail.email_imap_alert": {
 			"before": "✉ "
