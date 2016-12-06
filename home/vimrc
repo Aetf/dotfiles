@@ -338,8 +338,8 @@ map <leader>bd :Bclose<cr>
 map <leader>ba :bufdo bd<cr>
 
 " Move between buffers
-map <M-h> :bnext<cr>
-map <M-l> :bprevious<cr>
+map <M-h> :bprevious<cr>
+map <M-l> :bnext<cr>
 
 " Opens a new buffer with the current buffer's path
 " Super useful when editing files in the same directory
