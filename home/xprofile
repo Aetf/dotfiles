@@ -22,7 +22,7 @@ export NASMENV="-i /home/aetf/Develop/ASM/inc"
 export NASM=$NASMENV
 
 # Predefined variables to Java runtime
-export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+export _JAVA_OPTIONS="swing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 
 # Ccache directory
 export CCACHE_DIR=/opt/.ccache
@@ -46,7 +46,13 @@ if [ -d $INSTALLDIR ]; then
     done
 fi
 ## Node.js executable
-PATH="$PATH:$HOME/.node_modules/bin"
+if [ -d $HOME/.node_modules/bin ]; then
+    PATH="$PATH:$HOME/.node_modules/bin"
+fi
+## ruby gem executable
+for p in ~/.gem/ruby/*/bin; do
+    PATH="$PATH:$p"
+done
 ## Local bin directory
 PATH="$PATH:$HOME/.local/bin"
 
