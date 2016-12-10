@@ -42,7 +42,7 @@ Host ccgpu
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
     RequestTTY force
-    LocalForward 9999 localhost:8888
+    LocalForward 6007 localhost:6006
     Compression yes
     ControlMaster auto
     ControlPath ~/.ssh/%r@%h:%p
@@ -62,6 +62,8 @@ Host cc
     ForwardX11Trusted no
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
+    LocalForward 6006 localhost:6006
+    LocalForward 9999 localhost:8888
     RequestTTY force
     Compression yes
     ControlMaster auto
