@@ -244,6 +244,27 @@ set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
+" kalisi doesn't provide the terminal color palette for neovim
+if has('nvim')
+    " Soft black palette from Konsole
+    let g:terminal_color_0  = '#3f3f3f'
+    let g:terminal_color_1  = '#705050'
+    let g:terminal_color_2  = '#60b48a'
+    let g:terminal_color_3  = '#dfaf8f'
+    let g:terminal_color_4  = '#9ab8d7'
+    let g:terminal_color_5  = '#dc8cc3'
+    let g:terminal_color_6  = '#8cd0d3'
+    let g:terminal_color_7  = '#dcdccc'
+    let g:terminal_color_8  = '#709080'
+    let g:terminal_color_9  = '#dca3a3'
+    let g:terminal_color_10 = '#72d5a3'
+    let g:terminal_color_11 = '#f0dfaf'
+    let g:terminal_color_12 = '#94bff3'
+    let g:terminal_color_13 = '#ec93d3'
+    let g:terminal_color_14 = '#93e0e3'
+    let g:terminal_color_15 = '#ffffff'
+endif
+
 " Change cursor shape
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_SR = "\<Esc>]50;CursorShape=2\x7"
@@ -253,7 +274,6 @@ let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
 if has("gui_running")
     set guioptions-=T
     set guioptions+=e
-    set t_Co=256
     set guitablabel=%M\ %t
 endif
 
