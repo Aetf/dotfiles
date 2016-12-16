@@ -38,5 +38,5 @@ view-full-screen=Ctrl+Shift+F11
 
 [Window]
 DynamicTabTitles=true
-Height=52
+Height=53
 KeepOpen=false
