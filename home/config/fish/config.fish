@@ -29,7 +29,7 @@ if test "$DISPLAY"x = "x";
     set -x NASMENV "-i /home/aetf/Develop/ASM/inc"
     set -x NASM $NASMENV
     ## Predefined variables to Java runtime
-    set -x _JAVA_OPTIONS "swing.crossplatformlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dswing.defaultlaf=com.sun.java.swing.plaf.gtk.GTKLookAndFeel -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+    set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
     ## Ccache directory
     set -x CCACHE_DIR /opt/.ccache
     set -x CCACHE_COMPRESS
@@ -78,7 +78,7 @@ end
 
 ## More colorful
 switch $TERM
-    case 'xterm' 'konsole'
+    case 'xterm-256color' 'konsole'
         set TERM konsole
         # explicitly enable 256color and 24bit color in fish
         set fish_term256 1
