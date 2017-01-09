@@ -112,7 +112,7 @@ if has('nvim')
     let g:airline#extensions#tabline#buffers_label = 'Buffers'
 endif
 
-" Finally add plugins to &runtimepath
+" Initialize plugin system
 call plug#end()
 
 " Settings for syntastic
