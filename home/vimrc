@@ -524,6 +524,8 @@ if has('nvim')
     set shada='1000,f1,<500,:100,/100,h,%
     " Turn off list mode in terminal
     autocmd TermOpen * setlocal nolist
+    " Live command preview
+    set inccommand=split
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
