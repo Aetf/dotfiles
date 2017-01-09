@@ -144,7 +144,7 @@ let g:ctrlp_working_path_mode = 'ra'
 
 " Settings for Seiya.vim
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
-let g:seiya_auto_enable=1
+let g:seiya_auto_enable=1 " this is disabled in ginit.vim for neovim-qt, which doesn't have transparent bg
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
