@@ -74,6 +74,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 " Git gutter
 Plug 'airblade/vim-gitgutter'
 
+" Highlight yank region
+Plug 'machakann/vim-highlightedyank'
+
 if !has('nvim')
     " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
     " natively supported in neovim
@@ -146,6 +149,11 @@ let g:ctrlp_working_path_mode = 'ra'
 let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
 let g:seiya_auto_enable=1 " this is disabled in ginit.vim for neovim-qt, which doesn't have transparent bg
 
+" Settings for vim-highlightedyank
+if !has('nvim')
+    " Trigger highlight event if not Neovim
+    map y <Plug>(highlightedyank)
+endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
