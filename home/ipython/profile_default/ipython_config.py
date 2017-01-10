@@ -1,6 +1,13 @@
 # Configuration file for ipython.
 
 #------------------------------------------------------------------------------
+# Detect various libraries
+#------------------------------------------------------------------------------
+import pkgutil
+hasMatplotlib = pkgutil.find_loader('matplotlib') is not None
+hasPowerline = pkgutil.find_loader('powerline') is not None
+
+#------------------------------------------------------------------------------
 # Configurable configuration
 #------------------------------------------------------------------------------
 
@@ -36,9 +43,8 @@
 # c.InteractiveShellApp.exec_lines = []
 
 # A list of dotted module names of IPython extensions to load.
-c.InteractiveShellApp.extensions = [
-        'powerline.bindings.ipython.post_0_11'
-]
+if hasPowerline:
+    c.InteractiveShellApp.extensions.append('powerline.bindings.ipython.post_0_11')
 
 # dotted module name of an IPython extension to load.
 # c.InteractiveShellApp.extra_extension = ''
@@ -55,7 +61,8 @@ c.InteractiveShellApp.extensions = [
 # c.InteractiveShellApp.hide_initial_ns = True
 
 # Configure matplotlib for interactive use with the default matplotlib backend.
-# c.InteractiveShellApp.matplotlib = None
+if hasMatplotlib:
+    c.InteractiveShellApp.matplotlib = 'auto'
 
 # Run the module as a script.
 # c.InteractiveShellApp.module_to_run = ''
