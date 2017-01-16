@@ -235,7 +235,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/EECS551HW10/eecs551hw10.kilepr
 MainwindowHeight=769
 MainwindowWidth=1280
 horizontalSplitterLeft=28
-horizontalSplitterRight=598
+horizontalSplitterRight=597
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -271,7 +271,7 @@ livePreviewCompileOnlyAfterSaving=true
 
 [MainWindow]
 Height 800=700
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAA=
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHp/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADdP////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1280=1180
 Window-Maximized 800x1280=true
@@ -697,7 +697,7 @@ to=pdf
 type=Process
 
 [Tool/LivePreview-PDFLaTeX/Default]
-autoRun=false
+autoRun=true
 checkForRoot=no
 class=LaTeXLivePreview
 command=xelatex
@@ -1443,7 +1443,7 @@ DefaultProjectLocation=/home/aetf/develop/latex
 DocumentClassOptions=letter,10pt
 
 [VersionInfo]
-RCVersion=7
+RCVersion=8
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex]
 CursorColumn=0
