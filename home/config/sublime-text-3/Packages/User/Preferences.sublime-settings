@@ -28,6 +28,7 @@
 	"ignored_packages":
 	[
 		"CSS",
+		"Git",
 		"Makefile",
 		"Markdown",
 		"Vintage"
