@@ -1,0 +1,18 @@
+#! /usr/bin/bash
+
+USERNAME='qi437103'
+PASSWORD='JWlRaM0FQ6xaxbfX'
+
+TUNNEL_ID='384391'
+REMOTE_IPv4='184.105.253.14'
+REMOTE_IPv6='2001:470:1f10:eb2::1/64'
+CLIENT_IPv4=''
+CLIENT_IPv6='2001:470:1f10:eb2::2/64'
+
+ENDPOINT_URL="https://ipv4.tunnelbroker.net/nic/update?username=$USERNAME&password=$PASSWORD&hostname=$TUNNEL_ID"
+
+#wget "https://ipv4.tunnelbroker.net/nic/update?username=$USERNAME&password=$PASSWORD&hostname=$TUNNEL_ID"
+response=$(wget -q "$ENDPOINT_URL" -O - | cut -d ' ' -f 2)
+
+echo "he-updateip: Local IP updated to $response"
+
