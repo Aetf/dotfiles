@@ -1,0 +1,8 @@
+#! /bin/sh
+UNQUIRED_FILE=`mktemp`
+EXPLICIT_FILE=`mktemp`
+pacman -Qtt | sed -r 's/([^0-9]*) .*/\1/g' | sort > $UNQUIRED_FILE
+pacman -Qe | sed -r 's/([^0-9]*) .*/\1/g' | sort > $EXPLICIT_FILE
+
+comm -23 $UNQUIRED_FILE $EXPLICIT_FILE
+rm $UNQUIRED_FILE $EXPLICIT_FILE
