@@ -73,6 +73,8 @@ CommandWindow3=Activate and pass click
 CommandWindowWheel=Scroll
 
 [Plugins]
+blurEnabled=false
+contrastEnabled=false
 coverswitchEnabled=true
 cubeEnabled=true
 cubeslideEnabled=false
@@ -99,6 +101,8 @@ ActivitiesMode=1
 ApplicationsMode=1
 BorderActivate=9
 BorderAlternativeActivate=9
+DesktopLayout=org.kde.breeze.desktop
+DesktopListLayout=org.kde.breeze.desktop
 DesktopMode=1
 HighlightWindows=true
 LayoutName=org.kde.breeze.desktop
@@ -160,3 +164,4 @@ ButtonsOnLeft=XIAM
 ButtonsOnRight=F
 CloseOnDoubleClickOnMenu=false
 library=org.kde.breeze
+theme=

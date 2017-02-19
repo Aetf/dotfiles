@@ -1,0 +1,115 @@
+[Containments][1][General]
+AppletOrder=51
+
+[Containments][24][General]
+extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.ktp-contactlist,audoban.applet.playbar
+hiddenItems=sogou-qimpanel
+knownItems=org.kde.ktp-contactlist,org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
+shownItems=Konversation
+
+[Containments][52][General]
+appletOrder=53;54
+iconSize=96
+panelSize=114
+panelVisibility=AlwaysVisible
+useThemePanel=true
+
+[Containments][58][Applets][59][Configuration][General]
+isInNowDockPanel=true
+launchers=multi
+
+[Containments][58][Applets][75][Configuration][General]
+length=164
+
+[Containments][58][General]
+iconSize=96
+panelSize=26
+panelVisibility=AlwaysVisible
+useThemePanel=true
+zoomLevel=15
+
+[Containments][76][General]
+AppletOrder=77;92;80;91
+
+[Containments][81][General]
+extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
+hiddenItems=sogou-qimpanel
+knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
+
+[InteractiveConsole]
+Geometry=\x01ÙÐË\x00\x02\x00\x00\x00\x00\x02º\x00\x00\x01ï\x00\x00\x07E\x00\x00\x04O\x00\x00\x02º\x00\x00\x02,\x00\x00\x07E\x00\x00\x04J\x00\x00\x00\x00\x00\x00\x00\x00\n\x00
+SplitterState=\x00\x00\x00ÿ\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x08p\x00\x00\x013\x01ÿÿÿÿ\x01\x00\x00\x00\x02\x00
+
+[PlasmaRunnerManager]
+LaunchCounts=1 services_org.kde.Help.desktop,1 services_kde4-konqbrowser.desktop,2 shell_krunner
+pluginWhiteList=services,calculator,shell,baloosearch,locations,unitconverter,org.kde.datetime
+
+[PlasmaViews][Panel 1]
+panelVisibility=1
+
+[PlasmaViews][Panel 1][Horizontal1920]
+length=479
+panelVisibility=1
+thickness=30
+
+[PlasmaViews][Panel 1][Horizontal2560]
+length=804
+maxLength=2560
+minLength=2560
+panelVisibility=1
+thickness=50
+
+[PlasmaViews][Panel 1][Horizontal640]
+length=637
+panelVisibility=0
+thickness=30
+
+[PlasmaViews][Panel 107]
+alignment=132
+panelVisibility=1
+
+[PlasmaViews][Panel 107][Horizontal2560]
+maxLength=1032
+minLength=1032
+thickness=130
+
+[PlasmaViews][Panel 107][Vertical1600]
+thickness=64
+
+[PlasmaViews][Panel 52]
+panelVisibility=2
+
+[PlasmaViews][Panel 52][Horizontal2560]
+panelVisibility=2
+thickness=60
+
+[PlasmaViews][Panel 58]
+alignment=132
+panelVisibility=1
+
+[PlasmaViews][Panel 58][Horizontal2560]
+panelVisibility=2
+thickness=148
+
+[PlasmaViews][Panel 76]
+panelVisibility=1
+
+[PlasmaViews][Panel 76][Horizontal2560]
+thickness=64
+
+[PlasmaViews][Panel 93]
+alignment=2
+panelVisibility=1
+
+[PlasmaViews][Panel 93][Horizontal2560]
+maxLength=875
+minLength=580
+thickness=50
+
+[ScreenConnectors]
+0=eDP-1
+1=VX2452 Serie/TVT154601933
+2=HDMI-2
+
+[Updates]
+performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js
