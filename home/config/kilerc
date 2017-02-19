@@ -112,6 +112,13 @@ kile_livePreviewEnabled=true
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl]
+Bookmarks=
+Highlighting=None
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=Normal
+
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
 Bookmarks=
 Highlighting=LaTeX
@@ -278,12 +285,12 @@ lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
 DocsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.tex
-DocsOpenOnStart1[$e]=$HOME/develop/latex/hotos17/hotos17.bib
+DocsOpenOnStart1[$d]
 DocsOpenOnStart2[$d]
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
-EncodingsOfDocsOpenOnStart1[$e]=UTF-8
+EncodingsOfDocsOpenOnStart1[$d]
 EncodingsOfDocsOpenOnStart2[$d]
-NoDOOS=2
+NoDOOS=1
 NoPOOS=1
 ProjectsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 
@@ -291,7 +298,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 MainwindowHeight=769
 MainwindowWidth=1280
 horizontalSplitterLeft=28
-horizontalSplitterRight=662
+horizontalSplitterRight=684
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -349,6 +356,7 @@ width=458
 
 [Notification Messages]
 Find in Files...Normal Fraction - \rac{}{}Alt+Shift+F=false
+Find in Files...Normal Fraction - \\rac{}{}Alt+Shift+F=false
 
 [Projects]
 File1[$e]=$HOME/develop/latex/cv/resume/resume.tex
@@ -372,8 +380,8 @@ File4[$e]=$HOME/develop/latex/cv/cv/cv.tex
 File5[$e]=$HOME/develop/latex/EECS551HW10/homework.solution.tex
 File6[$e]=/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty
 File7[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
-File8[$e]=$HOME/develop/latex/hotos17/hotos17.tex
-File9[$e]=$HOME/develop/latex/hotos17/hotos17.bib
+File8[$e]=$HOME/develop/latex/hotos17/hotos17.bib
+File9[$e]=$HOME/develop/latex/hotos17/hotos17.tex
 Name1[$e]=master.tex
 Name10[$d]
 Name2[$e]=minted.sty
@@ -382,17 +390,18 @@ Name4[$e]=cv.tex
 Name5[$e]=homework.solution.tex
 Name6[$e]=subfigure.sty
 Name7[$e]=hotos17.kilepr
-Name8[$e]=hotos17.tex
-Name9[$e]=hotos17.bib
+Name8[$e]=hotos17.bib
+Name9[$e]=hotos17.tex
 
 [Scripting]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty
-Saved Documents=file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test.tex
+Documents=file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl
+Saved Documents=file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_index.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex,file://:@/tmp/kile-zSGozZ/test_bib.tex
 
 [Show]
+BottomBarIndex=0
 BottomBarSize=120
 SelectedLeftView=-1
 SideBarSize=128
@@ -1682,6 +1691,13 @@ ViMarks=.,116,59,<,131,0,>,131,0,[,116,59,],116,96,^,116,97
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex]
 CursorColumn=0
 CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl]
+CursorColumn=0
+CursorLine=72
 JumpList=
 TextFolding=[]
 ViMarks=
