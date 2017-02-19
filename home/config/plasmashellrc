@@ -1,6 +1,9 @@
 [Containments][1][General]
 AppletOrder=51
 
+[Containments][107][General]
+AppletOrder=110;127
+
 [Containments][24][General]
 extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.ktp-contactlist,audoban.applet.playbar
 hiddenItems=sogou-qimpanel
@@ -66,7 +69,7 @@ thickness=30
 
 [PlasmaViews][Panel 107]
 alignment=132
-panelVisibility=1
+panelVisibility=3
 
 [PlasmaViews][Panel 107][Horizontal2560]
 maxLength=1032
