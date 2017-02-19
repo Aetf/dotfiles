@@ -33,86 +33,6 @@ MidButton;NoModifier=org.kde.paste
 RightButton;NoModifier=org.kde.contextmenu
 wheel:Vertical;NoModifier=org.kde.switchdesktop
 
-[Containments][124]
-activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.image
-
-[Containments][124][ConfigDialog]
-DialogHeight=960
-DialogWidth=1280
-
-[Containments][124][General]
-pressToMove=false
-pressToMoveHelp=false
-showToolbox=false
-
-[Containments][124][Wallpaper][General]
-Color=60,184,197
-Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
-SlideInterval=900
-SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
-
-[Containments][124][Wallpaper][org.kde.image][General]
-Color=60,184,197
-Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
-SlideInterval=900
-SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
-height=1600
-width=2560
-
-[Containments][124][Wallpaper][org.kde.slideshow][General]
-Color=60,184,197
-Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
-SlideInterval=900
-SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
-height=1600
-width=2560
-
-[Containments][125]
-activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][125][ConfigDialog]
-DialogHeight=960
-DialogWidth=1280
-
-[Containments][125][General]
-pressToMove=false
-pressToMoveHelp=false
-showToolbox=false
-
-[Containments][125][Wallpaper][General]
-Color=invalid
-FillMode=2
-SlideInterval=1
-SlidePaths=\\0
-
-[Containments][125][Wallpaper][org.kde.image][General]
-Color=60,184,197
-Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
-SlideInterval=900
-SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
-height=1600
-width=2560
-
-[Containments][125][Wallpaper][org.kde.slideshow][General]
-Color=invalid
-FillMode=2
-SlideInterval=1
-SlidePaths=\\0
-height=1600
-width=2560
-
 [Containments][126]
 activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
 formfactor=0
@@ -120,7 +40,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.image
+wallpaperplugin=org.kde.slideshow
 
 [Containments][126][ConfigDialog]
 DialogHeight=960
@@ -137,10 +57,10 @@ sortMode=-1
 toolTips=true
 
 [Containments][126][Wallpaper][General]
-Color=invalid
-FillMode=2
-SlideInterval=1
-SlidePaths=\\0
+Color=60,184,197
+Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
+SlideInterval=900
+SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
 
 [Containments][126][Wallpaper][org.kde.image][General]
 Color=60,184,197
@@ -151,10 +71,10 @@ height=1600
 width=2560
 
 [Containments][126][Wallpaper][org.kde.slideshow][General]
-Color=invalid
-FillMode=2
-SlideInterval=1
-SlidePaths=\\0
+Color=60,184,197
+Image=file:///usr/share/wallpapers/BytheWater/contents/images/2560x1600.jpg
+SlideInterval=900
+SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
 height=1600
 width=2560
 
@@ -270,7 +190,7 @@ plugin=org.kde.plasma.systemtray
 SystrayContainmentId=96
 
 [Containments][93][ConfigDialog]
-DialogHeight=143
+DialogHeight=137
 DialogWidth=2560
 
 [Containments][93][General]
@@ -329,4 +249,4 @@ iconSize=64
 launchers=multi
 
 [General]
-immutability=1
+immutability=2
