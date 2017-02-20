@@ -225,6 +225,10 @@ plugin=org.kde.plasma.networkmanagement
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][96][Applets][127]
+immutability=1
+plugin=org.kde.plasma.mediacontroller
+
 [Containments][96][Applets][97]
 immutability=1
 plugin=org.kde.plasma.clipboard

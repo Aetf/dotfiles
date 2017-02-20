@@ -40,8 +40,12 @@ hiddenItems=sogou-qimpanel
 knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
 
 [InteractiveConsole]
-Geometry=\x01ÙÐË\x00\x02\x00\x00\x00\x00\x02º\x00\x00\x01ï\x00\x00\x07E\x00\x00\x04O\x00\x00\x02º\x00\x00\x02,\x00\x00\x07E\x00\x00\x04J\x00\x00\x00\x00\x00\x00\x00\x00\n\x00
+Geometry=\x01ÙÐË\x00\x02\x00\x00\x00\x00\x016\x00\x00\x01\x00\x00\x00\tµ\x00\x00\x05³\x00\x00\x016\x00\x00\x01=\x00\x00\tµ\x00\x00\x05®\x00\x00\x00\x00\x00\x00\x00\x00\n\x00
 SplitterState=\x00\x00\x00ÿ\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x08p\x00\x00\x013\x01ÿÿÿÿ\x01\x00\x00\x00\x02\x00
+
+[KFileDialog Settings]
+Recent Files[$e]=file:$HOME/develop/vcs/kwin-maxmize-to-new-desktop/code/main.js,file:$HOME/develop/vcs/kwin-maxmize-to-new-desktop/code/main.js
+Recent URLs[$e]=file:$HOME/develop/vcs/kwin-maxmize-to-new-desktop/code/
 
 [PlasmaRunnerManager]
 LaunchCounts=1 services_org.kde.Help.desktop,1 services_kde4-konqbrowser.desktop,2 shell_krunner
