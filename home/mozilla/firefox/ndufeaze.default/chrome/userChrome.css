@@ -1,0 +1,86 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+#TabsToolbar{
+  background: #eff0f1 !important;
+}
+#tabbrowser-tabs {
+  background: #eff0f1 !important;
+}
+#hcp-mmc-buttons-item {
+  display: flex;
+  justify-content: stretch;
+  flex-direction: row;
+}
+#hcp-controls-paletteitem {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+}
+
+.hNew_mmcbuttons:not(:hover) > .toolbarbutton-icon:-moz-window-inactive {
+  opacity: 1 !important;
+}
+.hNew_mmcbuttons {
+  padding-left: 7px !important;
+  padding-right: 7px !important;
+  margin-left: 7px !important;
+}
+
+#hctp_close_but {
+  order: 1;
+  list-style-image: none !important;
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: inherit !important;
+  background-image: url("titlebuttons/titlebutton-close-backdrop@2.png");
+}
+#hctp_close_but:hover {
+  background-image: url("titlebuttons/titlebutton-close-hover-backdrop@2.png");
+}
+#hctp_close_but:active {
+  background-image: url("titlebuttons/titlebutton-close-active-backdrop@2.png");
+}
+
+#hctp_minimize_but {
+  order: 2;
+  list-style-image: none !important;
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: inherit !important;
+  background-image: url("titlebuttons/titlebutton-minimize-backdrop@2.png");
+}
+#hctp_minimize_but:active {
+  background-image: url("titlebuttons/titlebutton-minimize-active-backdrop@2.png");
+}
+#hctp_minimize_but:hover {
+  background-image: url("titlebuttons/titlebutton-minimize-hover-backdrop@2.png");
+}
+
+#hctp_restore_but {
+  order: 3;
+  list-style-image: none !important;
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: inherit !important;
+  background-image: url("titlebuttons/titlebutton-maximize-backdrop@2.png");
+}
+#hctp_restore_but:active {
+  background-image: url("titlebuttons/titlebutton-maximize-active-backdrop@2.png");
+}
+#hctp_restore_but:hover {
+  background-image: url("titlebuttons/titlebutton-maximize-hover-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:hover {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-hover-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:active {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-active-backdrop@2.png");
+}
