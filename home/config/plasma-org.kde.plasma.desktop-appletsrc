@@ -227,7 +227,11 @@ plugin=org.kde.plasma.bluetooth
 
 [Containments][96][Applets][127]
 immutability=1
-plugin=org.kde.plasma.mediacontroller
+plugin=org.kde.discovernotifier
+
+[Containments][96][Applets][127][Configuration][ConfigDialog]
+DialogHeight=960
+DialogWidth=1280
 
 [Containments][96][Applets][97]
 immutability=1
@@ -242,8 +246,8 @@ immutability=1
 plugin=org.kde.plasma.devicenotifier
 
 [Containments][96][General]
-extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
-knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
+extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier
+knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier
 
 [Containments107Appletsts][112][Configuration][General]
 launchers=multi
