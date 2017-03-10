@@ -85,8 +85,8 @@ glideEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
 kwin4_effect_scaleinEnabled=true
-magiclampEnabled=true
-minimizeanimationEnabled=false
+magiclampEnabled[$d]
+minimizeanimationEnabled[$d]
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
