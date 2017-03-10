@@ -1,10 +1,90 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
-#TabsToolbar{
-  background: #eff0f1 !important;
+
+#main-window {
+  background: #475057 !important;
+}
+#TabsToolbar {
+  background: #475057 !important;
 }
 #tabbrowser-tabs {
+  background: #475057 !important;
+}
+#nav-bar {
+  background: #475057;
+}
+
+#main-window:-moz-window-inactive {
   background: #eff0f1 !important;
 }
+#browser-panel:-moz-window-inactive {
+  background: #eff0f1 !important;
+}
+#TabsToolbar:-moz-window-inactive {
+  background: #eff0f1 !important;
+}
+#tabbrowser-tabs:-moz-window-inactive {
+  background: #eff0f1 !important;
+}
+#tabbrowser-tabs:-moz-window-inactive box {
+  color: black;
+}
+.tabbrowser-tab:not([visuallyselected]):-moz-window-inactive .tab-close-button {
+  filter: brightness(50%);
+}
+.tabbrowser-tab:not([visuallyselected]):-moz-window-inactive .tab-close-button:hover {
+  filter: brightness(100%);
+}
+#tabbrowser-tabs:-moz-window-inactive .tabs-newtab-button:hover {
+  background-color: #d7d8da !important;
+}
+.tabbrowser-tab:not([visuallyselected]):-moz-window-inactive:hover {
+  background-color: #d7d8da !important;
+}
+#nav-bar:-moz-window-inactive {
+  background-color: #eff0f1;
+}
+:-moz-any(#TabsToolbar, #nav-bar):-moz-window-inactive .toolbarbutton-1:hover:not([disabled="true"]) > .toolbarbutton-badge-stack {
+  background: #eaeaea !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+:-moz-any(#TabsToolbar, #nav-bar):-moz-window-inactive .toolbarbutton-1:hover:not([disabled="true"]) > .toolbarbutton-icon {
+  background: #eaeaea !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+:-moz-any(#TabsToolbar, #nav-bar):-moz-window-inactive .toolbarbutton-1:hover:not([disabled="true"]):not([open]) > .toolbarbutton-menubutton-button > .toolbarbutton-icon {
+  background: #eaeaea !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+:-moz-any(#TabsToolbar, #nav-bar):-moz-window-inactive .toolbarbutton-1:hover:not([disabled="true"]):not([open]) > .toolbarbutton-menubutton-dropmarker > .dropmarker-icon {
+  background: #eaeaea !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+#urlbar:-moz-window-inactive {
+  background-color: #ffffff !important;
+  color: rgb(24, 25, 26) !important;
+}
+#urlbar:-moz-window-inactive *::-moz-selection, #navigator-toolbox .searchbar-textbox *::-moz-selection, .browserContainer > findbar *::-moz-selection {
+  background-color: #ffffff !important;
+  color: rgb(24, 25, 26) !important;
+}
+#identity-icon:-moz-window-inactive {
+  list-style-image: url(chrome://browser/skin/identity-icon.svg#normal) !important;
+}
+
+/* -- Firefox Icon -- */
+#hctp_fx_app_button_item {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-content: center;
+}
+.hctp-appmenu-button-cls {
+  border: none !important;
+}
+
+/* -- Window control buttons (Breeze style) -- */
+
 #hcp-mmc-buttons-item {
   display: flex;
   justify-content: stretch;
@@ -14,17 +94,19 @@
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-}
-
-.hNew_mmcbuttons:not(:hover) > .toolbarbutton-icon:-moz-window-inactive {
   opacity: 1 !important;
 }
-.hNew_mmcbuttons {
-  padding-left: 7px !important;
-  padding-right: 7px !important;
-  margin-left: 7px !important;
+
+#main-window #hcp-controls-paletteitem .hNew_mmcbuttons {
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  margin-left: 8px !important;
+}
+#main-window #hcp-controls-paletteitem .hNew_mmcbuttons:not(:hover) {
+  opacity: 1 !important;
 }
 
+/* --- Close button --- */
 #hctp_close_but {
   order: 1;
   list-style-image: none !important;
@@ -33,54 +115,104 @@
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
-  background-image: url("titlebuttons/titlebutton-close-backdrop@2.png");
+  background-image: url("titlebuttons/titlebutton-close@2.png");
 }
 #hctp_close_but:hover {
+  background-image: url("titlebuttons/titlebutton-close-hover@2.png");
+  filter: brightness(1.4) hue-rotate(15deg);
+}
+#hctp_close_but:active,#hctp_close_but:active:hover {
+  background-image: url("titlebuttons/titlebutton-close-active@2.png");
+}
+/* ---- Close button (inactive) ---- */
+#hctp_close_but:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-close-backdrop@2.png");
+}
+#hctp_close_but:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-close-hover-backdrop@2.png");
 }
-#hctp_close_but:active {
+#hctp_close_but:active:-moz-window-inactive,#hctp_close_but:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-close-active-backdrop@2.png");
 }
 
+/* --- Minimize button --- */
 #hctp_minimize_but {
   order: 2;
   list-style-image: none !important;
-  
+
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
-  background-image: url("titlebuttons/titlebutton-minimize-backdrop@2.png");
-}
-#hctp_minimize_but:active {
-  background-image: url("titlebuttons/titlebutton-minimize-active-backdrop@2.png");
+  background-image: url("titlebuttons/titlebutton-minimize@2.png");
 }
 #hctp_minimize_but:hover {
+  background-image: url("titlebuttons/titlebutton-minimize-hover@2.png");
+}
+#hctp_minimize_but:active,#hctp_minimize_but:active:hover {
+  background-image: url("titlebuttons/titlebutton-minimize-active@2.png");
+}
+/* ---- Minimize button (inactive) ---- */
+#hctp_minimize_but:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-minimize-backdrop@2.png");
+}
+#hctp_minimize_but:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-minimize-hover-backdrop@2.png");
 }
+#hctp_minimize_but:active:-moz-window-inactive,#hctp_minimize_but:active:hover:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-minimize-active-backdrop@2.png");
+}
 
+/* --- Maximize button --- */
 #hctp_restore_but {
   order: 3;
   list-style-image: none !important;
-  
+
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
-  background-image: url("titlebuttons/titlebutton-maximize-backdrop@2.png");
-}
-#hctp_restore_but:active {
-  background-image: url("titlebuttons/titlebutton-maximize-active-backdrop@2.png");
+  background-image: url("titlebuttons/titlebutton-maximize@2.png");
 }
 #hctp_restore_but:hover {
+  background-image: url("titlebuttons/titlebutton-maximize-hover@2.png");
+}
+#hctp_restore_but:active,#hctp_restore_but:active:hover {
+  background-image: url("titlebuttons/titlebutton-maximize-active@2.png");
+}
+/* ---- Maximize button (inactive) ---- */
+#hctp_restore_but:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-maximize-backdrop@2.png");
+}
+#hctp_restore_but:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-hover-backdrop@2.png");
 }
+#hctp_restore_but:active:-moz-window-inactive,$hctp_restore_but:active:hover:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-maximize-active-backdrop@2.png");
+}
+/* ---- Maximize button (maximized) ---- */
 #main-window:not([sizemode="normal"]) #hctp_restore_but {
-  background-image: url("titlebuttons/titlebutton-maximize-maximized-backdrop@2.png");
+  background-image: url("titlebuttons/titlebutton-maximize-maximized@2.png");
 }
 #main-window:not([sizemode="normal"]) #hctp_restore_but:hover {
-  background-image: url("titlebuttons/titlebutton-maximize-maximized-hover-backdrop@2.png");
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-hover@2.png");
 }
 #main-window:not([sizemode="normal"]) #hctp_restore_but:active {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-active@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:active:hover {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-active@2.png");
+}
+/* ---- Maximize button (maximized, inactive) ---- */
+#main-window:not([sizemode="normal"]) #hctp_restore_but:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:hover:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-hover-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:active:-moz-window-inactive {
+  background-image: url("titlebuttons/titlebutton-maximize-maximized-active-backdrop@2.png");
+}
+#main-window:not([sizemode="normal"]) #hctp_restore_but:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-active-backdrop@2.png");
 }
