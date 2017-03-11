@@ -10,7 +10,7 @@ location=4
 plugin=org.kde.latte.containment
 timerHide=700
 timerShow=200
-visibility=4
+visibility=2
 wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][10]
