@@ -1,0 +1,15 @@
+[1]
+Description=修复 Yakuake 有时出现在任务栏中
+skipswitcher=true
+skipswitcherrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+title=Yakuake
+titlematch=0
+types=1
+wmclass=yakuake yakuake
+wmclasscomplete=true
+wmclassmatch=1
+
+[General]
+count=1
