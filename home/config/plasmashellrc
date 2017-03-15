@@ -106,7 +106,10 @@ thickness=64
 
 [PlasmaViews][Panel 93]
 alignment=2
-panelVisibility=1
+panelVisibility=2
+
+[PlasmaViews][Panel 93][Horizontal1920]
+thickness=30
 
 [PlasmaViews][Panel 93][Horizontal2560]
 maxLength=875

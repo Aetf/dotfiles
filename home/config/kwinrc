@@ -81,15 +81,20 @@ cubeslideEnabled=false
 desktopchangeosdEnabled=true
 diminactiveEnabled=true
 dimscreenEnabled=true
+enforcedecoEnabled=true
 glideEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
 kwin4_effect_scaleinEnabled=true
 magiclampEnabled[$d]
+max2NewVirtualDesktopEnabled=true
+minimizeallEnabled=false
 minimizeanimationEnabled[$d]
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
+synchronizeskipswitcherEnabled=false
+videowallEnabled=false
 windowgeometryEnabled=false
 
 [Script-desktopchangeosd]
