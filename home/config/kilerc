@@ -1,3 +1,6 @@
+[Audio Preview Settings]
+Autoplay=true
+
 [Complete]
 CompleteTex=1-latex-document,1-tex,1-etoolbox,1-amsfonts,1-amsmath,1-array,1-acronym,1-amssymb
 
@@ -308,8 +311,8 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=450
-Recent Files[$e]=file:///tmp/workspace/test.tex,file:$HOME/develop/latex/hotos17/hotos17.bib,file:$HOME/develop/latex/hotos17/hotos17.cls,file:$HOME/develop/latex/hotos17/hotos17.tex,file:$HOME/develop/latex/EECS551HW10/eecs551hw10.kilepr,file:$HOME/develop/latex/cv/cv/cv.tex,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
-Recent URLs[$e]=file:$HOME/develop/latex/cv/resume/,file:$HOME/develop/,file:$HOME/develop/latex/cv/cv/,file:$HOME/develop/latex/EECS551HW10/,file:$HOME/develop/latex/,file:$HOME/develop/latex/hotos17/
+Recent Files[$e]=file:$HOME/develop/latex/hotos17/hotos17.bib,file:$HOME/develop/latex/sosp17/pages/impl.tex,file:$HOME/develop/latex/sosp17/pages/eval.tex,file:$HOME/develop/latex/sosp17/pages/arch.tex,file:$HOME/develop/latex/sosp17/pages/motivation.tex,file:$HOME/develop/latex/sosp17/pages/intro.tex,file:$HOME/develop/latex/hotos17/hotos17.kilepr,file:$HOME/develop/latex/hotos17/hotos17.tex,file:$HOME/develop/latex/EECS551HW10/eecs551hw10.kilepr,file:$HOME/develop/latex/cv/cv/cv.tex,file:$HOME/develop/latex/xjtuthesis/solutions/master.tex
+Recent URLs[$e]=file:$HOME/develop/latex/cv/cv/,file:$HOME/develop/latex/EECS551HW10/,file:$HOME/develop/latex/,file:$HOME/develop/latex/hotos17/,file:$HOME/develop/latex/sosp17/,file:$HOME/develop/latex/sosp17/pages/
 Width 1280=720
 
 [KileConfigDialog]
@@ -318,7 +321,7 @@ Width 1280=849
 
 [KileMainWindow]
 Height 800=499
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHy/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADff////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKxAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHy/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADff////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1280=853
 Window-Maximized 800x1280=true
@@ -356,7 +359,6 @@ width=458
 
 [Notification Messages]
 Find in Files...Normal Fraction - \rac{}{}Alt+Shift+F=false
-Find in Files...Normal Fraction - \\rac{}{}Alt+Shift+F=false
 
 [Projects]
 File1[$e]=$HOME/develop/latex/cv/resume/resume.tex
