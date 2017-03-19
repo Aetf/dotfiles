@@ -92,7 +92,7 @@ Lock Session=Meta+L,Ctrl+Alt+L\tScreensaver,锁定会话
 Log Out=Ctrl+Alt+Del,none,注销
 Log Out Without Confirmation=Ctrl+Alt+Shift+Del,none,注销前不确认
 Reboot Without Confirmation=Ctrl+Alt+Shift+PgUp,none,重启前不确认
-_k_friendly_name=系统设置
+_k_friendly_name=ksmserver
 
 [kwin]
 Activate Window Demanding Attention=Alt+Shift+A,Ctrl+Alt+A,激活请求注意的窗口
