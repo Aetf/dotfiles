@@ -15,9 +15,6 @@ end
 ## Only set these if we don't have DISPLAY
 ## otherwise, these've been set in $HOME/.xprofile
 if test "$DISPLAY"x = "x";
-    ## Locale
-    set -x LANG zh_CN.UTF8
-    set -x LC_ALL zh_CN.UTF-8
     ## Install directory
     set -x INSTALLDIR "$HOME/software"
     ## Default editor
