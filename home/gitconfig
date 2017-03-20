@@ -8,7 +8,7 @@
 	ui = true
 [alias]
 	co = checkout
-	ci = commit
+	ci = commit -v
 	st = status
 	br = branch -vv
 	hist = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
