@@ -3,9 +3,6 @@ export XMODIFIERS=@im=fcitx
 export GTK_IM_MODULE=fcitx
 export QT_IM_MODULE=fcitx
 
-# Install directory
-export INSTALLDIR="$HOME/software"
-
 # Default editor
 export EDITOR=vim
 export VISUAL=$EDITOR
@@ -30,17 +27,6 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # More PATH
 ## Prepend user's bin directory to PATH
 PATH="$HOME/customizations/scripts:$PATH"
-## more in INSTALLDIR
-if [ -d $INSTALLDIR ]; then
-    for dir in $INSTALLDIR/*; do
-        if [ -d "$dir" -a `basename $dir` != "src" ]; then
-            PATH="$PATH:$dir"
-            if [ -d "$dir/bin" ]; then
-                PATH="$PATH:$dir/bin"
-            fi
-        fi
-    done
-fi
 ## Node.js executable
 if [ -d $HOME/.node_modules/bin ]; then
     PATH="$PATH:$HOME/.node_modules/bin"
