@@ -27,6 +27,8 @@ export XDG_CONFIG_HOME="$HOME/.config"
 # More PATH
 ## Prepend user's bin directory to PATH
 PATH="$HOME/customizations/scripts:$PATH"
+## Local bin directory
+PATH="$HOME/.local/bin:$PATH"
 ## Node.js executable
 if [ -d $HOME/.node_modules/bin ]; then
     PATH="$PATH:$HOME/.node_modules/bin"
@@ -35,7 +37,5 @@ fi
 for p in ~/.gem/ruby/*/bin; do
     PATH="$PATH:$p"
 done
-## Local bin directory
-PATH="$PATH:$HOME/.local/bin"
 
 export PATH

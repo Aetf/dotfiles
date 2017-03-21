@@ -37,16 +37,9 @@ if test "$DISPLAY"x = "x";
     if test -d "$HOME/customizations/scripts"
         set PATH "$HOME/customizations/scripts" $PATH
     end
-    ## more in INSTALLDIR
-    if test -d "$INSTALLDIR"
-        for dir in "$INSTALLDIR/*"
-            if test -d "$dir" -a (basename $dir) != "src"
-                set PATH "$PATH" "$dir"
-                if test -d "$dir/bin"
-                    set PATH $PATH "$dir/bin"
-                end
-            end
-        end
+    ## Local bin directory
+    if test -d "$HOME/.local/bin"
+        set PATH "$HOME/.local/bin" $PATH
     end
     ## ruby gem executable
     for p in ~/.gem/ruby/*/bin
@@ -55,10 +48,6 @@ if test "$DISPLAY"x = "x";
     ## Node.js executable
     if test -d "$HOME/.node_modules/bin"
         set PATH $PATH "$HOME/.node_modules/bin"
-    end
-    ## Local bin directory
-    if test -d "$HOME/.local/bin"
-        set PATH $PATH "$HOME/.local/bin"
     end
 end
 
