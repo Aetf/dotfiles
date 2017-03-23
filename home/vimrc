@@ -84,6 +84,12 @@ Plug 'airblade/vim-gitgutter'
 " Highlight yank region
 Plug 'machakann/vim-highlightedyank'
 
+" Anyfold for smart indent based folding
+Plug 'pseewald/vim-anyfold'
+
+" Fold cycling with one key
+Plug 'arecarn/vim-fold-cycle'
+
 if !has('nvim')
     " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
     " natively supported in neovim
@@ -136,6 +142,8 @@ let g:syntastic_check_on_wq = 1
 let g:syntastic_cpp_checkers = []
 let g:syntastic_aggregate_errors = 1
 
+let g:syntastic_cuda_nvcc_args = "-std=c++11"
+
 " Settings for vim-fish
 "     Let :make to use fish for syntax checking
 autocmd FileType fish compiler fish
@@ -161,6 +169,13 @@ if !has('nvim')
     " Trigger highlight event if not Neovim
     map y <Plug>(highlightedyank)
 endif
+
+" Settings for anyfold
+let g:anyfold_activate=1
+set foldlevel=1
+"" unfolds the line in which the curosr is located when opening a file
+autocmd User anyfoldLoaded normal zv
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
