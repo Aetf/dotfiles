@@ -275,4 +275,4 @@ iconSize=64
 launchers=multi
 
 [General]
-immutability=1
+immutability=2
