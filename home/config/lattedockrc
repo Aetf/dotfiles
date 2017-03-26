@@ -1,0 +1,12 @@
+[Containments][7][General]
+appletOrder=8;9
+
+[PlasmaTransientsConfig]
+raiseOnActivityChange=false
+raiseOnDesktopChange=false
+timerHide=700
+timerShow=200
+visibility=2
+
+[ScreenConnectors]
+10=eDP-1

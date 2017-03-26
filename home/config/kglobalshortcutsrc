@@ -248,6 +248,10 @@ view_actual_size=Meta+0,Meta+0,实际大小(A)
 view_zoom_in=Meta+=,Meta+=,放大(I)
 view_zoom_out=Meta+-,Meta+-,缩小(O)
 
+[lattedock]
+_k_friendly_name=Latte Dock
+activate widget 10=none,none,激活 天气预报 部件
+
 [mediacontrol]
 _k_friendly_name=媒体控制器
 nextmedia=Media Next,Media Next,媒体播放下一首

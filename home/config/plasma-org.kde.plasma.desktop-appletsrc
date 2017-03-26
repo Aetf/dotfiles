@@ -42,6 +42,9 @@ location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.slideshow
 
+[Containments][126][Applets][128][Configuration][General]
+launchers=multi
+
 [Containments][126][ConfigDialog]
 DialogHeight=960
 DialogWidth=1280
@@ -182,6 +185,12 @@ plugin=org.kde.plasma.panelspacer
 [Containments][93][Applets][111][Configuration][General]
 length=-185
 
+[Containments][93][Applets][129][Configuration][General]
+launchers=multi
+
+[Containments][93][Applets][130][Configuration][General]
+launchers=multi
+
 [Containments][93][Applets][95]
 immutability=1
 plugin=org.kde.plasma.systemtray
@@ -266,4 +275,4 @@ iconSize=64
 launchers=multi
 
 [General]
-immutability=2
+immutability=1
