@@ -1,0 +1,34 @@
+if [ -x /usr/bin/fcitx ] && [ -x /usr/bin/sogou-session ]; then
+    if ([ -x /usr/bin/im-config ]) && (! [ -f $HOME/.xinputrc ]); then
+        /usr/bin/im-config -n fcitx && export XMODIFIERS=@im=fcitx || true
+    elif ([ -x /usr/bin/imsettings-switch ]) && (! [ -f $HOME/.config/imsettings/xinputrc ]); then
+        /usr/bin/imsettings-switch -qf fcitx.conf && export XMODIFIERS=@im=fcitx || true
+    elif [ "$XMODIFIERS" = "" ] || [ "$XMODIFIERS" = "@im=xim" ]; then
+        export XMODIFIERS=@im=fcitx
+    fi
+
+    if [ "$XMODIFIERS" = "@im=fcitx" ]; then
+        gtk2_so=$(shopt -s nullglob; file=(/usr/lib/*/gtk-2.0/*/immodules/im-fcitx.so \
+                                           /usr/lib*/gtk-2.0/*/immodules/im-fcitx.so); echo $file)
+        gtk3_so=$(shopt -s nullglob; file=(/usr/lib/*/gtk-3.0/*/immodules/im-fcitx.so \
+                                           /usr/lib*/gtk-3.0/*/immodules/im-fcitx.so); echo $file)
+        if [ -n $gtk2_so ] && [ -f $gtk2_so ]; then
+            if [ -n $gtk3_so ] && [ -f $gtk3_so ]; then
+                export GTK_IM_MODULE=fcitx
+            fi
+        fi
+        qt4_so=$(shopt -s nullglob; file=(/usr/lib/*/qt4/plugins/inputmethods/qtim-fcitx.so \
+                                          /usr/lib*/qt4/plugins/inputmethods/qtim-fcitx.so); echo $file)
+        qt5_so=$(shopt -s nullglob; file=(/usr/lib/*/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so \
+                                          /usr/lib*/qt5/plugins/platforminputcontexts/libfcitxplatforminputcontextplugin.so); echo $file)
+        if [ -n $qt4_so ] && [ -f $qt4_so ]; then
+            export QT4_IM_MODULE=fcitx
+            if [ -n $qt5_so ] && [ -f $qt5_so ]; then
+                export QT_IM_MODULE=fcitx
+            fi
+        fi
+        STARTUP="/usr/bin/sogou-session $STARTUP"
+    fi
+fi
+
+echo $GTK_IM_MODULE $QT4_IM_MOUDLE $QT_IM_MODULE
