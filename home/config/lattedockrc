@@ -2,11 +2,11 @@
 appletOrder=8;9
 
 [PlasmaTransientsConfig]
-raiseOnActivityChange=false
-raiseOnDesktopChange=false
-timerHide=700
-timerShow=200
-visibility=2
+raiseOnActivityChange[$d]
+raiseOnDesktopChange[$d]
+timerHide[$d]
+timerShow[$d]
+visibility[$d]
 
 [ScreenConnectors]
 10=eDP-1

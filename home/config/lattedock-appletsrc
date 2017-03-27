@@ -9,10 +9,10 @@ lastScreen=-1
 location=4
 plugin=org.kde.latte.containment
 raiseOnActivityChange=false
-raiseOnDesktopChange=true
+raiseOnDesktopChange=false
 timerHide=700
 timerShow=100
-visibility=2
+visibility=4
 wallpaperplugin=org.kde.image
 
 [Containments][1][Applets][10]
@@ -122,7 +122,7 @@ plugin=org.kde.latte.plasmoid
 
 [Containments][1][Applets][2][Configuration][General]
 isInLatteDock=true
-launchers=multi;*;3;file:///usr/bin/firefox-nightly;file:///usr/share/applications/atom.desktop;file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
+launchers=multi;*;3;file:///usr/share/applications/firefox-nightly.desktop;file:///usr/share/applications/atom.desktop;file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
 
 [Containments][1][ConfigDialog]
 DialogHeight=987
@@ -173,6 +173,3 @@ DialogWidth=900
 
 [Containments][4][General]
 appletOrder=5;6
-
-[Containments][7][Applets][8][Configuration][General]
-launchers=multi
