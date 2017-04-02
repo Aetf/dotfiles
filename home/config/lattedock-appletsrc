@@ -1,6 +1,9 @@
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
 
+[AppletGlobals][org.kde.plasma.notifications]
+popupPosition=3
+
 [Containments][1]
 activityId=
 formfactor=2
@@ -225,6 +228,10 @@ plugin=org.kde.plasma.devicenotifier
 immutability=1
 plugin=org.kde.plasma.notifications
 
+[Containments][19][Applets][24][Configuration][ConfigDialog]
+DialogHeight=960
+DialogWidth=1280
+
 [Containments][19][Applets][25]
 immutability=1
 plugin=org.kde.plasma.volume
@@ -236,6 +243,10 @@ plugin=org.kde.plasma.battery
 [Containments][19][Applets][27]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
+
+[Containments][19][Applets][29]
+immutability=1
+plugin=org.kde.plasma.bluetooth
 
 [Containments][19][ConfigDialog]
 DialogHeight=960

@@ -1,6 +1,10 @@
 [Containments][7][General]
 appletOrder=8;9
 
+[KFileDialog Settings]
+Recent Files[$e]=file:///tmp/workspace/ss.latterc,file:///tmp/workspace/ss.latterc
+Recent URLs[$e]=file:///tmp/workspace/
+
 [PlasmaTransientsConfig]
 raiseOnActivityChange[$d]
 raiseOnDesktopChange[$d]
