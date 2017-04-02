@@ -251,6 +251,14 @@ view_zoom_out=Meta+-,Meta+-,缩小(O)
 [lattedock]
 _k_friendly_name=Latte Dock
 activate widget 10=none,none,激活 天气预报 部件
+clear-history=none,none,清除剪贴板历史(L)
+clipboard_action=,Ctrl+Alt+X,启用剪贴板动作
+cycleNextAction=none,none,下一个历史项
+cyclePrevAction=none,none,上一个历史项
+edit_clipboard=none,none,编辑内容(E)...
+repeat_action=,Ctrl+Alt+R,在当前剪贴板上手动执行动作
+show-barcode=none,none,显示条形码(S)...
+show-on-mouse-pos=none,none,在鼠标指针处弹出 Klipper
 
 [mediacontrol]
 _k_friendly_name=媒体控制器
