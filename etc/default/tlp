@@ -195,7 +195,14 @@ USB_AUTOSUSPEND=1
 # Exclude listed devices from USB autosuspend (separate with spaces).
 # Use lsusb to get the ids.
 # Note: input devices (usbhid) are excluded automatically (see below)
-USB_BLACKLIST="18d1:4ee2"
+#
+# List of devices
+# 18d1:4ee2 Nexus 6P [Transfer files]
+# 18d1:4ee6 Nexus 6P [Transfer photos (PTP)]
+# 18d1:4ee7 Nexus 6P [Charge only]
+# 18d1:4ee9 Nexus 6P [MIDI]
+#
+USB_BLACKLIST="18d1:4ee2 18d1:4ee6 18d1:4ee7 18d1:4ee9"
 
 # WWAN devices are excluded from USB autosuspend: 0=do not exclude / 1=exclude
 USB_BLACKLIST_WWAN=1
