@@ -106,7 +106,7 @@ function! BuildYCM(info)
         !./install.py --clang-completer --racer-completer --omnisharp-completer --tern-completer
     endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'javascript', 'rust'], 'do': function('BuildYCM')}
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript', 'rust'], 'do': function('BuildYCM')}
 
 " vim-airline for neovim, which can't use powerline
 if has('nvim')
