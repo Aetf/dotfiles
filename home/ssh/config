@@ -78,6 +78,7 @@ Host conflux
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials yes
     LocalForward 9999 localhost:8888
+    LocalForward 6006 localhost:6006
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
