@@ -90,6 +90,9 @@ Plug 'pseewald/vim-anyfold'
 " Fold cycling with one key
 Plug 'arecarn/vim-fold-cycle'
 
+" Indent text object
+Plug 'michaeljsmith/vim-indent-object'
+
 if !has('nvim')
     " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
     " natively supported in neovim
@@ -103,10 +106,10 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py --clang-completer --racer-completer --omnisharp-completer --tern-completer
+        !./install.py --system-libclang --clang-completer --omnisharp-completer --tern-completer
     endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript', 'rust'], 'do': function('BuildYCM')}
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript'], 'do': function('BuildYCM')}
 
 " vim-airline for neovim, which can't use powerline
 if has('nvim')
@@ -154,6 +157,7 @@ autocmd FileType fish setlocal foldmethod=expr
 let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_python_binary_path = 'python'
 
 " Settings for CtrlP
 let g:ctrlp_map = '<c-p>'
@@ -529,6 +533,15 @@ map <leader>pp :setlocal paste!<cr>
 " => Neovim specific
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if has('nvim')
+    " Force to use system python internally which has python-neovim installed
+    if exists("$VIRTUAL_ENV")
+        let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+    else
+        let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+    endif
+    " Disable python2
+    let g:loaded_python_provider=1
+    let g:python_host_skip_check=1
     " Use true colors
     set termguicolors
     " Change cursor shape between modes
