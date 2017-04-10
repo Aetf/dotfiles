@@ -53,12 +53,12 @@
 		"QML",
 		"RawLineEdit",
 		"SideBarEnhancements",
+		"Six",
 		"SublimeLinter",
 		"SublimeLinter-coffeelint",
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-cppcheck",
-		"Theme - Spacegray",
-		"Vintageous"
+		"Theme - Spacegray"
 	],
 	"proxy_password": "pfyu",
 	"proxy_username": "pfyu",
