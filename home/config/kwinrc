@@ -94,6 +94,7 @@ sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
 synchronizeskipswitcherEnabled=false
+trackmouseEnabled=true
 videowallEnabled=false
 windowgeometryEnabled=false
 
