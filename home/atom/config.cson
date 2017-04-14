@@ -104,7 +104,6 @@
   "merge-conflicts":
     gitPath: "/usr/bin/git"
   minimap:
-    adjustAbsoluteModeHeight: true
     plugins:
       cursorline: true
       cursorlineDecorationsZIndex: 0
@@ -138,6 +137,7 @@
     ignoreWhitespace: true
     leftEditorColor: "red"
     rightEditorColor: "green"
+    scrollSyncType: "Vertical + Horizontal"
     syncHorizontalScroll: true
   "tree-view":
     hideVcsIgnoredFiles: true
