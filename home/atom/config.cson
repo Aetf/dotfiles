@@ -1,0 +1,233 @@
+"*":
+  Hydrogen:
+    gateways: "[{\"name\": \"Localhost\", \"options\": {\"baseUrl\": \"http://localhost:8888\"}}]"
+  "animated-cursor":
+    animationDirection: "horizontal"
+  "atom-beautify":
+    c:
+      beautify_on_save: true
+      default_beautifier: "clang-format"
+    cpp:
+      default_beautifier: "clang-format"
+    general:
+      analytics: false
+      beautifyEntireFileOnSave: false
+      muteUnsupportedLanguageErrors: true
+    python:
+      max_line_length: 100
+      sort_imports: true
+  "autocomplete-plus":
+    backspaceTriggersAutocomplete: true
+    enableAutoConfirmSingleSuggestion: false
+    enableExtendedUnicodeSupport: true
+    suppressActivationForEditorClasses: [
+      "vim-mode-plus.normal-mode"
+      "vim-mode-plus.visual-mode"
+      "vim-mode-plus.operator-pending-mode"
+      "vim-mode-plus.insert-mode.replace"
+    ]
+  "autocomplete-python":
+    pythonPaths: "/home/aetf/.local/venvs/$PROJECT_NAME-dev/bin/python;$PROJECT/.venv;/usr/bin/python"
+    useSnippets: "required"
+  core:
+    audioBeep: false
+    autoHideMenuBar: true
+    customFileTypes:
+      "source.ini": [
+        ".buckconfig"
+        ".hgrc"
+      ]
+      "source.json": [
+        ".arcconfig"
+        "BUCK.autodeps"
+      ]
+      "source.python": [
+        "BUCK"
+      ]
+    disabledPackages: [
+      "spell-check"
+      "ex-mode"
+      "markdown-preview"
+      "activate-power-mode"
+      "language-python"
+    ]
+    projectHome: "/home/aetf/develop/js"
+    telemetryConsent: "limited"
+    themes: [
+      "one-dark-ui"
+      "base16-eighties-one-dark"
+    ]
+  "disable-keybindings":
+    prefixKeys: [
+      "ctrl-w"
+    ]
+  editor:
+    fontFamily: "Dejavu Sans Mono"
+    invisibles: {}
+    preferredLineLength: 110
+    scrollPastEnd: true
+    showIndentGuide: true
+    showInvisibles: true
+    tabLength: 4
+    zoomFontWhenCtrlScrolling: false
+  "exception-reporting":
+    userId: "5df70c90-dfba-0160-14cd-fe77e6da13ad"
+  "highlight-selected":
+    hideHighlightOnSelectedWord: true
+  latex:
+    alwaysOpenResultInAtom: true
+    buildOnSave: true
+    enableShellEscape: true
+    engine: "xelatex"
+    useMasterFileSearch: true
+  linter:
+    lintPreviewTabs: false
+  "linter-flake8":
+    executablePath: "/home/aetf/.local/venvs/$PROJECT_NAME-dev/bin/flake8;/home/aetf/.local/venvs/$PROJECT_NAME/bin/flake8;/usr/bin/flake8"
+    maxLineLength: 120
+  "linter-ui-default": {}
+  "markdown-pdf": {}
+  "markdown-preview": {}
+  "markdown-preview-enhanced":
+    enableTypographer: true
+    enableWikiLinkSyntax: false
+    mathRenderingOption: "MathJax"
+  "markdown-preview-plus":
+    enableLatexRenderingByDefault: true
+    useGitHubStyle: true
+    useLazyHeaders: false
+  "markdown-themeable-pdf":
+    codeHighlightingTheme: "github.css"
+    enableCustomFooter: false
+    enableCustomHeader: false
+    enableLinkify: true
+  "merge-conflicts":
+    gitPath: "/usr/bin/git"
+  minimap:
+    adjustAbsoluteModeHeight: true
+    plugins:
+      cursorline: true
+      cursorlineDecorationsZIndex: 0
+      "find-and-replace": true
+      "find-and-replaceDecorationsZIndex": 0
+      "git-diff": true
+      "git-diffDecorationsZIndex": 0
+      "highlight-selected": true
+      "highlight-selectedDecorationsZIndex": 0
+      "minimap-autohide": true
+      "minimap-autohideDecorationsZIndex": 0
+      "minimap-autohider": true
+      "minimap-autohiderDecorationsZIndex": 0
+      pigments: true
+      pigmentsDecorationsZIndex: 0
+      "split-diff": true
+      "split-diffDecorationsZIndex": 0
+    scrollAnimation: true
+  "minimap-git-diff":
+    useGutterDecoration: true
+  "pdf-view":
+    fitToWidthOnOpen: true
+  "project-manager":
+    alwaysOpenInSameWindow: true
+    environmentSpecificProjects: true
+    includeGitRepositories: true
+  "relative-numbers": {}
+  "spell-check": {}
+  "split-diff":
+    diffWords: true
+    ignoreWhitespace: true
+    leftEditorColor: "red"
+    rightEditorColor: "green"
+    syncHorizontalScroll: true
+  "tree-view":
+    hideVcsIgnoredFiles: true
+  "tree-view-breadcrumb":
+    displayProjectRoot: true
+    keepBreadcrumbVisible: true
+  "vim-mode":
+    wrapLeftRightMotion: true
+  "vim-mode-plus":
+    automaticallyEscapeInsertModeOnActivePaneItemChange: true
+    flashOnMoveToOccurrence: true
+    flashOnUndoRedo: true
+    highlightSearch: true
+    incrementalSearch: true
+    setCursorToStartOfChangeOnUndoRedo: true
+    showHoverOnOperate: true
+    showHoverSearchCounter: true
+    smoothScrollOnFullScrollMotion: true
+    smoothScrollOnHalfScrollMotion: true
+    statusBarModeStringStyle: "long"
+    stayOnTransformString: true
+    stayOnYank: true
+    useClipboardAsDefaultRegister: true
+    useSmartcaseForSearch: true
+    wrapLeftRightMotion: true
+  welcome:
+    showOnStartup: false
+  wordcount:
+    hidechars: true
+    ignorecode: true
+    noextension: true
+".ansi.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".beamer.latex.tex.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".bibtex.text":
+  editor:
+    preferredLineLength: 100
+    softWrapAtPreferredLineLength: true
+    tabLength: 4
+".breakpoints.hydrogen":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".diff.source":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".hack.html.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".hackfragment.source":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".hg-commit.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".hover.reason.source.type":
+  editor:
+    preferredLineLength: 110
+    tabLength: 4
+".latex.log.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".latex.memoir.tex.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".latex.tex.text":
+  editor:
+    preferredLineLength: 100
+    softWrapAtPreferredLineLength: true
+    tabLength: 4
+".plain.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4
+".reason.source":
+  editor:
+    preferredLineLength: 110
+    tabLength: 4
+".tex.text":
+  editor:
+    preferredLineLength: 100
+    tabLength: 4

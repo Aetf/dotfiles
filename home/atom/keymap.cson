@@ -1,0 +1,16 @@
+'atom-workspace:not([mini])':
+  'ctrl-K': 'paner:very-top'
+  'ctrl-J': 'paner:very-bottom'
+  'ctrl-H': 'paner:very-left'
+  'ctrl-L': 'paner:very-right'
+
+'atom-text-editor.vim-mode-plus.normal-mode':
+  # Override default cmd-L(editor:split-selections-into-lines)
+  'ctrl-L': 'paner:very-right'
+
+'atom-text-editor.vim-mode-plus.insert-mode':
+  'j k': 'vim-mode-plus:activate-normal-mode' # jk to escape
+  'k j': 'vim-mode-plus:activate-normal-mode' # jk to escape
+
+#'atom-text-editor.vim-mode-plus.insert-mode.autocomplete-active':
+#  'escape': 'autocomplete-plus:cancel'
