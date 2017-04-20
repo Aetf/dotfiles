@@ -72,6 +72,9 @@ Plug 'scrooloose/syntastic'
 " support for editing fish scripts
 Plug 'dag/vim-fish'
 
+" support for qml
+Plug 'peterhoeg/vim-qml'
+
 " Rust language support
 Plug 'rust-lang/rust.vim'
 
