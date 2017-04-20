@@ -21,7 +21,7 @@ dummy=prevent-empty-group
 dummy=prevent-empty-group
 
 [Solarized (dark)]
-Font=DejaVu Sans Mono,10,-1,5,75,0,0,0,0,0
+Font=DejaVu Sans Mono,10,-1,5,50,0,0,0,0,0,Book
 dummy=prevent-empty-group
 
 [Solarized (light)]
