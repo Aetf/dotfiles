@@ -251,6 +251,7 @@ view_zoom_out=Meta+-,Meta+-,缩小(O)
 [lattedock]
 _k_friendly_name=Latte Dock
 activate widget 10=none,none,激活 天气预报 部件
+activate widget 30=Ctrl+Print,none,激活 Event Calendar 部件
 clear-history=none,none,清除剪贴板历史(L)
 clipboard_action=,Ctrl+Alt+X,启用剪贴板动作
 cycleNextAction=none,none,下一个历史项
