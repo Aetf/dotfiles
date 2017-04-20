@@ -16,6 +16,21 @@
     python:
       max_line_length: 100
       sort_imports: true
+  "atom-material-ui":
+    colors:
+      abaseColor: "#2196f3"
+      genAccent: true
+      paintCursor: true
+      predefinedColor: "Blue"
+    fonts:
+      fontSize: 15
+    tabs:
+      compactTabs: true
+    treeView:
+      compactList: true
+    ui:
+      panelContrast: true
+      panelShadows: true
   "autocomplete-plus":
     backspaceTriggersAutocomplete: true
     enableAutoConfirmSingleSuggestion: false
@@ -54,7 +69,7 @@
     projectHome: "/home/aetf/develop/js"
     telemetryConsent: "limited"
     themes: [
-      "one-dark-ui"
+      "atom-material-ui"
       "base16-eighties-one-dark"
     ]
   "disable-keybindings":
