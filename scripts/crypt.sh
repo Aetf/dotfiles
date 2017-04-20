@@ -24,20 +24,20 @@ MAGIC="deadbeaf"
 tryDecrypt() {
     log "tryDecrypt"
 
-    local encrypted base64decoded exitCode payload
+    local encrypted exitCode payload
     tryDecryptOut=
 
     encrypted=$1
 
-    # base64 decode
-    base64decoded=$(echo "$encrypted" | base64 -d 2>/dev/null)
+    # try base64 decode, we don't store the result, because bash is not good at handle binary data (espasically null byte)
+    echo "$encrypted" | base64 -d 1>/dev/null 2>&1
     exitCode=$?
     if [[ $exitCode != 0 ]]; then
         return 1
     fi
 
     # gpg decrypt
-    payload=$(echo "$base64decoded" | gpg --decrypt 2>/dev/null)
+    payload=$(echo "$encrypted" | base64 -d 2>/dev/null | gpg --decrypt 2>/dev/null)
     exitCode=$?
     if [[ $exitCode != 0 ]]; then
         return 1
