@@ -21,6 +21,8 @@ isTargetLine() {
 }
 
 MAGIC="deadbeaf"
+KEYFILE=".git/crypt-key"
+OPENSSL_CIPHER="-aes-128-cbc -nosalt"
 tryDecrypt() {
     log "tryDecrypt"
 
@@ -37,7 +39,7 @@ tryDecrypt() {
     fi
 
     # gpg decrypt
-    payload=$(echo "$encrypted" | base64 -d 2>/dev/null | gpg --decrypt 2>/dev/null)
+    payload=$(echo "$encrypted" | base64 -d 2>/dev/null | openssl enc -d $OPENSSL_CIPHER -pass "file:$KEYFILE" 2>/dev/null)
     exitCode=$?
     if [[ $exitCode != 0 ]]; then
         return 1
@@ -63,7 +65,7 @@ encrypt() {
             if ! tryDecrypt "$value"; then
                 # only encrypt is it is not already encrypted
                 local payload="${MAGIC}${value}"
-                local encrypted=$(echo "$payload" | gpg --encrypt --recipient Aetf 2>/dev/null | base64 -w 0 2>/dev/null)
+                local encrypted=$(echo "$payload" | openssl enc $OPENSSL_CIPHER -pass "pass:$KEYFILE" 2>/dev/null | base64 -w 0 2>/dev/null)
                 echo "$key=$encrypted"
                 continue
             fi
@@ -105,6 +107,14 @@ init() {
     git config --local filter.crypt.smudge "crypt.sh dec"
     git config --local --bool filter.crypt.required "true"
     git config --local diff.crypt.textconv "crypt.sh diff"
+
+    # generate key and store in kwallet
+    if [[ -f "$KEYFILE" ]]; then
+        log "The keyfile already exists: $KEYFILE"
+        log "Remove it first if you want to regenerate"
+    else
+        openssl rand -out "$KEYFILE" 128
+    fi
 }
 
 # Begins main
@@ -125,7 +135,7 @@ case $act in
         do_diff $1
         ;;
     init*)
-        init
+        init "$@"
         ;;
     *)
         echo "Unknown action $act"
