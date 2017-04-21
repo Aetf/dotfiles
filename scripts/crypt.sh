@@ -39,7 +39,7 @@ tryDecrypt() {
     fi
 
     # gpg decrypt
-    payload=$(echo "$encrypted" | base64 -d | openssl enc -d $OPENSSL_CIPHER -pass "file:$KEYFILE" )
+    payload=$(echo "$encrypted" | base64 -d 2>/dev/null | openssl enc -d $OPENSSL_CIPHER -pass "file:$KEYFILE" 2>/dev/null)
     exitCode=$?
     if [[ $exitCode != 0 ]]; then
         return 1
