@@ -39,7 +39,7 @@ tryDecrypt() {
     fi
 
     # gpg decrypt
-    payload=$(echo "$encrypted" | base64 -d 2>/dev/null | openssl enc -d $OPENSSL_CIPHER -pass "file:$KEYFILE" 2>/dev/null)
+    payload=$(echo "$encrypted" | base64 -d | openssl enc -d $OPENSSL_CIPHER -pass "file:$KEYFILE" )
     exitCode=$?
     if [[ $exitCode != 0 ]]; then
         return 1
@@ -65,7 +65,7 @@ encrypt() {
             if ! tryDecrypt "$value"; then
                 # only encrypt is it is not already encrypted
                 local payload="${MAGIC}${value}"
-                local encrypted=$(echo "$payload" | openssl enc $OPENSSL_CIPHER -pass "pass:$KEYFILE" 2>/dev/null | base64 -w 0 2>/dev/null)
+                local encrypted=$(echo "$payload" | openssl enc $OPENSSL_CIPHER -pass "file:$KEYFILE" 2>/dev/null | base64 -w 0 2>/dev/null)
                 echo "$key=$encrypted"
                 continue
             fi
