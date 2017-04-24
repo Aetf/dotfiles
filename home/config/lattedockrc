@@ -1,9 +1,13 @@
 [Containments][7][General]
 appletOrder=8;9
 
+[FileDialogSize]
+Height 1600=755
+Width 2560=1229
+
 [KFileDialog Settings]
-Recent Files[$e]=file:///tmp/workspace/ss.latterc,file:///tmp/workspace/ss.latterc
-Recent URLs[$e]=file:///tmp/workspace/
+Recent Files[$e]=bell.oga,file:///usr/share/sounds/freedesktop/stereo/bell.oga
+Recent URLs[$e]=file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/
 
 [PlasmaTransientsConfig]
 raiseOnActivityChange[$d]
