@@ -79,17 +79,23 @@ switch $TERM
 end
 
 # Prompt line hook provided by powerline
+function _setup_powerline
+    powerline-daemon -q
+    set fish_function_path $fish_function_path "/usr/lib/python3.6/site-packages/powerline/bindings/fish"
+    powerline-setup
+end
 switch $TERM
     case 'xterm*' 'konsole' 'tmux'
-        powerline-setup
+        _setup_powerline
     case 'linux'
         set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
-        powerline-setup
+        _setup_powerline
     case '*'
         function fish_prompt
             fallback_prompt
         end
 end
+functions --erase _setup_powerline
 
 # Silence 'Picked up _JAVA_OPTIONS' message on command line (combined with java.fish)
 set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
