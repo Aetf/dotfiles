@@ -213,6 +213,10 @@ command W w !sudo tee % > /dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Change cursor style between modes. This works for GUI in vim, and also for terminal in nvim
 set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+if has('nvim-0.2.0') && !has('nvim-0.2.1')
+    " There's bug in 0.2.0 that flipping blinkon0 and blinkon1 on Konsole
+    set guicursor=n-v-c:block-Cursor/lCursor-blinkon1,i-ci:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1
+endif
 " For vim, extra escape sequence is needed for cursor change in terminal
 if !has('nvim')
     let &t_SI = "\<Esc>]50;CursorShape=1\x7"
