@@ -211,6 +211,15 @@ command W w !sudo tee % > /dev/null
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => VIM user interface
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Change cursor style between modes. This works for GUI in vim, and also for terminal in nvim
+set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
+" For vim, extra escape sequence is needed for cursor change in terminal
+if !has('nvim')
+    let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+    let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+    let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
+endif
+
 " Show hybrid line numbers.
 set relativenumber
 set number
@@ -301,11 +310,6 @@ if has('nvim')
     let g:terminal_color_14 = '#93e0e3'
     let g:terminal_color_15 = '#ffffff'
 endif
-
-" Change cursor shape
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_SR = "\<Esc>]50;CursorShape=2\x7"
-let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
 
 " Set extra options when running in GUI mode
 if has("gui_running")
@@ -547,8 +551,6 @@ if has('nvim')
     let g:python_host_skip_check=1
     " Use true colors
     set termguicolors
-    " Change cursor shape between modes
-    :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
     " Load Archlinux specific vimfiles
     set runtimepath^=/usr/share/vim/vimfiles
     " ESC for exit terminal mode
