@@ -42,6 +42,17 @@ location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.slideshow
 
+[Containments][126][Applets][127]
+immutability=1
+plugin=org.kde.plasma.notes
+
+[Containments][126][Applets][127][Configuration][ConfigDialog]
+DialogHeight=960
+DialogWidth=1280
+
+[Containments][126][Applets][127][Configuration][General]
+noteId=30a2338a-70b3-4f18-be74-f00c25549f
+
 [Containments][126][Applets][128][Configuration][General]
 launchers=multi
 
@@ -50,6 +61,7 @@ DialogHeight=960
 DialogWidth=1280
 
 [Containments][126][General]
+ItemsGeometries=Applet-127:20,1123,992,320,0;
 arrangement=1
 iconSize=3
 pressToMove=false
@@ -227,4 +239,4 @@ iconSize=64
 launchers=multi
 
 [General]
-immutability=1
+immutability=2
