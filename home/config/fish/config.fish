@@ -49,6 +49,8 @@ if test "$DISPLAY"x = "x";
     if test -d "$HOME/.node_modules/bin"
         set PATH $PATH "$HOME/.node_modules/bin"
     end
+    ## rust cargo executable
+    set PATH $PATH "$HOME/.cargo/bin"
 end
 
 # Some useful alias (functions in .config/fish/functions)
