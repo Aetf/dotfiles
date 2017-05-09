@@ -109,10 +109,10 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py --system-libclang --clang-completer --omnisharp-completer --tern-completer
+        !./install.py --system-libclang --clang-completer --omnisharp-completer --tern-completer --racer-completer
     endif
 endfunction
-Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript'], 'do': function('BuildYCM')}
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript', 'rust'], 'do': function('BuildYCM')}
 
 " vim-airline for neovim, which can't use powerline
 if has('nvim')
