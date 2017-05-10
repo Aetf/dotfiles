@@ -157,10 +157,11 @@ autocmd FileType fish compiler fish
 autocmd FileType fish setlocal foldmethod=expr
 
 " Settings for YouCompleteMe
-let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = expand('~/.vim/ycm_extra_conf.py')
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_python_binary_path = 'python'
+let g:ycm_rust_src_path = expand('~/.multirust/toolchains/stable-x86_64-unknown-linux-gnu/lib/rustlib/src/rust/src')
 
 " Settings for CtrlP
 let g:ctrlp_map = '<c-p>'
@@ -180,6 +181,7 @@ endif
 " Settings for anyfold
 let g:anyfold_activate=1
 set foldlevel=1
+set foldminlines=3
 "" unfolds the line in which the curosr is located when opening a file
 autocmd User anyfoldLoaded normal zv
 
