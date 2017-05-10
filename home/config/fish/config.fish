@@ -50,7 +50,9 @@ if test "$DISPLAY"x = "x";
         set PATH $PATH "$HOME/.node_modules/bin"
     end
     ## rust cargo executable
-    set PATH $PATH "$HOME/.cargo/bin"
+    if test -d "$HOME/.cargo/bin"
+        set PATH $PATH "$HOME/.cargo/bin"
+    end
 end
 
 # Some useful alias (functions in .config/fish/functions)

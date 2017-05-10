@@ -38,6 +38,8 @@ for p in ~/.gem/ruby/*/bin; do
     PATH="$PATH:$p"
 done
 ## rust cargo executable
-PATH="$PATH:$HOME/.cargo/bin"
+if [ -d $HOME/.cargo/bin ]; then
+    PATH="$PATH:$HOME/.cargo/bin"
+fi
 
 export PATH
