@@ -96,6 +96,22 @@ Plug 'arecarn/vim-fold-cycle'
 " Indent text object
 Plug 'michaeljsmith/vim-indent-object'
 
+" Undo history visualizer
+Plug 'mbbill/undotree'
+
+" NERD Tree with git status
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
+" Surroound
+Plug 'tpope/vim-surround'
+
+" NERD Commenter
+Plug 'scrooloose/nerdcommenter'
+
+" Auto close braces
+Plug 'spf13/vim-autoclose'
+
 if !has('nvim')
     " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
     " natively supported in neovim
@@ -184,6 +200,18 @@ set foldlevel=1
 set foldminlines=3
 "" unfolds the line in which the curosr is located when opening a file
 autocmd User anyfoldLoaded normal zv
+
+" NERD Tree configuration
+map <C-n> :NERDTreeToggle<CR>
+
+autocmd StdinReadPre * let s:std_in=1
+"" open NERDTree if vim starts up on opening a directory
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+"" close vim if the only window left open is a NERDTree
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Auto close
+let g:autoclose_vim_commentmode=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -342,6 +370,14 @@ set nobackup
 set nowb
 set noswapfile
 
+" Toggle Undotree window
+map <leader>u :UndotreeToggle<cr>
+
+" Enable persistent undo
+if has("persistent_undo")
+    set undodir=~/.vim/undo
+    set undofile
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Text, tab and indent related
