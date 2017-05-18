@@ -61,7 +61,7 @@ DialogHeight=960
 DialogWidth=1280
 
 [Containments][126][General]
-ItemsGeometries=Applet-127:20,1123,992,320,0;
+ItemsGeometries=Applet-127:32,1120,992,320,0;
 arrangement=1
 iconSize=3
 pressToMove=false
