@@ -2,7 +2,7 @@
 Language:        Cpp
 BasedOnStyle:  LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: true
+AlignAfterOpenBracket: Align
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
 AlignEscapedNewlinesLeft: false
@@ -11,10 +11,9 @@ AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortBlocksOnASingleLine: false
 AllowShortCaseLabelsOnASingleLine: false
-AllowShortFunctionsOnASingleLine: Inline
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
 AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
@@ -23,7 +22,7 @@ BinPackParameters: true
 BraceWrapping:
   AfterClass:      true
   AfterControlStatement: false
-  AfterEnum:       false
+  AfterEnum:       true
   AfterFunction:   true
   AfterNamespace:  false
   AfterObjCDeclaration: true
@@ -32,31 +31,35 @@ BraceWrapping:
   BeforeCatch:     false
   BeforeElse:      false
   IndentBraces:    false
+BreakAfterJavaFieldAnnotations: true
 BreakBeforeBinaryOperators: NonAssignment
 BreakBeforeBraces: Custom
-BreakBeforeTernaryOperators: true
+BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: true
+BreakStringLiterals: true
 ColumnLimit:     100
 CommentPragmas:  '^ IWYU pragma:'
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-DerivePointerAlignment: false
+DerivePointerAlignment: true
 DisableFormat:   false
-ForEachMacros:   [ foreach, Q_FOREVER, Q_FOREACH, BOOST_FOREACH ]
+ForEachMacros:   [ 'foreach', 'Q_FOREVER', 'Q_FOREACH', 'BOOST_FOREACH' ]
 IncludeCategories:
   - Regex:           '^(<|")(llvm|llvm-c|clang|clang-c)/'
     Priority:        2
   - Regex:           '^<'
-    Priority:        1
+    Priority:        4
   - Regex:           '^(<|")(gtest|isl|json)/'
     Priority:        3
   - Regex:           '.*'
-    Priority:        4
+    Priority:        1
 IndentCaseLabels: false
 IndentWidth:     4
 IndentWrappedFunctionNames: false
+JavaScriptQuotes: Single
+JavaScriptWrapImports: true
 KeepEmptyLinesAtTheStartOfBlocks: true
 MacroBlockBegin: ''
 MacroBlockEnd:   ''
@@ -75,13 +78,14 @@ PointerAlignment: Right
 ReflowComments:  true
 SortIncludes:    true
 SpaceAfterCStyleCast: true
+SpaceAfterTemplateKeyword: false
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 1
 SpacesInAngles:  false
-SpacesInContainerLiterals: true
 SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: true
 SpacesInParentheses: false
 SpacesInSquareBrackets: false
 Standard:        Cpp11
