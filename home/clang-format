@@ -43,7 +43,7 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-DerivePointerAlignment: true
+DerivePointerAlignment: false
 DisableFormat:   false
 ForEachMacros:   [ 'foreach', 'Q_FOREVER', 'Q_FOREACH', 'BOOST_FOREACH' ]
 IncludeCategories:
