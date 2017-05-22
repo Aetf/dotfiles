@@ -1,0 +1,1 @@
+build --verbose_failures --local_resources 3172,1.5,1.0
