@@ -93,6 +93,24 @@ SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
 height=1600
 width=2560
 
+[Containments][128]
+activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
+formfactor=0
+immutability=1
+lastScreen=3
+location=0
+plugin=org.kde.desktopcontainment
+wallpaperplugin=org.kde.image
+
+[Containments][129]
+activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
+formfactor=0
+immutability=1
+lastScreen=4
+location=0
+plugin=org.kde.desktopcontainment
+wallpaperplugin=org.kde.image
+
 [Containments][44]
 activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
 formfactor=0
