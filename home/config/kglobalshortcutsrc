@@ -46,7 +46,7 @@ PowerOff=Power Off,Power Off,关机
 Show System Activity=Ctrl+Esc,Ctrl+Esc,显示系统活动
 Sleep=Sleep,Sleep,挂起
 Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,切换键盘背光
-_k_friendly_name=KDE Daemon
+_k_friendly_name=电源管理
 display=Display,Display\tMeta+P,切换显示器
 
 [khotkeys]

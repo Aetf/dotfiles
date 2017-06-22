@@ -301,12 +301,12 @@ lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
 DocsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.tex
-DocsOpenOnStart1[$e]=$HOME/develop/latex/hotos17/hotos17.bib
+DocsOpenOnStart1[$d]
 DocsOpenOnStart2[$d]
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
-EncodingsOfDocsOpenOnStart1[$e]=UTF-8
+EncodingsOfDocsOpenOnStart1[$d]
 EncodingsOfDocsOpenOnStart2[$d]
-NoDOOS=2
+NoDOOS=1
 NoPOOS=1
 ProjectsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 
@@ -314,7 +314,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 MainwindowHeight=773
 MainwindowWidth=1280
 horizontalSplitterLeft=129
-horizontalSplitterRight=751
+horizontalSplitterRight=749
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -391,7 +391,7 @@ previewTask=XeLaTeX ---> PDF (Okular)
 
 [Recent Files]
 File1[$e]=$HOME/develop/latex/xjtuthesis/solutions/master.tex
-File10[$e]=$HOME/develop/latex/hotos17/hotos17.bib
+File10[$e]=$HOME/develop/latex/hotos17/hotos17.tex
 File2[$e]=/usr/share/texmf-dist/tex/latex/minted/minted.sty
 File3[$e]=$HOME/develop/latex/cv/resume/resume.tex
 File4[$e]=$HOME/develop/latex/EECS551HW10/homework.solution.tex
@@ -399,9 +399,9 @@ File5[$e]=/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty
 File6[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 File7[$e]=$HOME/develop/latex/cv/cv/cv.tex
 File8[$e]=/usr/share/texmf-dist/tex/latex/natbib/natbib.sty
-File9[$e]=$HOME/develop/latex/hotos17/hotos17.tex
+File9[$e]=$HOME/develop/latex/hotos17/hotos17.bib
 Name1[$e]=master.tex
-Name10[$e]=hotos17.bib
+Name10[$e]=hotos17.tex
 Name2[$e]=minted.sty
 Name3[$e]=resume.tex
 Name4[$e]=homework.solution.tex
@@ -409,7 +409,7 @@ Name5[$e]=subfigure.sty
 Name6[$e]=hotos17.kilepr
 Name7[$e]=cv.tex
 Name8[$e]=natbib.sty
-Name9[$e]=hotos17.tex
+Name9[$e]=hotos17.bib
 
 [Scripting]
 ScriptNameColumnWidth=100
