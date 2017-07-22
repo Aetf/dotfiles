@@ -313,8 +313,8 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
 [Geometries]
 MainwindowHeight=773
 MainwindowWidth=1280
-horizontalSplitterLeft=129
-horizontalSplitterRight=749
+horizontalSplitterLeft=343
+horizontalSplitterRight=534
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -421,8 +421,8 @@ Saved Documents=file://:@/tmp/kile-livepreviewnox7d0/comment.cut,file://:@/usr/s
 [Show]
 BottomBarIndex=0
 BottomBarSize=120
-SelectedLeftView=1
-SideBarSize=100
+SelectedLeftView=3
+SideBarSize=314
 SystemCheckLastVersionRunForAtStartUp=2.9.60
 
 [Tool/Archive/Tar]
