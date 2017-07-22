@@ -82,3 +82,11 @@ Host conflux
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host conflux-trans
+    User peifeng
+    HostName conflux-login1.arc-ts.umich.edu
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
