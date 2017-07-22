@@ -62,7 +62,6 @@
       ]
     disabledPackages: [
       "spell-check"
-      "ex-mode"
       "markdown-preview"
       "activate-power-mode"
       "language-python"
@@ -179,6 +178,8 @@
     useClipboardAsDefaultRegister: true
     useSmartcaseForSearch: true
     wrapLeftRightMotion: true
+  "vim-mode-plus-ex-mode":
+    notifiedUseExMode: true
   welcome:
     showOnStartup: false
   wordcount:
