@@ -8,7 +8,12 @@ if not status -i; exit; end
 # If ssh-agent haven't been started, we are in kmscon or linux console
 # start ssh-agent with tmux
 if test "$SSH_AUTH_SOCK"x = "x";
-    exec ssh-agent tmux new -As console
+    if test "$TERM" = "linux";
+        # Don't start tmux on linux console
+        exec ssh-agent fish
+    else
+        exec ssh-agent tmux new -As console
+    end
 end
 
 # Some environment variables
