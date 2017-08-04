@@ -59,7 +59,8 @@
 		"SublimeLinter-coffeelint",
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-cppcheck",
-		"Theme - Spacegray"
+		"Theme - Spacegray",
+		"Valgrind"
 	],
 	"proxy_password": "pfyu",
 	"proxy_username": "pfyu",
