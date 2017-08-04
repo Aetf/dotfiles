@@ -36,6 +36,9 @@ Strength=10
 TabBox=false
 TabBoxAlternative=false
 
+[Effect-Glide]
+GlideAngle=0
+
 [Effect-PresentWindows]
 BorderActivate=7
 BorderActivateAll=9
@@ -43,6 +46,9 @@ BorderActivateClass=9
 
 [Effect-Zoom]
 InitialZoom=1
+
+[Effect-kwin4_effect_translucency]
+Dialogs=95
 
 [ElectricBorders]
 Bottom=None
@@ -73,7 +79,7 @@ CommandWindow3=Activate and pass click
 CommandWindowWheel=Scroll
 
 [Plugins]
-blurEnabled=false
+blurEnabled=true
 contrastEnabled=false
 coverswitchEnabled=true
 cubeEnabled=true
@@ -86,10 +92,9 @@ glideEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
 kwin4_effect_scaleinEnabled=true
-magiclampEnabled[$d]
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
-minimizeanimationEnabled[$d]
+minimizeanimationEnabled=false
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
