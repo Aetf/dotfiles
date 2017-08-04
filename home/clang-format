@@ -37,7 +37,7 @@ BreakBeforeBraces: Custom
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: true
 BreakStringLiterals: true
-ColumnLimit:     100
+ColumnLimit:     110
 CommentPragmas:  '^ IWYU pragma:'
 ConstructorInitializerAllOnOneLineOrOnePerLine: false
 ConstructorInitializerIndentWidth: 4
@@ -72,7 +72,7 @@ PenaltyBreakBeforeFirstCallParameter: 100
 PenaltyBreakComment: 300
 PenaltyBreakFirstLessLess: 120
 PenaltyBreakString: 1000
-PenaltyExcessCharacter: 10000
+PenaltyExcessCharacter: 1000
 PenaltyReturnTypeOnItsOwnLine: 10000
 PointerAlignment: Right
 ReflowComments:  true
