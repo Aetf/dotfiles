@@ -100,7 +100,8 @@
   "linter-flake8":
     executablePath: "/home/aetf/.local/venvs/$PROJECT_NAME-dev/bin/flake8;/home/aetf/.local/venvs/$PROJECT_NAME/bin/flake8;/usr/bin/flake8"
     maxLineLength: 120
-  "linter-ui-default": {}
+  "linter-ui-default":
+    panelHeight: 81
   "markdown-pdf": {}
   "markdown-preview": {}
   "markdown-preview-enhanced":
