@@ -31,7 +31,7 @@ if test "$DISPLAY"x = "x";
     set -x NASMENV "-i /home/aetf/Develop/ASM/inc"
     set -x NASM $NASMENV
     ## Predefined variables to Java runtime
-    set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+    #set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
     ## Ccache directory
     set -x CCACHE_DIR /opt/.ccache
     set -x CCACHE_COMPRESS
