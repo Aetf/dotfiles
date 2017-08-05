@@ -1,13 +1,13 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " User: Aetf - aetf@unlimitedcodeworks.xyz
-" Maintainer: 
+" Maintainer:
 "       Amir Salihefendic
 "       http://amix.dk - amix@amix.dk
 "
-" Version: 
+" Version:
 "       5.0 - 29/05/12 15:43:36
 "
-" Blog_post: 
+" Blog_post:
 "       http://amix.dk/blog/post/19691#The-ultimate-Vim-configuration-on-Github
 "
 " Awesome_version:
@@ -20,7 +20,7 @@
 " Syntax_highlighted:
 "       http://amix.dk/vim/vimrc.html
 "
-" Raw_version: 
+" Raw_version:
 "       http://amix.dk/vim/vimrc.txt
 "
 " Sections:
@@ -37,6 +37,7 @@
 "    -> vimgrep searching and cope displaying
 "    -> Spell checking
 "    -> Misc
+"    -> Neovim specific
 "    -> Helper functions
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -46,31 +47,124 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Load plugins early so we can use them.
 
+" Set bash as shell, because fish is not compatible to vim-plug
+"set shell=/usr/bin/bash
+
+" Automatically download vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
 " Activate plugin Manager vim-plug
-call plug#begin('~/.vim/plugged')
+silent! call plug#begin('~/.vim/plugged')
 
 " vim colorscheme with neovim in mind
 Plug 'freeo/vim-kalisi'
 
+" Transparent background
+Plug 'miyakogi/seiya.vim'
+
 " syntax checking using external checkers
 Plug 'scrooloose/syntastic'
 
-" Finally add plugins to &runtimepath
+" support for editing fish scripts
+Plug 'dag/vim-fish'
+
+" Rust language support
+Plug 'rust-lang/rust.vim'
+
+" CtrlP for fuzzy finder
+Plug 'ctrlpvim/ctrlp.vim'
+
+" Git gutter
+Plug 'airblade/vim-gitgutter'
+
+" Anyfold for smart indent based folding
+Plug 'pseewald/vim-anyfold'
+
+" Fold Cycling with one key
+Plug 'arecarn/vim-fold-cycle'
+
+" Indent text object
+Plug 'michaeljsmith/vim-indent-object'
+
+if !has('nvim')
+    " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
+    " natively supported in neovim
+    Plug 'ConradIrwin/vim-bracketed-paste'
+endif
+
+" YouCompleteMe
+function! BuildYCM(info)
+    " info is a dictionary with 3 fields
+    " - name:   name of the plugin
+    " - status: 'installed', 'updated', or 'unchanged'
+    " - force:  set on PlugInstall! or PlugUpdate!
+    if a:info.status == 'installed' || a:info.force
+        !./install.py --clang-completer --racer-completer --omnisharp-completer --tern-completer
+    endif
+endfunction
+Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'javascript', 'rust'], 'do': function('BuildYCM')}
+
+" vim-airline for neovim, which can't use powerline
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_detect_crypt=1
+let g:airline_detect_spell=1
+let g:airline_detect_iminsert=0
+let g:airline_inactive_collapse=1
+let g:airline_theme='kalisi'
+let g:airline_powerline_fonts=1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 0
+let g:airline#extensions#tabline#buffers_label = 'Buffers'
+
+" Initialize plugin system
 call plug#end()
 
 " Settings for syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+" this is handled by vim-airline
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 1
 
-let g:syntastic_cpp_checkers = ['cppcheck']
+let g:syntastic_cpp_checkers = []
 let g:syntastic_aggregate_errors = 1
 
+" Settings for vim-fish
+"     Let :make to use fish for syntax checking
+autocmd FileType fish compiler fish
+"     Enable folding of block structures in fish
+autocmd FileType fish setlocal foldmethod=expr
+
+" Settings for YouCompleteMe
+let g:ycm_global_ycm_extra_conf = '~/.vim/ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_autoclose_preview_window_after_completion = 1
+
+" Settings for CtrlP
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_working_path_mode = 'ra'
+
+" Settings for Seiya.vim
+let g:seiya_target_groups = has('nvim') ? ['guibg'] : ['ctermbg']
+let g:seiya_auto_enable=1 " this is disabled in ginit.vim for neovim-qt, which doesn't have transparent bg
+
+" Settings for anyfold
+let g:anyfold_activate=1
+set foldlevel=1
+" unfolds the line in which the cursor is located when opening a file
+autocmd User anyfoldLoaded normal zv
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
@@ -87,11 +181,14 @@ set autoread
 
 " With a map leader it's possible to do extra key combinations
 " like <leader>w saves the current file
-let mapleader = ","
-let g:mapleader = ","
+let mapleader = "."
+let g:mapleader = "."
 
 " Fast saving
 nmap <leader>w :w!<cr>
+
+" :W sudo saves the file
+command W w !sudo tee % > /dev/null
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -101,14 +198,14 @@ nmap <leader>w :w!<cr>
 set relativenumber
 set number
 
-" Set 7 lines to the cursor - when moving vertically using j/k
-set so=7
+" Set 3 lines to the cursor - when moving vertically using j/k
+set so=3
 
 " Turn on the WiLd menu
 set wildmenu
 
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc
+set wildignore=*.o,*~,*.pyc,*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 
 "Always show current position
 set ruler
@@ -126,7 +223,7 @@ set whichwrap+=<,>,h,l
 " Ignore case when searching
 set ignorecase
 
-" When searching try to be smart about cases 
+" When searching try to be smart about cases
 set smartcase
 
 " Highlight search results
@@ -152,6 +249,8 @@ set novisualbell
 set t_vb=
 set tm=500
 
+" Add a bit extra margin to the left
+set foldcolumn=1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Fonts
@@ -165,6 +264,27 @@ set t_Co=256
 let &t_AB="\e[48;5;%dm"
 let &t_AF="\e[38;5;%dm"
 
+" kalisi doesn't provide the terminal color palette for neovim
+if has('nvim')
+    " Soft black palette from Konsole
+    let g:terminal_color_0  = '#3f3f3f'
+    let g:terminal_color_1  = '#705050'
+    let g:terminal_color_2  = '#60b48a'
+    let g:terminal_color_3  = '#dfaf8f'
+    let g:terminal_color_4  = '#9ab8d7'
+    let g:terminal_color_5  = '#dc8cc3'
+    let g:terminal_color_6  = '#8cd0d3'
+    let g:terminal_color_7  = '#dcdccc'
+    let g:terminal_color_8  = '#709080'
+    let g:terminal_color_9  = '#dca3a3'
+    let g:terminal_color_10 = '#72d5a3'
+    let g:terminal_color_11 = '#f0dfaf'
+    let g:terminal_color_12 = '#94bff3'
+    let g:terminal_color_13 = '#ec93d3'
+    let g:terminal_color_14 = '#93e0e3'
+    let g:terminal_color_15 = '#ffffff'
+endif
+
 " Change cursor shape
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
@@ -173,7 +293,6 @@ let &t_EI = "\<Esc>]50;CUrsorShape=0\x7"
 if has("gui_running")
     set guioptions-=T
     set guioptions+=e
-    set t_Co=256
     set guitablabel=%M\ %t
 endif
 
@@ -217,6 +336,10 @@ set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
 
+" Show tabs, trailing space and nbsp
+set list
+set listchars=tab:➪\ ,trail:␣,nbsp:☠
+
 
 """"""""""""""""""""""""""""""
 " => Visual mode related
@@ -251,22 +374,20 @@ map <C-l> <C-W>l
 map <leader>bd :Bclose<cr>
 
 " Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+map <leader>ba :bufdo bd<cr>
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove
+" Move between buffers
+map <M-h> :bprevious<cr>
+map <M-l> :bnext<cr>
 
-" Opens a new tab with the current buffer's path
+" Opens a new buffer with the current buffer's path
 " Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+map <leader>te :edit <c-r>=expand("%:p:h")<cr>/
 
 " Switch CWD to the directory of the open buffer
 map <leader>cd :cd %:p:h<cr>:pwd<cr>
 
-" Specify the behavior when switching between buffers 
+" Specify the behavior when switching between buffers
 try
   set switchbuf=useopen,usetab,newtab
   set stal=2
@@ -278,6 +399,7 @@ autocmd BufReadPost *
      \ if line("'\"") > 0 && line("'\"") <= line("$") |
      \   exe "normal! g`\"" |
      \ endif
+
 " Remember info about open buffers on close
 set viminfo^=%
 
@@ -285,11 +407,6 @@ set viminfo^=%
 """"""""""""""""""""""""""""""
 " => Status line
 """"""""""""""""""""""""""""""
-" Statusline provided by powerline
-let g:powerline_pycmd = 'py3'
-"python3 from powerline.vim import setup as powerline_setup
-"python3 powerline_setup()
-"python3 del powerline_setup
 
 " Always show the status line
 set laststatus=2
@@ -385,12 +502,36 @@ map <leader>s? z=
 noremap <Leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Quickly open a buffer for scripbble
-map <leader>q :e ~/buffer<cr>
+map <leader>q :e /tmp/workspace<cr>
 
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Neovim specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    " Use true colors
+    set termguicolors
+    " Change cursor shape between modes
+    :let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
+    " Load Archlinux specific vimfiles
+    set runtimepath^=/usr/share/vim/vimfiles
+    " ESC for exit terminal mode
+    tnoremap <Esc> <C-\><C-n>
+    " Window navigation in terminal mode
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+    " ShaDa
+    set shada='1000,f1,<500,:100,/100,h,%
+    " Turn off list mode in terminal
+    autocmd TermOpen * setlocal nolist
+    " Live command preview
+    set inccommand=split
+endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions

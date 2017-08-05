@@ -1,3 +1,6 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Helper function
 uniqappend () {
     varname=$1
@@ -49,49 +52,117 @@ export TOOL_DIR=$HOME/tools
 
 # Extra Path
 if [ -d $HOME/.local/bin ]; then
-    uniqprepend PATH $HOME/.local/bin
+    uniqappend PATH $HOME/.local/bin
 fi
 
 # Detect extra installations in tools
-INCLUDE=${INCLUDE:-}
-LIB=${LIB:-}
-LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}
-PATH=${PATH:-}
-for pkg in $TOOL_DIR/*; do
-    case $pkg in
-        *.skip)
-            continue;;
-    esac
-    inc_dir=$pkg/include
-    bin_dir=$pkg/bin
-    lib_dir=$pkg/lib
-    if ! [ -d $lib_dir ]; then
-        lib_dir=$pkg/lib64
-    fi
-    if [ -d $inc_dir ]; then
-        uniqprepend INCLUDE $inc_dir
-    fi
-    if [ -d $bin_dir ]; then
-        uniqprepend PATH $bin_dir
-    fi
-    if [ -d $lib_dir ]; then
-        uniqprepend LD_LIBRARY_PATH $lib_dir
-        uniqprepend LIB $lib_dir
-    fi
-done
-export PATH
-export LD_LIBRARY_PATH
-export INCLUDE
-export LIB
+AUTO_DETECT=true
+if $AUTO_DETECT; then
+    INCLUDE=${INCLUDE:-}
+    LIB=${LIB:-}
+    LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}
+    PATH=${PATH:-}
+    for pkg in $TOOL_DIR/*; do
+        case $pkg in
+            *.skip)
+                continue;;
+        esac
+        inc_dir=$pkg/include
+        bin_dir=$pkg/bin
+        lib_dir=$pkg/lib
+        lib64_dir=$pkg/lib64
+        if [ -d $inc_dir ]; then
+            uniqprepend INCLUDE $inc_dir
+        fi
+        if [ -d $bin_dir ]; then
+            uniqprepend PATH $bin_dir
+        fi
+        if [ -d $lib_dir ]; then
+            uniqprepend LD_LIBRARY_PATH $lib_dir
+            uniqprepend LIB $lib_dir
+        fi
+        if [ -d $lib64_dir ]; then
+            uniqprepend LD_LIBRARY_PATH $lib64_dir
+            uniqprepend LIB $lib64_dir
+        fi
+
+        for cmake_dir in $pkg/share/*/cmake; do
+            if [ -d $cmake_dir ]; then
+                uniqprepend CMAKE_PREFIX_PATH $pkg
+            fi
+        done
+    done
+    export PATH
+    export LD_LIBRARY_PATH
+    export INCLUDE
+    export LIB
+    export CMAKE_PREFIX_PATH
+fi
 
 # Package specific variables
-export JAVA_HOME=/usr/lib/jvm/java-8-oracle/
+export JAVA_HOME=$TOOL_DIR/ibm-java-ppc64le-80
+
+export TERM=xterm-256color
 
 # Alias
 alias ls='ls --color=auto -h -v --indicator-style=classify'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
+alias bd=". bd -si"
 
 # Editor
 export EDITOR=vim
+
+# liquid prompt
+PS1='PS1' # fix warning in liquidprompt due to PS1 is empty
+## disable vcs on large repo
+LP_DISABLED_VCS_PATH="$BUILD_DIR/q:$BUILD_DIR/models:$BUILD_DIR/fold:$BUILD_DIR/tensorflow-rpcdev:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
+. ~/.liquidprompt/liquidprompt
+
+# vex completion
+eval "$(vex --shell-config bash)"
+
+# Spack package manager
+export SPACK_ROOT=$TOOL_DIR/spack
+# don't load shell integration, which is too slow. We explicitly set MODULEPATH
+# common used modules are loaded as spack view in $TOOL_DIR/spack_packages
+#. $SPACK_ROOT/share/spack/setup-env.sh
+export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
+
+# check if we are on login node
+if type module > /dev/null 2> /dev/null; then
+    :
+    # on login node, don't do anything
+else
+    # Set the path directly without call into spack to speed up
+    #SPACK_LMOD_HOME=`spack location --install-dir lmod`
+    SPACK_LMOD_HOME='/gpfs/gpfs0/groups/chowdhury/peifeng/tools/spack/opt/spack/linux-rhel7-ppc64le/gcc-6.3.0/lmod-7.4.11-yq7bdkgtnqcsmxlch55uyxpyfxf5nknw'
+    . $SPACK_LMOD_HOME/lmod/lmod/init/bash
+fi
+
+if [[ -f $HOME/.modules ]]; then
+    . $HOME/.modules
+fi
+
+# setup extra environment variables
+#export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
+#export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
+#export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
+# compile time library path list
+export LIBRARY_PATH=$LD_LIBRARY_PATH
+# set compiler to gcc and g++
+export CC=gcc
+export CXX=g++
+
+# setup completion for inter command
+eval "$(inter --print-complete)"
+
+# Make SSH_AUTH_SOCK points to a fixed location
+if [[ -n $SSH_AUTH_SOCK && ! -h $SSH_AUTH_SOCK ]]; then
+    ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
+    export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
+fi
+
+# Disable TTY XON/XOFF
+stty -ixon
