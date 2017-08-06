@@ -1,6 +1,3 @@
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
 # Helper function
 uniqappend () {
     varname=$1
@@ -100,8 +97,14 @@ if $AUTO_DETECT; then
 fi
 
 # Package specific variables
-export JAVA_HOME=$TOOL_DIR/ibm-java-ppc64le-80
+#export JAVA_HOME=$TOOL_DIR/ibm-java-ppc64le-80
 
+# If not running interactively, exit after setting up paths
+[[ $- != *i* ]] && return
+
+#------------------------------------------------------------
+# Following section only applies to an interactive session
+#------------------------------------------------------------
 export TERM=xterm-256color
 
 # Alias
@@ -128,22 +131,7 @@ export SPACK_ROOT=$TOOL_DIR/spack
 # don't load shell integration, which is too slow. We explicitly set MODULEPATH
 # common used modules are loaded as spack view in $TOOL_DIR/spack_packages
 #. $SPACK_ROOT/share/spack/setup-env.sh
-export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
-
-# check if we are on login node
-if type module > /dev/null 2> /dev/null; then
-    :
-    # on login node, don't do anything
-else
-    # Set the path directly without call into spack to speed up
-    #SPACK_LMOD_HOME=`spack location --install-dir lmod`
-    SPACK_LMOD_HOME='/gpfs/gpfs0/groups/chowdhury/peifeng/tools/spack/opt/spack/linux-rhel7-ppc64le/gcc-6.3.0/lmod-7.4.11-yq7bdkgtnqcsmxlch55uyxpyfxf5nknw'
-    . $SPACK_LMOD_HOME/lmod/lmod/init/bash
-fi
-
-if [[ -f $HOME/.modules ]]; then
-    . $HOME/.modules
-fi
+#export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
 
 # setup extra environment variables
 #export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
@@ -156,7 +144,7 @@ export CC=gcc
 export CXX=g++
 
 # setup completion for inter command
-eval "$(inter --print-complete)"
+#eval "$(inter --print-complete)"
 
 # Make SSH_AUTH_SOCK points to a fixed location
 if [[ -n $SSH_AUTH_SOCK && ! -h $SSH_AUTH_SOCK ]]; then
