@@ -113,6 +113,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
 alias bd=". bd -si"
+alias kfg="kill \$(jobs -p); fg"
 
 # Editor
 export EDITOR=vim
