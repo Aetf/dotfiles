@@ -97,7 +97,7 @@ if $AUTO_DETECT; then
 fi
 
 # Package specific variables
-#export JAVA_HOME=$TOOL_DIR/ibm-java-ppc64le-80
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
