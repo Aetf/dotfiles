@@ -94,7 +94,7 @@ kwin4_effect_fadedesktopEnabled=false
 kwin4_effect_scaleinEnabled=true
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
-minimizeanimationEnabled=false
+minimizeanimationEnabled[$d]
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
