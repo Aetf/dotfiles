@@ -11,5 +11,20 @@ wmclass=yakuake yakuake
 wmclasscomplete=true
 wmclassmatch=1
 
+[2]
+Description=Firefox Nightly No Window Decoration
+clientmachine=aetf-arch-mac
+clientmachinematch=0
+noborder=true
+noborderrule=2
+title=Nightly
+titlematch=0
+types=1
+windowrole=browser
+windowrolematch=1
+wmclass=firefoxnightly
+wmclasscomplete=false
+wmclassmatch=1
+
 [General]
-count=1
+count=2
