@@ -10,6 +10,7 @@
     cpp:
       default_beautifier: "clang-format"
     general:
+      _analyticsUserId: "3c4a76bd-aecc-4c3c-8441-00c282b4fe50"
       analytics: false
       beautifyEntireFileOnSave: false
       muteUnsupportedLanguageErrors: true
@@ -65,6 +66,8 @@
       "markdown-preview"
       "activate-power-mode"
       "language-python"
+      "minimap-autohider"
+      "fancy-bracket-matcher"
     ]
     projectHome: "/home/aetf/develop/js"
     telemetryConsent: "limited"
@@ -102,6 +105,7 @@
     maxLineLength: 120
   "linter-ui-default":
     panelHeight: 81
+    showPanel: true
   "markdown-pdf": {}
   "markdown-preview": {}
   "markdown-preview-enhanced":
