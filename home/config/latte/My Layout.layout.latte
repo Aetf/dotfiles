@@ -1,9 +1,6 @@
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
 
-[AppletGlobals][org.kde.plasma.notifications]
-popupPosition=3
-
 [Containments][1]
 activityId=
 formfactor=2
@@ -104,6 +101,7 @@ immutability=1
 plugin=org.kde.latte.plasmoid
 
 [Containments][1][Applets][2][Configuration][General]
+isInLatteDock=true
 launchers=multi;*;3;file:///usr/share/applications/firefox-nightly.desktop;file:///usr/share/applications/atom.desktop;file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
 
 [Containments][1][Applets][34]
@@ -114,20 +112,23 @@ plugin=org.kde.plasma.panelspacer
 length=119
 
 [Containments][1][ConfigDialog]
-DialogHeight=1010
+DialogHeight=1149
 DialogWidth=900
 
 [Containments][1][General]
+advanced=true
 appletOrder=2;34;12;13;11
 dotsOnActive=true
 iconMargin=5
 iconSize=96
+launchersGroup=Layout
 maxLength=85
 proportionIconSize=6.5
 reverseLinesPosition=true
 showToolTips=true
 showWindowActions=true
 threeColorsWindows=true
+titleTooltips=true
 
 [Containments][15]
 activityId=
@@ -174,12 +175,12 @@ clock_timeformat=AP h:mm
 timer_sfx_filepath=file:///usr/share/sounds/freedesktop/stereo/bell.oga
 
 [Containments][15][Applets][30][Configuration][Google Calendar]
-access_token=SGK58lk7YNdYPgNUQs8B03EdP9sYPhBQqhc0j0xfG2+wVHvkpft39ds9IgsUtLj+As/2y5vKrXvdK9dcU/uCT0YQQd5Mdy5CJYVLehaI+gKR1+cLW1ohhTVQxTgOsqezetui0Z5hiGy/LZ4GX8XxGgCGmQG2zRMqldCdymn2a0qSyVyEuGUtO4PgvfNta7hu
+access_token=ya29.Gl2uBA52Icj9C5a5qs_-U3HgVLzo7fmad38p-Y5qinhgllj6mNIsvdmU_50fQTy8gfNXXZyJIyOKvT8OtFRGAflqsPcHkvO3GlMe25SaXwR63UsjdPqLOuCmszPBn0g
 access_token_expires_at=41979066
 access_token_type=Bearer
 calendar_id_list=peifeng@umich.edu,7437103@gmail.com,#contacts@group.v.calendar.google.com
 calendar_list=W3sia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ5MjU2MDIyMDYwNTAwMFwiIiwiaWQiOiJwZWlmZW5nQHVtaWNoLmVkdSIsInN1bW1hcnkiOiJwZWlmZW5nQHVtaWNoLmVkdSIsInRpbWVab25lIjoiQW1lcmljYS9OZXdfWW9yayIsInN1bW1hcnlPdmVycmlkZSI6IkFjZGFtaWMiLCJjb2xvcklkIjoiMTYiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjNDk4NmU3IiwiZm9yZWdyb3VuZENvbG9yIjoiIzAwMDAwMCIsInNlbGVjdGVkIjp0cnVlLCJhY2Nlc3NSb2xlIjoid3JpdGVyIiwiZGVmYXVsdFJlbWluZGVycyI6W119LHsia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ0MDYxOTY1NDAzNTAwMFwiIiwiaWQiOiI3NDM3MTAzQGdtYWlsLmNvbSIsInN1bW1hcnkiOiI3NDM3MTAzQGdtYWlsLmNvbSIsInRpbWVab25lIjoiQW1lcmljYS9OZXdfWW9yayIsInN1bW1hcnlPdmVycmlkZSI6Ijc0MzcxMDNAZ21haWwuY29tIiwiY29sb3JJZCI6IjE3IiwiYmFja2dyb3VuZENvbG9yIjoiIzlhOWNmZiIsImZvcmVncm91bmRDb2xvciI6IiMwMDAwMDAiLCJzZWxlY3RlZCI6dHJ1ZSwiYWNjZXNzUm9sZSI6Im93bmVyIiwiZGVmYXVsdFJlbWluZGVycyI6W3sibWV0aG9kIjoiZW1haWwiLCJtaW51dGVzIjoxMH0seyJtZXRob2QiOiJwb3B1cCIsIm1pbnV0ZXMiOjEwfV0sIm5vdGlmaWNhdGlvblNldHRpbmdzIjp7Im5vdGlmaWNhdGlvbnMiOlt7InR5cGUiOiJldmVudENyZWF0aW9uIiwibWV0aG9kIjoiZW1haWwifSx7InR5cGUiOiJldmVudENoYW5nZSIsIm1ldGhvZCI6ImVtYWlsIn0seyJ0eXBlIjoiZXZlbnRDYW5jZWxsYXRpb24iLCJtZXRob2QiOiJlbWFpbCJ9LHsidHlwZSI6ImV2ZW50UmVzcG9uc2UiLCJtZXRob2QiOiJlbWFpbCJ9XX0sInByaW1hcnkiOnRydWV9LHsia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ0NjE0Mzc2MzE0NjAwMFwiIiwiaWQiOiIjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29tIiwic3VtbWFyeSI6IkNvbnRhY3RzIiwidGltZVpvbmUiOiJBbWVyaWNhL05ld19Zb3JrIiwiY29sb3JJZCI6IjIiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZDA2YjY0IiwiZm9yZWdyb3VuZENvbG9yIjoiIzAwMDAwMCIsInNlbGVjdGVkIjp0cnVlLCJhY2Nlc3NSb2xlIjoicmVhZGVyIiwiZGVmYXVsdFJlbWluZGVycyI6W119XQ==
-refresh_token=isYdBZJ+2VHKtM0vQWSaXopkmRLK1LjQwH5jiFtLXjbrLjs0YSz+J8l/Ywkc6KgON6hd1mkM4kw+kJjem3e8JA==
+refresh_token=1/-crK1wkHLCDhbd_aXma63e_J1UY4eMG-esxC0lM_Nq4
 
 [Containments][15][Applets][30][Configuration][Weather]
 weather_city_id=4984247
@@ -288,38 +289,9 @@ extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.c
 hiddenItems=65013358
 knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier,org.kde.kdeconnect
 
-[Containments][4]
-activityId=
-dockWindowBehavior=false
-formfactor=2
-immutability=1
-lastScreen=-1
-location=4
-onPrimary=true
-plugin=org.kde.latte.containment
-raiseOnActivityChange=false
-raiseOnDesktopChange=false
-session=1
-timerHide=700
-timerShow=200
-visibility=2
-wallpaperplugin=org.kde.image
-
-[Containments][4][Applets][5]
-immutability=1
-plugin=org.kde.latte.plasmoid
-
-[Containments][4][Applets][5][Configuration][General]
-isInLatteDock=true
-launchers=multi
-
-[Containments][4][Applets][6]
-immutability=1
-plugin=org.kde.plasma.analogclock
-
-[Containments][4][ConfigDialog]
-DialogHeight=987
-DialogWidth=900
-
-[Containments][4][General]
-appletOrder=5;6
+[LayoutSettings]
+activities=
+color=blue
+launchers=file:///usr/share/applications/firefox-nightly.desktop,file:///usr/share/applications/atom.desktop,file:///home/aetf/.local/share/applications/netease-cloud-music.desktop,file:///usr/share/applications/org.kde.kdevelop.desktop
+showInMenu=true
+version=2
