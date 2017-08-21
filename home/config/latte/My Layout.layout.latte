@@ -103,13 +103,7 @@ plugin=org.kde.latte.plasmoid
 [Containments][1][Applets][2][Configuration][General]
 isInLatteDock=true
 launchers=multi;*;3;file:///usr/share/applications/firefox-nightly.desktop;file:///usr/share/applications/atom.desktop;file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
-
-[Containments][1][Applets][34]
-immutability=1
-plugin=org.kde.plasma.panelspacer
-
-[Containments][1][Applets][34][Configuration][General]
-length=119
+launchers59=file:///usr/share/applications/firefox-nightly.desktop,file:///usr/share/applications/atom.desktop,file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
 
 [Containments][1][ConfigDialog]
 DialogHeight=1149
@@ -117,14 +111,20 @@ DialogWidth=900
 
 [Containments][1][General]
 advanced=true
-appletOrder=2;34;12;13;11
+appletOrder=2;12;13;11
 dotsOnActive=true
-iconMargin=5
+iconMargin=55
 iconSize=96
 launchersGroup=Layout
 maxLength=85
-proportionIconSize=6.5
+panelSize=40
+panelTransparency=35
+proportionIconSize=7
 reverseLinesPosition=true
+shadowColor=31363b
+shadowOpacity=100
+shadowSize=20
+showGlow=true
 showToolTips=true
 showWindowActions=true
 threeColorsWindows=true
@@ -207,13 +207,15 @@ meltdownTemperature=95
 resources=[{"alias":"Core","childSourceObjects":{"acpi/Thermal_Zone/0-pch_wildcat_point/Temperature":{"temperature":0},"acpi/Thermal_Zone/1-x86_pkg_temp/Temperature":{"temperature":0},"acpi/Thermal_Zone/2-BAT0/Temperature":{"temperature":0},"lmsensors/BAT0-virtual-0/temp1":{"temperature":0},"lmsensors/applesmc-isa-0300/Right_Side__":{"temperature":0},"lmsensors/applesmc-isa-0300/TA0P":{"temperature":0},"lmsensors/applesmc-isa-0300/TB0T":{"temperature":0},"lmsensors/applesmc-isa-0300/TB1T":{"temperature":0},"lmsensors/applesmc-isa-0300/TB2T":{"temperature":0},"lmsensors/applesmc-isa-0300/TBXT":{"temperature":0},"lmsensors/applesmc-isa-0300/TC0C":{"temperature":0},"lmsensors/applesmc-isa-0300/TC0E":{"temperature":0},"lmsensors/applesmc-isa-0300/TC0F":{"temperature":0},"lmsensors/applesmc-isa-0300/TC0P":{"temperature":0},"lmsensors/applesmc-isa-0300/TC1C":{"temperature":0},"lmsensors/applesmc-isa-0300/TCGC":{"temperature":0},"lmsensors/applesmc-isa-0300/TCSA":{"temperature":0},"lmsensors/applesmc-isa-0300/TCXC":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0A":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0B":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0C":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0F":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0R":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0V":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0a":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0b":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0c":{"temperature":0},"lmsensors/applesmc-isa-0300/TH0x":{"temperature":0},"lmsensors/applesmc-isa-0300/THSP":{"temperature":0},"lmsensors/applesmc-isa-0300/TM0P":{"temperature":0},"lmsensors/applesmc-isa-0300/TMLB":{"temperature":0},"lmsensors/applesmc-isa-0300/TPCD":{"temperature":0},"lmsensors/applesmc-isa-0300/TW0P":{"temperature":0},"lmsensors/applesmc-isa-0300/Th1H":{"temperature":0},"lmsensors/applesmc-isa-0300/Ts0P":{"temperature":0},"lmsensors/applesmc-isa-0300/Ts0S":{"temperature":0},"lmsensors/applesmc-isa-0300/Ts1P":{"temperature":0},"lmsensors/applesmc-isa-0300/Ts1S":{"temperature":0},"lmsensors/applesmc-isa-0300/Ts2S":{"temperature":0},"lmsensors/coretemp-isa-0000/Core_0":{"temperature":0},"lmsensors/coretemp-isa-0000/Core_1":{"temperature":0},"lmsensors/coretemp-isa-0000/Package_id_0":{"temperature":0},"lmsensors/pch_wildcat_point-virtual-0/temp1":{"temperature":0},"udisks/APPLE_SSD_SM0128G_S29BNYAG634845":{"temperature":0}},"meltdownTemperature":90,"overrideLimitTemperatures":false,"sourceName":"lmsensors/coretemp-isa-0000/Package_id_0","virtual":false,"warningTemperature":70}]
 
 [Containments][15][ConfigDialog]
-DialogHeight=987
+DialogHeight=1149
 DialogWidth=900
 
 [Containments][15][General]
+advanced=true
 appletOrder=18;31;30
+disablePanelShadowForMaximized=true
 durationTime=x1
-lockedZoomApplets=31
+lockedZoomApplets=42;43;44;45;31
 maxLength=30
 panelPosition=Right
 panelSize=100
@@ -276,10 +278,6 @@ plugin=org.kde.kdeconnect
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
-[Containments][19][Applets][35]
-immutability=1
-plugin=audoban.applet.playbar
-
 [Containments][19][ConfigDialog]
 DialogHeight=960
 DialogWidth=1280
@@ -292,6 +290,6 @@ knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.m
 [LayoutSettings]
 activities=
 color=blue
-launchers=file:///usr/share/applications/firefox-nightly.desktop,file:///usr/share/applications/atom.desktop,file:///home/aetf/.local/share/applications/netease-cloud-music.desktop,file:///usr/share/applications/org.kde.kdevelop.desktop
+launchers=file:///usr/share/applications/firefox-nightly.desktop,file:///usr/share/applications/atom.desktop,file:///home/aetf/.local/share/applications/netease-cloud-music.desktop,file:///usr/share/applications/org.kde.kdevelop.desktop,file:///latte-separator.desktop
 showInMenu=true
 version=2

@@ -1,5 +1,8 @@
+[Containments][38][General]
+appletOrder=39;40
+
 [Containments][7][General]
-appletOrder=8;9
+appletOrder[$d]
 
 [FileDialogSize]
 Height 1600=755
@@ -10,10 +13,10 @@ Recent Files[$e]=bell.oga,file:///usr/share/sounds/freedesktop/stereo/bell.oga
 Recent URLs[$e]=file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/
 
 [PlasmaTransientsConfig]
-raiseOnActivityChange[$d]
-raiseOnDesktopChange[$d]
-timerHide[$d]
-timerShow[$d]
+raiseOnActivityChange=false
+raiseOnDesktopChange=false
+timerHide=700
+timerShow=200
 visibility[$d]
 
 [ScreenConnectors]
