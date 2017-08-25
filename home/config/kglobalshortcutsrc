@@ -50,7 +50,7 @@ _k_friendly_name=电源管理
 display=Display,Display\tMeta+P,切换显示器
 
 [khotkeys]
-_k_friendly_name=系统设置
+_k_friendly_name=KDE Daemon
 {2b5c4d1c-8509-4cb0-8def-b4a8f44c7762}=Launch (C),none,Start Screenshot Tool
 {4a2211f5-5898-40ea-bf41-1088f397b99f}=Meta+F,none,Run Firefox
 {545e5b26-ffc4-4281-97be-14425281f599}=Meta+Launch (C),none,Take Active Window Screenshot

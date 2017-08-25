@@ -308,7 +308,7 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/nsdi18/pages/intro.tex
+LastDocument[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
 SingleFileMasterDocument[$e]=$HOME/develop/latex/nsdi18/nsdi18.tex
 lastDir[$e]=$HOME/
 
@@ -335,7 +335,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/nsdi18.kilepr
 MainwindowHeight=773
 MainwindowWidth=1280
 horizontalSplitterLeft=29
-horizontalSplitterRight=731
+horizontalSplitterRight=728
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
