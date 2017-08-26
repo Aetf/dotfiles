@@ -1,5 +1,6 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
+/*
 #main-window {
   background: #475057 !important;
 }
@@ -71,6 +72,7 @@
 #identity-icon:-moz-window-inactive {
   list-style-image: url(chrome://browser/skin/identity-icon.svg#normal) !important;
 }
+*/
 
 /* -- Firefox Icon -- */
 #hctp_fx_app_button_item {
@@ -85,6 +87,7 @@
 
 /* -- Window control buttons (Breeze style) -- */
 
+/*
 #hcp-mmc-buttons-item {
   display: flex;
   justify-content: stretch;
@@ -105,114 +108,134 @@
 #main-window #hcp-controls-paletteitem .hNew_mmcbuttons:not(:hover) {
   opacity: 1 !important;
 }
+*/
 
 /* --- Close button --- */
-#hctp_close_but {
-  order: 1;
+toolbar #_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:hover > .toolbarbutton-badge-stack{
+    background: none !important;
+}
+
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action {
+  /*order: 1;*/
   list-style-image: none !important;
-  
-  background-size: contain;
+
+  background-size: 55%;
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
   background-image: url("titlebuttons/titlebutton-close@2.png");
 }
-#hctp_close_but:hover {
+
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:hover {
   background-image: url("titlebuttons/titlebutton-close-hover@2.png");
   filter: brightness(1.4) hue-rotate(15deg);
 }
-#hctp_close_but:active,#hctp_close_but:active:hover {
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:active,
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:active:hover {
   background-image: url("titlebuttons/titlebutton-close-active@2.png");
 }
 /* ---- Close button (inactive) ---- */
-#hctp_close_but:-moz-window-inactive {
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-close-backdrop@2.png");
 }
-#hctp_close_but:hover:-moz-window-inactive {
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-close-hover-backdrop@2.png");
 }
-#hctp_close_but:active:-moz-window-inactive,#hctp_close_but:active:hover:-moz-window-inactive {
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:active:-moz-window-inactive,
+#_9df09ddc-e0c8-499d-836c-3a701f49a5af_-browser-action:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-close-active-backdrop@2.png");
 }
 
 /* --- Minimize button --- */
-#hctp_minimize_but {
-  order: 2;
+toolbar #_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:hover > .toolbarbutton-badge-stack {
+    background: none !important;
+}
+
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action {
+  /*order: 2;*/
   list-style-image: none !important;
 
-  background-size: contain;
+  background-size: 55%;
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
   background-image: url("titlebuttons/titlebutton-minimize@2.png");
 }
-#hctp_minimize_but:hover {
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:hover {
   background-image: url("titlebuttons/titlebutton-minimize-hover@2.png");
 }
-#hctp_minimize_but:active,#hctp_minimize_but:active:hover {
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:active,
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:active:hover {
   background-image: url("titlebuttons/titlebutton-minimize-active@2.png");
 }
 /* ---- Minimize button (inactive) ---- */
-#hctp_minimize_but:-moz-window-inactive {
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-minimize-backdrop@2.png");
 }
-#hctp_minimize_but:hover:-moz-window-inactive {
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-minimize-hover-backdrop@2.png");
 }
-#hctp_minimize_but:active:-moz-window-inactive,#hctp_minimize_but:active:hover:-moz-window-inactive {
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:active:-moz-window-inactive,
+#_d15466ae-5029-4ea8-bd98-6a1b0adb58f4_-browser-action:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-minimize-active-backdrop@2.png");
 }
 
 /* --- Maximize button --- */
-#hctp_restore_but {
-  order: 3;
+toolbar #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:hover > .toolbarbutton-badge-stack {
+    background: none !important;
+}
+
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action {
+  /*order: 3;*/
   list-style-image: none !important;
 
-  background-size: contain;
+  background-size: 55%;
   background-repeat: no-repeat;
   background-position: center;
   background-color: inherit !important;
   background-image: url("titlebuttons/titlebutton-maximize@2.png");
 }
-#hctp_restore_but:hover {
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:hover {
   background-image: url("titlebuttons/titlebutton-maximize-hover@2.png");
 }
-#hctp_restore_but:active,#hctp_restore_but:active:hover {
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active,
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:hover {
   background-image: url("titlebuttons/titlebutton-maximize-active@2.png");
 }
 /* ---- Maximize button (inactive) ---- */
-#hctp_restore_but:-moz-window-inactive {
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-backdrop@2.png");
 }
-#hctp_restore_but:hover:-moz-window-inactive {
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-hover-backdrop@2.png");
 }
-#hctp_restore_but:active:-moz-window-inactive,$hctp_restore_but:active:hover:-moz-window-inactive {
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:-moz-window-inactive,
+#_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-active-backdrop@2.png");
 }
 /* ---- Maximize button (maximized) ---- */
-#main-window:not([sizemode="normal"]) #hctp_restore_but {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action {
   background-image: url("titlebuttons/titlebutton-maximize-maximized@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:hover {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:hover {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-hover@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:active {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-active@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:active:hover {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:hover {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-active@2.png");
 }
 /* ---- Maximize button (maximized, inactive) ---- */
-#main-window:not([sizemode="normal"]) #hctp_restore_but:-moz-window-inactive {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-backdrop@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:hover:-moz-window-inactive {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-hover-backdrop@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:active:-moz-window-inactive {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-active-backdrop@2.png");
 }
-#main-window:not([sizemode="normal"]) #hctp_restore_but:active:hover:-moz-window-inactive {
+#main-window:not([sizemode="normal"]) #_28a53f32-f6bf-4f28-9d3a-58b26c8eeb5d_-browser-action:active:hover:-moz-window-inactive {
   background-image: url("titlebuttons/titlebutton-maximize-maximized-active-backdrop@2.png");
 }
