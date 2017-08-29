@@ -34,6 +34,18 @@ Host vps-trans
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h-trans:%p
     ControlPersist yes
+Host archvps
+    User aetf
+    HostName 104.207.141.153
+    Port 59901
+    ForwardX11 no
+    ForwardAgent yes
+    IdentityFile ~/.ssh/id_rsa
+    IdentitiesOnly yes
+    RequestTTY force
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
 Host ccgpu
     User cc
     HostName 129.114.108.110
