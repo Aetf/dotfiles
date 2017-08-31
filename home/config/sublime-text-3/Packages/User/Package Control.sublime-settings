@@ -59,6 +59,7 @@
 		"SublimeLinter-coffeelint",
 		"SublimeLinter-contrib-eslint",
 		"SublimeLinter-cppcheck",
+		"SublimeLinter-xmllint",
 		"Theme - Spacegray",
 		"Valgrind"
 	],
