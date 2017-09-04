@@ -10,7 +10,7 @@ log() {
 target_attributes=('access_token' 'refresh_token')
 
 isTargetLine() {
-    local line=$1
+    local line="$1"
     for attr in "${target_attributes[@]}"; do
         attr="$attr="
         if [[ "${line:0:${#attr}}" == "$attr" ]]; then
@@ -29,7 +29,7 @@ tryDecrypt() {
     local encrypted exitCode payload
     tryDecryptOut=
 
-    encrypted=$1
+    encrypted="$1"
 
     # try base64 decode, we don't store the result, because bash is not good at handle binary data (espasically null byte)
     echo "$encrypted" | base64 -d 1>/dev/null 2>&1
@@ -97,7 +97,7 @@ decrypt() {
 
 do_diff() {
     log "do_diff"
-    exec < $1
+    exec < "$1"
     decrypt
     log "do_diff done"
 }
@@ -119,7 +119,7 @@ init() {
 
 # Begins main
 log "main"
-act=$1
+act="$1"
 shift
 
 log "action is $act"
@@ -132,7 +132,7 @@ case $act in
         decrypt
         ;;
     diff*)
-        do_diff $1
+        do_diff "$1"
         ;;
     init*)
         init "$@"
