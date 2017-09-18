@@ -97,7 +97,7 @@ if $AUTO_DETECT; then
 fi
 
 # Package specific variables
-export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+export JAVA_HOME=$TOOLS/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
@@ -113,7 +113,7 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -al'
 alias bd=". bd -si"
-alias kfg="kill \$(jobs -p); fg"
+alias kfg="kill -- -\$(jobs -p); fg"
 
 # Editor
 export EDITOR=vim
@@ -134,10 +134,16 @@ export SPACK_ROOT=$TOOL_DIR/spack
 #. $SPACK_ROOT/share/spack/setup-env.sh
 #export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
 
+if type module >/dev/null 2>/dev/null; then
+    if [[ -f $HOME/.modules ]]; then
+        . $HOME/.modules
+    fi
+fi
+
 # setup extra environment variables
-#export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
-#export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
-#export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
+export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
+export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
+export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
 # compile time library path list
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 # set compiler to gcc and g++
@@ -145,7 +151,7 @@ export CC=gcc
 export CXX=g++
 
 # setup completion for inter command
-#eval "$(inter --print-complete)"
+eval "$(inter --print-complete)"
 
 # Make SSH_AUTH_SOCK points to a fixed location
 if [[ -n $SSH_AUTH_SOCK && ! -h $SSH_AUTH_SOCK ]]; then
