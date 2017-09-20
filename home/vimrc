@@ -122,6 +122,17 @@ let g:airline_powerline_fonts=1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 0
 let g:airline#extensions#tabline#buffers_label = 'Buffers'
+let g:airline#extensions#tmuxline#enabled = 0
+
+" Tmuxline
+Plug 'edkolev/tmuxline.vim'
+" let g:tmuxline_preset='full'
+let g:tmuxline_preset = {
+      \'a'    : '#S',
+      \'win'  : ['#I', '#W'],
+      \'cwin'  : ['#I', '#W', '#F'],
+      \'y'    : '#H',
+      \'z'    : '%H:%M:%S'}
 
 " Initialize plugin system
 call plug#end()
@@ -377,8 +388,8 @@ map <leader>bd :Bclose<cr>
 map <leader>ba :bufdo bd<cr>
 
 " Move between buffers
-map <M-h> :bprevious<cr>
-map <M-l> :bnext<cr>
+map <A-h> :bprevious<cr>
+map <A-l> :bnext<cr>
 
 " Opens a new buffer with the current buffer's path
 " Super useful when editing files in the same directory

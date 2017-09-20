@@ -97,7 +97,7 @@ if $AUTO_DETECT; then
 fi
 
 # Package specific variables
-export JAVA_HOME=$TOOLS/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
+export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
@@ -123,6 +123,9 @@ PS1='PS1' # fix warning in liquidprompt due to PS1 is empty
 ## disable vcs on large repo
 LP_DISABLED_VCS_PATH="$BUILD_DIR/q:$BUILD_DIR/models:$BUILD_DIR/fold:$BUILD_DIR/tensorflow-rpcdev:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
 . ~/.liquidprompt/liquidprompt
+LP_TITLE_OPEN='\033k'
+LP_TITLE_CLOSE='\033\\'
+#PROMPT_COMMAND="$PROMPT_COMMAND ; PS1=\$(_lp_title \${HOSTNAME}: \${PWD##*/})\$PS1"
 
 # vex completion
 eval "$(vex --shell-config bash)"
