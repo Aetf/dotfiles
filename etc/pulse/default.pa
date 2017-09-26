@@ -135,9 +135,6 @@ load-module module-role-cork
 load-module module-filter-heuristics
 load-module module-filter-apply
 
-### Automatically switch to newly-connected devices
-load-module module-switch-on-connect
-
 ### Make some devices default
 #set-default-sink output
 #set-default-source input
