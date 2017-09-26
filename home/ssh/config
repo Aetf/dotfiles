@@ -48,9 +48,10 @@ Host archvps
     ControlPersist yes
 Host ccgpu
     User cc
-    HostName 129.114.108.110
+    HostName 129.114.108.183
     ForwardX11 no
     ForwardX11Trusted no
+    ForwardAgent yes
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
     RequestTTY force
@@ -61,7 +62,7 @@ Host ccgpu
     ControlPersist yes
 Host ccgpu-trans
     User cc
-    HostName 129.114.108.110
+    HostName 129.114.108.183
     ForwardX11 no
     ForwardX11Trusted no
     UserKnownHostsFile /dev/null
@@ -69,9 +70,10 @@ Host ccgpu-trans
     Compression yes
 Host cc
     User cc
-    HostName 129.114.108.86
-    ForwardX11 no
-    ForwardX11Trusted no
+    HostName 129.114.108.180
+    ForwardX11 yes
+    ForwardX11Trusted yes
+    ForwardAgent yes
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
     LocalForward 6006 localhost:6006
