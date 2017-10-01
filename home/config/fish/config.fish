@@ -115,11 +115,32 @@ set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
 set -e _JAVA_OPTIONS
 
 # Default command for fzf
-set -x FZF_DEFAULT_COMMAND 'plocate "^"(pwd)'
+#set -x FZF_DEFAULT_COMMAND 'plocate "^"(pwd)'
 ## paste the selected entry onto command line
-set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
+#set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 ## cd into directory
-set -x FZF_ALT_C_COMMAND 'plocate -t dir "^"(pwd)'
+#set -x FZF_ALT_C_COMMAND 'plocate -t dir "^"(pwd)'
+## Solarized colors
+set -x FZF_DEFAULT_OPTS "
+  --height 40% --border
+  --color=bg+:#393939,bg:#2d2d2d,spinner:#66cccc,hl:#6699cc
+  --color=fg:#a09f93,header:#6699cc,info:#ffcc66,pointer:#66cccc
+  --color=marker:#66cccc,fg+:#e8e6df,prompt:#ffcc66,hl+:#6699cc
+"
+function bd -d 'cd to one of the previously visited locations'
+	# Clear non-existent folders from cdhist.
+	set -l buf
+	for i in (seq 1 (count $dirprev))
+		set -l dir $dirprev[$i]
+		if test -d $dir
+			set buf $buf $dir
+		end
+	end
+	set dirprev $buf
+	string join \n $dirprev | tac | sed 1d | eval (__fzfcmd) +m --tiebreak=index --toggle-sort=ctrl-r $FZF_CDHIST_OPTS | read -l result
+	[ "$result" ]; and cd $result
+	commandline -f repaint
+end
 
 # Custom key bindings
 function fish_user_key_bindings
