@@ -6,6 +6,7 @@
 import pkgutil
 hasMatplotlib = pkgutil.find_loader('matplotlib') is not None
 hasPowerline = pkgutil.find_loader('powerline') is not None
+hasJupyterThemes = pkgutil.find_loader('jupyterthemes') is not None
 
 #------------------------------------------------------------------------------
 # Configurable configuration
@@ -63,6 +64,10 @@ if hasPowerline:
 # Configure matplotlib for interactive use with the default matplotlib backend.
 if hasMatplotlib:
     c.InteractiveShellApp.matplotlib = 'auto'
+    # use jupyterthemes to style the graph
+    if hasJupyterThemes:
+        from jupyterthemes import jtplot
+        jtplot.style()
 
 # Run the module as a script.
 # c.InteractiveShellApp.module_to_run = ''
