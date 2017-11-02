@@ -1,4 +1,4 @@
-#	$OpenBSD: sshd_config,v 1.100 2016/08/15 12:32:04 naddy Exp $
+#	$OpenBSD: sshd_config,v 1.101 2017/03/14 07:19:07 djm Exp $
 
 # This is the sshd server system-wide configuration file.  See
 # sshd_config(5) for more information.
@@ -10,7 +10,7 @@
 # possible, but leave them commented.  Uncommented options override the
 # default value.
 
-#Port 22
+Port 59901
 #AddressFamily any
 #ListenAddress 0.0.0.0
 #ListenAddress ::
@@ -24,8 +24,8 @@
 #RekeyLimit default none
 
 # Logging
-#SyslogFacility AUTH
-#LogLevel INFO
+SyslogFacility AUTH
+LogLevel VERBOSE
 
 # Authentication:
 
@@ -59,7 +59,8 @@ PasswordAuthentication no
 #PermitEmptyPasswords no
 
 # Change to no to disable s/key passwords
-ChallengeResponseAuthentication no
+ChallengeResponseAuthentication yes
+AuthenticationMethods publickey keyboard-interactive:pam
 
 # Kerberos options
 #KerberosAuthentication no
@@ -93,7 +94,6 @@ PrintMotd no # pam does that
 #PrintLastLog yes
 #TCPKeepAlive yes
 #UseLogin no
-UsePrivilegeSeparation sandbox
 #PermitUserEnvironment no
 #Compression delayed
 #ClientAliveInterval 0
