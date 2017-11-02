@@ -1,1 +1,0 @@
-build --ignore_unsupported_sandboxing --verbose_failures --local_resources 2048,1.5,1.0
