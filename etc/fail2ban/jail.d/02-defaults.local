@@ -117,8 +117,8 @@ logencoding = auto
 # iptables-multiport, shorewall, etc) It is used to define
 # action_* variables. Can be overridden globally or per
 # section within jail.local file
-#banaction = iptables-multiport
-#banaction_allports = iptables-allports
+banaction = ufw
+banaction_allports = ufw
 
 # The simplest action to take: ban only
 #action_ = %(banaction)s[name=%(__name__)s, bantime="%(bantime)s", port="%(port)s", protocol="%(protocol)s", chain="%(chain)s"]
