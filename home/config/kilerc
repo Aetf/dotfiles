@@ -8,28 +8,28 @@ CompleteTex=1-latex-document,1-tex,1-etoolbox,1-amsfonts,1-amsmath,1-array,1-acr
 DefaultProfile=Shell.profile
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex]
-Bookmarks=
-Highlighting=LaTeX
-Highlighting Set By User=false
-Indentation Mode=normal
-Mode=LaTeX
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-XeLaTeX
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex]
-Bookmarks=
-Highlighting=LaTeX
-Highlighting Set By User=false
-Indentation Mode=normal
-Mode=LaTeX
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex]
 Bookmarks=
@@ -122,6 +122,27 @@ Highlighting Set By User=false
 Indentation Mode=normal
 Mode=Normal
 
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/atlast.bib]
+Bookmarks=
+Highlighting=BibTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=BibTeX
+Mode Set By User=false
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/lib/usenix.sty]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls]
 Bookmarks=
 Highlighting=LaTeX
@@ -135,15 +156,56 @@ kile_livePreviewEnabled=true
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
-[Document-Settings,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex]
 Bookmarks=
 Highlighting=LaTeX
 Highlighting Set By User=false
 Indentation Mode=normal
 Mode=LaTeX
+Mode Set By User=false
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
+
+[Document-Settings,URL=file://:@/tmp/kile-7SoOoX/test.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=false
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/tmp/kile-7SoOoX/test_bib.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=false
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/tmp/kile-7SoOoX/test_index.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=false
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/tmp/kile-7SoOoX/test_plain.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=false
 kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
@@ -176,32 +238,32 @@ kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test.tex]
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=false
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-XeLaTeX
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_bib.tex]
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=false
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-XeLaTeX
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_index.tex]
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=false
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-XeLaTeX
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/tmp/kile-xTeD2Q/test_plain.tex]
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=false
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-XeLaTeX
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/tmp/kile-zSGozZ/test.tex]
 bibliographyBackendAutoDetected[$d]
@@ -246,6 +308,19 @@ kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
 [Document-Settings,URL=file://:@/tmp/workspace/test.tex]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
+
+[Document-Settings,URL=file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
 kile_livePreviewEnabled=true
@@ -309,25 +384,25 @@ listViewIconSize=0
 [Files]
 CleanUpAfterClose=true
 LastDocument[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
-SingleFileMasterDocument[$e]=$HOME/develop/latex/nsdi18/nsdi18.tex
+SingleFileMasterDocument[$e]=$HOME/develop/latex/nsdi18/salus.tex
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
-DocsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/nsdi18.tex
-DocsOpenOnStart1[$e]=$HOME/develop/latex/nsdi18/pages/intro.tex
-DocsOpenOnStart2[$e]=$HOME/develop/latex/nsdi18/pages/bg.tex
-DocsOpenOnStart3[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
-DocsOpenOnStart4[$e]=$HOME/develop/latex/nsdi18/pages/arch.tex
+DocsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
+DocsOpenOnStart1[$d]
+DocsOpenOnStart2[$d]
+DocsOpenOnStart3[$d]
+DocsOpenOnStart4[$d]
 DocsOpenOnStart5[$d]
 DocsOpenOnStart6[$d]
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
-EncodingsOfDocsOpenOnStart1[$e]=UTF-8
-EncodingsOfDocsOpenOnStart2[$e]=UTF-8
-EncodingsOfDocsOpenOnStart3[$e]=UTF-8
-EncodingsOfDocsOpenOnStart4[$e]=UTF-8
+EncodingsOfDocsOpenOnStart1[$d]
+EncodingsOfDocsOpenOnStart2[$d]
+EncodingsOfDocsOpenOnStart3[$d]
+EncodingsOfDocsOpenOnStart4[$d]
 EncodingsOfDocsOpenOnStart5[$d]
 EncodingsOfDocsOpenOnStart6[$d]
-NoDOOS=5
+NoDOOS=1
 NoPOOS=1
 ProjectsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/nsdi18.kilepr
 
@@ -335,7 +410,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/nsdi18.kilepr
 MainwindowHeight=773
 MainwindowWidth=1280
 horizontalSplitterLeft=29
-horizontalSplitterRight=728
+horizontalSplitterRight=663
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -345,20 +420,20 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=450
-Recent Files[$e]=file:$HOME/develop/latex/hotos17/hotos17.bib,file:$HOME/develop/latex/nsdi18/pages/con.tex,file:$HOME/develop/latex/nsdi18/pages/bg.tex,file:$HOME/develop/latex/nsdi18/lib/usenix.sty,file:$HOME/develop/latex/nsdi18/pages/ack.tex,file:$HOME/develop/latex/nsdi18/pages/abstract.tex,file:$HOME/develop/latex/nsdi18/pages/intro.tex,file:$HOME/develop/latex/nsdi18/pages/impl.tex,file:$HOME/develop/latex/nsdi18/pages/eval.tex,file:$HOME/develop/latex/nsdi18/pages/arch.tex,file:$HOME/develop/latex/nsdi18/nsdi18.kilepr,file:$HOME/develop/latex/cv/cv/cv.kilepr,file:$HOME/develop/latex/hotos17/hotos17.kilepr,file:$HOME/develop/latex/hotos17/hotos17.tex,file:$HOME/develop/latex/EECS551HW10/eecs551hw10.kilepr,file:$HOME/develop/latex/cv/cv/cv.tex
+Recent Files[$e]=file:$HOME/develop/latex/hotos17/hotos17.bib,file:$HOME/develop/latex/nsdi18/salus.tex,file:$HOME/develop/latex/nsdi18/salus.bib,file:$HOME/develop/latex/nsdi18/pages/scheduling.tex,file:$HOME/develop/latex/nsdi18/pages/related.tex,file:$HOME/develop/latex/nsdi18/pages/overview.tex,file:$HOME/develop/latex/nsdi18/pages/motivation.tex,file:$HOME/develop/latex/nsdi18/pages/memory.tex,file:$HOME/develop/latex/nsdi18/pages/intro.tex,file:$HOME/develop/latex/nsdi18/pages/impl.tex,file:$HOME/develop/latex/nsdi18/pages/eval.tex,file:$HOME/develop/latex/nsdi18/pages/con.tex,file:$HOME/develop/latex/nsdi18/pages/ack.tex,file:$HOME/develop/latex/nsdi18/pages/abstract.tex,file:$HOME/develop/latex/nsdi18/lib/sigplanconf.cls,file:$HOME/develop/latex/nsdi18/lib/usenix.sty
 Recent URLs[$e]=file:$HOME/develop/latex/hotos17/,file:$HOME/develop/latex/cv/,file:$HOME/develop/latex/cv/cv/,file:$HOME/develop/latex/nsdi18/,file:$HOME/develop/latex/nsdi18/pages/,file:$HOME/develop/latex/nsdi18/lib/
 Width 1280=720
 
 [KileConfigDialog]
-Height 800=699
+Height 800=773
 Width 1280=849
 
 [KileMainWindow]
-Height 800=504
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHy/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADff////8AAAAAAAAAAA==
+Height 800=800
+State=AAAA/wAAAAD9AAAAAAAABQAAAALHAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAIG/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADkf////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
-Width 1280=853
-Window-Maximized 800x1280=true
+Width 1280=1280
+Window-Maximized 800x1280=false
 
 [KileMainWindow][Toolbar OkularViewerToolBar]
 IconSize=22
@@ -371,7 +446,7 @@ livePreviewCompileOnlyAfterSaving=true
 
 [MainWindow]
 Height 800=700
-State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAHy/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADff////8AAAAAAAAAAA==
+State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAIU/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADn/////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
 Width 1280=1180
 Window-Maximized 800x1280=true
@@ -410,43 +485,52 @@ Name5[$e]=nsdi18.kilepr
 [QuickPreview]
 convert=true
 dvipng=true
-previewTask=XeLaTeX ---> PDF (Okular)
+dvipngResolution=192
+envPreviewInWidget=true
+mathgroupPreviewInWidget=true
+previewTask=PDFLaTeX ---> PDF (Okular)
+selPreviewInWidget=true
 
 [Recent Files]
-File1[$e]=$HOME/develop/latex/nsdi18/pages/abstract.tex
-File10[$d]
-File2[$e]=$HOME/develop/latex/nsdi18/pages/con.tex
-File3[$e]=$HOME/develop/latex/nsdi18/pages/impl.tex
-File4[$e]=$HOME/develop/latex/nsdi18/nsdi18.bib
-File5[$e]=$HOME/develop/latex/nsdi18/nsdi18.tex
-File6[$e]=$HOME/develop/latex/nsdi18/pages/intro.tex
-File7[$e]=$HOME/develop/latex/nsdi18/pages/bg.tex
-File8[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
-File9[$e]=$HOME/develop/latex/nsdi18/pages/arch.tex
-Name1[$e]=abstract.tex
-Name10[$d]
-Name2[$e]=con.tex
-Name3[$e]=impl.tex
-Name4[$e]=nsdi18.bib
-Name5[$e]=nsdi18.tex
-Name6[$e]=intro.tex
-Name7[$e]=bg.tex
-Name8[$e]=eval.tex
-Name9[$e]=arch.tex
+File1[$e]=$HOME/develop/latex/nsdi18/pages/related.tex
+File10[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
+File2[$e]=$HOME/develop/latex/nsdi18/pages/intro.tex
+File3[$e]=$HOME/develop/latex/nsdi18/pages/memory.tex
+File4[$e]=$HOME/develop/latex/nsdi18/pages/scheduling.tex
+File5[$e]=$HOME/develop/latex/nsdi18/pages/impl.tex
+File6[$e]=$HOME/develop/latex/nsdi18/salus.bib
+File7[$e]=$HOME/develop/latex/nsdi18/salus.tex
+File8[$e]=$HOME/develop/latex/nsdi18/pages/overview.tex
+File9[$e]=$HOME/develop/latex/nsdi18/pages/motivation.tex
+Name1[$e]=related.tex
+Name10[$e]=eval.tex
+Name2[$e]=intro.tex
+Name3[$e]=memory.tex
+Name4[$e]=scheduling.tex
+Name5[$e]=impl.tex
+Name6[$e]=salus.bib
+Name7[$e]=salus.tex
+Name8[$e]=overview.tex
+Name9[$e]=motivation.tex
 
 [Scripting]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls
-Saved Documents=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls,file://:@/tmp/kile-livepreviewnox7d0/comment.cut,file://:@/usr/share/texmf-dist/tex/latex/natbib/natbib.sty,file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex,file://:@/tmp/workspace/test.tex,file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex,file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex,file://:@/tmp/kile-xTeD2Q/test_index.tex,file://:@/tmp/kile-xTeD2Q/test_bib.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-xTeD2Q/test_plain.tex,file://:@/tmp/kile-zSGozZ/test_index.tex
+Documents=file://:@/home/aetf/develop/latex/nsdi18/atlast.bib
+Saved Documents=file://:@/home/aetf/develop/latex/nsdi18/atlast.bib,file://:@/tmp/kile-7SoOoX/test_index.tex,file://:@/tmp/kile-7SoOoX/test_bib.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/home/aetf/develop/latex/nsdi18/lib/usenix.sty,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls,file://:@/tmp/kile-livepreviewnox7d0/comment.cut,file://:@/usr/share/texmf-dist/tex/latex/natbib/natbib.sty,file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/EECS551HW6/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW5/homework.solution.tex,file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty,file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex
 
 [Show]
 BottomBarIndex=0
 BottomBarSize=120
 SelectedLeftView=-1
-SideBarSize=301
-SystemCheckLastVersionRunForAtStartUp=2.9.60
+SideBarSize=243
+SystemCheckLastVersionRunForAtStartUp=2.9.92
+
+[Structure]
+SvDefaultGraphicExt=pdf
+SvOpenBibitems=true
+SvOpenReferences=true
 
 [Tool/Archive/Tar]
 class=Archive
@@ -642,24 +726,24 @@ type=Process
 
 [Tool/ForwardDVI/Document Viewer]
 class=ForwardDVI
-className=Okular::Part
+className[$d]
 from=dvi
-libName=okularpart
-libOptions=dvi
-state=Viewer
+libName[$d]
+libOptions[$d]
+state[$d]
 to=dvi
-type=Part
-useDocumentViewer=yes
+type=DocumentViewer
+useDocumentViewer[$d]
 
 [Tool/ForwardDVI/Embedded Viewer]
-class=ForwardDVI
-className=Okular::Part
-from=dvi
-libName=okularpart
-libOptions=dvi
-state=Viewer
-to=dvi
-type=Part
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+libOptions[$d]
+state[$d]
+to[$d]
+type[$d]
 
 [Tool/ForwardDVI/Okular]
 class=ForwardDVI
@@ -671,24 +755,24 @@ type=Process
 
 [Tool/ForwardPDF/Document Viewer]
 class=ForwardDVI
-className=Okular::Part
+className[$d]
 from=pdf
-libName=okularpart
-libOptions=
-state=Viewer
+libName[$d]
+libOptions[$d]
+state[$d]
 to=pdf
-type=Part
-useDocumentViewer=yes
+type=DocumentViewer
+useDocumentViewer[$d]
 
 [Tool/ForwardPDF/Embedded Viewer]
-class=ForwardDVI
-className=Okular::Part
-from=pdf
-libName=okularpart
-libOptions=
-state=Viewer
-to=pdf
-type=Part
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+libOptions[$d]
+state[$d]
+to[$d]
+type[$d]
 
 [Tool/ForwardPDF/Okular]
 class=ForwardDVI
@@ -697,7 +781,7 @@ from=pdf
 options=--unique %absolute_target
 to=pdf
 type=Process
-useDocumentViewer=no
+useDocumentViewer[$d]
 
 [Tool/LaTeX to Web/TeX4ht (LaTeX to HTML)]
 class=Compile
@@ -724,9 +808,12 @@ to=xml
 type=Process
 
 [Tool/LaTeX to Web/latex2html]
+autoRun=no
+checkForRoot=no
 class=Compile
 command=latex2html
 from=tex
+jumpToFirstError=no
 options=%source
 to=html
 type=Process
@@ -765,22 +852,22 @@ to=dvi
 type=Process
 
 [Tool/LaTeX/Modern (with build dir)]
-autoRun=yes
-checkForRoot=yes
-class=LaTeX
-className=
-close=
-command=latex
-from=
-jumpToFirstError=yes
-libName=
-libOptions=
-options=-src-specials -output-directory build/ -interaction=nonstopmode %source
-relDir=
-state=
-target=
-to=dvi
-type=Process
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/Lilypond/DVI]
 class=Compile
@@ -834,13 +921,13 @@ to=pdf
 type=Process
 
 [Tool/LivePreview-PDFLaTeX/Default]
-autoRun=true
+autoRun=yes
 checkForRoot=no
 class=LaTeXLivePreview
-command=xelatex
+command=pdflatex
 from=
 jumpToFirstError=yes
-options=-shell-escape -synctex=1 -interaction=nonstopmode -output-directory=%dir_target %source
+options=-synctex=1 -interaction=nonstopmode -output-directory=%dir_target %source
 to=pdf
 type=Process
 
@@ -933,20 +1020,23 @@ to=xdvi
 type=Process
 
 [Tool/Make/Default]
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+close[$d]
+command[$d]
+jumpToFirstError[$d]
+menu[$d]
+state[$d]
+type[$d]
+
+[Tool/MakeIndex/Default]
 autoRun=no
 checkForRoot=no
 class=Compile
-close=no
-command=make
-jumpToFirstError=no
-menu=Compile
-state=Editor
-type=Process
-
-[Tool/MakeIndex/Default]
-class=Compile
 command=makeindex
 from=idx
+jumpToFirstError=no
 options=%S.idx
 to=idx
 type=Process
@@ -1001,22 +1091,22 @@ to=pdf
 type=Process
 
 [Tool/PDFLaTeX/Modern (with build dir)]
-autoRun=yes
-checkForRoot=yes
-class=LaTeX
-className=
-close=
-command=pdflatex
-from=
-jumpToFirstError=yes
-libName=
-libOptions=
-options=-synctex=1 -output-directory build/ -interaction=nonstopmode %source
-relDir=
-state=
-target=
-to=pdf
-type=Process
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/PDFLaTeX/PSTricks]
 autoRun=yes
@@ -1030,9 +1120,12 @@ to=pdf
 type=Process
 
 [Tool/PDFTeX/Default]
+autoRun=no
+checkForRoot=no
 class=Compile
 command=pdftex
 from=
+jumpToFirstError=no
 options=-interaction=nonstopmode %source
 to=pdf
 type=Process
@@ -1046,12 +1139,12 @@ to=pdf
 type=Process
 
 [Tool/PDFTeX/Modern]
-autoRun=no
-checkForRoot=no
+autoRun[$d]
+checkForRoot[$d]
 class=Compile
 command=pdftex
 from=
-jumpToFirstError=no
+jumpToFirstError[$d]
 options=-synctex=1 -interaction=nonstopmode %source
 to=pdf
 type=Process
@@ -1134,10 +1227,10 @@ sequence=LaTeX,ForwardDVI
 type=Sequence
 
 [Tool/QuickBuild/LaTeX+ViewDVI]
-autoRun=no
-checkForRoot=no
+autoRun[$d]
+checkForRoot[$d]
 class=Sequence
-jumpToFirstError=no
+jumpToFirstError[$d]
 sequence=LaTeX,ViewDVI
 type=Sequence
 
@@ -1152,24 +1245,24 @@ sequence=LuaLaTeX,ViewPDF
 type=Sequence
 
 [Tool/QuickBuild/Make+ViewPDF]
-autoRun=no
-checkForRoot=no
-class=Sequence
-className=
-close=
-command=
-from=
-jumpToFirstError=no
-libName=
-libOptions=
-options=
-relDir=
-sequence=Make,ViewPDF
-state=
-target=
-to=
-type=Sequence
-useDocumentViewer=no
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+sequence[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
+useDocumentViewer[$d]
 
 [Tool/QuickBuild/PDFLaTeX+ForwardPDF]
 class=Sequence
@@ -1181,48 +1274,48 @@ autoRun=no
 checkForRoot=no
 class=Sequence
 jumpToFirstError=no
-sequence=PDFLaTeX,PDFLaTeX,BibTeX,PDFLaTeX,ViewPDF
+sequence=PDFLaTeX,BibTeX,PDFLaTeX,PDFLaTeX,ViewPDF
 type=Sequence
 
 [Tool/QuickBuild/PdfLaTex+ViewPDF]
-autoRun=no
-checkForRoot=no
-class=Sequence
-className=
-close=
-command=
-from=
-jumpToFirstError=no
-libName=
-libOptions=
-options=
-relDir=
-sequence=PDFLaTeX,ViewPDF
-state=
-target=
-to=
-type=Sequence
-useDocumentViewer=no
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+sequence[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
+useDocumentViewer[$d]
 
 [Tool/QuickBuild/XeLaTex+ViewPDF]
-autoRun=no
-checkForRoot=no
-class=Sequence
-className=
-close=
-command=
-from=
-jumpToFirstError=no
-libName=
-libOptions=
-options=
-relDir=
-sequence=XeLaTeX,ViewPDF
-state=
-target=
-to=
-type=Sequence
-useDocumentViewer=no
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+sequence[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
+useDocumentViewer[$d]
 
 [Tool/TeX/Default]
 class=Compile
@@ -1265,14 +1358,14 @@ to=bib
 type=Process
 
 [Tool/ViewBib/KBibTex (embedded)]
-class=ViewBib
-className=KBibTeXPart
-from=bib
-libName=kbibtexpart
-liboptions=%dir_base/%source
-state=Viewer
-to=bib
-type=Part
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+liboptions[$d]
+state[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewBib/Pybliographer]
 class=ViewBib
@@ -1292,22 +1385,22 @@ type=Process
 
 [Tool/ViewDVI/Document Viewer]
 class=View
-className=Okular::Part
+className[$d]
 from=dvi
-libName=okularpart
-state=Viewer
+libName[$d]
+state[$d]
 to=dvi
-type=Part
-useDocumentViewer=yes
+type=DocumentViewer
+useDocumentViewer[$d]
 
 [Tool/ViewDVI/Embedded Viewer]
-class=View
-className=Okular::Part
-from=dvi
-libName=okularpart
-state=Viewer
-to=dvi
-type=Part
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+state[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewDVI/Evince]
 class=View
@@ -1337,13 +1430,13 @@ to=dvi
 type=Process
 
 [Tool/ViewHTML/Embedded Viewer]
-class=ViewHTML
-from=html
-relDir=
-state=HTMLpreview
-target=
-to=html
-type=DocPart
+class[$d]
+from[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewHTML/Firefox]
 class=ViewHTML
@@ -1399,24 +1492,24 @@ to=pdf
 type=Process
 
 [Tool/ViewPDF/Document Viewer]
-class=View
-className=Okular::Part
-from=pdf
-libName=okularpart
-state=Viewer
-to=pdf
-type=Part
-useDocumentViewer=yes
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+state[$d]
+to[$d]
+type[$d]
+useDocumentViewer[$d]
 
 [Tool/ViewPDF/Embedded Viewer]
-class=View
-className=Okular::Part
-from=pdf
-libName=okularpart
-state=Viewer
-to=pdf
-type=Part
-useDocumentViewer=no
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+state[$d]
+to[$d]
+type[$d]
+useDocumentViewer[$d]
 
 [Tool/ViewPDF/Evince]
 class=View
@@ -1428,22 +1521,22 @@ to=pdf
 type=Process
 
 [Tool/ViewPDF/MasterPdfEditor]
-autoRun=
-checkForRoot=
-class=View
-className=
-close=
-command=masterpdfeditor4
-from=pdf
-jumpToFirstError=
-libName=
-libOptions=
-options=%target
-relDir=
-state=Viewer
-target=
-to=pdf
-type=Process
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewPDF/Okular]
 class=View
@@ -1455,22 +1548,22 @@ to=pdf
 type=Process
 
 [Tool/ViewPDF/Okular (with build dir)]
-autoRun=
-checkForRoot=
-class=View
-className=
-close=
-command=okular
-from=pdf
-jumpToFirstError=
-libName=
-libOptions=
-options=build/%target
-relDir=
-state=Viewer
-target=
-to=pdf
-type=Process
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewPDF/Okular Unique]
 class=View
@@ -1482,23 +1575,26 @@ to=pdf
 type=Process
 
 [Tool/ViewPS/Document Viewer]
+autoRun=no
+checkForRoot=no
 class=View
-className=Okular::Part
+className[$d]
 from=ps
-libName=okularpart
-state=Viewer
+jumpToFirstError=no
+libName[$d]
+state[$d]
 to=ps
-type=Part
-useDocumentViewer=yes
+type=DocumentViewer
+useDocumentViewer[$d]
 
 [Tool/ViewPS/Embedded Viewer]
-class=View
-className=Okular::Part
-from=ps
-libName=okularpart
-state=Viewer
-to=ps
-type=Part
+class[$d]
+className[$d]
+from[$d]
+libName[$d]
+state[$d]
+to[$d]
+type[$d]
 
 [Tool/ViewPS/Evince]
 class=View
@@ -1565,27 +1661,27 @@ class=LaTeX
 command=xelatex
 from=
 jumpToFirstError=yes
-options=-shell-escape -synctex=1 -interaction=nonstopmode %source
+options=-synctex=1 -interaction=nonstopmode %source
 to=pdf
 type=Process
 
 [Tool/XeLaTeX/PDF Modern (with build dir)]
-autoRun=yes
-checkForRoot=yes
-class=LaTeX
-className=
-close=
-command=xelatex
-from=
-jumpToFirstError=yes
-libName=
-libOptions=
-options=-shell-escape -synctex=1 -output-directory build/ -interaction=nonstopmode %source
-relDir=
-state=
-target=
-to=pdf
-type=Process
+autoRun[$d]
+checkForRoot[$d]
+class[$d]
+className[$d]
+close[$d]
+command[$d]
+from[$d]
+jumpToFirstError[$d]
+libName[$d]
+libOptions[$d]
+options[$d]
+relDir[$d]
+state[$d]
+target[$d]
+to[$d]
+type[$d]
 
 [Tool/XeLaTeX/XDVI]
 autoRun=yes
@@ -1634,39 +1730,39 @@ Biber=Default
 BstInputPaths=lib
 ConTeXt=PDF
 Convert=pdf2png
-DBLaTeX=LaTeX
+DBLaTeX=Convert to DVI
 DVItoPDF=Default
 DVItoPNG=Default
 DVItoPS=Default
 ForwardDVI=Document Viewer
 ForwardPDF=Document Viewer
-LaTeX=Modern
+LaTeX=Default
 LaTeX to Web=latex2html
 Lilypond=PDF
 LivePreview-LuaLaTeX=Default
 LivePreview-PDFLaTeX=Default
 LivePreview-XeLaTeX=Default
-LuaLaTeX=PDF Modern
-Make=Default
+LuaLaTeX=PDF
+Make[$d]
 MakeIndex=Default
 MetaPost=Default
-PDFLaTeX=Modern
-PDFTeX=Modern
+PDFLaTeX=Default
+PDFTeX=Default
 PStoPDF=Default
 PreviewLaTeX=Default
 PreviewLuaLaTeX=Default
 PreviewPDFLaTeX=Default
-PreviewTeXPaths=/home/aetf/develop/latex/hotos17:lib
+PreviewTeXPaths[$d]
 PreviewXeLaTeX=Default
 QuickBuild=PDFLaTeX+ViewPDF
-TeX=Modern
+TeX=Default
 TeXPaths=lib
 ViewBib=KBibTex
 ViewDVI=Document Viewer
 ViewHTML=Konqueror
-ViewPDF=MasterPdfEditor
+ViewPDF=Okular Unique
 ViewPS=Document Viewer
-XeLaTeX=PDF Modern
+XeLaTeX=PDF
 
 [ToolsGUI]
 Archive=Archive,archive-insert
@@ -1688,7 +1784,7 @@ LivePreview-LuaLaTeX=none,application-x-executable
 LivePreview-PDFLaTeX=none,application-x-executable
 LivePreview-XeLaTeX=none,application-x-executable
 LuaLaTeX=Compile,latex
-Make=Other,application-x-executable
+Make[$d]
 MakeIndex=Compile,makeidx
 MetaPost=Compile,mpost
 PDFLaTeX=Compile,pdflatex
@@ -1716,18 +1812,18 @@ DocumentClassOptions=letter,10pt
 RCVersion=8
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW1/homework.solution.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW2/homework.solution.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW4/homework.solution.tex]
 CursorColumn=0
@@ -1785,6 +1881,20 @@ JumpList=
 TextFolding=[]
 ViMarks=
 
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/atlast.bib]
+CursorColumn=17
+CursorLine=620
+JumpList=362,5,91,8,612,18
+TextFolding=[]
+ViMarks=.,620,17,<,624,19,>,625,4,[,620,17,],620,18,^,620,18
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/lib/usenix.sty]
+CursorColumn=0
+CursorLine=94
+JumpList=
+TextFolding=[]
+ViMarks=
+
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls]
 CursorColumn=0
 CursorLine=0
@@ -1792,12 +1902,47 @@ JumpList=
 TextFolding=[]
 ViMarks=
 
-[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
-CursorColumn=0
-CursorLine=43
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex]
+CursorColumn=47
+CursorLine=15
 JumpList=
 TextFolding=[]
-ViMarks=.,43,4,[,43,4,],43,4,^,43,4
+ViMarks=.,26,7,<,14,38,>,14,18,[,26,0,],26,8,^,26,8
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/xjtuthesis/solutions/master.tex]
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
+
+[View-Settings,View=0,URL=file://:@/tmp/kile-7SoOoX/test.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/tmp/kile-7SoOoX/test_bib.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/tmp/kile-7SoOoX/test_index.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/tmp/kile-7SoOoX/test_plain.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-livepreviewnox7d0/comment.cut]
 CursorColumn=11
@@ -1835,32 +1980,32 @@ TextFolding=[]
 ViMarks=
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-xTeD2Q/test.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-xTeD2Q/test_bib.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-xTeD2Q/test_index.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-xTeD2Q/test_plain.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/tmp/kile-zSGozZ/test.tex]
 CursorColumn[$d]
@@ -1905,11 +2050,18 @@ TextFolding=[]
 ViMarks=.,56,43,[,56,43,],57,0,^,47,33
 
 [View-Settings,View=0,URL=file://:@/tmp/workspace/test.tex]
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
+
+[View-Settings,View=0,URL=file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty]
 CursorColumn=0
-CursorLine=1
+CursorLine=0
 JumpList=
 TextFolding=[]
-ViMarks=.,1,0,[,1,0,],1,0,^,0,34
+ViMarks=
 
 [View-Settings,View=0,URL=file://:@/usr/share/texmf-dist/tex/latex/minted/minted.sty]
 CursorColumn=0
