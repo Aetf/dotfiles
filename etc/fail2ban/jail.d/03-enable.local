@@ -1,0 +1,50 @@
+#
+#JAILS
+#
+
+#
+# SSH servers
+#
+
+[sshd]
+# To use more aggressive sshd filter (inclusive sshd-ddos failregex):
+#filter = sshd-aggressive
+port    = 59901
+logpath =
+backend = %(sshd_backend)s
+enabled = true
+
+
+#
+# HTTP servers
+#
+
+[nginx-http-auth]
+
+port    = http,https
+logpath = %(nginx_error_log)s
+
+# To use 'nginx-limit-req' jail you should have `ngx_http_limit_req_module` 
+# and define `limit_req` and `limit_req_zone` as described in nginx documentation
+# http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
+# or for example see in 'config/filter.d/nginx-limit-req.conf'
+[nginx-limit-req]
+port    = http,https
+logpath = %(nginx_error_log)s
+
+[nginx-botsearch]
+
+port     = http,https
+logpath  = %(nginx_error_log)s
+maxretry = 2
+
+# Ban attackers that try to use PHP's URL-fopen() functionality
+# through GET/POST variables. - Experimental, with more than a year
+# of usage in production environments.
+
+[php-url-fopen]
+
+port    = http,https
+logpath = %(nginx_access_log)s
+          %(apache_access_log)s
+
