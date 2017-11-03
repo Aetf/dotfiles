@@ -1,0 +1,35 @@
+server {
+	listen 80;
+	listen [::]:80;
+	server_name deluge.unlimitedcodeworks.xyz;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	server_name deluge.unlimitedcodeworks.xyz;
+	keepalive_timeout 70;
+
+	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
+
+	access_log /var/log/nginx/sites/deluge.access;
+	error_log /var/log/nginx/sites/deluge.error error;
+
+	limit_req zone=two burst=100 nodelay;
+
+	root /var/websites/fallback;
+	location /robots.txt {
+	}
+
+	location / {
+		proxy_set_header Host $host;
+		proxy_set_header X-Real-IP $remote_addr;
+		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		proxy_set_header X-Forwarded-Proto $scheme;
+
+		proxy_pass http://localhost:9999;
+	}
+}

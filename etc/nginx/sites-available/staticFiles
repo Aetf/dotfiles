@@ -1,0 +1,27 @@
+server {
+	listen 80;
+	listen [::]:80;
+
+	root /srv/http/files;
+
+	server_name static.unlimitedcodeworks.xyz;
+
+	access_log /var/log/nginx/sites/staticFiles.access;
+	error_log /var/log/nginx/sites/staticFiles.error error;
+	rewrite_log on;
+
+	location / {
+		sendfile on;
+		sendfile_max_chunk 1m;
+		tcp_nopush on;
+	}
+
+	#error_page 404 /404.html;
+
+	# redirect server error pages to the static page /50x.html
+	#
+	#error_page 500 502 503 504 /50x.html;
+	#location = /50x.html {
+	#	root /usr/share/nginx/html;
+	#}
+}
