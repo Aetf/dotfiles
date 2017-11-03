@@ -21,28 +21,17 @@ Host vps
     ForwardX11 no
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
-    RequestTTY force
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host vps-trans
-    User aetf
-    HostName vps.unlimitedcodeworks.xyz
-    ForwardX11 no
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
-    ControlMaster auto
-    ControlPath ~/.ssh/masters/%n:%r@%h-trans:%p
-    ControlPersist yes
 Host archvps
     User aetf
-    HostName 104.207.141.153
+    HostName 45.77.144.92
     Port 59901
     ForwardX11 no
     ForwardAgent yes
     IdentityFile ~/.ssh/id_rsa
     IdentitiesOnly yes
-    RequestTTY force
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
@@ -54,20 +43,11 @@ Host ccgpu
     ForwardAgent yes
     UserKnownHostsFile /dev/null
     StrictHostKeyChecking no
-    RequestTTY force
     LocalForward 6007 localhost:6006
     Compression yes
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host ccgpu-trans
-    User cc
-    HostName 129.114.108.183
-    ForwardX11 no
-    ForwardX11Trusted no
-    UserKnownHostsFile /dev/null
-    StrictHostKeyChecking no
-    Compression yes
 Host cc
     User cc
     HostName 129.114.108.180
@@ -78,7 +58,6 @@ Host cc
     StrictHostKeyChecking no
     LocalForward 6006 localhost:6006
     LocalForward 9999 localhost:8888
-    RequestTTY force
     Compression yes
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
@@ -92,15 +71,11 @@ Host conflux
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials yes
     LocalForward 9999 localhost:8888
+    LocalForward 6003 localhost:6003
+    LocalForward 6004 localhost:6004
+    LocalForward 6005 localhost:6005
     LocalForward 6006 localhost:6006
-    ControlMaster auto
-    ControlPath ~/.ssh/masters/%n:%r@%h:%p
-    ControlPersist yes
-Host conflux-trans
-    User peifeng
-    HostName conflux-login1.arc-ts.umich.edu
-    GSSAPIAuthentication yes
-    GSSAPIDelegateCredentials yes
+    LocalForward 6007 localhost:6007
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
