@@ -20,22 +20,26 @@ enabled = true
 #
 
 [nginx-http-auth]
-
+enabled = true
 port    = http,https
 logpath = %(nginx_error_log)s
+          /var/log/nginx/sites/*.error
 
 # To use 'nginx-limit-req' jail you should have `ngx_http_limit_req_module` 
 # and define `limit_req` and `limit_req_zone` as described in nginx documentation
 # http://nginx.org/en/docs/http/ngx_http_limit_req_module.html
 # or for example see in 'config/filter.d/nginx-limit-req.conf'
 [nginx-limit-req]
+enabled = true
 port    = http,https
 logpath = %(nginx_error_log)s
+          /var/log/nginx/sites/*.error
 
 [nginx-botsearch]
-
+enabled = true
 port     = http,https
 logpath  = %(nginx_error_log)s
+           /var/log/nginx/sites/*.error
 maxretry = 2
 
 # Ban attackers that try to use PHP's URL-fopen() functionality
@@ -43,8 +47,9 @@ maxretry = 2
 # of usage in production environments.
 
 [php-url-fopen]
-
+enabled = true
 port    = http,https
 logpath = %(nginx_access_log)s
           %(apache_access_log)s
+          /var/log/nginx/sites/*.error
 
