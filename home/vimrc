@@ -112,6 +112,9 @@ Plug 'scrooloose/nerdcommenter'
 " Auto close braces
 Plug 'spf13/vim-autoclose'
 
+" Word jumping with vim-snipe
+Plug 'yangmillstheory/vim-snipe'
+
 if !has('nvim')
     " Bracketed pasting mode: http://cirw.in/blog/bracketed-paste
     " natively supported in neovim
