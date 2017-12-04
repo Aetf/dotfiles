@@ -6,8 +6,8 @@ Height 1600=755
 Width 2560=1229
 
 [KFileDialog Settings]
-Recent Files[$e]=bell.oga,file:///usr/share/sounds/freedesktop/stereo/bell.oga
-Recent URLs[$e]=file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/
+Recent Files[$e]=bell.oga,file:$HOME/.config/latte/My Layout.layout.latte,file:$HOME/customizations/home/config/latte/My Layout.layout.latte,file:$HOME/.config/latte/EvtCalTest.layout.latte,file:///usr/share/sounds/freedesktop/stereo/bell.oga
+Recent URLs[$e]=file:$HOME/.config/latte/,file:$HOME/.config/latte/,file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/,file:$HOME/customizations/home/config/latte/,file:///,file:$HOME/customizations/home/config/
 
 [PlasmaTransientsConfig]
 raiseOnActivityChange[$d]
@@ -24,6 +24,6 @@ visibility[$d]
 currentLayout=My Layout
 lastNonAssignedLayout=My Layout
 launchers=
-layoutsWindowSize=700,450
+layoutsWindowSize=700,481
 showInfoWindow=true
 version=2

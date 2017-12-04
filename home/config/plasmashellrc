@@ -4,6 +4,13 @@ AppletOrder=51
 [Containments][107][General]
 AppletOrder=110;127
 
+[Containments][136][General]
+AppletOrder=137;138;139;140;142
+
+[Containments][141][General]
+extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier,org.kde.kdeconnect,org.kde.plasma.vault
+knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier,org.kde.kdeconnect,org.kde.plasma.vault
+
 [Containments][24][General]
 extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.ktp-contactlist,audoban.applet.playbar
 hiddenItems=sogou-qimpanel
@@ -86,6 +93,12 @@ thickness=130
 [PlasmaViews][Panel 107][Vertical1600]
 thickness=64
 
+[PlasmaViews][Panel 134][Horizontal2560]
+thickness[$d]
+
+[PlasmaViews][Panel 136][Horizontal2560]
+thickness=68
+
 [PlasmaViews][Panel 52]
 panelVisibility=2
 
@@ -126,6 +139,8 @@ thickness=50
 0=eDP-1
 1=VX2452 Serie/TVT154601933
 2=HDMI-2
+3=HDMI-1
+4=DP-1
 
 [Updates]
 performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js
