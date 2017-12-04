@@ -7,7 +7,7 @@ log() {
     :
 }
 
-target_attributes=('access_token' 'refresh_token')
+target_attributes=('access_token' 'refresh_token' '//registry.npmjs.org/:_authToken')
 
 isTargetLine() {
     local line="$1"
