@@ -3,4 +3,4 @@ Description=Sync systemd files in dotfiles
 
 [Service]
 Type=oneshot
-ExecStart=/usr/local/bin/sync-etc-systemd.sh '/home/aetf/customizations/config/systemd/user' '/home/aetf/systemd/user'
+ExecStart=/usr/local/bin/sync-etc-systemd.sh '/home/aetf/customizations/home/config/systemd/user' '/home/aetf/.config/systemd/user'

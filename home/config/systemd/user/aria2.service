@@ -1,0 +1,9 @@
+[Unit]
+Description=Aria2 Daemon Service
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/aria2c --conf-path=%h/.config/aria2/aria2-daemon.conf
+
+[Install]
+WantedBy=default.target
