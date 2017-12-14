@@ -155,7 +155,7 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_4_1Triggers0]
-Key=Launch (C)
+Key=Launch (C);Print
 Type=SHORTCUT
 Uuid={2b5c4d1c-8509-4cb0-8def-b4a8f44c7762}
 
@@ -213,7 +213,7 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_4_3Triggers0]
-Key=Meta+Launch (C)
+Key=Meta+Launch (C);Meta+Print
 Type=SHORTCUT
 Uuid={545e5b26-ffc4-4281-97be-14425281f599}
 

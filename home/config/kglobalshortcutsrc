@@ -51,9 +51,9 @@ display=Display,Display\tMeta+P,切换显示器
 
 [khotkeys]
 _k_friendly_name=KDE Daemon
-{2b5c4d1c-8509-4cb0-8def-b4a8f44c7762}=Launch (C),none,Start Screenshot Tool
+{2b5c4d1c-8509-4cb0-8def-b4a8f44c7762}=Launch (C)\tPrint,none,Start Screenshot Tool
 {4a2211f5-5898-40ea-bf41-1088f397b99f}=Meta+F,none,Run Firefox
-{545e5b26-ffc4-4281-97be-14425281f599}=Meta+Launch (C),none,Take Active Window Screenshot
+{545e5b26-ffc4-4281-97be-14425281f599}=Meta+Launch (C)\tMeta+Print,none,Take Active Window Screenshot
 {5a868cd8-e586-47a0-bc99-0f8a97efe021}=Meta+Ctrl+Alt+K,none,KeePass AutoTypeSearch
 {7a6edb3d-4c09-4ae2-b44e-1533874aab66}=Shift+Print,none,Take Full Screen Screenshot
 {9219253f-1618-4d60-a256-11ea4609ff6e}=Meta+Alt+K,none,KeePass AutoType
@@ -262,7 +262,6 @@ activate task manager entry 8=Meta+8,Meta+8,激活任务管理器条目 8
 activate task manager entry 9=Meta+9,Meta+9,激活任务管理器条目 9
 activate widget 10=none,none,激活 天气预报 部件
 activate widget 22=none,none,激活 Thermal Monitor 部件
-activate widget 30=Ctrl+Print,none,激活 Event Calendar 部件
 clear-history=none,none,清除剪贴板历史(L)
 clipboard_action=,Ctrl+Alt+X,启用剪贴板动作
 cycleNextAction=none,none,下一个历史项
