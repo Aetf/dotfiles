@@ -6,13 +6,13 @@ Skin=breeze-thin-dark
 Translucency=true
 
 [Desktop Entry]
-DefaultProfile=Profile 5.profile
+DefaultProfile=Profile 1.profile
 
 [Dialogs]
 FirstRun=false
 
 [Favorite Profiles]
-Favorites=
+Favorites=Profile 1.profile
 
 [Shortcuts]
 close-active-terminal=Ctrl+Shift+R
