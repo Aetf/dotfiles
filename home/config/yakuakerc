@@ -1,12 +1,12 @@
+[Animation]
+Frames=10
+
 [Appearance]
 Skin=breeze-thin-dark
 Translucency=true
 
-[AutoOpen]
-PollMouse=false
-
 [Desktop Entry]
-DefaultProfile=Yakuake Shell.profile
+DefaultProfile=Profile 5.profile
 
 [Dialogs]
 FirstRun=false
@@ -14,13 +14,9 @@ FirstRun=false
 [Favorite Profiles]
 Favorites=
 
-[KFileDialog Settings]
-Recent Files[$e]=file:///tmp/workspace/consolelog,file:///tmp/workspace/consolelog
-Recent URLs[$e]=file:///tmp/workspace/
-
 [Shortcuts]
 close-active-terminal=Ctrl+Shift+R
-close-session=Ctrl+Alt+W
+close-session=Ctrl+Shift+W
 file_quit=Ctrl+Shift+Q
 grow-terminal-bottom=Ctrl+Alt+Down
 grow-terminal-left=Ctrl+Alt+Left
@@ -38,9 +34,9 @@ split-left-right=Ctrl+(
 split-top-bottom=Ctrl+)
 toggle-session-monitor-activity=Ctrl+Shift+A
 toggle-session-monitor-silence=Ctrl+Shift+I
-view-full-screen=Ctrl+Shift+F11
+view-full-screen=F11
 
 [Window]
 DynamicTabTitles=true
-Height=53
+Height=54
 KeepOpen=false

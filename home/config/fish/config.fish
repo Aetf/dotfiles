@@ -5,64 +5,14 @@
 # If not running interactively, don't do anything
 if not status -i; exit; end
 
-# If ssh-agent haven't been started, we are in kmscon or linux console
-# start ssh-agent with tmux
-if test "$SSH_AUTH_SOCK"x = "x";
-    if test "$TERM" = "linux";
-        # Don't start tmux on linux console
-        exec ssh-agent fish
-    else
-        exec ssh-agent tmux new -As console
-    end
+# If we are in kmscon console, start tmux
+# Don't start tmux on linux console
+if test "$TERM" = "kmscon";
+    set -x TERM xterm-256color
+    exec tmux new -As console
 end
 
-# Some environment variables
-## Only set these if we don't have DISPLAY
-## otherwise, these've been set in $HOME/.xprofile
-if test "$DISPLAY"x = "x";
-    ## Install directory
-    set -x INSTALLDIR "$HOME/software"
-    ## Default editor
-    set -x EDITOR vim
-    set -x VISUAL $EDITOR
-    ## Used for virtualbox
-    set -x VBOX_USB usbfs
-    ## Nasm environment
-    set -x NASMENV "-i /home/aetf/Develop/ASM/inc"
-    set -x NASM $NASMENV
-    ## Predefined variables to Java runtime
-    #set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
-    ## Ccache directory
-    set -x CCACHE_DIR /opt/.ccache
-    set -x CCACHE_COMPRESS
-    ## XDG variables
-    set -x XDG_CONFIG_HOME "$HOME/.config"
-
-    # Prepend user's bin directory to PATH
-    if test -d "$HOME/customizations/scripts"
-        set PATH "$HOME/customizations/scripts" $PATH
-    end
-    ## Local bin directory
-    if test -d "$HOME/.local/bin"
-        set PATH "$HOME/.local/bin" $PATH
-    end
-    ## ruby gem executable
-    for p in ~/.gem/ruby/*/bin
-        set PATH $PATH $p
-    end
-    ## Node.js executable
-    if test -d "$HOME/.node_modules/bin"
-        set PATH $PATH "$HOME/.node_modules/bin"
-    end
-    ## rust cargo executable
-    if test -d "$HOME/.cargo/bin"
-        set PATH $PATH "$HOME/.cargo/bin"
-    end
-    ## Spack executable
-    if test -d "$HOME/.local/spack/bin"
-        set PATH "$HOME/.local/spack/bin" $PATH
-    end
-end
+# Environment variables are set in $HOME/.profile, which should be sourced both with and w/o display manager
 
 # Some useful alias (functions in .config/fish/functions)
 # ll='ls -lh'

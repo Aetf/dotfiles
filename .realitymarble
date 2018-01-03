@@ -8,12 +8,12 @@
         {
             "name": "home",
             "type": "realitymarble.NoHiddenPhantasm",
-            "joint_path": "/home/aetf/"
+            "joint_path": "/home/peifeng/"
         },
         {
             "name": "scripts",
             "type": "realitymarble.ScriptsPhantasm",
-            "joint_path": "/home/aetf/.local/bin"
+            "joint_path": "/home/peifeng/.local/bin"
         }
     ]
 }

@@ -1,29 +1,27 @@
 [1]
-Description=修复 Yakuake 有时出现在任务栏中
-skipswitcher=true
-skipswitcherrule=2
-skiptaskbar=true
-skiptaskbarrule=2
-title=Yakuake
-titlematch=0
-types=1
-wmclass=yakuake yakuake
-wmclasscomplete=true
-wmclassmatch=1
-
-[2]
 Description=Firefox Nightly No Window Decoration
-clientmachine=aetf-arch-mac
+clientmachine=abacus
 clientmachinematch=0
 noborder=true
 noborderrule=2
-title=Nightly
+title=Manage Version 1.0 :: Breeze Window Controls (Close) :: Add-ons for Firefox - Firefox Nightly
 titlematch=0
 types=1
 windowrole=browser
 windowrolematch=1
 wmclass=firefoxnightly
 wmclasscomplete=false
+wmclassmatch=1
+
+[2]
+Description=Fix Yakuake Shows Up In Taskbar
+skipswitcher=true
+skipswitcherrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+types=1
+wmclass=yakuake yakuake
+wmclasscomplete=true
 wmclassmatch=1
 
 [General]

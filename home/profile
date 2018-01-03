@@ -10,15 +10,11 @@ export VISUAL=$EDITOR
 # Used for virtualbox
 export VBOX_USB=usbfs
 
-# Nasm environment
-export NASMENV="-i /home/aetf/Develop/ASM/inc"
-export NASM=$NASMENV
-
 # Predefined variables to Java runtime
 #export _JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 
 # Ccache directory
-export CCACHE_DIR=/opt/.ccache
+export CCACHE_DIR=$HOME/.cache/ccache
 export CCACHE_COMPRESS
 
 # XDG variables
