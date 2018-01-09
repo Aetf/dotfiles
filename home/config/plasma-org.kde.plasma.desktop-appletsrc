@@ -13,7 +13,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.image
+wallpaperplugin=org.kde.potd
 
 [Containments][16][ConfigDialog]
 DialogHeight=1020
@@ -22,5 +22,12 @@ DialogWidth=1360
 [Containments][16][General]
 showToolbox=false
 
+[Containments][16][Wallpaper][General]
+Provider=bing
+
+[Containments][16][Wallpaper][org.kde.potd][General]
+FillMode=2
+Provider=bing
+
 [General]
-immutability=1
+immutability=2
