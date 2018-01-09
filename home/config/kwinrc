@@ -48,7 +48,7 @@ BorderActivateClass=9
 InitialZoom=1
 
 [Effect-kwin4_effect_translucency]
-Dialogs=95
+Dialogs=100
 
 [ElectricBorders]
 Bottom=None
@@ -91,7 +91,7 @@ enforcedecoEnabled=true
 glideEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
-kwin4_effect_scaleinEnabled=true
+kwin4_effect_scaleinEnabled[$d]
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
 minimizeanimationEnabled[$d]
