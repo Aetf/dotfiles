@@ -17,6 +17,10 @@ export VBOX_USB=usbfs
 export CCACHE_DIR=$HOME/.cache/ccache
 export CCACHE_COMPRESS
 
+# CUDA directory
+export CUDA_DIR=/opt/cuda
+export CUDA_HOME=$CUDA_DIR
+
 # XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
 
