@@ -1,0 +1,19 @@
+#! /bin/bash
+
+function info() {
+    echo $@
+}
+
+function main() {
+    local inputpdf=$1
+    local outputemf=${2:-${inputpdf/pdf/emf}}
+
+    info "Output: " $outputemf
+
+    local tempsvg=$(mktemp --tmpdir pdf2emf-XXXXXXXX.svg)
+    pdf2svg "$inputpdf" "$tempsvg"
+    inkscape "$tempsvg" -M "$outputemf"
+    rm "$tempsvg"
+}
+
+main $@
