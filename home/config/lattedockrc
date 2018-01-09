@@ -1,3 +1,9 @@
+[PlasmaTransientsConfig]
+raiseOnActivityChange[$d]
+raiseOnDesktopChange[$d]
+timerHide[$d]
+timerShow[$d]
+
 [ScreenConnectors]
 10=DP-1
 11=Screen19
