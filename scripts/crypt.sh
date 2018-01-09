@@ -7,6 +7,10 @@ log() {
     :
 }
 
+err() {
+    echo "$@" >&2
+}
+
 target_attributes=('access_token' 'refresh_token' '//registry.npmjs.org/:_authToken')
 
 isTargetLine() {
@@ -23,8 +27,18 @@ isTargetLine() {
 MAGIC="deadbeaf"
 KEYFILE=".git/crypt-key"
 OPENSSL_CIPHER="-aes-128-cbc -nosalt"
+
+checkInit() {
+    if [[ ! -f $KEYFILE ]]; then
+        err "Keyfile $KEYFILE doesn't exist. You need run init first."
+        exit 2
+    fi
+}
+
 tryDecrypt() {
     log "tryDecrypt"
+
+    checkInit
 
     local encrypted exitCode payload
     tryDecryptOut=
@@ -57,13 +71,15 @@ tryDecrypt() {
 
 encrypt() {
     log "encrypting"
+    checkInit
 
     while IFS='$\n' read -r line; do
         if isTargetLine "$line"; then
             local key="${line%%=*}"
             local value="${line#*=}"
             if ! tryDecrypt "$value"; then
-                # only encrypt is it is not already encrypted
+                # only encrypt if it is not already encrypted
+                log "encrypting key $key"
                 local payload="${MAGIC}${value}"
                 local encrypted=$(echo "$payload" | openssl enc $OPENSSL_CIPHER -pass "file:$KEYFILE" 2>/dev/null | base64 -w 0 2>/dev/null)
                 echo "$key=$encrypted"
@@ -78,6 +94,7 @@ encrypt() {
 
 decrypt() {
     log "decrypting"
+    checkInit
 
     while IFS='$\n' read -r line; do
         if isTargetLine "$line"; then
@@ -85,6 +102,7 @@ decrypt() {
             local encrypted="${line#*=}"
             if tryDecrypt "$encrypted"; then
                 value="$tryDecryptOut"
+                log "decrypted key $key"
                 echo "$key=$value"
                 continue
             fi
@@ -110,8 +128,8 @@ init() {
 
     # generate key and store in kwallet
     if [[ -f "$KEYFILE" ]]; then
-        log "The keyfile already exists: $KEYFILE"
-        log "Remove it first if you want to regenerate"
+        err "The keyfile already exists: $KEYFILE"
+        err "Remove it first if you want to regenerate"
     else
         openssl rand -out "$KEYFILE" 128
     fi
