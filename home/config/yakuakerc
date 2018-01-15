@@ -6,13 +6,13 @@ Skin=breeze-thin-dark
 Translucency=true
 
 [Desktop Entry]
-DefaultProfile=Profile 1.profile
+DefaultProfile=Yakuake.profile
 
 [Dialogs]
 FirstRun=false
 
 [Favorite Profiles]
-Favorites=Profile 1.profile
+Favorites=Yakuake.profile
 
 [Shortcuts]
 close-active-terminal=Ctrl+Shift+R
