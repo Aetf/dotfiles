@@ -1,7 +1,5 @@
 # IME settings
-export XMODIFIERS=@im=fcitx
-export GTK_IM_MODULE=fcitx
-export QT_IM_MODULE=fcitx
+#handled automatically in /etc/X11/Xsession.d/72sogoupinyin
 
 # Default editor
 export EDITOR=vim
