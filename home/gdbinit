@@ -5,7 +5,8 @@
 
 # Qt/KDE pretty printers
 python
-sys.path.insert(0, "/home/aetf/.gdb")
+import os
+sys.path.insert(0, os.path.expanduser('~/.gdb'))
 
 from qt import register_qt_printers
 register_qt_printers (None)
