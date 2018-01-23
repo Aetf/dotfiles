@@ -1,3 +1,3 @@
 function rm --description 'Safe rm'
-	command rm -I --preserve-root $argv
+	command rm -i --preserve-root $argv
 end

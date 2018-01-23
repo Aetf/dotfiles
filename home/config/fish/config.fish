@@ -11,40 +11,8 @@ if test $TERM != "screen-256color";
     set TERM xterm-256color
 end
 
-## Only set these if we don't have DISPLAY
-## otherwise, these've been set in $HOME/.xprofile
-if test $DISPLAYx = "x";
-    ## Install directory
-    set -x INSTALLDIR ~/Software
-    ## Default editor
-    set -x EDITOR vim
-    ## Used for virtualbox
-    set -x VBOX_USB usbfs
-    ## Nasm environment
-    set -x NASMENV "-i /home/aetf/Develop/ASM/inc"
-    set -x NASM $NASMENV
-    ## Predefined variables to Java runtime
-    set -x _JAVA_OPTIONS "-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
-    ## Ccache directory
-    set -x CCACHE_DIR /opt/.ccache
-    set -x CCACHE_COMPRESS
-    ## XDG variables
-    set -x XDG_CONFIG_HOME "$HOME/.config"
-
-    # Prepend user's bin directory to PATH
-    set PATH ~/bin $PATH
-    ## more in INSTALLDIR
-    for dir in (find $INSTALLDIR -maxdepth 1 -mindepth 1 -type d -not -name src -print);
-        begin
-            set PATH $PATH "$dir";
-            if [ -d "$dir/bin" ];
-        	    set PATH $PATH "$dir/bin";
-            end
-        end
-    end
-    ## ruby gem executable
-    set PATH $PATH ~/.gem/ruby/2.2.0/bin
-end
+## Default editor
+set -x EDITOR vim
 
 # Make time output more informations
 set -x TIME
@@ -74,24 +42,20 @@ I/O\n\
 # grepc='grep --color=always'
 
 # Prompt line hook provided by powerline
-if test $TERM = 'xterm';
-	powerline-setup;
-else if test $TERM = 'xterm-256color';
-	powerline-setup;
-else if test $TERM = 'screen-256color';
-        set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
-	powerline-setup;
-else
-    function fish_prompt
-        fallback_prompt
-    end
+function _setup_powerline
+    powerline-daemon -q
+    set fish_function_path $fish_function_path "/usr/local/lib/python2.7/site-packages/powerline/bindings/fish"
+    powerline-setup
 end
-
-
-# Fix KeeAgent enviroment variable
-#set _ssh_socket_dir '/tmp/ssh-agent-lib-sock'
-#set _ssh_socket (find "$_ssh_socket_dir" -maxdepth 1 -mindepth 1 -type s -print)
-#if test -S "$_ssh_socket";
-#    set -x SSH_AGENT_PID (echo "$_ssh_socket" | sed 's/[^.]*\.//')
-#    set -x SSH_AUTH_SOCK "$_ssh_socket"
-#end
+switch $TERM
+    case 'xterm*' 'konsole' 'tmux'
+        _setup_powerline
+    case 'linux'
+        set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
+        _setup_powerline
+    case '*'
+        function fish_prompt
+            fallback_prompt
+        end
+end
+functions --erase _setup_powerline
