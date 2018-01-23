@@ -1,17 +1,17 @@
 [1]
-Description=Firefox Nightly No Window Decoration
+Description=Firefox No Window Decoration
 clientmachine=abacus
 clientmachinematch=0
 noborder=true
 noborderrule=2
-title=Manage Version 1.0 :: Breeze Window Controls (Close) :: Add-ons for Firefox - Firefox Nightly
+title=Firefox Nightly
 titlematch=0
 types=1
 windowrole=browser
 windowrolematch=1
-wmclass=firefoxnightly
-wmclasscomplete=false
-wmclassmatch=1
+wmclass=navigator
+wmclasscomplete=true
+wmclassmatch=2
 
 [2]
 Description=Fix Yakuake Shows Up In Taskbar
