@@ -9,9 +9,9 @@ titlematch=0
 types=1
 windowrole=browser
 windowrolematch=1
-wmclass=navigator
+wmclass=navigator (nightly|firefox)
 wmclasscomplete=true
-wmclassmatch=2
+wmclassmatch=3
 
 [2]
 Description=Fix Yakuake Shows Up In Taskbar
