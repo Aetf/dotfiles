@@ -61,6 +61,8 @@ ForEachMacros:
 IncludeCategories:
   - Regex:           '^(<|")(tensorflow|third_party)/'
     Priority:        5
+  - Regex:           '^<boost/'
+    Priority:        7
   - Regex:           '^<'
     Priority:        10
   - Regex:           'tensorflow_headers\.h'
