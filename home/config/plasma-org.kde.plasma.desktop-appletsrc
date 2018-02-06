@@ -6,6 +6,10 @@ wheel:Vertical;NoModifier=org.kde.switchdesktop
 [ActionPlugins][1]
 RightButton;NoModifier=org.kde.contextmenu
 
+[AppletGlobals][org.kde.plasma.comic]
+lastUpdate=2018,2,4,16,27,37
+updateInterval=3
+
 [Containments][16]
 activityId=f68ddaf1-4b58-45e4-ab2e-56ca5be58c2b
 formfactor=0

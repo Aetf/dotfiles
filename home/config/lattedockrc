@@ -1,3 +1,6 @@
+[Notification Messages]
+ConfirmTrash=true
+
 [PlasmaTransientsConfig]
 raiseOnActivityChange[$d]
 raiseOnDesktopChange[$d]
