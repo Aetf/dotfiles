@@ -175,4 +175,4 @@ ButtonsOnLeft=XIAM
 ButtonsOnRight=F
 CloseOnDoubleClickOnMenu=false
 library=org.kde.breeze
-theme=
+theme[$d]
