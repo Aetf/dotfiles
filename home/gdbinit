@@ -14,4 +14,9 @@ register_qt_printers (None)
 from kde import register_kde_printers
 register_kde_printers (None)
 
+from libstdcxx.v6.printers import register_libstdcxx_printers
+register_libstdcxx_printers (None)
+
 end
+
+directory ~/develop/c++/tensorflow
