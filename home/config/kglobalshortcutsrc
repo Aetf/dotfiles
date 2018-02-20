@@ -1,3 +1,6 @@
+[$Version]
+update_info=powerdevil_move_shortcuts.upd:powerdevil_move_shortcuts
+
 [KDE Keyboard Layout Switcher]
 Switch to Next Keyboard Layout=Ctrl+Alt+K,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon
@@ -13,16 +16,16 @@ Toggle Touchpad=Touchpad Toggle,Touchpad Toggle,Toggle Touchpad
 _k_friendly_name=KWin
 
 [kded5]
-Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
-Decrease Screen Brightness=Monitor Brightness Down,Monitor Brightness Down,Decrease Screen Brightness
-Hibernate=Hibernate,Hibernate,Hibernate
-Increase Keyboard Brightness=Keyboard Brightness Up,Keyboard Brightness Up,Increase Keyboard Brightness
-Increase Screen Brightness=Monitor Brightness Up,Monitor Brightness Up,Increase Screen Brightness
-PowerOff=Power Off,Power Off,Power Off
+Decrease Keyboard Brightness[$d]
+Decrease Screen Brightness[$d]
+Hibernate[$d]
+Increase Keyboard Brightness[$d]
+Increase Screen Brightness[$d]
+PowerOff[$d]
 Show System Activity=Ctrl+Esc,Ctrl+Esc,Show System Activity
-Sleep=Sleep,Sleep,Suspend
-Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,Toggle Keyboard Backlight
-_k_friendly_name=Power Management
+Sleep[$d]
+Toggle Keyboard Backlight[$d]
+_k_friendly_name=KDE Daemon
 display=Display\tMeta+P,Display\tMeta+P,Switch Display
 
 [khotkeys]
@@ -254,6 +257,17 @@ nextmedia=Media Next,Media Next,Media playback next
 playpausemedia=Media Play,Media Play,Play/Pause media playback
 previousmedia=Media Previous,Media Previous,Media playback previous
 stopmedia=Media Stop,Media Stop,Stop media playback
+
+[org_kde_powerdevil]
+Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,Decrease Keyboard Brightness
+Decrease Screen Brightness=Monitor Brightness Down,Monitor Brightness Down,Decrease Screen Brightness
+Hibernate=Hibernate,Hibernate,Hibernate
+Increase Keyboard Brightness=Keyboard Brightness Up,Keyboard Brightness Up,Increase Keyboard Brightness
+Increase Screen Brightness=Monitor Brightness Up,Monitor Brightness Up,Increase Screen Brightness
+PowerOff=Power Off,Power Off,Power Off
+Sleep=Sleep,Sleep,Suspend
+Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,Toggle Keyboard Backlight
+_k_friendly_name=Power Management
 
 [plasmashell]
 _k_friendly_name=Plasma
