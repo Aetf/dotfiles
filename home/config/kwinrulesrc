@@ -1,5 +1,7 @@
 [1]
 Description=修复 Yakuake 有时出现在任务栏中
+blockcompositing[$d]
+blockcompositingrule[$d]
 skipswitcher=true
 skipswitcherrule=2
 skiptaskbar=true
@@ -17,14 +19,14 @@ clientmachine=aetf-arch-mac
 clientmachinematch=0
 noborder=true
 noborderrule=2
-title=Nightly
+title=Firefox Nightly
 titlematch=0
 types=1
 windowrole=browser
 windowrolematch=1
-wmclass=firefoxnightly
-wmclasscomplete=false
-wmclassmatch=1
+wmclass=navigator (firefox|nightly)
+wmclasscomplete=true
+wmclassmatch=3
 
 [General]
 count=2
