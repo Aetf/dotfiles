@@ -79,3 +79,12 @@ Host conflux
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host abacus
+    User peifeng
+    HostName abacus.eecs.umich.edu
+    Port 39909
+    ForwardX11 yes
+    ForwardX11Trusted yes
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
