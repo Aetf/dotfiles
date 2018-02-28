@@ -92,12 +92,15 @@ if $AUTO_DETECT; then
     export PATH
     export LD_LIBRARY_PATH
     export INCLUDE
+    export CPATH
     export LIB
     export CMAKE_PREFIX_PATH
 fi
 
 # Package specific variables
-export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
+if [[ -d $TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le ]]; then
+    export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
+fi
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
@@ -119,16 +122,23 @@ alias kfg="kill -- -\$(jobs -p); fg"
 export EDITOR=vim
 
 # liquid prompt
-PS1='PS1' # fix warning in liquidprompt due to PS1 is empty
-## disable vcs on large repo
-LP_DISABLED_VCS_PATH="$BUILD_DIR/q:$BUILD_DIR/models:$BUILD_DIR/fold:$BUILD_DIR/tensorflow-rpcdev:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
-. ~/.liquidprompt/liquidprompt
-LP_TITLE_OPEN='\033k'
-LP_TITLE_CLOSE='\033\\'
-#PROMPT_COMMAND="$PROMPT_COMMAND ; PS1=\$(_lp_title \${HOSTNAME}: \${PWD##*/})\$PS1"
+if [[ -d ~/.liquidprompt ]]; then
+    PS1='PS1' # fix warning in liquidprompt due to PS1 is empty
+    ## disable vcs on large repo
+    LP_DISABLED_VCS_PATH="$BUILD_DIR/q:$BUILD_DIR/models:$BUILD_DIR/fold:$BUILD_DIR/tensorflow-rpcdev:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
+    . ~/.liquidprompt/liquidprompt
+    ## Set tmux tab title when we are ssh in an interactive session
+    if [[ -n $RUNNING_IN_TMUX && -n $INTER_SESSION ]]; then
+        LP_TITLE_OPEN='\033k'
+        LP_TITLE_CLOSE='\033\\'
+    fi
+    #PROMPT_COMMAND="$PROMPT_COMMAND ; PS1=\$(_lp_title \${HOSTNAME}: \${PWD##*/})\$PS1"
+fi
 
 # vex completion
-eval "$(vex --shell-config bash)"
+if type vex >/dev/null 2>/dev/null; then
+    eval "$(vex --shell-config bash)"
+fi
 
 # Spack package manager
 export SPACK_ROOT=$TOOL_DIR/spack
@@ -154,13 +164,24 @@ export CC=gcc
 export CXX=g++
 
 # setup completion for inter command
-eval "$(inter --print-complete)"
+if type inter >/dev/null 2>/dev/null; then
+    eval "$(inter --print-complete)"
+fi
 
 # Make SSH_AUTH_SOCK points to a fixed location
 if [[ -n $SSH_AUTH_SOCK && ! -h $SSH_AUTH_SOCK ]]; then
+    mkdir -p $HOME/.ssh
     ln -sf $SSH_AUTH_SOCK $HOME/.ssh/ssh_auth_sock
     export SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock
 fi
 
 # Disable TTY XON/XOFF
 stty -ixon
+
+# Automatically update window size
+shopt -s checkwinsize
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
