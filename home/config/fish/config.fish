@@ -78,7 +78,7 @@ end
 ## More colorful
 switch $TERM
     case 'xterm-256color' 'konsole'
-        set TERM konsole
+        #set TERM konsole
         # explicitly enable 256color and 24bit color in fish
         set fish_term256 1
         set fish_term24bit 1
