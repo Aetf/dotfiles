@@ -1,10 +1,23 @@
 server {
 	listen 80;
 	listen [::]:80;
+	server_name static.unlimitedcodeworks.xyz;
+
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	server_name static.unlimitedcodeworks.xyz;
+
+	keepalive_requests 10;
+	keepalive_timeout 60 60;
+
+	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
 
 	root /srv/http/files;
-
-	server_name static.unlimitedcodeworks.xyz;
 
 	access_log /var/log/nginx/sites/staticFiles.access;
 	error_log /var/log/nginx/sites/staticFiles.error error;
