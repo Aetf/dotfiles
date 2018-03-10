@@ -3,8 +3,6 @@
 set -o errexit
 shopt -s nullglob
 
-self=$(basename "$0")
-
 FORWARD_ENVS=(
 'RUNNING_IN_TMUX'
 'INTER_SESSION'
@@ -54,6 +52,12 @@ FREE_HOSTS=(
 
 REQUESTED_NODE=1
 RUNTIME_DIR=$HOME/.local/run
+
+# Implementation below, Do NOT modify
+# ===============================================================================
+
+self=$(basename "$0")
+selfdir=$(dirname "$0")
 
 # Input: RUNTIME_DIR, exec_host, jobid, SESSION_ID
 safe_stop() {
@@ -252,6 +256,7 @@ Options:
   --noheader               Do not print header when listing sessions.
   --complete               Print list of hosts for completion.
   --print-complete         Print command for completion for bash.
+  --install                Modify bashrc to install the script.
 EOF
 }
 
@@ -375,10 +380,21 @@ complete -F _inter inter
 EOF
 }
 
+do_install() {
+    cat >> $HOME/.bashrc <<EOF
+# Setup inter
+export PATH=\$PATH:$selfdir
+[ -s "$selfdir/$self" ] && eval "\$($self --print-complete)"
+EOF
+    echo -e "\e[1;33m==>\e[0m \e[1mInstallation complete!\e[0m\n"
+    echo -e "\e[1;33m==>\e[0m \e[1mQuick Manual:\e[0m"
+    usage
+}
+
 # --- main starts from here ---
 # NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
 # separately; see below.
-TEMP=`getopt -o hlq:c: --long help,list,complete,print-complete,queue:,cores-per-node: \
+TEMP=`getopt -o hlq:c: --long help,list,complete,print-complete,install,queue:,cores-per-node: \
              -n "$self" -- "$@"`
 
 if [ $? != 0 ] ; then usage >&2; exit 1 ; fi
@@ -418,6 +434,9 @@ while true; do
         exit ;;
     --print-complete )
         do_print_complete
+        exit ;;
+    --install )
+        do_install
         exit ;;
     -- ) shift; break ;;
     * ) break ;;
