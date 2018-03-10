@@ -42,6 +42,9 @@ FORWARD_ENVS=(
 )
 
 FREE_HOSTS=(
+    'gpu-cn010'
+    'gpu-cn011'
+    'gpu-cn012'
     'gpu-cn013'
     'gpu-cn014'
     'gpu-cn015'
