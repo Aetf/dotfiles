@@ -134,6 +134,8 @@ let g:tmuxline_preset = {
       \'y'    : '#H',
       \'z'    : '%H:%M:%S'}
 
+Plug 'yangmillstheory/vim-snipe'
+
 " Initialize plugin system
 call plug#end()
 
