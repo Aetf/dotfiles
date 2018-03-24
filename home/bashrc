@@ -59,6 +59,7 @@ if $AUTO_DETECT; then
     LIB=${LIB:-}
     LD_LIBRARY_PATH=${LD_LIBRARY_PATH:-}
     PATH=${PATH:-}
+    PKG_CONFIG_PATH=${PKG_CONFIG_PATH:-}
     for pkg in $TOOL_DIR/*; do
         case $pkg in
             *.skip)
@@ -70,6 +71,7 @@ if $AUTO_DETECT; then
         lib64_dir=$pkg/lib64
         if [ -d $inc_dir ]; then
             uniqprepend INCLUDE $inc_dir
+            uniqprepend CPATH $inc_dir
         fi
         if [ -d $bin_dir ]; then
             uniqprepend PATH $bin_dir
@@ -88,6 +90,11 @@ if $AUTO_DETECT; then
                 uniqprepend CMAKE_PREFIX_PATH $pkg
             fi
         done
+        for pkgconfig_dir in $pkg/lib*/pkgconfig; do
+            if [ -d $pkgconfig_dir ]; then
+                uniqprepend PKG_CONFIG_PATH $pkgconfig_dir
+            fi
+        done
     done
     export PATH
     export LD_LIBRARY_PATH
@@ -95,12 +102,33 @@ if $AUTO_DETECT; then
     export CPATH
     export LIB
     export CMAKE_PREFIX_PATH
+    export PKG_CONFIG_PATH
 fi
 
 # Package specific variables
 if [[ -d $TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le ]]; then
     export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
 fi
+CUDA_HOME=/gpfs/gpfs0/software/rhel72/packages/cuda/8.0
+if [[ -d $CUDA_HOME ]]; then
+    export CUDA_HOME
+    export CUDA_ROOT=$CUDA_HOME
+    uniqprepend PATH $CUDA_HOME/bin
+    uniqprepend LD_LIBRARY_PATH $CUDA_HOME/lib64
+    uniqprepend INCLUDE $CUDA_HOME/include
+    uniqprepend CPATH $CUDA_HOME/include
+    uniqprepend LIB $CUDA_HOME/lib64
+fi
+
+export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
+export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
+export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
+# compile time library path list
+export LIBRARY_PATH=$LD_LIBRARY_PATH
+
+# set compiler to gcc and g++
+export CC=gcc
+export CXX=g++
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
@@ -109,6 +137,10 @@ fi
 # Following section only applies to an interactive session
 #------------------------------------------------------------
 export TERM=xterm-256color
+
+# Fix Ctrl+Left/Right to move around words
+bind '"\e[1;5D":backward-word'
+bind '"\e[1;5C":forward-word'
 
 # Alias
 alias ls='ls --color=auto -h -v --indicator-style=classify'
@@ -125,7 +157,7 @@ export EDITOR=vim
 if [[ -d ~/.liquidprompt ]]; then
     PS1='PS1' # fix warning in liquidprompt due to PS1 is empty
     ## disable vcs on large repo
-    LP_DISABLED_VCS_PATH="$BUILD_DIR/q:$BUILD_DIR/models:$BUILD_DIR/fold:$BUILD_DIR/tensorflow-rpcdev:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
+    LP_DISABLED_VCS_PATH="$BUILD_DIR/incudator-mxnet:$BUILD_DIR/models:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
     . ~/.liquidprompt/liquidprompt
     ## Set tmux tab title when we are ssh in an interactive session
     if [[ -n $RUNNING_IN_TMUX && -n $INTER_SESSION ]]; then
@@ -147,22 +179,6 @@ export SPACK_ROOT=$TOOL_DIR/spack
 #. $SPACK_ROOT/share/spack/setup-env.sh
 #export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
 
-if type module >/dev/null 2>/dev/null; then
-    if [[ -f $HOME/.modules ]]; then
-        . $HOME/.modules
-    fi
-fi
-
-# setup extra environment variables
-export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
-export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
-export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
-# compile time library path list
-export LIBRARY_PATH=$LD_LIBRARY_PATH
-# set compiler to gcc and g++
-export CC=gcc
-export CXX=g++
-
 # setup completion for inter command
 if type inter >/dev/null 2>/dev/null; then
     eval "$(inter --print-complete)"
@@ -180,8 +196,3 @@ stty -ixon
 
 # Automatically update window size
 shopt -s checkwinsize
-
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
