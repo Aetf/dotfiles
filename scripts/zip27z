@@ -1,0 +1,23 @@
+#! /usr/bin/bash
+set -e
+
+
+if [[ -z $1 ]]; then
+    echo "Usage: zip27z <zip-file-name>"
+    exit 1
+fi
+
+input=$(realpath $1)
+
+input_dir=$(dirname "$input")
+input_name=$(basename "$input" .zip)
+output="${input_dir}/${input_name}.7z"
+
+echo "Converting $input to $output"
+
+temp=$(mktemp -d)
+unzip "$input" -d "$temp" >/dev/null
+pushd "$temp" >/dev/null
+7z a -mx=9 -r -sdel "$output" * >/dev/null
+popd >/dev/null
+rmdir "$temp"
