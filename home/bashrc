@@ -167,22 +167,12 @@ if [[ -d ~/.liquidprompt ]]; then
     #PROMPT_COMMAND="$PROMPT_COMMAND ; PS1=\$(_lp_title \${HOSTNAME}: \${PWD##*/})\$PS1"
 fi
 
-# vex completion
-if type vex >/dev/null 2>/dev/null; then
-    eval "$(vex --shell-config bash)"
-fi
-
 # Spack package manager
 export SPACK_ROOT=$TOOL_DIR/spack
 # don't load shell integration, which is too slow. We explicitly set MODULEPATH
 # common used modules are loaded as spack view in $TOOL_DIR/spack_packages
 #. $SPACK_ROOT/share/spack/setup-env.sh
 #export MODULEPATH=$TOOL_DIR/spack/share/spack/lmod/linux-rhel7-ppc64le/Core:/gpfs/gpfs0/software/rhel72/conflux-modules/modulefiles
-
-# setup completion for inter command
-if type inter >/dev/null 2>/dev/null; then
-    eval "$(inter --print-complete)"
-fi
 
 # Make SSH_AUTH_SOCK points to a fixed location
 if [[ -n $SSH_AUTH_SOCK && ! -h $SSH_AUTH_SOCK ]]; then
