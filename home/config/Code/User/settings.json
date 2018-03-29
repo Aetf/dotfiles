@@ -9,7 +9,7 @@
     "editor.smoothScrolling": true,
     "editor.renderWhitespace":"boundary",
     "editor.cursorBlinking": "smooth",
-    "editor.fontFamily": "'Dejavu Sans Mono'",
+    "editor.fontFamily": "'DejaVu Sans Mono'",
     "workbench.colorTheme": "Base16 Dark Eighties",
     "vim.enableNeovim": false,
     "editor.formatOnType": true,
@@ -93,7 +93,7 @@
     "explorer.confirmDragAndDrop": false,
     "explorer.autoReveal": false,
     "explorer.confirmDelete": false,
-    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.multiCursorModifier": "alt",
     "gitlens.advanced.messages": {
         "suppressCommitHasNoPreviousCommitWarning": false,
         "suppressCommitNotFoundWarning": false,
@@ -107,5 +107,9 @@
     "gitlens.codeLens.scopes": [
         "document"
     ],
-    "gitlens.codeLens.enabled": false
+    "gitlens.codeLens.enabled": false,
+    "gitlens.keymap": "alternate",
+    "terminal.integrated.fontFamily": "'DejaVu Sans Mono'",
+    "python.terminal.activateEnvironment": false,
+    "git.confirmSync": false
 }
