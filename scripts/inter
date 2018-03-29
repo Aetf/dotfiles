@@ -329,7 +329,7 @@ do_inter() {
     forward=$(env | egrep "^($pattern)")
     forward="${forward//$'\n'/ }"
 
-    remotecmd="exec env $forward $SHELL"
+    remotecmd="exec env $forward $SHELL --login"
     # cd to same directory if under home
     case "$(readlink -f .)/" in $(readlink -f $HOME)/*)
         remotecmd="cd $(pwd); $remotecmd"
