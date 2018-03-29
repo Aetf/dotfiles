@@ -31,7 +31,7 @@ Host archvps
     ControlPersist yes
 Host ccgpu
     User cc
-    HostName 129.114.108.183
+    HostName 129.114.108.180
     ForwardX11 no
     ForwardX11Trusted no
     ForwardAgent yes
