@@ -1,0 +1,29 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+PS1='[\u@\h \W]\$ '
+
+if [[ -f $HOME/.profile ]]; then
+    . $HOME/.profile
+fi
+
+# source awesome-terminal-fonts font map before drop into fish
+shopt -s nullglob
+function source_atf() {
+    local AWESOME_TERMINAL_FONTS_DIR=/usr/share/fonts/awesome-terminal-fonts
+    for f in $AWESOME_TERMINAL_FONTS_DIR/*.sh; do
+        . "$f"
+    done
+    for name in ${!CODEPOINT_OF*}; do
+        export $name
+    done
+}
+source_atf
+unset -f source_atf
+
+exec fish
