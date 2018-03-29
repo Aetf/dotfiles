@@ -23,6 +23,9 @@ wallpaperplugin=org.kde.potd
 DialogHeight=1020
 DialogWidth=1360
 
+[Containments][16][Configuration]
+PreloadWeight=26
+
 [Containments][16][General]
 showToolbox=false
 

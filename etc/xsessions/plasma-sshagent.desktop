@@ -6,4 +6,4 @@ TryExec=/usr/bin/ssh-agent
 DesktopNames=KDE
 Name=Plasma
 Comment=Plasma by KDE
-X-KDE-PluginInfo-Version=5.11.5
+X-KDE-PluginInfo-Version=5.12.1
