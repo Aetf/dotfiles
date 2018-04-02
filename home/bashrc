@@ -130,6 +130,11 @@ export LIBRARY_PATH=$LD_LIBRARY_PATH
 export CC=gcc
 export CXX=g++
 
+# Go language
+export GOROOT=$TOOL_DIR/go
+export GOPATH=$TOOL_DIR/gopath
+export GOBIN=$TOOL_DIR/gopath/bin
+
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
 
