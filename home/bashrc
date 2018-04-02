@@ -165,7 +165,7 @@ if [[ -d ~/.liquidprompt ]]; then
     LP_DISABLED_VCS_PATH="$BUILD_DIR/incudator-mxnet:$BUILD_DIR/models:$BUILD_DIR/tensorflow:$HOME/.vim/plugged/YouCompleteMe"
     . ~/.liquidprompt/liquidprompt
     ## Set tmux tab title when we are ssh in an interactive session
-    if [[ -n $RUNNING_IN_TMUX && -n $INTER_SESSION ]]; then
+    if [[ -n $TMUX ]]; then
         LP_TITLE_OPEN='\033k'
         LP_TITLE_CLOSE='\033\\'
     fi

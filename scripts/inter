@@ -37,6 +37,8 @@ FORWARD_ENVS=(
 
 'GCC_ROOT'
 'GCC_LIB'
+
+'TMUX'
 )
 
 FREE_HOSTS=(
