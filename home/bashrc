@@ -1,23 +1,3 @@
-# Helper function
-uniqappend () {
-    varname=$1
-    x=$2
-    case ":${!varname}:" in
-        *":$x:"*) :;; # already there
-        *) eval $varname=\"\$$varname:\$x\";;
-    esac
-    eval $varname=\"\$\{$varname\#:\}\"
-}
-uniqprepend () {
-    varname=$1
-    x=$2
-    case ":${!varname}:" in
-        *":$x:"*) :;; # already there
-        *) eval $varname=\"\$x:\$$varname\";;
-    esac
-    eval $varname=\"\$\{$varname\%:\}\"
-}
-
 # Remove duplicate and nonexist entries
 if [ -n "$PATH" ]; then
     old_PATH=$PATH:; PATH=
@@ -40,16 +20,6 @@ if [ -n "${LD_LIBRARY_PATH:=}" ]; then
         old_PATH=${old_PATH#*:}
     done
     unset old_PATH x
-fi
-
-# Basic locations
-export DOWNLOAD_DIR=$HOME/downloads
-export BUILD_DIR=$HOME/buildbed
-export TOOL_DIR=$HOME/tools
-
-# Extra Path
-if [ -d $HOME/.local/bin ]; then
-    uniqappend PATH $HOME/.local/bin
 fi
 
 # Detect extra installations in tools
@@ -106,10 +76,10 @@ if $AUTO_DETECT; then
 fi
 
 # Package specific variables
-if [[ -d $TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le ]]; then
-    export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
+if [[ -d /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.161-0.b14.el7_4.ppc64le/ ]]; then
+    export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.161-0.b14.el7_4.ppc64le/
 fi
-CUDA_HOME=/gpfs/gpfs0/software/rhel72/packages/cuda/8.0
+CUDA_HOME=/usr/local/cuda-9.1
 if [[ -d $CUDA_HOME ]]; then
     export CUDA_HOME
     export CUDA_ROOT=$CUDA_HOME
@@ -120,9 +90,9 @@ if [[ -d $CUDA_HOME ]]; then
     uniqprepend LIB $CUDA_HOME/lib64
 fi
 
-export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
-export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
-export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
+#export OPENBLAS=/usr/lib64/libopenblas.so
+#export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
+#export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
 # compile time library path list
 export LIBRARY_PATH=$LD_LIBRARY_PATH
 
@@ -134,6 +104,7 @@ export CXX=g++
 export GOROOT=$TOOL_DIR/go
 export GOPATH=$TOOL_DIR/gopath
 export GOBIN=$TOOL_DIR/gopath/bin
+
 
 # If not running interactively, exit after setting up paths
 [[ $- != *i* ]] && return
@@ -154,6 +125,12 @@ alias la='ls -a'
 alias lla='ls -al'
 alias bd=". bd -si"
 alias kfg="kill -- -\$(jobs -p); fg"
+
+cdmk() {
+    mkdir -p "$@"
+    for last in "$@"; do true; done
+    cd $last
+}
 
 # Editor
 export EDITOR=vim

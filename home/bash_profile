@@ -1,13 +1,46 @@
 # .bash_profile
 
-# Get the aliases and functions
-if [ -f ~/.bashrc ]; then
-	. ~/.bashrc
-fi
-
 # Source completion
 if [ -d ~/.bash_completion.d ]; then
 	for bcfile in ~/.bash_completion.d/*; do
 		. $bcfile
 	done
 fi
+
+# Helper function
+uniqappend () {
+    varname=$1
+    x=$2
+    case ":${!varname}:" in
+        *":$x:"*) :;; # already there
+        *) eval $varname=\"\$$varname:\$x\";;
+    esac
+    eval $varname=\"\$\{$varname\#:\}\"
+}
+uniqprepend () {
+    varname=$1
+    x=$2
+    case ":${!varname}:" in
+        *":$x:"*) :;; # already there
+        *) eval $varname=\"\$x:\$$varname\";;
+    esac
+    eval $varname=\"\$\{$varname\%:\}\"
+}
+export -f uniqappend
+export -f uniqprepend
+
+# Basic locations
+export DOWNLOAD_DIR=$HOME/downloads
+export BUILD_DIR=$HOME/buildbed
+export TOOL_DIR=$HOME/tools
+
+# Extra Path
+if [ -d $HOME/.local/bin ]; then
+    uniqprepend PATH $HOME/.local/bin
+fi
+
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+	. ~/.bashrc
+fi
+
