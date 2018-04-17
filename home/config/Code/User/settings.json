@@ -101,6 +101,8 @@
         "suppressGitVersionWarning": false,
         "suppressLineUncommittedWarning": false,
         "suppressNoRepositoryWarning": false,
+        "suppressResultsExplorerNotice": false,
+        "suppressShowKeyBindingsNotice": true,
         "suppressUpdateNotice": false,
         "suppressWelcomeNotice": true
     },
@@ -108,7 +110,7 @@
         "document"
     ],
     "gitlens.codeLens.enabled": false,
-    "gitlens.keymap": "alternate",
+    "gitlens.keymap": "chorded",
     "terminal.integrated.fontFamily": "'DejaVu Sans Mono'",
     "python.terminal.activateEnvironment": false,
     "git.confirmSync": false
