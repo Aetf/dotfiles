@@ -3,10 +3,16 @@ server {
 	listen [::]:80;
 	server_name games.unlimitedcodeworks.xyz;
 
+	return 301 https://$host#request_uri;
+}
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name games.unlimitedcodeworks.xyz;
 
 	access_log /var/log/nginx/sites/games.access;
 	error_log /var/log/nginx/sites/games.error error;
-        rewrite_log on;
+	rewrite_log on;
 
 	root /srv/http/door-shiyu;
 

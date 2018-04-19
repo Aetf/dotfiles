@@ -14,11 +14,8 @@
 server {
 	listen 80 default_server;
 	listen [::]:80 default_server ipv6only=on;
-	listen 443 default_server ssl;
-	listen [::]:443 default_server ipv6only=on ssl;
-
-	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
+	listen 443 default_server ssl http2;
+	listen [::]:443 default_server ipv6only=on ssl http2;
 
 	root /var/websites/fallback;
 	index index.html index.htm;

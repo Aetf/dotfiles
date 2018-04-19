@@ -7,10 +7,9 @@ server {
 }
 
 server {
-	listen 443 ssl;
-	listen [::]:443 ssl;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
 	server_name jiahui.love;
-	keepalive_timeout 70;
 
 	ssl_certificate /etc/letsencrypt/live/jiahui.love/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/jiahui.love/privkey.pem;

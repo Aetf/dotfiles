@@ -22,15 +22,12 @@ server {
 }
 
 server {
-	listen 443 ssl;
-	listen [::]:443 ssl;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
 	server_name files.unlimitedcodeworks.xyz;
 
 	keepalive_requests 10;
 	keepalive_timeout 60 60;
-
-	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
 
 	access_log /var/log/nginx/sites/pydio.access;
 	error_log /var/log/nginx/sites/pydio.error error;

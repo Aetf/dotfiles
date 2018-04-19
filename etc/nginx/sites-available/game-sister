@@ -10,10 +10,6 @@ server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
 	server_name game.unlimitedcodeworks.xyz;
-	keepalive_timeout 70;
-
-	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
 
 	access_log /var/log/nginx/sites/game.access;
 	error_log /var/log/nginx/sites/game.error error;
