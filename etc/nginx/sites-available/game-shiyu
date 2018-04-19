@@ -8,7 +8,7 @@ server {
 	error_log /var/log/nginx/sites/games.error error;
         rewrite_log on;
 
-	root /home/aetf/WebRoot/door2;
+	root /srv/http/door-shiyu;
 
 	location / {
 	}

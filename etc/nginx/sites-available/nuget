@@ -17,7 +17,7 @@ server {
 	ssl_certificate /etc/letsencrypt/live/unlimitedcodeworks.xyz/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/unlimitedcodeworks.xyz/privkey.pem;
 
-	root /home/aetf/WebRoot/simple-nuget-server/public/;
+	root /srv/http/simple-nuget-server/public/;
 	access_log /var/log/nginx/sites/nuget.access;
 	error_log /var/log/nginx/sites/nuget.error error;
 
@@ -55,6 +55,6 @@ server {
 	# Used with X-Accel-Redirect
 	location /packagefiles {
 		internal;
-		root /home/aetf/WebRoot/simple-nuget-server/;
+		root /srv/http/simple-nuget-server/;
 	}
 }
