@@ -68,40 +68,40 @@ kile_livePreviewStatusUserSpecified[$d]
 kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex]
-Bookmarks=
-Highlighting=LaTeX
-Highlighting Set By User=false
-Indentation Mode=normal
-Mode=LaTeX
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/cv/cv/cv.tex]
-Bookmarks=
-Highlighting=LaTeX
-Highlighting Set By User=false
-Indentation Mode=normal
-Mode=LaTeX
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/cv/resume/resume.tex]
-Bookmarks=
-Highlighting=LaTeX
-Highlighting Set By User=false
-Indentation Mode=normal
-Mode=LaTeX
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+Bookmarks[$d]
+Highlighting[$d]
+Highlighting Set By User[$d]
+Indentation Mode[$d]
+Mode[$d]
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex]
 Bookmarks=
@@ -157,6 +157,105 @@ kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
 [Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.bib]
+Bookmarks=
+Highlighting=BibTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=BibTeX
+Mode Set By User=false
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/eval.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/impl.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/intro.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/memory.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/motivation.tex]
+Bookmarks=
+Highlighting=LaTeX
+Highlighting Set By User=false
+Indentation Mode=normal
+Mode=LaTeX
+Mode Set By User=false
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
+[Document-Settings,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/scheduling.tex]
 Bookmarks=
 Highlighting=LaTeX
 Highlighting Set By User=false
@@ -314,6 +413,13 @@ kile_livePreviewEnabled[$d]
 kile_livePreviewStatusUserSpecified[$d]
 kile_livePreviewTool[$d]
 
+[Document-Settings,URL=file://:@/tmp/workspace/hw1/homework.solutions.template.tex]
+bibliographyBackendAutoDetected=
+bibliographyBackendUserOverride=
+kile_livePreviewEnabled=true
+kile_livePreviewStatusUserSpecified=false
+kile_livePreviewTool=LivePreview-PDFLaTeX
+
 [Document-Settings,URL=file://:@/tmp/workspace/main.tex]
 bibliographyBackendAutoDetected=
 bibliographyBackendUserOverride=
@@ -322,11 +428,11 @@ kile_livePreviewStatusUserSpecified=false
 kile_livePreviewTool=LivePreview-PDFLaTeX
 
 [Document-Settings,URL=file://:@/tmp/workspace/slides.tex]
-bibliographyBackendAutoDetected=
-bibliographyBackendUserOverride=
-kile_livePreviewEnabled=true
-kile_livePreviewStatusUserSpecified=false
-kile_livePreviewTool=LivePreview-PDFLaTeX
+bibliographyBackendAutoDetected[$d]
+bibliographyBackendUserOverride[$d]
+kile_livePreviewEnabled[$d]
+kile_livePreviewStatusUserSpecified[$d]
+kile_livePreviewTool[$d]
 
 [Document-Settings,URL=file://:@/tmp/workspace/test.tex]
 bibliographyBackendAutoDetected[$d]
@@ -404,34 +510,36 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/nvfellowship/main.tex
+LastDocument[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/motivation.tex
 SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
 [FilesOpenOnStart]
-DocsOpenOnStart0[$e]=$HOME/develop/latex/nvfellowship/main.tex
-DocsOpenOnStart1[$e]=$HOME/develop/latex/nvfellowship/main.bib
-DocsOpenOnStart2[$d]
-DocsOpenOnStart3[$d]
-DocsOpenOnStart4[$d]
-DocsOpenOnStart5[$d]
-DocsOpenOnStart6[$d]
+DocsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/intro.tex
+DocsOpenOnStart1[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/con.tex
+DocsOpenOnStart2[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/memory.tex
+DocsOpenOnStart3[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/impl.tex
+DocsOpenOnStart4[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/motivation.tex
+DocsOpenOnStart5[$e]=$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.bib
+DocsOpenOnStart6[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/scheduling.tex
+DocsOpenOnStart7[$d]
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
 EncodingsOfDocsOpenOnStart1[$e]=UTF-8
-EncodingsOfDocsOpenOnStart2[$d]
-EncodingsOfDocsOpenOnStart3[$d]
-EncodingsOfDocsOpenOnStart4[$d]
-EncodingsOfDocsOpenOnStart5[$d]
-EncodingsOfDocsOpenOnStart6[$d]
-NoDOOS=2
+EncodingsOfDocsOpenOnStart2[$e]=UTF-8
+EncodingsOfDocsOpenOnStart3[$e]=UTF-8
+EncodingsOfDocsOpenOnStart4[$e]=UTF-8
+EncodingsOfDocsOpenOnStart5[$e]=UTF-8
+EncodingsOfDocsOpenOnStart6[$e]=UTF-8
+EncodingsOfDocsOpenOnStart7[$d]
+NoDOOS=7
 NoPOOS=1
-ProjectsOpenOnStart0[$e]=$HOME/develop/latex/nvfellowship/nvfellowship.kilepr
+ProjectsOpenOnStart0[$e]=$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.kilepr
 
 [Geometries]
 MainwindowHeight=773
 MainwindowWidth=1280
 horizontalSplitterLeft=29
-horizontalSplitterRight=733
+horizontalSplitterRight=724
 verticalSplitterBottom=152
 verticalSplitterTop=531
 
@@ -441,8 +549,8 @@ resolution=600
 
 [KFileDialog Settings]
 Height 800=510
-Recent Files[$e]=file:$HOME/develop/latex/nvfellowship/main.bib,file:$HOME/develop/latex/nvfellowship/nvfellowship.kilepr,file:$HOME/develop/latex/cv/cv/lib/cv.sty,file:$HOME/develop/latex/cv/cv/cv.bib,file:$HOME/develop/latex/nsdi18/salus.tex,file:$HOME/develop/latex/nsdi18/salus.bib,file:$HOME/develop/latex/nsdi18/pages/scheduling.tex,file:$HOME/develop/latex/nsdi18/pages/related.tex,file:$HOME/develop/latex/nsdi18/pages/overview.tex,file:$HOME/develop/latex/nsdi18/pages/motivation.tex,file:$HOME/develop/latex/nsdi18/pages/memory.tex,file:$HOME/develop/latex/nsdi18/pages/intro.tex,file:$HOME/develop/latex/nsdi18/pages/impl.tex,file:$HOME/develop/latex/nsdi18/pages/eval.tex,file:$HOME/develop/latex/nsdi18/pages/con.tex
-Recent URLs[$e]=file:$HOME/develop/latex/nsdi18/,file:$HOME/develop/latex/nsdi18/pages/,file:$HOME/develop/latex/nsdi18/lib/,file:$HOME/develop/latex/cv/cv/lib/,file:$HOME/develop/latex/nvfellowship/,file:$HOME/develop/latex/,file:$HOME/develop/
+Recent Files[$e]=file:$HOME/develop/latex/cv/shortcv/cv.kilepr,file:$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.kilepr,file:$HOME/develop/latex/nsdi18/osdi18/lib/usenix.sty,file:$HOME/develop/latex/nsdi18/osdi18/pages/scheduling.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/related.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/overview.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/motivation.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/memory.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/intro.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/impl.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/eval.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/con.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/ack.tex,file:$HOME/develop/latex/nsdi18/osdi18/pages/abstract.tex
+Recent URLs[$e]=file:$HOME/develop/latex/nsdi18/osdi18/,file:$HOME/develop/,file:$HOME/develop/latex/nsdi18/,file:$HOME/develop/latex/cv/shortcv/,file:$HOME/develop/latex/nsdi18/osdi18/pages/,file:$HOME/develop/latex/nsdi18/osdi18/lib/,file:$HOME/develop/latex/
 Width 1280=816
 
 [KileConfigDialog]
@@ -450,10 +558,10 @@ Height 800=773
 Width 1280=849
 
 [KileMainWindow]
-Height 800=503
+Height 800=510
 State=AAAA/wAAAAD9AAAAAAAABQAAAAKsAAAABAAAAAQAAAAIAAAACPwAAAABAAAAAgAAAAUAAAAWAG0AYQBpAG4AVABvAG8AbABCAGEAcgEAAAAA/////wAAAAAAAAAAAAAAGAB0AG8AbwBsAHMAVABvAG8AbABCAGEAcgEAAAIG/////wAAAAAAAAAAAAAAFgBlAGQAaQB0AFQAbwBvAGwAQgBhAHIAAAAAAP////8AAAAAAAAAAAAAABYAbQBhAHQAaABUAG8AbwBsAEIAYQByAAAAAAD/////AAAAAAAAAAAAAAAmAE8AawB1AGwAYQByAFYAaQBlAHcAZQByAFQAbwBvAGwAQgBhAHIBAAADkf////8AAAAAAAAAAA==
 ToolBarsMovable=Disabled
-Width 1280=920
+Width 1280=853
 Window-Maximized 800x1280=true
 
 [KileMainWindow][Toolbar OkularViewerToolBar]
@@ -495,16 +603,20 @@ Find in Files...Normal Fraction - frac{}{}Alt+Shift+F=false
 [Projects]
 File1[$e]=$HOME/develop/latex/cv/resume/resume.tex
 File2[$e]=$HOME/develop/latex/EECS551HW10/eecs551hw10.kilepr
-File3[$e]=$HOME/develop/latex/hotos17/hotos17.kilepr
-File4[$e]=$HOME/develop/latex/cv/cv/cv.kilepr
-File5[$e]=$HOME/develop/latex/nsdi18/nsdi18.kilepr
-File6[$e]=$HOME/develop/latex/nvfellowship/nvfellowship.kilepr
+File3[$e]=$HOME/develop/latex/cv/cv/cv.kilepr
+File4[$e]=$HOME/develop/latex/cv/shortcv/cv.kilepr
+File5[$e]=$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.kilepr
+File6[$d]
+File7[$d]
+File8[$d]
 Name1[$e]=resume.tex
 Name2[$e]=eecs551hw10.kilepr
-Name3[$e]=hotos17.kilepr
+Name3[$e]=cv.kilepr
 Name4[$e]=cv.kilepr
-Name5[$e]=nsdi18.kilepr
-Name6[$e]=nvfellowship.kilepr
+Name5[$e]=salus-osdi18.kilepr
+Name6[$d]
+Name7[$d]
+Name8[$d]
 
 [QuickPreview]
 convert=true
@@ -519,39 +631,39 @@ selPreviewInWidget=true
 KILE_LATEX_SAVE_DIR[$e]=file:$HOME/develop/latex/nvfellowship/,$HOME/documents
 
 [Recent Files]
-File1[$e]=$HOME/develop/latex/cv/cv/cv.tex
-File10[$d]
-File2[$e]=$HOME/develop/latex/cv/cv/lib/cv.sty
-File3[$e]=$HOME/develop/latex/cv/cv/cv.bib
-File4[$e]=$HOME/develop/latex/nsdi18/pages/eval.tex
-File5[$e]=$HOME/develop/latex/nsdi18/salus.tex
-File6[$e]=$HOME/develop/latex/nvfellowship/nvfellowship.kilepr
-File7[$e]=$HOME/develop/latex/nvfellowship/main.tex
-File8[$e]=$HOME/develop/latex/nvfellowship/main.bib
-File9[$d]
-Name1[$e]=cv.tex
-Name10[$d]
-Name2[$e]=cv.sty
-Name3[$e]=cv.bib
-Name4[$e]=eval.tex
-Name5[$e]=salus.tex
-Name6[$e]=nvfellowship.kilepr
-Name7[$e]=main.tex
-Name8[$e]=main.bib
-Name9[$d]
+File1[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/related.tex
+File10[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/scheduling.tex
+File2[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/eval.tex
+File3[$e]=$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.kilepr
+File4[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/intro.tex
+File5[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/con.tex
+File6[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/memory.tex
+File7[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/impl.tex
+File8[$e]=$HOME/develop/latex/nsdi18/osdi18/pages/motivation.tex
+File9[$e]=$HOME/develop/latex/nsdi18/osdi18/salus-osdi18.bib
+Name1[$e]=related.tex
+Name10[$e]=scheduling.tex
+Name2[$e]=eval.tex
+Name3[$e]=salus-osdi18.kilepr
+Name4[$e]=intro.tex
+Name5[$e]=con.tex
+Name6[$e]=memory.tex
+Name7[$e]=impl.tex
+Name8[$e]=motivation.tex
+Name9[$e]=salus-osdi18.bib
 
 [Scripting]
 ScriptNameColumnWidth=100
 
 [Session Settings]
-Documents=file://:@/home/aetf/develop/latex/nvfellowship/main.bbl
-Saved Documents=file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/main.tex,file://:@/home/aetf/develop/latex/nsdi18/atlast.bib,file://:@/tmp/kile-7SoOoX/test_index.tex,file://:@/tmp/kile-7SoOoX/test_bib.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/home/aetf/develop/latex/nsdi18/lib/usenix.sty,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls,file://:@/tmp/kile-livepreviewnox7d0/comment.cut,file://:@/usr/share/texmf-dist/tex/latex/natbib/natbib.sty,file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex,file://:@/tmp/workspace/slides.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex,file://:@/home/aetf/develop/latex/cv/resume/resume.tex
+Documents=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/intro.tex
+Saved Documents=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/intro.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/eval.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/impl.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.bib,file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/memory.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/scheduling.tex,file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.tex,file://:@/tmp/workspace/hw1/homework.solutions.template.tex,file://:@/tmp/workspace/hw1/homework.solutions.template.tex,file://:@/tmp/workspace/hw1/homework.solutions.template.tex,file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/nvfellowship/main.bbl,file://:@/home/aetf/develop/latex/main.tex,file://:@/home/aetf/develop/latex/nsdi18/atlast.bib,file://:@/tmp/kile-7SoOoX/test_index.tex,file://:@/tmp/kile-7SoOoX/test_bib.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/tmp/kile-7SoOoX/test_plain.tex,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/usr/share/texmf-dist/tex/latex/caption/caption.sty,file://:@/home/aetf/develop/latex/nsdi18/lib/usenix.sty,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/pages/motivation.tex,file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls,file://:@/tmp/kile-livepreviewnox7d0/comment.cut,file://:@/usr/share/texmf-dist/tex/latex/natbib/natbib.sty,file://:@/home/aetf/develop/latex/hotos17/hotos17.bbl,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty,file://:@/tmp/kile-x0FAcY/test_index.tex,file://:@/tmp/kile-x0FAcY/test_bib.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/tmp/kile-x0FAcY/test_plain.tex,file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex,file://:@/tmp/workspace/test.tex,file://:@/tmp/workspace/main.tex,file://:@/home/aetf/develop/latex/cv/cv/cv.tex
 
 [Show]
 BottomBarIndex=0
 BottomBarSize=120
 SelectedLeftView=-1
-SideBarSize=129
+SideBarSize=184
 SystemCheckLastVersionRunForAtStartUp=2.9.92
 
 [Structure]
@@ -1889,25 +2001,25 @@ TextFolding[$d]
 ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/EECS551HW8/homework.solution.tex]
-CursorColumn=0
-CursorLine=0
-JumpList=
-TextFolding=[]
-ViMarks=
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/cv/cv/cv.tex]
-CursorColumn=0
-CursorLine=143
-JumpList=
-TextFolding=[]
-ViMarks=.,159,13,[,144,0,],-1,-1,^,43,99
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/cv/resume/resume.tex]
-CursorColumn=96
-CursorLine=116
-JumpList=
-TextFolding=[]
-ViMarks=.,116,59,<,131,0,>,131,0,[,116,59,],116,96,^,116,97
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/hotnets16-template/hotnets16.tex]
 CursorColumn=0
@@ -1945,6 +2057,62 @@ TextFolding=[]
 ViMarks=
 
 [View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/nsdi18.cls]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.bib]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/osdi18.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/eval.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/impl.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/intro.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/memory.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/motivation.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
+[View-Settings,View=0,URL=file://:@/home/aetf/develop/latex/nsdi18/osdi18/pages/scheduling.tex]
 CursorColumn=0
 CursorLine=0
 JumpList=
@@ -2091,6 +2259,13 @@ JumpList[$d]
 TextFolding[$d]
 ViMarks[$d]
 
+[View-Settings,View=0,URL=file://:@/tmp/workspace/hw1/homework.solutions.template.tex]
+CursorColumn=0
+CursorLine=0
+JumpList=
+TextFolding=[]
+ViMarks=
+
 [View-Settings,View=0,URL=file://:@/tmp/workspace/main.tex]
 CursorColumn=0
 CursorLine=0
@@ -2099,11 +2274,11 @@ TextFolding=[]
 ViMarks=
 
 [View-Settings,View=0,URL=file://:@/tmp/workspace/slides.tex]
-CursorColumn=6
-CursorLine=58
-JumpList=
-TextFolding=[]
-ViMarks=.,56,43,[,56,43,],57,0,^,47,33
+CursorColumn[$d]
+CursorLine[$d]
+JumpList[$d]
+TextFolding[$d]
+ViMarks[$d]
 
 [View-Settings,View=0,URL=file://:@/tmp/workspace/test.tex]
 CursorColumn[$d]

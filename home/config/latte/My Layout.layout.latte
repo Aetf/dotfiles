@@ -25,6 +25,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=
 
 [Containments][1][Applets][11][Configuration]
+PreloadWeight=0
 activityId=
 formfactor=0
 immutability=1
@@ -53,6 +54,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=
 
 [Containments][1][Applets][12][Configuration]
+PreloadWeight=0
 activityId=
 formfactor=0
 immutability=1
@@ -81,6 +83,7 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=
 
 [Containments][1][Applets][13][Configuration]
+PreloadWeight=0
 activityId=
 formfactor=0
 immutability=1
@@ -100,6 +103,9 @@ url=file:///home/aetf/sync
 immutability=1
 plugin=org.kde.latte.plasmoid
 
+[Containments][1][Applets][2][Configuration]
+PreloadWeight=0
+
 [Containments][1][Applets][2][Configuration][General]
 isInLatteDock=true
 launchers=multi;*;3;file:///usr/share/applications/firefox-nightly.desktop;file:///usr/share/applications/atom.desktop;file:///home/aetf/.local/share/applications/netease-cloud-music.desktop
@@ -108,6 +114,9 @@ launchers59=file:///usr/share/applications/firefox-nightly.desktop,file:///usr/s
 [Containments][1][ConfigDialog]
 DialogHeight=1149
 DialogWidth=900
+
+[Containments][1][Configuration]
+PreloadWeight=0
 
 [Containments][1][General]
 advanced=true
@@ -151,11 +160,15 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][15][Applets][18][Configuration]
+PreloadWeight=94
 SystrayContainmentId=19
 
 [Containments][15][Applets][30]
 immutability=1
 plugin=org.kde.plasma.eventcalendar
+
+[Containments][15][Applets][30][Configuration]
+PreloadWeight=10
 
 [Containments][15][Applets][30][Configuration][Agenda]
 agenda_breakup_multiday_events=true
@@ -175,8 +188,8 @@ clock_timeformat=AP h:mm
 timer_sfx_filepath=file:///usr/share/sounds/freedesktop/stereo/bell.oga
 
 [Containments][15][Applets][30][Configuration][Google Calendar]
-access_token=EofY6mvykvMjBo27Uch/mo2edo/OMn8DJ8uzl2sDhVAPG8pNsGEZIQMdy5Jpn4Mg6FQu9sFB0GmzLWoB/Gr5tN37vZl5gV8b0PP1ZiTxN5UjLNV7w5oUwd9PssD2Lo9ThMEyhE54sh45NVuXhGIDyvvxgNOPlFm/nK6+8FRXzuEgbPmPlpqWP9kP+OreUOEa
-access_token_expires_at=3026632967
+access_token=SGK58lk7YNdYPgNUQs8B0zZl/NpPLI6W0iwz979RuldaW67QDfKd9/Xq6QYYWVzPNogae9L7XPbZtxEtodI1KQ/8uA4Tks/Um7UoOIftLnBKRVxTg0AkX7DroywGIjZpGk8IuT05pRDFNPnGbUvY7aYmUz4twxMgig/c+ZShbXdfjugfP8iS5jNmVGC1FyAa
+access_token_expires_at=1639649971
 access_token_type=Bearer
 calendar_id_list=7437103@gmail.com,#contacts@group.v.calendar.google.com,peifeng@umich.edu
 calendar_list=W3sia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ5MjU2MDIyMDYwNTAwMFwiIiwiaWQiOiJwZWlmZW5nQHVtaWNoLmVkdSIsInN1bW1hcnkiOiJwZWlmZW5nQHVtaWNoLmVkdSIsInRpbWVab25lIjoiQW1lcmljYS9OZXdfWW9yayIsInN1bW1hcnlPdmVycmlkZSI6IkFjZGFtaWMiLCJjb2xvcklkIjoiMTYiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjNDk4NmU3IiwiZm9yZWdyb3VuZENvbG9yIjoiIzAwMDAwMCIsInNlbGVjdGVkIjp0cnVlLCJhY2Nlc3NSb2xlIjoid3JpdGVyIiwiZGVmYXVsdFJlbWluZGVycyI6W119LHsia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ0MDYxOTY1NDAzNTAwMFwiIiwiaWQiOiI3NDM3MTAzQGdtYWlsLmNvbSIsInN1bW1hcnkiOiI3NDM3MTAzQGdtYWlsLmNvbSIsInRpbWVab25lIjoiQW1lcmljYS9OZXdfWW9yayIsInN1bW1hcnlPdmVycmlkZSI6Ijc0MzcxMDNAZ21haWwuY29tIiwiY29sb3JJZCI6IjE3IiwiYmFja2dyb3VuZENvbG9yIjoiIzlhOWNmZiIsImZvcmVncm91bmRDb2xvciI6IiMwMDAwMDAiLCJzZWxlY3RlZCI6dHJ1ZSwiYWNjZXNzUm9sZSI6Im93bmVyIiwiZGVmYXVsdFJlbWluZGVycyI6W3sibWV0aG9kIjoiZW1haWwiLCJtaW51dGVzIjoxMH0seyJtZXRob2QiOiJwb3B1cCIsIm1pbnV0ZXMiOjEwfV0sIm5vdGlmaWNhdGlvblNldHRpbmdzIjp7Im5vdGlmaWNhdGlvbnMiOlt7InR5cGUiOiJldmVudENyZWF0aW9uIiwibWV0aG9kIjoiZW1haWwifSx7InR5cGUiOiJldmVudENoYW5nZSIsIm1ldGhvZCI6ImVtYWlsIn0seyJ0eXBlIjoiZXZlbnRDYW5jZWxsYXRpb24iLCJtZXRob2QiOiJlbWFpbCJ9LHsidHlwZSI6ImV2ZW50UmVzcG9uc2UiLCJtZXRob2QiOiJlbWFpbCJ9XX0sInByaW1hcnkiOnRydWV9LHsia2luZCI6ImNhbGVuZGFyI2NhbGVuZGFyTGlzdEVudHJ5IiwiZXRhZyI6IlwiMTQ0NjE0Mzc2MzE0NjAwMFwiIiwiaWQiOiIjY29udGFjdHNAZ3JvdXAudi5jYWxlbmRhci5nb29nbGUuY29tIiwic3VtbWFyeSI6IkNvbnRhY3RzIiwidGltZVpvbmUiOiJBbWVyaWNhL05ld19Zb3JrIiwiY29sb3JJZCI6IjIiLCJiYWNrZ3JvdW5kQ29sb3IiOiIjZDA2YjY0IiwiZm9yZWdyb3VuZENvbG9yIjoiIzAwMDAwMCIsInNlbGVjdGVkIjp0cnVlLCJhY2Nlc3NSb2xlIjoicmVhZGVyIiwiZGVmYXVsdFJlbWluZGVycyI6W119XQ==
@@ -191,6 +204,9 @@ global=
 [Containments][15][Applets][31]
 immutability=1
 plugin=org.kde.thermalMonitor
+
+[Containments][15][Applets][31][Configuration]
+PreloadWeight=0
 
 [Containments][15][Applets][31][Configuration][Appearance]
 aliasFontSize=41
@@ -209,6 +225,9 @@ resources=[{"alias":"Core","childSourceObjects":{"acpi/Thermal_Zone/0-pch_wildca
 [Containments][15][ConfigDialog]
 DialogHeight=1149
 DialogWidth=900
+
+[Containments][15][Configuration]
+PreloadWeight=0
 
 [Containments][15][General]
 advanced=true
@@ -238,21 +257,36 @@ wallpaperplugin=org.kde.image
 immutability=1
 plugin=org.kde.plasma.clipboard
 
+[Containments][19][Applets][20][Configuration]
+PreloadWeight=0
+
 [Containments][19][Applets][21]
 immutability=1
 plugin=org.kde.plasma.printmanager
+
+[Containments][19][Applets][21][Configuration]
+PreloadWeight=0
 
 [Containments][19][Applets][22]
 immutability=1
 plugin=org.kde.discovernotifier
 
+[Containments][19][Applets][22][Configuration]
+PreloadWeight=0
+
 [Containments][19][Applets][23]
 immutability=1
 plugin=org.kde.plasma.devicenotifier
 
+[Containments][19][Applets][23][Configuration]
+PreloadWeight=0
+
 [Containments][19][Applets][24]
 immutability=1
 plugin=org.kde.plasma.notifications
+
+[Containments][19][Applets][24][Configuration]
+PreloadWeight=0
 
 [Containments][19][Applets][24][Configuration][ConfigDialog]
 DialogHeight=960
@@ -262,29 +296,40 @@ DialogWidth=1280
 immutability=1
 plugin=org.kde.plasma.volume
 
+[Containments][19][Applets][25][Configuration]
+PreloadWeight=0
+
 [Containments][19][Applets][25][Configuration][ConfigDialog]
 DialogHeight=1020
 DialogWidth=1360
-
-[Containments][19][Applets][26]
-immutability=1
-plugin=org.kde.plasma.battery
 
 [Containments][19][Applets][27]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
+[Containments][19][Applets][27][Configuration]
+PreloadWeight=95
+
 [Containments][19][Applets][32]
 immutability=1
 plugin=org.kde.kdeconnect
+
+[Containments][19][Applets][32][Configuration]
+PreloadWeight=0
 
 [Containments][19][Applets][33]
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][19][Applets][33][Configuration]
+PreloadWeight=0
+
 [Containments][19][Applets][34]
 immutability=1
 plugin=org.kde.redshiftControl
+
+[Containments][19][Applets][34][Configuration]
+PreloadWeight=10
 
 [Containments][19][Applets][34][Configuration][Advanced]
 latitude=42.3241
@@ -301,9 +346,22 @@ smoothTransitions=true
 immutability=1
 plugin=org.kde.plasma.vault
 
+[Containments][19][Applets][36][Configuration]
+PreloadWeight=0
+
+[Containments][19][Applets][37]
+immutability=1
+plugin=org.kde.plasma.battery
+
+[Containments][19][Applets][37][Configuration]
+PreloadWeight=0
+
 [Containments][19][ConfigDialog]
 DialogHeight=960
 DialogWidth=1280
+
+[Containments][19][Configuration]
+PreloadWeight=0
 
 [Containments][19][General]
 extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier,org.kde.kdeconnect,org.kde.redshiftControl,org.kde.plasma.vault
@@ -313,6 +371,9 @@ knownItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.m
 [LayoutSettings]
 activities=
 color=blue
-launchers=applications:firefox-nightly.desktop,applications:visual-studio-code.desktop,applications:org.kde.kdevelop.desktop,file:///latte-separator.desktop
+launchers=applications:firefox-nightly.desktop,applications:visual-studio-code.desktop,applications:jetbrains-clion.desktop,applications:org.kde.kdevelop.desktop,file:///latte-separator.desktop
 showInMenu=true
 version=2
+
+[ScreenMapping]
+screenMapping=

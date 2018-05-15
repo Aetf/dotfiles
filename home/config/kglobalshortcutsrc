@@ -1,3 +1,6 @@
+[$Version]
+update_info=powerdevil_move_shortcuts.upd:powerdevil_move_shortcuts
+
 [ActivityManager]
 _k_friendly_name=ActivityManager
 switch-to-activity-3881f087-1a1f-4a82-86a3-f699337ea5eb=none,none,切换到活动 "默认"
@@ -37,16 +40,16 @@ Toggle Touchpad=Touchpad Toggle,Touchpad Toggle,切换触摸板
 _k_friendly_name=KDE Daemon
 
 [kded5]
-Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,降低键盘亮度
-Decrease Screen Brightness=Monitor Brightness Down,Monitor Brightness Down,降低屏幕亮度
-Hibernate=Hibernate,Hibernate,休眠
-Increase Keyboard Brightness=Keyboard Brightness Up,Keyboard Brightness Up,提高键盘亮度
-Increase Screen Brightness=Monitor Brightness Up,Monitor Brightness Up,提高屏幕亮度
-PowerOff=Power Off,Power Off,关机
+Decrease Keyboard Brightness[$d]
+Decrease Screen Brightness[$d]
+Hibernate[$d]
+Increase Keyboard Brightness[$d]
+Increase Screen Brightness[$d]
+PowerOff[$d]
 Show System Activity=Ctrl+Esc,Ctrl+Esc,显示系统活动
-Sleep=Sleep,Sleep,挂起
-Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,切换键盘背光
-_k_friendly_name=电源管理
+Sleep[$d]
+Toggle Keyboard Backlight[$d]
+_k_friendly_name=KDE Daemon
 display=Display,Display\tMeta+P,切换显示器
 
 [khotkeys]
@@ -267,18 +270,18 @@ clipboard_action=,Ctrl+Alt+X,启用剪贴板动作
 cycleNextAction=none,none,下一个历史项
 cyclePrevAction=none,none,上一个历史项
 edit_clipboard=none,none,编辑内容(E)...
-new instance for task manager entry 1=Meta+Ctrl+1,Meta+Ctrl+1,New Instance for Task Manager Entry 1
-new instance for task manager entry 10=Meta+Ctrl+0,Meta+Ctrl+0,New Instance for Task Manager Entry 10
-new instance for task manager entry 2=Meta+Ctrl+2,Meta+Ctrl+2,New Instance for Task Manager Entry 2
-new instance for task manager entry 3=Meta+Ctrl+3,Meta+Ctrl+3,New Instance for Task Manager Entry 3
-new instance for task manager entry 4=Meta+Ctrl+4,Meta+Ctrl+4,New Instance for Task Manager Entry 4
-new instance for task manager entry 5=Meta+Ctrl+5,Meta+Ctrl+5,New Instance for Task Manager Entry 5
-new instance for task manager entry 6=Meta+Ctrl+6,Meta+Ctrl+6,New Instance for Task Manager Entry 6
-new instance for task manager entry 7=Meta+Ctrl+7,Meta+Ctrl+7,New Instance for Task Manager Entry 7
-new instance for task manager entry 8=Meta+Ctrl+8,Meta+Ctrl+8,New Instance for Task Manager Entry 8
-new instance for task manager entry 9=Meta+Ctrl+9,Meta+Ctrl+9,New Instance for Task Manager Entry 9
+new instance for task manager entry 1=Meta+Ctrl+1,Meta+Ctrl+1,任务管理器项目 1 的新实例
+new instance for task manager entry 10=Meta+Ctrl+0,Meta+Ctrl+0,任务管理器项目 10 的新实例
+new instance for task manager entry 2=Meta+Ctrl+2,Meta+Ctrl+2,任务管理器项目 2 的新实例
+new instance for task manager entry 3=Meta+Ctrl+3,Meta+Ctrl+3,任务管理器项目 3 的新实例
+new instance for task manager entry 4=Meta+Ctrl+4,Meta+Ctrl+4,任务管理器项目 4 的新实例
+new instance for task manager entry 5=Meta+Ctrl+5,Meta+Ctrl+5,任务管理器项目 5 的新实例
+new instance for task manager entry 6=Meta+Ctrl+6,Meta+Ctrl+6,任务管理器项目 6 的新实例
+new instance for task manager entry 7=Meta+Ctrl+7,Meta+Ctrl+7,任务管理器项目 7 的新实例
+new instance for task manager entry 8=Meta+Ctrl+8,Meta+Ctrl+8,任务管理器项目 8 的新实例
+new instance for task manager entry 9=Meta+Ctrl+9,Meta+Ctrl+9,任务管理器项目 9 的新实例
 repeat_action=,Ctrl+Alt+R,在当前剪贴板上手动执行动作
-show latte dock=Meta+F1,Meta+`,Show Latte Dock
+show latte dock=Meta+F1,Meta+`,显示 Latte 停靠栏
 show-barcode=none,none,显示条形码(S)...
 show-on-mouse-pos=none,none,在鼠标指针处弹出 Klipper
 
@@ -288,6 +291,17 @@ nextmedia=Media Next,Media Next,媒体播放下一首
 playpausemedia=Media Play,Media Play,播放/暂停媒体播放
 previousmedia=Media Previous,Media Previous,媒体播放上一首
 stopmedia=Media Stop,Media Stop,停止媒体播放
+
+[org_kde_powerdevil]
+Decrease Keyboard Brightness=Keyboard Brightness Down,Keyboard Brightness Down,降低键盘亮度
+Decrease Screen Brightness=Monitor Brightness Down,Monitor Brightness Down,降低屏幕亮度
+Hibernate=Hibernate,Hibernate,休眠
+Increase Keyboard Brightness=Keyboard Brightness Up,Keyboard Brightness Up,提高键盘亮度
+Increase Screen Brightness=Monitor Brightness Up,Monitor Brightness Up,提高屏幕亮度
+PowerOff=Power Off,Power Off,关机
+Sleep=Sleep,Sleep,挂起
+Toggle Keyboard Backlight=Keyboard Light On/Off,Keyboard Light On/Off,切换键盘背光
+_k_friendly_name=电源管理
 
 [plasmashell]
 _k_friendly_name=Plasma

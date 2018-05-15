@@ -53,6 +53,9 @@ launchers=multi
 DialogHeight=960
 DialogWidth=1280
 
+[Containments][126][Configuration]
+PreloadWeight=0
+
 [Containments][126][General]
 arrangement=1
 iconSize=3
@@ -94,6 +97,9 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][131][Configuration]
+PreloadWeight=0
+
 [Containments][132]
 activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
 formfactor=0
@@ -102,6 +108,9 @@ lastScreen=4
 location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
+
+[Containments][132][Configuration]
+PreloadWeight=0
 
 [Containments][133]
 activityId=00000000-0000-0000-0000-000000000000
@@ -112,6 +121,9 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][133][Configuration]
+PreloadWeight=0
+
 [Containments][134]
 activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
 formfactor=0
@@ -121,6 +133,9 @@ location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
+[Containments][134][Configuration]
+PreloadWeight=0
+
 [Containments][44]
 activityId=3881f087-1a1f-4a82-86a3-f699337ea5eb
 formfactor=0
@@ -129,6 +144,9 @@ lastScreen=1
 location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.image
+
+[Containments][44][Configuration]
+PreloadWeight=0
 
 [Containments][44][Wallpaper][org.kde.image][General]
 height=1080
@@ -142,6 +160,9 @@ lastScreen=2
 location=0
 plugin=org.kde.desktopcontainment
 wallpaperplugin=org.kde.image
+
+[Containments][50][Configuration]
+PreloadWeight=0
 
 [Containments][50][Wallpaper][org.kde.image][General]
 height=1200
@@ -192,6 +213,9 @@ plugin=org.kde.plasma.bluetooth
 [Containments][62][Applets][70]
 immutability=1
 plugin=org.kde.plasma.battery
+
+[Containments][62][Configuration]
+PreloadWeight=0
 
 [Containments][62][General]
 extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume
@@ -254,6 +278,9 @@ plugin=org.kde.plasma.devicenotifier
 DialogHeight=960
 DialogWidth=1280
 
+[Containments][96][Configuration]
+PreloadWeight=0
+
 [Containments][96][General]
 extraItems=org.kde.plasma.printmanager,org.kde.plasma.bluetooth,org.kde.plasma.mediacontroller,org.kde.plasma.clipboard,org.kde.plasma.battery,org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.discovernotifier
 hiddenItems=52430569
@@ -268,3 +295,6 @@ launchers=multi
 
 [General]
 immutability=2
+
+[ScreenMapping]
+itemsOnDisabledScreens=
