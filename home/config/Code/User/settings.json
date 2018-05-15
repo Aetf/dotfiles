@@ -103,5 +103,8 @@
         "suppressNoRepositoryWarning": false,
         "suppressUpdateNotice": false,
         "suppressWelcomeNotice": true
-    }
+    },
+    "gitlens.codeLens.enabled": false,
+    "gitlens.keymap": "alternate",
+    "diffEditor.ignoreTrimWhitespace": false
 }
