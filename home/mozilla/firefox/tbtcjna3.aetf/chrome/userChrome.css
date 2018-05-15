@@ -1,6 +1,24 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
 
 /*
+#titlebar-max {
+  -moz-box-ordinal-group: 0;
+}
+
+#titlebar-content {
+  direction: rtl;
+}
+
+#TabsToolbar {
+  direction: rtl;
+}
+
+#tabbrowser-tabs {
+  direction: ltr;
+}
+*/
+
+/*
 #main-window {
   background: #475057 !important;
 }
