@@ -45,6 +45,7 @@ BorderActivateAll=9
 BorderActivateClass=9
 
 [Effect-Zoom]
+EnableFocusTracking=true
 InitialZoom=1
 
 [Effect-kwin4_effect_translucency]
@@ -88,10 +89,10 @@ desktopchangeosdEnabled=true
 diminactiveEnabled=true
 dimscreenEnabled=true
 enforcedecoEnabled=true
-glideEnabled=true
+glideEnabled[$d]
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
-kwin4_effect_scaleinEnabled[$d]
+kwin4_effect_scaleinEnabled=true
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
 minimizeanimationEnabled[$d]
