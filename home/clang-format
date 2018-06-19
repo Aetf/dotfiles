@@ -63,12 +63,14 @@ IncludeBlocks: Regroup
 IncludeCategories:
   - Regex:           'tensorflow_headers\.h'
     Priority:        -1
-  - Regex:           '.*'
+  - Regex:           '^"'
     Priority:        3
   - Regex:           '^(<|")(tensorflow|third_party)/'
     Priority:        5
   - Regex:           '^<boost/'
     Priority:        7
+  - Regex:           '^<.+\.'
+    Priority:        6
   - Regex:           '^<'
     Priority:        10
 IncludeIsMainRegex: '(_test)?$'
