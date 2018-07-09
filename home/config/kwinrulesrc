@@ -1,9 +1,36 @@
 [1]
+Description=Window settings for virtualbox machine
+blockcompositing=true
+blockcompositingrule=2
+clientmachine=localhost
+clientmachinematch=0
+noborder[$d]
+noborderrule[$d]
+title=Windows 10 [Running] - Oracle VM VirtualBox
+titlematch=1
+types=1
+windowrole[$d]
+windowrolematch[$d]
+wmclass=virtualbox machine
+wmclasscomplete=false
+wmclassmatch=1
+
+[2]
 Description=Firefox No Window Decoration
 clientmachine=abacus
 clientmachinematch=0
+maximizehoriz[$d]
+maximizehorizrule[$d]
+maximizevert[$d]
+maximizevertrule[$d]
 noborder=true
 noborderrule=2
+placement[$d]
+placementrule[$d]
+skipswitcher[$d]
+skipswitcherrule[$d]
+skiptaskbar[$d]
+skiptaskbarrule[$d]
 title=Firefox Nightly
 titlematch=0
 types=1
@@ -13,7 +40,7 @@ wmclass=navigator (nightly|firefox)
 wmclasscomplete=true
 wmclassmatch=3
 
-[2]
+[3]
 Description=Settings for Vivaldi
 clientmachine=abacus
 clientmachinematch=0
@@ -21,8 +48,6 @@ maximizehoriz=true
 maximizehorizrule=3
 maximizevert=true
 maximizevertrule=3
-placement[$d]
-placementrule[$d]
 skipswitcher[$d]
 skipswitcherrule[$d]
 skiptaskbar[$d]
@@ -36,7 +61,7 @@ wmclass=vivaldi
 wmclasscomplete=false
 wmclassmatch=2
 
-[3]
+[4]
 Description=Fix Yakuake Shows Up In Taskbar
 skipswitcher=true
 skipswitcherrule=2
@@ -48,4 +73,4 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [General]
-count=3
+count=4
