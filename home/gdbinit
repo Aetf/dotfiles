@@ -7,6 +7,7 @@
 python
 import os
 sys.path.insert(0, os.path.expanduser('~/.gdb'))
+sys.path.insert(0, os.path.expanduser('~/.gdb/Boost-Pretty-Printer'))
 
 from qt import register_qt_printers
 register_qt_printers (None)
@@ -16,6 +17,9 @@ register_kde_printers (None)
 
 from libstdcxx.v6.printers import register_libstdcxx_printers
 register_libstdcxx_printers (None)
+
+from boost import register_printers
+register_printers(boost_version=(1,67,0))
 
 end
 
