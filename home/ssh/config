@@ -13,13 +13,6 @@ Host vpsfs
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host vps
-    User aetf
-    HostName vps.unlimitedcodeworks.xyz
-    ForwardX11 no
-    ControlMaster auto
-    ControlPath ~/.ssh/masters/%n:%r@%h:%p
-    ControlPersist yes
 Host archvps
     User aetf
     HostName 45.77.144.92
@@ -29,9 +22,9 @@ Host archvps
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host ccgpu
+Host cc2
     User cc
-    HostName 129.114.108.180
+    HostName 129.114.109.116
     ForwardX11 no
     ForwardX11Trusted no
     ForwardAgent yes
@@ -44,7 +37,7 @@ Host ccgpu
     ControlPersist yes
 Host cc
     User cc
-    HostName 129.114.108.180
+    HostName 129.114.108.200
     ForwardX11 yes
     ForwardX11Trusted yes
     ForwardAgent yes
