@@ -582,6 +582,7 @@ Favorites=
 [FileBrowserWidget]
 Decoration position=0
 Previews=false
+Show Inline Previews=true
 Show hidden files=false
 Sort by=Name
 Sort directories first=true
@@ -599,18 +600,18 @@ lastDir[$e]=$HOME/
 DocsOpenOnStart0[$e]=$HOME/develop/latex/salus-paper/osdi18/salus-osdi18.tex
 DocsOpenOnStart1[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/memory.tex
 DocsOpenOnStart2[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/eval.tex
-DocsOpenOnStart3[$d]
+DocsOpenOnStart3[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/overview.tex
 DocsOpenOnStart4[$d]
 DocsOpenOnStart5[$d]
 DocsOpenOnStart6[$d]
 EncodingsOfDocsOpenOnStart0[$e]=UTF-8
 EncodingsOfDocsOpenOnStart1[$e]=UTF-8
 EncodingsOfDocsOpenOnStart2[$e]=UTF-8
-EncodingsOfDocsOpenOnStart3[$d]
+EncodingsOfDocsOpenOnStart3[$e]=UTF-8
 EncodingsOfDocsOpenOnStart4[$d]
 EncodingsOfDocsOpenOnStart5[$d]
 EncodingsOfDocsOpenOnStart6[$d]
-NoDOOS=3
+NoDOOS=4
 NoPOOS=1
 ProjectsOpenOnStart0[$e]=$HOME/develop/latex/salus-paper/osdi18/osdi18.kilepr
 
@@ -618,7 +619,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/salus-paper/osdi18/osdi18.kilepr
 MainwindowHeight=1053
 MainwindowWidth=1920
 horizontalSplitterLeft=29
-horizontalSplitterRight=1044
+horizontalSplitterRight=1043
 verticalSplitterBottom=214
 verticalSplitterTop=749
 
@@ -723,22 +724,22 @@ File1[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/motivation.tex
 File10[$d]
 File2[$e]=$HOME/develop/latex/salus-paper/osdi18/salus-osdi18.bib
 File3[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/abstract.tex
-File4[$e]=$HOME/develop/latex/salus-paper/osdi18/salus-osdi18.tex
-File5[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/memory.tex
-File6[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/eval.tex
-File7[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/intro.tex
-File8[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/overview.tex
-File9[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/scheduling.tex
+File4[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/intro.tex
+File5[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/scheduling.tex
+File6[$e]=$HOME/develop/latex/salus-paper/osdi18/salus-osdi18.tex
+File7[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/memory.tex
+File8[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/eval.tex
+File9[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/overview.tex
 Name1[$e]=motivation.tex
 Name10[$d]
 Name2[$e]=salus-osdi18.bib
 Name3[$e]=abstract.tex
-Name4[$e]=salus-osdi18.tex
-Name5[$e]=memory.tex
-Name6[$e]=eval.tex
-Name7[$e]=intro.tex
-Name8[$e]=overview.tex
-Name9[$e]=scheduling.tex
+Name4[$e]=intro.tex
+Name5[$e]=scheduling.tex
+Name6[$e]=salus-osdi18.tex
+Name7[$e]=memory.tex
+Name8[$e]=eval.tex
+Name9[$e]=overview.tex
 
 [Scripting]
 ScriptNameColumnWidth=100
