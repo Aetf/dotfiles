@@ -4,7 +4,7 @@ function ssh --description 'Login to vps with tmux' -w ssh
             case '*vps'
                 command ssh -t $argv 'exec tmux new -As Arch'
             case 'cc*'
-                command ssh -t $argv 'exec tmux new -As Peifeng'
+                command ssh -t $argv 'exec tmux -2 new -As Peifeng'
             case 'clarity*'
                 command ssh -t $argv 'exec tmux new -As Peifeng'
             case '*'
