@@ -1,0 +1,33 @@
+source $HOME/.zsh/antigen/antigen.zsh
+#antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+colored-man-pages
+git
+extract
+
+oz/safe-paste
+
+nojhan/liquidprompt
+
+zsh-users/zsh-autosuggestions
+zdharma/fast-syntax-highlighting
+EOBUNDLES
+antigen apply
+#zsh-users/zsh-completions
+
+# Add completions dir
+fpath=($HOME/.zsh/completions.d $fpath)
+
+# Source all the configs
+source $HOME/.zsh/options.zsh
+source $HOME/.zsh/bindings.zsh
+source $HOME/.zsh/aliases.zsh
+source $HOME/.zsh/exports.zsh
+source $HOME/.zsh/fixes.zsh
+source $HOME/.zsh/plugin-settings.zsh
+source $HOME/.zsh/ssh-auth-sock.zsh
+
+if [ -e "$HOME/.zsh/local.zsh" ]; then # If local.zsh exists, source it
+  source $HOME/.zsh/local.zsh
+fi

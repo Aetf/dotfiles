@@ -1,0 +1,62 @@
+# Basic locations
+export DOWNLOAD_DIR=$HOME/downloads
+export BUILD_DIR=$HOME/buildbed
+export TOOL_DIR=$HOME/tools
+
+# Make sure various path are unique
+for varname in LIBRARY_PATH LD_LIBRARY_PATH LIB INCLUDE PKG_CONFIG_PATH CPATH CMAKE_PREFIX_PATH; do
+    export $varname
+    typeset -T $varname $varname:l
+    typeset -aU $varname:l
+done
+
+# Extra Path
+if [ -d $HOME/.local/bin ]; then
+    path=($path[@] $HOME/.local/bin)
+fi
+
+function autodetect_path() {
+    local pkg=$1
+
+    local inc_dir=$pkg/include
+    local bin_dir=$pkg/bin
+    local lib_dir=$pkg/lib
+    local lib64_dir=$pkg/lib64
+
+    if [ -d $inc_dir ]; then
+        include=($inc_dir $include[@])
+        cpath=($inc_dir $cpath[@])
+    fi
+    if [ -d $bin_dir ]; then
+        path=($bin_dir $path[@])
+    fi
+    if [ -d $lib_dir ]; then
+        ld_library_path=($lib_dir $ld_library_path[@])
+        lib=($lib_dir $lib[@])
+        library_path=($lib_dir $library_path[@])
+    fi
+    if [ -d $lib64_dir ]; then
+        ld_library_path=($lib64_dir $ld_library_path[@])
+        lib=($lib64_dir $lib[@])
+        library_path=($lib64_dir $library_path[@])
+    fi
+
+    for cmake_dir in $pkg/share/*/cmake(FN); do
+        cmake_prefix_path=($pkg $cmake_prefix_path[@])
+    done
+    for pkgconfig_dir in $pkg/lib*/pkgconfig(FN); do
+        pkg_config_path=($pkgconfig_dir $pkg_config_path[@])
+    done
+}
+
+# Detect extra installations in tools
+AUTO_DETECT=true
+if $AUTO_DETECT; then
+    for pkg in $TOOL_DIR/*(FN); do
+        case $pkg in
+            *.skip)
+                continue;;
+        esac
+        autodetect_path "$pkg"
+    done
+fi
