@@ -6,8 +6,8 @@ Height 1600=755
 Width 2560=1229
 
 [KFileDialog Settings]
-Recent Files[$e]=bell.oga,file:$HOME/.config/latte/My Layout.layout.latte,file:$HOME/customizations/home/config/latte/My Layout.layout.latte,file:$HOME/.config/latte/EvtCalTest.layout.latte,file:///usr/share/sounds/freedesktop/stereo/bell.oga
-Recent URLs[$e]=file:$HOME/.config/latte/,file:$HOME/.config/latte/,file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/,file:$HOME/customizations/home/config/latte/,file:///,file:$HOME/customizations/home/config/
+Recent Files[$e]=bell.oga,file:$HOME/customizations/home/config/latte/My Layout.layout.latte,file:$HOME/.config/latte/My Layout.layout.latte,file:$HOME/.config/latte/EvtCalTest.layout.latte,file:///usr/share/sounds/freedesktop/stereo/bell.oga
+Recent URLs[$e]=file:$HOME/.config/latte/,file:///tmp/workspace/,file:///usr/share/sounds/freedesktop/stereo/,file:$HOME/customizations/home/config/latte/,file:///,file:$HOME/customizations/home/config/,file:$HOME/customizations/home/
 
 [PlasmaTransientsConfig]
 raiseOnActivityChange[$d]
@@ -21,9 +21,15 @@ visibility[$d]
 11=HDMI-2
 
 [UniversalSettings]
+canDisableBorders=false
 currentLayout=My Layout
+downloadWindowSize=800,550
 lastNonAssignedLayout=My Layout
 launchers=
-layoutsWindowSize=700,481
+layoutsColumnWidths=93,135,93,0
+layoutsWindowSize=941,711
+memoryUsage=0
+mouseSensitivity=2
+screenTrackerInterval=2500
 showInfoWindow=true
 version=2
