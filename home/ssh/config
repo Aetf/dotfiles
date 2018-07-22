@@ -9,18 +9,7 @@ Host vpsfs
     User aetf
     HostName files.unlimitedcodeworks.xyz
     ForwardX11 no
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
     RequestTTY force
-    ControlMaster auto
-    ControlPath ~/.ssh/masters/%n:%r@%h:%p
-    ControlPersist yes
-Host vps
-    User aetf
-    HostName vps.unlimitedcodeworks.xyz
-    ForwardX11 no
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
@@ -30,14 +19,12 @@ Host archvps
     Port 59901
     ForwardX11 no
     ForwardAgent yes
-    IdentityFile ~/.ssh/id_rsa
-    IdentitiesOnly yes
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host ccgpu
+Host cc2
     User cc
-    HostName 129.114.108.183
+    HostName 129.114.109.116
     ForwardX11 no
     ForwardX11Trusted no
     ForwardAgent yes
@@ -50,7 +37,7 @@ Host ccgpu
     ControlPersist yes
 Host cc
     User cc
-    HostName 129.114.108.180
+    HostName 129.114.108.200
     ForwardX11 yes
     ForwardX11Trusted yes
     ForwardAgent yes
