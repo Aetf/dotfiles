@@ -12,14 +12,14 @@ SOMETHING_WRONG=
 # Purpose: Display message on stderr
 #
 info() {
-    echo "[INFO]: $@" >&2
+    echo "==> $@" >&2
 }
 err() {
-    echo "[ERROR]: $@" >&2
+    echo "==> ERROR: $@" >&2
     SOMETHING_WRONG=1
 }
 warning() {
-    echo "[WARN]: $@" >&2
+    echo "==> WARNING: $@" >&2
 }
 
 # Purpose: Display message and die with given exit code
@@ -43,19 +43,19 @@ mountPathForBoot() {
 }
 
 clean() {
-    info "Restore /boot previous mount status"
-    umount /boot
+    info "Restoring /boot previous mount status"
+    umount -v /boot
 
-    info "Remove unneeded conf file"
-    rm -f /esp/*.conf
+    info "Removing unneeded conf file"
+    rm -fv /esp/*.conf
     # We are using /esp/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
-    rm -rf /esp/EFI/archlinux/refind_linux.conf
+    rm -rfv /esp/EFI/archlinux/refind_linux.conf
 
     # Remove back icons if identical
     if [ -d /esp/EFI/refind/icons-backup ]; then
         if diff -q /esp/EFI/refind/icons /esp/EFI/refind/icons-backup > /dev/null; then
-            info "Remove identical icons-backup"
-            rm -rf /esp/EFI/refind/icons-backup
+            info "Removing identical icons-backup"
+            rm -rfv /esp/EFI/refind/icons-backup
         else
             warning "Detected updated icons, check and remove /esp/EFI/refind/icons-backup if needed"
         fi
@@ -66,8 +66,8 @@ setup() {
     #info "Umount anything on /boot"
     #while umount /boot; do continue; done
 
-    info "Mount ESP on /boot"
-    mount -o bind /esp /boot
+    info "Mounting ESP on /boot"
+    mount -vo bind /esp /boot
 }
 
 ensureScript() {
@@ -87,7 +87,7 @@ ensureScript() {
 
 tryInstall() {
     if ensureScript; then
-        info "Install refind"
+        info "Installing refind"
         "$REFIND_INSTALL_SCRIPT"
     fi
 }
