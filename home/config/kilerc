@@ -592,7 +592,7 @@ listViewIconSize=0
 
 [Files]
 CleanUpAfterClose=true
-LastDocument[$e]=$HOME/develop/latex/salus-paper/osdi18/pages/eval.tex
+LastDocument[$e]=$HOME/develop/latex/salus-paper/osdi18/salus-osdi18.tex
 SingleFileMasterDocument[$d]
 lastDir[$e]=$HOME/
 
@@ -619,7 +619,7 @@ ProjectsOpenOnStart0[$e]=$HOME/develop/latex/salus-paper/osdi18/osdi18.kilepr
 MainwindowHeight=1053
 MainwindowWidth=1920
 horizontalSplitterLeft=29
-horizontalSplitterRight=1043
+horizontalSplitterRight=1042
 verticalSplitterBottom=214
 verticalSplitterTop=749
 

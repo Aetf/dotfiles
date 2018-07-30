@@ -1,3 +1,7 @@
+[KFileDialog Settings]
+Recent Files[$e]=My Layout.layout.latte,file:$HOME/customizations/home/config/latte/My Layout.layout.latte
+Recent URLs[$e]=file:$HOME/customizations/home/config/latte/,file:$HOME/customizations/home/config/,file:$HOME/customizations/home/,file:$HOME/customizations/
+
 [Notification Messages]
 ConfirmTrash=true
 
@@ -12,9 +16,15 @@ timerShow[$d]
 11=Screen19
 
 [UniversalSettings]
+canDisableBorders=false
 currentLayout=My Layout
+downloadWindowSize=800,550
 lastNonAssignedLayout=My Layout
 launchers=
-layoutsWindowSize=700,450
+layoutsColumnWidths=157,242,157,0
+layoutsWindowSize=1356,711
+memoryUsage=0
+mouseSensitivity=1
+screenTrackerInterval=2500
 showInfoWindow=true
 version=2
