@@ -94,7 +94,7 @@ end
 # Prompt line hook provided by powerline
 function _setup_powerline
     powerline-daemon -q
-    set fish_function_path $fish_function_path "/usr/lib/python3.6/site-packages/powerline/bindings/fish"
+    set fish_function_path $fish_function_path "/usr/share/powerline/bindings/fish"
     powerline-setup
 end
 switch $TERM
