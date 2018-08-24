@@ -33,17 +33,16 @@ _k_friendly_name=KDE Daemon
 {153351c7-e6f6-4eb2-96f8-11801532df31}=,none,Take Active Window Screenshot
 {647b596c-4f9d-40f2-9626-de9d96d96175}=Meta+T,none,Run Konsole
 {6b890f0c-2af3-4b37-b106-8c8d6ff3da97}=Meta+F,none,Run Firefox
+{84a433d8-f212-4207-af9a-1d1c59205e2d}=Meta+K,none,Raise MainWindow
 {87287090-baad-4e43-8462-42cc8113b9a5}=Print,none,Start Screenshot Tool
 {9106d96b-e049-403a-8308-cb83483e49fe}=Meta+Shift+Print,none,Take Rectangular Region Screenshot
 {9358411c-3651-4f4e-8529-d6208558c7f1}=Meta+E,none,Run Dolphin
-{94e17e54-5e7f-42c3-abe1-aae39dd892fb}=Meta+Ctrl+Alt+K,none,KeePass AutoTypeSearch
 {9e6d928f-7b49-4a99-a59b-dd2ac71557c0}=Shift+Print,none,Take Full Screen Screenshot
+{b245a7dc-692a-4cdc-afe3-5a342ffab28b}=Ctrl+Alt+T,none,Launch Konsole
 {bffa8f60-63fd-4d80-8ac7-7ebf2cd8b66f}=,none,Take Full Screen Screenshot
-{c869a41e-1b8c-4a47-b77d-83534790eac9}=Meta+Alt+K,none,KeePass AutoType
 {d03619b6-9b3c-48cc-9d9c-a2aadb485550}=,none,Search
 {d3066442-bc04-4d91-b7c5-27e6c778937a}=,none,Start Screenshot Tool
 {dddf1020-708f-414b-810b-4ac960cc05e7}=Meta+Print,none,Take Active Window Screenshot
-{f991302d-5ab2-40c6-8a7f-7e9ac770b255}=Meta+K,none,Run KeePass
 
 [kmix]
 _k_friendly_name=Audio Volume
@@ -111,7 +110,7 @@ Switch to Desktop 18=none,none,Switch to Desktop 18
 Switch to Desktop 19=none,none,Switch to Desktop 19
 Switch to Desktop 2=none,Ctrl+F2,Switch to Desktop 2
 Switch to Desktop 20=none,none,Switch to Desktop 20
-Switch to Desktop 3=Ctrl+F3,Ctrl+F3,Switch to Desktop 3
+Switch to Desktop 3=none,Ctrl+F3,Switch to Desktop 3
 Switch to Desktop 4=Ctrl+F4,Ctrl+F4,Switch to Desktop 4
 Switch to Desktop 5=none,none,Switch to Desktop 5
 Switch to Desktop 6=none,none,Switch to Desktop 6
@@ -215,7 +214,7 @@ Window to Screen 4=none,none,Window to Screen 4
 Window to Screen 5=none,none,Window to Screen 5
 Window to Screen 6=none,none,Window to Screen 6
 Window to Screen 7=none,none,Window to Screen 7
-_k_friendly_name=System Settings Module
+_k_friendly_name=KWin
 view_actual_size=Meta+0,Meta+0,Actual Size
 view_zoom_in=Meta+=,Meta+=,Zoom In
 view_zoom_out=Meta+-,Meta+-,Zoom Out
