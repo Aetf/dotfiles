@@ -113,5 +113,6 @@
     "gitlens.keymap": "chorded",
     "terminal.integrated.fontFamily": "'DejaVu Sans Mono'",
     "python.terminal.activateEnvironment": false,
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "trailing-spaces.deleteModifiedLinesOnly": true
 }
