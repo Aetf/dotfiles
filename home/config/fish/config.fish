@@ -110,3 +110,10 @@ function fish_title
     end
 end
 
+#
+# Pipenv settings
+#
+# always use fancy pipenv shell
+set -x PIPENV_SHELL_FANCY 1
+# create .venv inside the project folder
+set -x PIPENV_VENV_IN_PROJECT 1
