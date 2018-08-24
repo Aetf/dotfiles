@@ -1,0 +1,3 @@
+# The env variable will be read and unset by startkde
+# so the desktop is lock after startup.
+export DESKTOP_LOCKED=1
