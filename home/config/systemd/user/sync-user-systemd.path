@@ -2,7 +2,7 @@
 Description=Path monitor for syncing systemd files in dotfiles
 
 [Path]
-PathChanged=/home/aetf/customizations/home/config/systemd/user
+PathChanged=/home/peifeng/customizations/home/config/systemd/user
 
 [Install]
 WantedBy=multi-user.target
