@@ -1,9 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Type=XSession
-Exec=/usr/bin/ssh-agent /usr/bin/startkde
-TryExec=/usr/bin/ssh-agent
-DesktopNames=KDE
-Name=Plasma with SSH Agent
-Comment=Plasma by KDE
-X-KDE-PluginInfo-Version=5.13.1
