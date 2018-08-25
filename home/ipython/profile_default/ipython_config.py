@@ -63,7 +63,7 @@ if hasPowerline:
 
 # Configure matplotlib for interactive use with the default matplotlib backend.
 if hasMatplotlib:
-    c.InteractiveShellApp.matplotlib = 'auto'
+    c.InteractiveShellApp.matplotlib = 'qt5'
     # use jupyterthemes to style the graph
     if hasJupyterThemes:
         from jupyterthemes import jtplot
