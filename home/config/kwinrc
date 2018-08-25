@@ -88,6 +88,7 @@ desktopchangeosdEnabled=true
 diminactiveEnabled=true
 dimscreenEnabled=true
 enforcedecoEnabled=true
+flipswitchEnabled=true
 glideEnabled=true
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
