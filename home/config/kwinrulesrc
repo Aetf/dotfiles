@@ -14,19 +14,19 @@ wmclasscomplete=true
 wmclassmatch=1
 
 [2]
-Description=Firefox Nightly No Window Decoration
-clientmachine=aetf-arch-mac
-clientmachinematch=0
-noborder=true
-noborderrule=2
-title=Firefox Nightly
-titlematch=0
-types=1
-windowrole=browser
-windowrolematch=1
-wmclass=navigator (firefox|nightly)
-wmclasscomplete=true
-wmclassmatch=3
+Description[$d]
+clientmachine[$d]
+clientmachinematch[$d]
+noborder[$d]
+noborderrule[$d]
+title[$d]
+titlematch[$d]
+types[$d]
+windowrole[$d]
+windowrolematch[$d]
+wmclass[$d]
+wmclasscomplete[$d]
+wmclassmatch[$d]
 
 [General]
-count=2
+count=1
