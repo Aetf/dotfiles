@@ -40,7 +40,7 @@ immutability=1
 lastScreen=0
 location=0
 plugin=org.kde.desktopcontainment
-wallpaperplugin=org.kde.slideshow
+wallpaperplugin=org.kde.potd
 
 [Containments][126][Applets][127][Configuration][General]
 color=translucent
@@ -79,6 +79,10 @@ SlideInterval=900
 SlidePaths=/home/aetf/sync/Stuff/Wallpaper/RewriteHf/
 height=1600
 width=2560
+
+[Containments][126][Wallpaper][org.kde.potd][General]
+FillMode=2
+Provider=spotlight
 
 [Containments][126][Wallpaper][org.kde.slideshow][General]
 Color=60,184,197
