@@ -1,4 +1,6 @@
-#! /bin/sh
+#! /bin/bash
+
+set -e
 
 # Default values
 REFIND_INSTALL_SCRIPT=/usr/bin/refind-install
@@ -43,31 +45,30 @@ mountPathForBoot() {
 }
 
 clean() {
-    info "Restore /boot previous mount status"
-    umount /boot
-
     info "Remove unneeded conf file"
-    rm -f /esp/*.conf
-    # We are using /esp/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
-    rm -rf /esp/EFI/archlinux/refind_linux.conf
+    rm -f /boot/*.conf
+    # We are using /boot/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
+    rm -rf /boot/EFI/archlinux/refind_linux.conf
 
     # Remove back icons if identical
-    if [ -d /esp/EFI/refind/icons-backup ]; then
-        if diff -q /esp/EFI/refind/icons /esp/EFI/refind/icons-backup > /dev/null; then
+    if [ -d /boot/EFI/refind/icons-backup ]; then
+        if diff -q /boot/EFI/refind/icons /boot/EFI/refind/icons-backup > /dev/null; then
             info "Remove identical icons-backup"
-            rm -rf /esp/EFI/refind/icons-backup
+            rm -rf /boot/EFI/refind/icons-backup
         else
-            warning "Detected updated icons, check and remove /esp/EFI/refind/icons-backup if needed"
+            warning "Detected updated icons, check and remove /boot/EFI/refind/icons-backup if needed"
         fi
     fi
+
+    info "Restore /boot previous mount status"
+    umount /boot
 }
 
 setup() {
     #info "Umount anything on /boot"
     #while umount /boot; do continue; done
-
     info "Mount ESP on /boot"
-    mount -o bind /esp /boot
+    mount /dev/disk/by-label/EFI /boot
 }
 
 ensureScript() {
