@@ -14,7 +14,7 @@ server {
 	access_log /var/log/nginx/sites/syncthing.access;
 	error_log /var/log/nginx/sites/syncthing.error error;
 
-	limit_req zone=two burst=100 nodelay;
+	limit_req zone=two burst=1000 nodelay;
 
 	root /var/websites/fallback;
 	location /robots.txt {
@@ -29,6 +29,7 @@ server {
 		proxy_set_header X-Forwarded-Proto $scheme;
 
 		proxy_read_timeout 5m;
+		proxy_send_timeout 5m;
 
 		proxy_pass http://localhost:8384;
 	}
