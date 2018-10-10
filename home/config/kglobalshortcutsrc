@@ -31,8 +31,8 @@ display=Display\tMeta+P,Display\tMeta+P,Switch Display
 [khotkeys]
 _k_friendly_name=KDE Daemon
 {153351c7-e6f6-4eb2-96f8-11801532df31}=,none,Take Active Window Screenshot
+{520f6ddc-d574-46dd-9009-6adad88ec12b}=Meta+F,none,Run Vivaldi
 {647b596c-4f9d-40f2-9626-de9d96d96175}=Meta+T,none,Run Konsole
-{6b890f0c-2af3-4b37-b106-8c8d6ff3da97}=Meta+F,none,Run Firefox
 {84a433d8-f212-4207-af9a-1d1c59205e2d}=Meta+K,none,Raise MainWindow
 {87287090-baad-4e43-8462-42cc8113b9a5}=Print,none,Start Screenshot Tool
 {9106d96b-e049-403a-8308-cb83483e49fe}=Meta+Shift+Print,none,Take Rectangular Region Screenshot

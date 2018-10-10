@@ -16,61 +16,61 @@ wmclasscomplete=false
 wmclassmatch=1
 
 [2]
-Description=Firefox No Window Decoration
-clientmachine=abacus
-clientmachinematch=0
+Description=Fix Yakuake Shows Up In Taskbar
+clientmachine[$d]
+clientmachinematch[$d]
 maximizehoriz[$d]
 maximizehorizrule[$d]
 maximizevert[$d]
 maximizevertrule[$d]
-noborder=true
-noborderrule=2
+noborder[$d]
+noborderrule[$d]
 placement[$d]
 placementrule[$d]
-skipswitcher[$d]
-skipswitcherrule[$d]
-skiptaskbar[$d]
-skiptaskbarrule[$d]
-title=Firefox Nightly
-titlematch=0
-types=1
-windowrole=browser
-windowrolematch=1
-wmclass=navigator (nightly|firefox)
-wmclasscomplete=true
-wmclassmatch=3
-
-[3]
-Description=Settings for Vivaldi
-clientmachine=abacus
-clientmachinematch=0
-maximizehoriz=true
-maximizehorizrule=3
-maximizevert=true
-maximizevertrule=3
-skipswitcher[$d]
-skipswitcherrule[$d]
-skiptaskbar[$d]
-skiptaskbarrule[$d]
-title=Start Page
-titlematch=0
-types=1
-windowrole=browser
-windowrolematch=1
-wmclass=vivaldi
-wmclasscomplete=false
-wmclassmatch=2
-
-[4]
-Description=Fix Yakuake Shows Up In Taskbar
 skipswitcher=true
 skipswitcherrule=2
 skiptaskbar=true
 skiptaskbarrule=2
+title[$d]
+titlematch[$d]
 types=1
+windowrole[$d]
+windowrolematch[$d]
 wmclass=yakuake yakuake
 wmclasscomplete=true
 wmclassmatch=1
 
+[3]
+Description[$d]
+clientmachine[$d]
+clientmachinematch[$d]
+maximizehoriz[$d]
+maximizehorizrule[$d]
+maximizevert[$d]
+maximizevertrule[$d]
+skipswitcher[$d]
+skipswitcherrule[$d]
+skiptaskbar[$d]
+skiptaskbarrule[$d]
+title[$d]
+titlematch[$d]
+types[$d]
+windowrole[$d]
+windowrolematch[$d]
+wmclass[$d]
+wmclasscomplete[$d]
+wmclassmatch[$d]
+
+[4]
+Description[$d]
+skipswitcher[$d]
+skipswitcherrule[$d]
+skiptaskbar[$d]
+skiptaskbarrule[$d]
+types[$d]
+wmclass[$d]
+wmclasscomplete[$d]
+wmclassmatch[$d]
+
 [General]
-count=4
+count=2

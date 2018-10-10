@@ -3,7 +3,7 @@ DataCount=6
 
 [Data_1]
 Comment=KMenuEdit Global Shortcuts
-DataCount=6
+DataCount=7
 Enabled=true
 Name=KMenuEdit
 SystemGroup=1
@@ -41,7 +41,7 @@ Uuid={d03619b6-9b3c-48cc-9d9c-a2aadb485550}
 
 [Data_1_2]
 Comment=Run Firefox
-Enabled=true
+Enabled=false
 Name=Run Firefox
 Type=SIMPLE_ACTION_DATA
 
@@ -168,6 +168,32 @@ TriggersCount=1
 Key=Ctrl+Alt+T
 Type=SHORTCUT
 Uuid={b245a7dc-692a-4cdc-afe3-5a342ffab28b}
+
+[Data_1_7]
+Comment=Comment
+Enabled=true
+Name=Run Vivaldi
+Type=SIMPLE_ACTION_DATA
+
+[Data_1_7Actions]
+ActionsCount=1
+
+[Data_1_7Actions0]
+CommandURL=vivaldi-stable.desktop
+Type=MENUENTRY
+
+[Data_1_7Conditions]
+Comment=
+ConditionsCount=0
+
+[Data_1_7Triggers]
+Comment=Simple_action
+TriggersCount=1
+
+[Data_1_7Triggers0]
+Key=Meta+F
+Type=SHORTCUT
+Uuid={520f6ddc-d574-46dd-9009-6adad88ec12b}
 
 [Data_2]
 Comment=This group contains various examples demonstrating most of the features of KHotkeys. (Note that this group and all its actions are disabled by default.)
