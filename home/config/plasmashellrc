@@ -6,8 +6,20 @@ extraItems=org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.pl
 knownItems=org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.plasma.battery,org.kde.plasma.mediacontroller,org.kde.plasma.vault,org.kde.plasma.networkmanagement,org.kde.plasma.volume,org.kde.plasma.bluetooth,org.kde.plasma.clipboard,org.kde.plasma.printmanager
 
 [DownloadDialog Settings]
-Height 2160=653
-Width 3840=1435
+Height 2160=641
+Width 3840=1578
+
+[PlasmaTransientsConfig]
+PreloadWeight[$d]
+
+[PlasmaViews][Panel 17][Horizontal3840]
+thickness=68
+
+[PlasmaViews][Panel 17][Vertical2160]
+thickness=30
+
+[PlasmaViews][Panel 18][Horizontal3840]
+thickness=68
 
 [PlasmaViews][Panel 2][Horizontal1920]
 thickness=30
@@ -16,8 +28,8 @@ thickness=30
 thickness=36
 
 [ScreenConnectors]
-0=DP-1
-1[$d]
+0=:0.0
+1=DP-1
 
 [Updates]
 performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js

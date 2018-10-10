@@ -34,7 +34,23 @@ Provider=bing
 
 [Containments][16][Wallpaper][org.kde.potd][General]
 FillMode=2
-Provider=bing
+Provider=natgeo
+
+[Containments][17]
+activityId=
+formfactor=3
+immutability=1
+lastScreen=1
+location=6
+plugin=org.kde.panel
+wallpaperplugin=org.kde.image
+
+[Containments][17][ConfigDialog]
+DialogHeight=2160
+DialogWidth=316
+
+[Containments][17][Configuration]
+PreloadWeight=0
 
 [General]
-immutability=2
+immutability=1

@@ -3,3 +3,4 @@ ShadowStrength=89
 
 [Windeco]
 ButtonSize=ButtonSmall
+DrawTitleBarSeparator=false

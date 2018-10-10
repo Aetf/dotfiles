@@ -40,7 +40,7 @@ TabBoxAlternative=false
 GlideAngle=0
 
 [Effect-PresentWindows]
-BorderActivate=7
+BorderActivate=9
 BorderActivateAll=9
 BorderActivateClass=9
 
@@ -60,6 +60,9 @@ Right=None
 Top=None
 TopLeft=None
 TopRight=None
+
+[ModifierOnlyShortcuts]
+Meta=org.kde.lattedock,/Latte,org.kde.LatteDock,activateLauncherMenu
 
 [MouseBindings]
 CommandActiveTitlebar1=Raise
@@ -143,6 +146,7 @@ AutoRaiseInterval=750
 AutogroupInForeground=true
 AutogroupSimilarWindows=false
 BorderSnapZone=10
+BorderlessMaximizedWindows=false
 CenterSnapZone=0
 ClickRaise=true
 DelayFocusInterval=300
