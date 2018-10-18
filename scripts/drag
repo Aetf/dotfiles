@@ -1,0 +1,228 @@
+#! /usr/bin/env python3
+
+import sys
+import signal
+import random
+import string
+import argparse
+from PyQt5.QtCore import Qt, QMimeData, QFileInfo, QUrl, QPoint, QSocketNotifier, QTimer, QEvent
+from PyQt5.QtGui import QDrag, QPixmap, QPainter
+from PyQt5.QtWidgets import QApplication, QWidget, QFileIconProvider
+from PyQt5.QtNetwork import QLocalSocket, QLocalServer
+
+
+class Application(QApplication):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.setAttribute(Qt.AA_UseHighDpiPixmaps)
+        self.setQuitOnLastWindowClosed(True)
+
+        self.handleSingal()
+
+        self.getch = self._find_getch()
+
+    def handleSingal(self):
+        pipename = "drag-signal" + ''.join(random.choices(string.ascii_uppercase + string.digits, k=10))
+
+        self.localServer = QLocalServer()
+        if not self.localServer.listen(pipename):
+            print(f"Error setting up singal handling socket for server: {self.localServer.errorString()}")
+            return sys.exit(-1)
+
+        self.writeSock = QLocalSocket()
+        self.writeSock.connectToServer(pipename, QLocalSocket.WriteOnly)
+        if not self.writeSock.waitForConnected(1000):
+            print(f"Error setting up singal handling socket for writeSock: {self.writeSock.errorString()}")
+            return sys.exit(-1)
+        signal.signal(signal.SIGINT, signal.SIG_DFL)
+        signal.set_wakeup_fd(self.writeSock.socketDescriptor())
+
+        # process events so localServer can emit and handle the connection above
+        self.processEvents()
+        readSock = self.localServer.nextPendingConnection()
+        if not readSock:
+            print(f"Error setting up singal handling socket for readSock: {self.localServer.errorString()}")
+            return sys.exit(-1)
+
+        self.notifier = QSocketNotifier(readSock.socketDescriptor(), QSocketNotifier.Read)
+        self.notifier.activated.connect(self.quitLater)
+
+    def quitLater(self):
+        QTimer.singleShot(50, self.quit)
+
+    def _find_getch(self):
+        try:
+            import termios
+        except ImportError:
+            # Non-POSIX. Return msvcrt's (Windows') getch.
+            import msvcrt
+            return msvcrt.getch
+
+        # POSIX system. Manipulate the tty and retore on exit.
+        import sys
+        import tty
+
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        # we want cbreak not raw because ctrl+c should still be handled as signal
+        tty.setcbreak(fd)
+
+        self.aboutToQuit.connect(lambda: termios.tcsetattr(fd, termios.TCSADRAIN, old_settings))
+
+        def _getch():
+            ch = sys.stdin.read(1)
+            return ch
+
+        return _getch
+
+
+class Window(QWidget):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self._iconProvider = QFileIconProvider()
+
+        # handle esc on GUI
+        self.installEventFilter(self)
+
+        # handle esc on CLI
+        self.quiting = False
+        self.installStdinNotifier()
+
+    def eventFilter(self, watched, event):
+        if event.type() == QEvent.KeyPress:
+            if event.key() == Qt.Key_Escape:
+                QApplication.instance().quitLater()
+                return True
+            return False
+        else:
+            # standard event processing
+            return super().eventFilter(watched, event)
+
+    def installStdinNotifier(self):
+        self.stdinNotifier = QSocketNotifier(sys.stdin.fileno(), QSocketNotifier.Read, self)
+
+        def _handleCLIKey():
+            try:
+                app = QApplication.instance()
+                ch = app.getch()
+                if ord(ch) == 27:  # ESC
+                    self.quiting = True
+                    app.quitLater()
+            except Exception as ex:
+                print(ex)
+
+        self.stdinNotifier.activated.connect(_handleCLIKey)
+
+    def dragPixmap(self, urls):
+        # If more than one item is dragged, align the items inside a
+        # rectangular grid. The maximum grid size is limited to 5 x 5 items.
+        itemCount = len(urls)
+        xCount = 0
+        size = 0
+        if itemCount > 16:
+            xCount = 5
+            size = 16  # KIconLoader::SizeSmall
+        elif itemCount > 9:
+            xCount = 4
+            size = 22  # KIconLoader::SizeSmallMedium
+        else:
+            xCount = 3
+            size = 32  # KIconLoader::SizeMedium
+
+        if itemCount < xCount:
+            xCount = itemCount
+
+        yCount = itemCount // xCount
+        if itemCount % xCount != 0:
+            ++yCount
+
+        if yCount > xCount:
+            yCount = xCount
+
+        # Draw the selected items into the grid cells.
+        dpr = self.devicePixelRatioF()
+        dragPixmap = QPixmap(dpr * xCount * size + xCount, dpr * yCount * size + yCount)
+        dragPixmap.setDevicePixelRatio(dpr)
+        dragPixmap.fill(Qt.transparent)
+        painter = QPainter(dragPixmap)
+        x = 0
+        y = 0
+        for url in urls:
+            icon = self._iconProvider.icon(QFileInfo(url))
+            pixmap = icon.pixmap(size)
+
+            painter.drawPixmap(x, y, pixmap)
+            x += size + 1
+            if x >= dragPixmap.width() / dpr:
+                x = 0
+                y += size + 1
+            if y >= dragPixmap.height() / dpr:
+                break
+
+        return dragPixmap
+
+    def dragData(self, urls):
+        data = QMimeData()
+        data.setUrls([QUrl.fromLocalFile(url) for url in urls])
+        return data
+
+    def startDrag(self, urls, closeWhenDone=True, retryOnIgnore=False):
+        drag = QDrag(self)
+
+        drag.setMimeData(self.dragData(urls))
+
+        pixmap = self.dragPixmap(urls)
+        drag.setPixmap(pixmap)
+
+        hotSpot = QPoint(pixmap.width() / pixmap.devicePixelRatioF() / 2, 0)
+        drag.setHotSpot(hotSpot)
+
+        action = drag.exec_(Qt.MoveAction | Qt.CopyAction | Qt.LinkAction, Qt.CopyAction)
+        return action
+
+    def canDrag(self):
+        return not self.quiting
+
+
+def validateUrls(urls):
+    fis = [QFileInfo(url) for url in urls]
+    return [
+        fi.canonicalFilePath()
+        for fi in fis if fi.exists()
+    ]
+
+
+def main():
+    parser = argparse.ArgumentParser(description='Start a file drag from command line. To exit, press Ctrl-C.')
+
+    parser.add_argument('urls', metavar='FILE', type=str, nargs='+',
+                        help='paths to include in the drag action')
+    parser.add_argument('-i', '--ignore', action='store_true',
+                        help='do not exit if the drop is ignored')
+    parser.add_argument('-n', '--no-exit', action='store_true',
+                        help='do not exit after a successful drop')
+    args, unknown = parser.parse_known_args()
+    urls = validateUrls(args.urls)
+
+    app = Application(sys.argv[0:1] + unknown)
+
+    win = Window()
+
+    try:
+        action = win.startDrag(urls)
+        while args.ignore and action == Qt.IgnoreAction and win.canDrag():
+            action = win.startDrag(urls)
+
+        if not args.no_exit:
+            app.quitLater()
+
+        return app.exec_()
+    except KeyboardInterrupt:
+        pass
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
