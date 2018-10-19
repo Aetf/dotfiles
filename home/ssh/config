@@ -69,7 +69,7 @@ Host conflux
 Host abacus
     User peifeng
     HostName abacus.eecs.umich.edu
-    Port 39909
+    Port 39901
     ForwardX11 yes
     ForwardX11Trusted yes
     ControlMaster auto
