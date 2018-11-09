@@ -11,16 +11,14 @@ server {
 	listen [::]:443 ssl;
 	server_name game.unlimitedcodeworks.xyz;
 
-	access_log /var/log/nginx/sites/game.access;
-	error_log /var/log/nginx/sites/game.error error;
+	access_log /var/log/nginx/sites/game-sister.access;
+	error_log /var/log/nginx/sites/game-sister.error error;
 	rewrite_log on;
 
 	root /srv/http/door;
 
 	location / {
 	}
-
-	error_page 404 /404.html;
 
 	# redirect server error pages to the static page /50x.html
 	#
