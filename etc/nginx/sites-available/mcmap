@@ -13,7 +13,7 @@ server {
 
 	root /srv/http/mc-map-overview;
 
-	access_log /var/log/nginx/sites/mcmap.access;
+	access_log /var/log/nginx/sites/mcmap.access netdata;
 	error_log /var/log/nginx/sites/mcmap.error error;
 
 	location / {

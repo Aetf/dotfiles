@@ -12,7 +12,7 @@ server {
 
 	server_name unlimitedcodeworks.xyz www.unlimitedcodeworks.xyz;
 
-	access_log /var/log/nginx/sites/blog.access;
+	access_log /var/log/nginx/sites/blog.access netdata;
 	error_log /var/log/nginx/sites/blog.error error;
 	rewrite_log on;
 

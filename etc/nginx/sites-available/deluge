@@ -11,7 +11,7 @@ server {
 	listen [::]:443 ssl http2;
 	server_name deluge.unlimitedcodeworks.xyz;
 
-	access_log /var/log/nginx/sites/deluge.access;
+	access_log /var/log/nginx/sites/deluge.access netdata;
 	error_log /var/log/nginx/sites/deluge.error error;
 
 	limit_req zone=two burst=100 nodelay;

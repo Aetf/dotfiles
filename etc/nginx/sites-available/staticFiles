@@ -16,7 +16,7 @@ server {
 
 	root /srv/http/files;
 
-	access_log /var/log/nginx/sites/staticFiles.access;
+	access_log /var/log/nginx/sites/staticFiles.access netdata;
 	error_log /var/log/nginx/sites/staticFiles.error error;
 	rewrite_log on;
 

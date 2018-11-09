@@ -23,7 +23,7 @@ server {
 	# Make site accessible from http://localhost/
 	server_name localhost;
 
-	access_log /var/log/nginx/sites/fallback.access;
+	access_log /var/log/nginx/sites/fallback.access netdata;
 	error_log /var/log/nginx/sites/fallback.error error;
 
 	location /robots.txt {

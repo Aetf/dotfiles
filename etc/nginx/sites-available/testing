@@ -22,7 +22,7 @@ server {
 	# Add index.php to the list if you are using PHP
 	index index.jsp index.html index.htm index.nginx-debian.html;
 
-	access_log /var/log/nginx/sites/testing.access;
+	access_log /var/log/nginx/sites/testing.access netdata;
 	error_log /var/log/nginx/sites/testing.error error;
 
 	location / {

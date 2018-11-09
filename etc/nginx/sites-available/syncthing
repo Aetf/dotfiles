@@ -11,7 +11,7 @@ server {
 	listen [::]:443 ssl http2;
 	server_name btsync.unlimitedcodeworks.xyz;
 
-	access_log /var/log/nginx/sites/syncthing.access;
+	access_log /var/log/nginx/sites/syncthing.access netdata;
 	error_log /var/log/nginx/sites/syncthing.error error;
 
 	limit_req zone=two burst=1000 nodelay;

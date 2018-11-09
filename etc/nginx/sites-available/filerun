@@ -29,7 +29,7 @@ server {
 	keepalive_requests 10;
 	keepalive_timeout 60 60;
 
-	access_log /var/log/nginx/sites/filerun.access;
+	access_log /var/log/nginx/sites/filerun.access netdata;
 	error_log /var/log/nginx/sites/filerun.error error;
 
 	client_max_body_size 2G;

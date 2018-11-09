@@ -14,7 +14,7 @@ server {
 	ssl_certificate /etc/letsencrypt/live/jiahui.love/fullchain.pem;
 	ssl_certificate_key /etc/letsencrypt/live/jiahui.love/privkey.pem;
 
-	access_log /var/log/nginx/sites/jiahui.access;
+	access_log /var/log/nginx/sites/jiahui.access netdata;
 	error_log /var/log/nginx/sites/jiahui.error error;
 	rewrite_log on;
 
