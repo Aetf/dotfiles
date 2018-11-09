@@ -1,0 +1,11 @@
+[Unit]
+Description=Let's Encrypt renewal
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/certbot renew
+#ExecStart=/usr/bin/certbot renew --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+#ExecStart=/usr/bin/certbot certonly -n --dns-cloudflare --dns-cloudflare-credentials /etc/letsencrypt/cloudflare.ini --config=/etc/letsencrypt/renew.ini --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+#ExecStart=/usr/bin/certbot certonly -n --standalone --config=/etc/letsencrypt/renew.ini --pre-hook "systemctl stop nginx.service" --post-hook "systemctl start nginx.service"
+ExecStartPost=/bin/systemctl reload nginx.service
+ExecStartPost=/bin/systemctl reload-or-restart syncthing-discosrv

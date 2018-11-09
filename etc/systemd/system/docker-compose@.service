@@ -1,0 +1,19 @@
+[Unit]
+Description=Docker Compose container starter for %i
+Requires=docker.service network-online.target
+After=docker.service network-online.target
+
+[Service]
+WorkingDirectory=/etc/compose
+
+ExecStartPre=-/usr/bin/docker-compose -f /etc/compose/%i.yml pull --quiet
+ExecStart=/usr/bin/docker-compose -f /etc/compose/%i.yml up
+
+ExecStop=/usr/bin/docker-compose -f /etc/compose/%i.yml down
+
+ExecReload=/usr/bin/docker-compose -f /etc/compose/%i.yml pull --quiet
+ExecReload=/usr/bin/docker-compose -f /etc/compose/%i.yml stop
+ExecReload=/usr/bin/docker-compose -f /etc/compose/%i.yml start
+
+[Install]
+WantedBy=multi-user.target
