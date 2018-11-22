@@ -1,0 +1,12 @@
+[Trigger]
+Type = File
+Operation = Install
+Operation = Upgrade
+Operation = Remove
+Target = boot/*
+
+[Action]
+Description = Mounting esp and boot partition...
+When = PreTransaction
+AbortOnFail
+Exec = /usr/bin/sh -c "/usr/bin/mount /dev/disk/by-label/EFI /esp && /usr/bin/mount --bind /esp/EFI/archlinux /boot"
