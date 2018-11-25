@@ -125,7 +125,7 @@ function! BuildYCM(info)
     " - status: 'installed', 'updated', or 'unchanged'
     " - force:  set on PlugInstall! or PlugUpdate!
     if a:info.status == 'installed' || a:info.force
-        !./install.py --system-libclang --clang-completer --omnisharp-completer --tern-completer --racer-completer
+        !./install.py --system-libclang --clang-completer --tern-completer --racer-completer
     endif
 endfunction
 Plug 'Valloric/YouCompleteMe', { 'for': ['c', 'cpp', 'python', 'csharp', 'cs', 'javascript', 'rust'], 'do': function('BuildYCM')}
@@ -195,7 +195,7 @@ if !has('nvim')
 endif
 
 " Settings for anyfold
-let g:anyfold_activate=1
+autocmd Filetype * AnyFoldActivate
 set foldlevel=1
 set foldminlines=3
 "" unfolds the line in which the curosr is located when opening a file
