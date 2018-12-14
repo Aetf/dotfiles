@@ -115,11 +115,11 @@ set _SILENT_JAVA_OPTIONS "$_JAVA_OPTIONS"
 set -e _JAVA_OPTIONS
 
 # Default command for fzf
-set -x FZF_DEFAULT_COMMAND 'fd --type=file --follow --include .config'
+set -x FZF_DEFAULT_COMMAND 'fd --type=file --no-ignore-vcs --follow'
 ## paste the selected entry onto command line
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 ## cd into directory
-set -x FZF_ALT_C_COMMAND "fd -t d . $HOME"
+set -x FZF_ALT_C_COMMAND "fd --type d --no-ignore-vcs --follow . $HOME"
 ## Solarized colors
 set -x FZF_DEFAULT_OPTS "--height
 40%
