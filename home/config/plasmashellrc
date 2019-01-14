@@ -9,6 +9,97 @@ knownItems=org.kde.plasma.devicenotifier,org.kde.plasma.notifications,org.kde.pl
 Height 2160=641
 Width 3840=1578
 
+[InteractiveConsole]
+Geometry=\x01ÙÐË\x00\x02\x00\x00\x00\x00\x06\x00\x00\x01œ\x00\x00\nÇ\x00\x00\x05ÿ\x00\x00\x06\x00\x00\x01Ò\x00\x00\nÇ\x00\x00\x05ú\x00\x00\x00\x00\x00\x00\x00\x00\x0f\x00
+SplitterState=\x00\x00\x00ÿ\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x08Ž\x00\x00\x01*\x01ÿÿÿÿ\x01\x00\x00\x00\x02\x00
+
+[KFileDialog Settings]
+Recent Files[$e]=main.js,file:$HOME/develop/js/kwin-maxmize-to-new-desktop/contents/code/main.js
+Recent URLs[$e]=file:$HOME/develop/js/kwin-maxmize-to-new-desktop/contents/code/
+
+[KTextEditor Document]
+Allow End of Line Detection=true
+BOM=false
+Backup Flags=0
+Backup Prefix=
+Backup Suffix=~
+Encoding=UTF-8
+End of Line=0
+Indent On Backspace=true
+Indent On Tab=true
+Indent On Text Paste=false
+Indentation Mode=normal
+Indentation Width=4
+Keep Extra Spaces=false
+Line Length Limit=4096
+Newline at End of File=true
+On-The-Fly Spellcheck=false
+Overwrite Mode=false
+PageUp/PageDown Moves Cursor=false
+Remove Spaces=0
+ReplaceTabsDyn=true
+Show Spaces=true
+Show Tabs=true
+Smart Home=true
+Swap Directory=/home/peifeng/.local/share/kate/swaps
+Swap File Mode=2
+Swap Sync Interval=15
+Tab Handling=2
+Tab Width=4
+Trailing Marker Size=1
+Word Wrap=false
+Word Wrap Column=120
+
+[KTextEditor Editor]
+Encoding Prober Type=1
+Fallback Encoding=ISO-8859-15
+
+[KTextEditor Renderer]
+Animate Bracket Matching=true
+Schema=Solarized (dark)
+Show Indentation Lines=true
+Show Whole Bracket Expression=true
+Word Wrap Marker=true
+
+[KTextEditor View]
+Allow Mark Menu=true
+Auto Brackets=true
+Auto Center Lines=0
+Auto Completion=true
+Backspace Remove Composed Characters=false
+Bookmark Menu Sorting=0
+Default Mark Type=2
+Dynamic Word Wrap=false
+Dynamic Word Wrap Align Indent=80
+Dynamic Word Wrap Indicators=1
+Fold First Line=false
+Folding Bar=true
+Folding Preview=true
+Icon Bar=true
+Input Mode=1
+Keyword Completion=true
+Line Modification=true
+Line Numbers=true
+Maximum Search History Size=100
+Persistent Selection=false
+Scroll Bar Marks=false
+Scroll Bar Mini Map All=false
+Scroll Bar Mini Map Width=60
+Scroll Bar MiniMap=true
+Scroll Bar Preview=true
+Scroll Past End=false
+Search/Replace Flags=140
+Show Line Count=false
+Show Lines Count=false
+Show Scrollbars=0
+Show Word Count=false
+Smart Copy Cut=false
+Vi Input Mode Steal Keys=false
+Vi Relative Line Numbers=true
+Word Completion=true
+Word Completion Minimal Word Length=3
+Word Completion Remove Tail=true
+
 [PlasmaTransientsConfig]
 PreloadWeight[$d]
 

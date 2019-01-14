@@ -38,7 +38,7 @@ windowrole[$d]
 windowrolematch[$d]
 wmclass=yakuake yakuake
 wmclasscomplete=true
-wmclassmatch=1
+wmclassmatch=2
 
 [3]
 Description[$d]

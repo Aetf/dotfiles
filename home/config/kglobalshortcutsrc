@@ -1,6 +1,10 @@
 [$Version]
 update_info=powerdevil_move_shortcuts.upd:powerdevil_move_shortcuts
 
+[ActivityManager]
+_k_friendly_name=Activity Manager
+switch-to-activity-f68ddaf1-4b58-45e4-ab2e-56ca5be58c2b=none,none,Switch to activity "Default"
+
 [KDE Keyboard Layout Switcher]
 Switch to Next Keyboard Layout=Ctrl+Alt+K,Ctrl+Alt+K,Switch to Next Keyboard Layout
 _k_friendly_name=KDE Daemon

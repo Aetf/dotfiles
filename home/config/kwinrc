@@ -1,3 +1,6 @@
+[$Version]
+update_info=kwin.upd:replace-scalein-with-scale
+
 [Compositing]
 AnimationSpeed=3
 Backend=OpenGL
@@ -83,6 +86,7 @@ CommandWindow3=Activate and pass click
 CommandWindowWheel=Scroll
 
 [Plugins]
+activatelattelaunchermenuEnabled=false
 blurEnabled=true
 contrastEnabled=false
 coverswitchEnabled=true
@@ -91,14 +95,15 @@ cubeslideEnabled=false
 desktopchangeosdEnabled=true
 diminactiveEnabled=true
 dimscreenEnabled=true
-enforcedecoEnabled=true
+enforcedecoEnabled=false
 glideEnabled[$d]
 highlightwindowEnabled=true
 kwin4_effect_fadedesktopEnabled=false
-kwin4_effect_scaleinEnabled=true
+kwin4_effect_scaleinEnabled[$d]
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
 minimizeanimationEnabled[$d]
+scaleEnabled=true
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
@@ -110,6 +115,10 @@ windowgeometryEnabled=false
 [Script-desktopchangeosd]
 PopupHideDelay=250
 TextOnly=false
+
+[Script-max2NewVirtualDesktop]
+keepNonEmptyDesktop=false
+trigger=FullscreenOnly
 
 [TabBox]
 ActivitiesMode=1
