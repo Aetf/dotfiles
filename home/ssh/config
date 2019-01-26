@@ -66,3 +66,9 @@ Host conflux
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host symbiotic
+    User peifeng
+    HostName symbiotic.eecs.umich.edu
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
