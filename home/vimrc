@@ -72,9 +72,6 @@ Plug 'scrooloose/syntastic'
 " support for editing fish scripts
 Plug 'dag/vim-fish'
 
-" support for qml
-Plug 'peterhoeg/vim-qml'
-
 " Rust language support
 Plug 'rust-lang/rust.vim'
 
@@ -215,6 +212,16 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 
 " Auto close
 let g:autoclose_vim_commentmode=1
+
+" NERD Commenter configuration
+"" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+"" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+
+"" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => General
