@@ -72,6 +72,7 @@ Host abacus
     Port 39901
     ForwardX11 yes
     ForwardX11Trusted yes
+    ForwardAgent yes
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
