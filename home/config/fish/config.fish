@@ -58,10 +58,6 @@ if test "$DISPLAY"x = "x";
     if test -d "$HOME/.cargo/bin"
         set PATH $PATH "$HOME/.cargo/bin"
     end
-    ## Spack executable
-    if test -d "$HOME/.local/spack/bin"
-        set PATH "$HOME/.local/spack/bin" $PATH
-    end
 end
 
 # Some useful alias (functions in .config/fish/functions)
