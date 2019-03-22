@@ -1,4 +1,4 @@
-function kp --description "Kill processes"
+function fk --description "Kill processes"
   set -l __kp__pid (command ps -ef | sed 1d | fzf (echo $FZF_DEFAULT_OPTS) -m --header='[kill:process]' | awk '{print $2}')
   set -l __kp__kc $argv[1]
 
