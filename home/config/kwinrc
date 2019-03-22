@@ -1,3 +1,6 @@
+[$Version]
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js
+
 [Compositing]
 AnimationSpeed=3
 Backend=OpenGL
@@ -13,6 +16,7 @@ UnredirectFullscreen=false
 XRenderSmoothScale=false
 
 [Desktops]
+Id_1=b6646ad3-7303-409d-817a-65b08dc562d1
 Number=1
 Rows=1
 
@@ -79,6 +83,7 @@ CommandWindow3=Activate and pass click
 CommandWindowWheel=Scroll
 
 [Plugins]
+activatelattelaunchermenuEnabled=false
 blurEnabled=true
 contrastEnabled=false
 coverswitchEnabled=true
@@ -86,16 +91,19 @@ cubeEnabled=true
 cubeslideEnabled=false
 desktopchangeosdEnabled=true
 diminactiveEnabled=true
-dimscreenEnabled=true
-enforcedecoEnabled=true
+dimscreenEnabled[$d]
+enforcedecoEnabled=false
 flipswitchEnabled=true
 glideEnabled=true
 highlightwindowEnabled=true
+kwin4_effect_dimscreenEnabled=true
 kwin4_effect_fadedesktopEnabled=false
-kwin4_effect_scaleinEnabled=true
+kwin4_effect_scaleEnabled=true
+kwin4_effect_scaleinEnabled[$d]
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
 minimizeanimationEnabled[$d]
+scaleEnabled[$d]
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
@@ -107,6 +115,12 @@ windowgeometryEnabled=false
 [Script-desktopchangeosd]
 PopupHideDelay=250
 TextOnly=false
+
+[Script-max2NewVirtualDesktop]
+blockWMClass=
+keepNonEmptyDesktop=false
+newDesktopPosition=RightToCurrent
+trigger=FullscreenOnly
 
 [TabBox]
 ActivitiesMode=1
