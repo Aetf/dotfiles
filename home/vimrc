@@ -75,6 +75,9 @@ Plug 'dag/vim-fish'
 " Rust language support
 Plug 'rust-lang/rust.vim'
 
+" TOML language
+Plug 'cespare/vim-toml'
+
 " CtrlP for fuzzy finder
 Plug 'ctrlpvim/ctrlp.vim'
 
