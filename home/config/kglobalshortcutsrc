@@ -2,8 +2,8 @@
 update_info=powerdevil_move_shortcuts.upd:powerdevil_move_shortcuts
 
 [ActivityManager]
-_k_friendly_name=ActivityManager
-switch-to-activity-3881f087-1a1f-4a82-86a3-f699337ea5eb=none,none,切换到活动 "默认"
+_k_friendly_name=活动管理器
+switch-to-activity-3881f087-1a1f-4a82-86a3-f699337ea5eb=none,none,切换到活动“默认”
 switch-to-activity-bf0333a6-63c2-43b6-b94f-c56a7c97c3f0=none,none,
 
 [KDE Keyboard Layout Switcher]
@@ -30,8 +30,8 @@ stop=,Media Stop,Stop
 toggle-mediaplayer=none,none,Toggle window media player
 
 [kaccess]
-Toggle Screen Reader On and Off=none,Meta+Alt+S,切换读屏器开关
-_k_friendly_name=辅助
+Toggle Screen Reader On and Off=none,Meta+Alt+S,切换屏幕阅读器开关
+_k_friendly_name=辅助功能
 
 [kcm_touchpad]
 Disable Touchpad=Touchpad Off,Touchpad Off,禁用触摸板
@@ -54,13 +54,12 @@ display=Display,Display\tMeta+P,切换显示器
 
 [khotkeys]
 _k_friendly_name=KDE Daemon
+{102b4566-cec7-403d-8f97-2a4275280888}=Meta+F,none,Run Vivaldi
 {2b5c4d1c-8509-4cb0-8def-b4a8f44c7762}=Launch (C)\tPrint,none,Start Screenshot Tool
-{4a2211f5-5898-40ea-bf41-1088f397b99f}=Meta+F,none,Run Firefox
+{4b9ef1cc-e4ed-4df4-ab04-987cf4ff4ad4}=Ctrl+Alt+T,none,Launch Konsole
 {545e5b26-ffc4-4281-97be-14425281f599}=Meta+Launch (C)\tMeta+Print,none,Take Active Window Screenshot
-{5a868cd8-e586-47a0-bc99-0f8a97efe021}=Meta+Ctrl+Alt+K,none,KeePass AutoTypeSearch
+{68b8057c-321e-4b74-bdb8-2e85da34b194}=Meta+K,none,Run KeePassXC
 {7a6edb3d-4c09-4ae2-b44e-1533874aab66}=Shift+Print,none,Take Full Screen Screenshot
-{9219253f-1618-4d60-a256-11ea4609ff6e}=Meta+Alt+K,none,KeePass AutoType
-{9fc21e69-b8d6-449a-8baa-948ba9a237ce}=Meta+K,none,Run KeePass
 {d7a2efc7-5ce5-44ae-9b6a-c551f759eaa5}=Meta+T,none,Run Konsole
 {f22e33f2-5c81-46d0-ae8b-096e3c305297}=Meta+E,none,Run Dolphin
 
@@ -282,8 +281,6 @@ activate task manager entry 6=Meta+6,Meta+6,激活任务管理器条目 6
 activate task manager entry 7=Meta+7,Meta+7,激活任务管理器条目 7
 activate task manager entry 8=Meta+8,Meta+8,激活任务管理器条目 8
 activate task manager entry 9=Meta+9,Meta+9,激活任务管理器条目 9
-activate widget 10=none,none,激活 天气预报 部件
-activate widget 22=none,none,激活 Thermal Monitor 部件
 clear-history=none,none,清除剪贴板历史(L)
 clipboard_action=,Ctrl+Alt+X,启用剪贴板动作
 cycleNextAction=none,none,下一个历史项
@@ -307,6 +304,7 @@ new instance for entry 5=,Meta+Ctrl+5,为项目 5 建立新实例
 new instance for entry 6=,Meta+Ctrl+6,为项目 6 建立新实例
 new instance for entry 7=,Meta+Ctrl+7,为项目 7 建立新实例
 new instance for entry 8=,Meta+Ctrl+8,为项目 8 建立新实例
+new instance for entry 9=,Meta+Ctrl+9,为项目 9 建立新实例
 new instance for task manager entry 1=Meta+Ctrl+1,Meta+Ctrl+1,任务管理器项目 1 的新实例
 new instance for task manager entry 10=Meta+Ctrl+0,Meta+Ctrl+0,任务管理器项目 10 的新实例
 new instance for task manager entry 2=Meta+Ctrl+2,Meta+Ctrl+2,任务管理器项目 2 的新实例
@@ -327,6 +325,8 @@ show-on-mouse-pos=none,none,在鼠标指针处弹出 Klipper
 
 [mediacontrol]
 _k_friendly_name=媒体控制器
+mediavolumedown=none,none,媒体音量下降
+mediavolumeup=none,none,媒体音量上升
 nextmedia=Media Next,Media Next,媒体播放下一首
 playpausemedia=Media Play,Media Play,播放/暂停媒体播放
 previousmedia=Media Previous,Media Previous,媒体播放上一首

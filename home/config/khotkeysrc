@@ -3,7 +3,7 @@ DataCount=6
 
 [Data_1]
 Comment=KMenuEdit Global Shortcuts
-DataCount=2
+DataCount=5
 Enabled=true
 Name=KMenuEdit
 SystemGroup=1
@@ -15,7 +15,7 @@ ConditionsCount=0
 
 [Data_1_1]
 Comment=Firefox
-Enabled=true
+Enabled=false
 Name=Run Firefox
 Type=SIMPLE_ACTION_DATA
 
@@ -41,7 +41,7 @@ Uuid={4a2211f5-5898-40ea-bf41-1088f397b99f}
 
 [Data_1_2]
 Comment=注释
-Enabled=true
+Enabled=false
 Name=Run KeePass
 Type=SIMPLE_ACTION_DATA
 
@@ -64,6 +64,84 @@ TriggersCount=1
 Key=Meta+K
 Type=SHORTCUT
 Uuid={9fc21e69-b8d6-449a-8baa-948ba9a237ce}
+
+[Data_1_3]
+Comment=Global keyboard shortcut to launch Konsole
+Enabled=true
+Name=Launch Konsole
+Type=MENUENTRY_SHORTCUT_ACTION_DATA
+
+[Data_1_3Actions]
+ActionsCount=1
+
+[Data_1_3Actions0]
+CommandURL=org.kde.konsole.desktop
+Type=MENUENTRY
+
+[Data_1_3Conditions]
+Comment=
+ConditionsCount=0
+
+[Data_1_3Triggers]
+Comment=Simple_action
+TriggersCount=1
+
+[Data_1_3Triggers0]
+Key=Ctrl+Alt+T
+Type=SHORTCUT
+Uuid={4b9ef1cc-e4ed-4df4-ab04-987cf4ff4ad4}
+
+[Data_1_4]
+Comment=Vivaldi
+Enabled=true
+Name=Run Vivaldi
+Type=SIMPLE_ACTION_DATA
+
+[Data_1_4Actions]
+ActionsCount=1
+
+[Data_1_4Actions0]
+CommandURL=vivaldi-stable.desktop
+Type=MENUENTRY
+
+[Data_1_4Conditions]
+Comment=
+ConditionsCount=0
+
+[Data_1_4Triggers]
+Comment=Simple_action
+TriggersCount=1
+
+[Data_1_4Triggers0]
+Key=Meta+F
+Type=SHORTCUT
+Uuid={102b4566-cec7-403d-8f97-2a4275280888}
+
+[Data_1_5]
+Comment=Run KeePassXC
+Enabled=true
+Name=Run KeePassXC
+Type=SIMPLE_ACTION_DATA
+
+[Data_1_5Actions]
+ActionsCount=1
+
+[Data_1_5Actions0]
+CommandURL=org.keepassxc.KeePassXC.desktop
+Type=MENUENTRY
+
+[Data_1_5Conditions]
+Comment=
+ConditionsCount=0
+
+[Data_1_5Triggers]
+Comment=Simple_action
+TriggersCount=1
+
+[Data_1_5Triggers0]
+Key=Meta+K
+Type=SHORTCUT
+Uuid={68b8057c-321e-4b74-bdb8-2e85da34b194}
 
 [Data_2]
 Comment=注释
@@ -219,7 +297,7 @@ Uuid={545e5b26-ffc4-4281-97be-14425281f599}
 
 [Data_5]
 Comment=注释
-Enabled=true
+Enabled=false
 Name=KeePass AutoType
 Type=SIMPLE_ACTION_DATA
 
@@ -245,7 +323,7 @@ Uuid={9219253f-1618-4d60-a256-11ea4609ff6e}
 
 [Data_6]
 Comment=注释
-Enabled=true
+Enabled=false
 Name=KeePass AutoTypeSearch
 Type=SIMPLE_ACTION_DATA
 
@@ -279,7 +357,7 @@ Comment=
 WindowsCount=0
 
 [Main]
-AlreadyImported=defaults,kde32b1,konqueror_gestures_kde321,printscreen,spectacle
+AlreadyImported=defaults,kde32b1,konqueror_gestures_kde321,printscreen,spectacle,konsole
 Disabled=false
 Version=2
 
