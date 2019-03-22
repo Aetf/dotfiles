@@ -76,3 +76,6 @@ Host abacus
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host *.utah.cloudlab.us
+    User peifeng
+    ForwardAgent yes
