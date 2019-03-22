@@ -9,7 +9,7 @@
     "editor.smoothScrolling": true,
     "editor.renderWhitespace":"boundary",
     "editor.cursorBlinking": "smooth",
-    "editor.fontFamily": "'Dejavu Sans Mono'",
+    "editor.fontFamily": "'Dejavu Sans Mono for Powerline'",
     "workbench.colorTheme": "Base16 Dark Eighties",
     "vim.enableNeovim": false,
     "editor.formatOnType": true,
@@ -100,5 +100,9 @@
     },
     "gitlens.codeLens.enabled": false,
     "gitlens.keymap": "alternate",
-    "diffEditor.ignoreTrimWhitespace": false
+    "diffEditor.ignoreTrimWhitespace": false,
+    "window.restoreWindows": "folders",
+    "npm.enableScriptExplorer": true,
+    "git.confirmSync": false,
+    "editor.fontLigatures": true
 }
