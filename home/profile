@@ -22,6 +22,9 @@ export CUDA_HOME=$CUDA_DIR
 # XDG variables
 export XDG_CONFIG_HOME="$HOME/.config"
 
+# Jupyter lab app dir
+export JUPYTERLAB_DIR=$HOME/.jupyter/lab/app
+
 # More PATH
 ## Prepend user's bin directory to PATH
 PATH="$HOME/customizations/scripts:$PATH"
