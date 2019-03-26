@@ -40,3 +40,4 @@ view-full-screen=F11
 DynamicTabTitles=true
 Height=41
 KeepOpen=false
+KeepOpenAfterLastSessionCloses=true
