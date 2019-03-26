@@ -72,3 +72,6 @@ Host symbiotic
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host *.utah.cloudlab.us
+    StrictHostKeyChecking no
+    ForwardAgent yes
