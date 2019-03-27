@@ -25,6 +25,8 @@ services:
       FR_DB_PASS: your_filerun_password
       DOCKER_USER: www-data
       DOCKER_GROUP: www-data
+      APACHE_RUN_USER: www-data
+      APACHE_RUN_GROUP: www-data
       HOST_USER_ID: 1000
       HOST_GROUP_ID: 1000
     depends_on:
