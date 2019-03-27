@@ -1,0 +1,21 @@
+server {
+	listen 80;
+	listen [::]:80;
+	server_name jiahui.id;
+
+	return 301 https://www.jiahui.id$request_uri;
+}
+
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name jiahui.id;
+
+	keepalive_requests 10;
+	keepalive_timeout 60 60;
+
+	ssl_certificate /etc/letsencrypt/live/jiahui.id/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/jiahui.id/privkey.pem;
+
+	return 301 https://www.jiahui.id$request_uri;
+}

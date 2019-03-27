@@ -1,7 +1,7 @@
 server {
 	listen 80;
 	listen [::]:80;
-	server_name game.unlimitedcodeworks.xyz;
+	server_name game.unlimitedcodeworks.xyz game.unlimited-code.works;
 
 	return 301 https://$server_name$request_uri;
 }
@@ -9,7 +9,7 @@ server {
 server {
 	listen 443 ssl;
 	listen [::]:443 ssl;
-	server_name game.unlimitedcodeworks.xyz;
+	server_name game.unlimitedcodeworks.xyz game.unlimited-code.works;
 
 	access_log /var/log/nginx/sites/game-sister.access netdata;
 	error_log /var/log/nginx/sites/game-sister.error error;
