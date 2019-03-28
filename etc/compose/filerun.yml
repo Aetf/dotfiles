@@ -15,7 +15,7 @@ services:
   web:
     image: afian/filerun
     entrypoint:
-      - /tools/entrypoint
+      - /tools/filerun_entrypoint
     command: "apache2-foreground"
     environment:
       FR_DB_HOST: db
@@ -38,4 +38,5 @@ services:
     volumes:
       - /srv/http/filerun:/var/www/html
       - /home/aetf:/user-files
+      - /srv/http/webdav:/webdav
       - ./tools:/tools
