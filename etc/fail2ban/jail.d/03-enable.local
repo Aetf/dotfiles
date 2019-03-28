@@ -42,6 +42,13 @@ logpath  = %(nginx_error_log)s
            /var/log/nginx/sites/*.error
 maxretry = 2
 
+[nginx-404]
+enabled = true
+port     = http,https
+logpath  = %(nginx_error_log)s
+           /var/log/nginx/sites/*.error
+maxretry = 2
+
 # Ban attackers that try to use PHP's URL-fopen() functionality
 # through GET/POST variables. - Experimental, with more than a year
 # of usage in production environments.
