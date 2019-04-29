@@ -49,6 +49,11 @@ Host cc
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
+Host conflux-fs
+    User peifeng
+    HostName conflux-login1.arc-ts.umich.edu
+    GSSAPIAuthentication yes
+    GSSAPIDelegateCredentials yes
 Host conflux
     User peifeng
     HostName conflux-login1.arc-ts.umich.edu
@@ -57,12 +62,16 @@ Host conflux
     ForwardAgent yes
     GSSAPIAuthentication yes
     GSSAPIDelegateCredentials yes
-    LocalForward 9999 localhost:8888
-    LocalForward 6003 localhost:6003
-    LocalForward 6004 localhost:6004
-    LocalForward 6005 localhost:6005
-    LocalForward 6006 localhost:6006
-    LocalForward 6007 localhost:6007
+    LocalForward 8888 localhost:8888
+    LocalForward 9010 localhost:9010
+    LocalForward 9011 localhost:9011
+    LocalForward 9012 localhost:9012
+    LocalForward 9013 localhost:9013
+    LocalForward 9014 localhost:9014
+    LocalForward 9015 localhost:9015
+    LocalForward 9016 localhost:9016
+    LocalForward 9017 localhost:9017
+    LocalForward 2210 localhost:22
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
