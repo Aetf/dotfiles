@@ -67,7 +67,7 @@ Plug 'freeo/vim-kalisi'
 Plug 'miyakogi/seiya.vim'
 
 " syntax checking using external checkers
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 
 " support for editing fish scripts
 Plug 'dag/vim-fish'
@@ -153,21 +153,12 @@ endif
 " Initialize plugin system
 call plug#end()
 
-" Settings for syntastic
-" this is handled by vim-airline
-"set statusline+=%#warningmsg#
-"set statusline+=%{SyntasticStatuslineFlag()}
-"set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-
-let g:syntastic_cpp_checkers = []
-let g:syntastic_aggregate_errors = 1
-
-let g:syntastic_cuda_nvcc_args = "-std=c++11"
+" Settings for ale
+"     Set this. Airline will handle the rest.
+let g:airline#extensions#ale#enabled = 1
+"     Use ctrl-K and ctrl-J to navigate between errors.
+nmap <silent> <C-k> <Plug>(ale_previous_wrap)
+nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Settings for vim-fish
 "     Let :make to use fish for syntax checking
