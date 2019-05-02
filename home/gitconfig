@@ -16,6 +16,7 @@
 	dump = cat-file -p
 	mgtree = merge -s subtree --squash --no-commit
 	sm = submodule
+	pull = pull --ff-only
 	fa = flow feature
 
 	lg = !"git lg1"
