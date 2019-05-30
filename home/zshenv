@@ -1,0 +1,166 @@
+# Stable unique append and prepend, won't change order if the value is present
+function uprepend() {
+    local varname=$1
+    local x=$2
+    if [[ ${${(P)varname}[(ie)$x]} -gt ${#${(P)varname}} ]]; then
+        typeset -g "${varname}[1, 0]=$x"
+    fi
+}
+
+function uappend() {
+    local varname=$1
+    local x=$2
+    if [[ ${${(P)varname}[(ie)$x]} -gt ${#${(P)varname}} ]]; then
+        eval "${varname}+=(${x})"
+    fi
+}
+
+function autodetect_path() {
+    local pkg=$1
+
+    local inc_dir=$pkg/include
+    local bin_dir=$pkg/bin
+    local lib_dir=$pkg/lib
+    local lib64_dir=$pkg/lib64
+    local sbin_dir=$pkg/sbin
+    local man_dir=$pkg/share/man
+
+    if [ -d $inc_dir ]; then
+        uprepend include $inc_dir
+        uprepend cpath $inc_dir
+    fi
+    if [ -d $bin_dir ]; then
+        uprepend path $bin_dir
+    fi
+    if [ -d $sbin_dir ]; then
+        # sbin comes after bin
+        uappend path $sbin_dir
+    fi
+    if [ -d $lib_dir ]; then
+        uprepend ld_library_path $lib_dir
+        uprepend lib $lib_dir
+        uprepend library_path $lib_dir
+    fi
+    if [ -d $lib64_dir ]; then
+        uprepend ld_library_path $lib64_dir
+        uprepend lib $lib64_dir
+        uprepend library_path $lib64_dir
+    fi
+
+    if [ -d $man_dir ]; then
+        uprepend manpath $man_dir
+    fi
+
+    # (FN): F means full dir (non-empty dir)
+    # N means NULL_GLOB, i.e. it expands to nothing, rather than expands to literal value
+    for cmake_dir in $pkg/share/*/cmake(FN); do
+        uappend cmake_prefix_path $pkg
+    done
+    for pkgconfig_dir in $pkg/lib*/pkgconfig(FN); do
+        uappend pkg_config_path $pkgconfig_dir
+    done
+}
+
+# introduce an anonymous function just for scroping
+() {
+    # Basic locations
+    export DOWNLOAD_DIR=$HOME/downloads
+    export BUILD_DIR=$HOME/buildbed
+    export TOOL_DIR=$HOME/tools
+
+    # Basic preference
+    export EDITOR=vim
+
+    # Make sure various path are unique
+    local varnames=(
+        LIBRARY_PATH
+        LD_LIBRARY_PATH
+        LIB
+
+        INCLUDE
+        CPATH
+
+        PKG_CONFIG_PATH
+        CMAKE_PREFIX_PATH
+    )
+    for varname ($varnames) {
+        # tie (-T) UPPERCASE_PATH to lowercase_path (:l), the UPPERCASE_PATH is scalar, lowercase_path is array.
+        # and make sure there is no duplication (-U), global (-g), and exported (-x)
+        typeset -T -Ugx $varname ${varname:l}
+    }
+    # MANPATH and PATH are spefical, and we can't -T on them
+    export -U manpath
+    export -U path
+
+    # Detect extra installations in tools
+    local auto_detect=true
+    if $auto_detect; then
+        for pkg in $TOOL_DIR/*(FN); do
+            case $pkg in
+                *.skip)
+                    continue;;
+                *miniconda*)
+                    continue;;
+            esac
+            autodetect_path "$pkg"
+        done
+    fi
+
+    # Extra Path
+    if [ -d $HOME/.local/bin ]; then
+        uappend path $HOME/.local/bin
+    fi
+
+    # Package specific variables
+    ## CUDA
+    CUDA_HOME=/gpfs/gpfs0/software/rhel72/packages/cuda/8.0
+    if [[ -d $CUDA_HOME ]]; then
+        export CUDA_HOME
+        export CUDA_ROOT=$CUDA_HOME
+        autodetect_path "$CUDA_HOME"
+    fi
+
+    ## Blas
+    export OPENBLAS=/gpfs/gpfs0/software/rhel72/packages/openblas/0.2.19/gcc-5.4.0/lib/libopenblas.so
+    export BLAS=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/libblas.so
+    export LAPACK=/gpfs/gpfs0/software/rhel72/packages/lapack/3.6.1/gcc-5.4.0/lib/liblapack.so
+
+    ## Java language
+    if [[ -d $TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le ]]; then
+        export JAVA_HOME=$TOOL_DIR/java-1.8.0-openjdk-1.8.0.131-3.b12.el7_3.ppc64le
+    fi
+
+    ## C++ (Use gcc 8.2.0)
+    GCC_ROOT=/gpfs/gpfs0/software/rhel72/packages/gcc/8.2.0
+    if [[ -d $GCC_ROOT ]]; then
+        export GCC_ROOT
+        export GCC_LIB=$GCC_ROOT/lib64
+        export GCC_INCLUDE=$GCC_ROOT/include
+        export C_INCLUDEPATH=$GCC_ROOT/include
+
+        # LD_RUN_PATH has no special treatment
+        export LD_RUN_PATH=$GCC_ROOT/lib64:$LD_RUN_PATH
+
+        uprepend path $GCC_ROOT/bin
+
+        uprepend manpath $GCC_ROOT/share/man
+        uprepend ld_library_path $GCC_ROOT/lib64
+        uprepend cpath $GCC_ROOT/lib/gcc/powerpc64le-unknown-linux-gnu/8.2.0/include
+        uprepend cpath $GCC_ROOT/lib/gcc/powerpc64le-unknown-linux-gnu/8.2.0/include-fixed
+    fi
+
+    # Go language, PATH itself is auto detected above
+    export GOROOT=$TOOL_DIR/go
+    export GOPATH=$TOOL_DIR/gopath
+    export GOBIN=$TOOL_DIR/gopath/bin
+
+    # Rust language
+    if [ -d $HOME/.cargo/bin ]; then
+        uappend path $HOME/.cargo/bin
+    fi
+
+    # Python language
+    if [ -d $TOOL_DIR/miniconda3/bin ]; then
+        uprepend path $TOOL_DIR/miniconda3/bin
+    fi
+} "$@"

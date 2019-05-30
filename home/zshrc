@@ -1,0 +1,75 @@
+if [[ "$ZPROF" = true ]]; then
+    zmodload zsh/zprof
+fi
+
+# Check if zplug is installed
+if [[ ! -d ~/.zplug ]]; then
+    git clone https://github.com/zplug/zplug ~/.zplug
+    source ~/.zplug/init.zsh && zplug update --self
+fi
+
+# only clone 1 level is enough
+zstyle ":zplug:tag" depth 1
+# default defer to 1 so we can use 0 to load something first
+zstyle ":zplug:tag" defer 1
+
+# Essential
+source ~/.zplug/init.zsh
+
+# Self management
+zplug "zplug/zplug", hook-build:'zplug --self-manage'
+
+# Fish-like autosuggestion
+zplug "zsh-users/zsh-autosuggestions", as:plugin
+
+# Fuzzy finder
+# TODO: alt-c changing directory is slow after fzf returns, probably due to redraw-prompt.
+zplug "junegunn/fzf", \
+    as:plugin, \
+    use:"shell/*.zsh", \
+    defer:2
+# Grab binaries from GitHub Releases
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*linux*ppc64le*", \
+    on:"junegunn/fzf"
+
+# Powerlevel10k prompt, with fast gitstatus, config is in ~/.zsh/config.d/purepower.zsh
+zplug "romkatv/powerlevel10k", \
+    use:"powerlevel10k.zsh-theme"
+# We have to build gitstatus ourself
+zplug "romkatv/gitstatus", \
+    as:command, \
+    use:"bin/gitstatusd-linux-ppc64le", \
+    hook-build: "zsh ~/.zsh/build-gitstatus", \
+    on:"romkatv/powerlevel10k"
+
+# (If the defer tag is given 2 or above, run after compinit command)
+zplug "zdharma/fast-syntax-highlighting", defer:2
+
+# Safe paste
+zplug "oz/safe-paste"
+
+# Install plugins if there are plugins that have not been installed
+zplug check || zplug install
+
+# Load any plugin specific settings, these are all variable settings, so we load them first
+zplug "~/.zsh/config.d", from:local, use:"*.zsh", defer:0
+
+# Load extra completions
+zplug "~/.zsh/completions.d", from:local, use:"*.zsh"
+
+# Finally load any extra things
+zplug "~/.zsh/extra.d", from:local, use:"*.zsh", defer:3
+
+# Then, source plugins and add commands to $PATH
+zplug load
+
+if [[ "$ZPROF" = true ]]; then
+    zprof
+fi
+
+# increast ulimit
+ulimit -n unlimited
