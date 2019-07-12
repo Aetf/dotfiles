@@ -1,7 +1,7 @@
 server {
 	listen 80;
     listen [::]:80;
-	server_name mc.unlimitedcodeworks.xyz mc.unlimited-code.works;
+	server_name mcadmin.unlimited-code.works;
 
 	return 301 https://$host$request_uri;
 }
@@ -9,10 +9,12 @@ server {
 server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
-	server_name mc.unlimitedcodeworks.xyz mc.unlimited-code.works;
+	server_name mcadmin.unlimited-code.works;
 
 	access_log /var/log/nginx/sites/mcmyadmin.access netdata;
 	error_log /var/log/nginx/sites/mcmyadmin.error error;
+
+    include snippets/cert/unlimited-code.works.conf;
 
 	root /var/websites/fallback;
 	location /robots.txt {
@@ -24,6 +26,6 @@ server {
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header X-Forwarded-Proto $scheme;
 
-		proxy_pass http://localhost:8081;
+		proxy_pass http://localhost:8080;
 	}
 }

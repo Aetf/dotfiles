@@ -1,0 +1,33 @@
+server {
+	listen 80;
+    listen [::]:80;
+	server_name mc.unlimited-code.works;
+
+	return 301 https://$host$request_uri;
+}
+
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+	server_name mc.unlimited-code.works;
+
+	access_log /var/log/nginx/sites/mcsh-webapi.access netdata;
+	error_log /var/log/nginx/sites/mcsh-webapi.error error;
+
+    ssl_certificate /etc/letsencrypt/live/unlimited-code.works/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/unlimited-code.works/privkey.pem;
+
+	root /var/websites/fallback;
+	location /robots.txt {
+	}
+
+	location / {
+		proxy_set_header Host $host;
+        # we don't want to expose real IP because webapi only allows localhost access
+		#proxy_set_header X-Real-IP $remote_addr;
+		#proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+		#proxy_set_header X-Forwarded-Proto $scheme;
+
+		proxy_pass http://localhost:8080;
+	}
+}
