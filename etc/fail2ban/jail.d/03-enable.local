@@ -39,14 +39,14 @@ logpath = %(nginx_error_log)s
 enabled = true
 port     = http,https
 logpath  = %(nginx_error_log)s
-           /var/log/nginx/sites/*.error
+           /var/log/nginx/sites/*.access
 maxretry = 2
 
-[nginx-404]
+[nginx-notfound]
 enabled = true
 port     = http,https
 logpath  = %(nginx_error_log)s
-           /var/log/nginx/sites/*.error
+           /var/log/nginx/sites/*.access
 maxretry = 2
 
 # Ban attackers that try to use PHP's URL-fopen() functionality
