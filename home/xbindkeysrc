@@ -1,4 +1,4 @@
-"xdotool key ctrl+shift+Tab"
+"xdotool key Control+Prior"
 b:6 press
-"xdotool key ctrl+Tab"
+"xdotool key Control+Next"
 b:7 press
