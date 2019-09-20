@@ -8,10 +8,6 @@
 alias ls='ls --color=auto'
 PS1='[\u@\h \W]\$ '
 
-if [[ -f $HOME/.profile ]]; then
-    . $HOME/.profile
-fi
-
 # source awesome-terminal-fonts font map before drop into fish
 shopt -s nullglob
 function source_atf() {

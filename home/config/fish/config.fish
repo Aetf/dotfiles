@@ -2,17 +2,9 @@
 # ~/.config/fish/config.fish
 #
 
-# If not running interactively, don't do anything
-if not status -i; exit; end
-
-# If we are in kmscon console, start tmux
-# Don't start tmux on linux console
-if test "$TERM" = "kmscon";
-    set -x TERM xterm-256color
-    exec tmux new -As console
-end
-
 # Environment variables are set in $HOME/.profile, which should be sourced both with and w/o display manager
+# When w/o display manager, the login shell (bash) will source .bash_profile, which will source .profile
+# With display manager, Xsession script will source .bash_profile
 
 # Some useful alias (functions in .config/fish/functions)
 # ll='ls -lh'
@@ -24,6 +16,16 @@ end
 # cmatrix='cmatrix -bls'
 # work='cd /tmp/workspace'
 # grepc='grep --color=always'
+
+# If not running interactively, don't do more
+if not status -i; exit; end
+
+# If we are in kmscon console, start tmux
+# Don't start tmux on linux console
+if test "$TERM" = "kmscon";
+    set -x TERM xterm-256color
+    exec tmux new -As console
+end
 
 ## More colorful
 switch $TERM

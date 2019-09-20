@@ -1,5 +1,6 @@
 # IME settings
-#handled automatically in /etc/X11/Xsession.d/72sogoupinyin
+export QT_IM_MOULDE=fcitx
+export GTK_IM_MODULE=fcitx
 
 # Default editor
 export EDITOR=vim
@@ -36,7 +37,9 @@ if [ -d $HOME/.node_modules/bin ]; then
 fi
 ## ruby gem executable
 for p in ~/.gem/ruby/*/bin; do
-    PATH="$PATH:$p"
+    if [[ -d $p ]]; then
+        PATH="$PATH:$p"
+    fi
 done
 ## rust cargo executable
 if [ -d $HOME/.cargo/bin ]; then
