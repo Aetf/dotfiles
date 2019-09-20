@@ -1,0 +1,7 @@
+[Desktop Entry]
+Version=1.0
+Name=SSH Launcher
+Exec=/home/peifeng/customizations/scripts/handle-ssh %u
+Type=Application
+Terminal=false
+Icon=utilities-terminal

@@ -1,0 +1,52 @@
+#! /usr/bin/env python3
+
+from subprocess import check_call, check_output
+
+
+def run_cmd(cmd):
+    # add a new session
+    sid = check_output([
+        'qdbus',
+        'org.kde.yakuake',
+        '/yakuake/sessions',
+        'addSession'
+    ], universal_newlines=True)
+    # make sure the session is visible
+    visible = check_output([
+        'qdbus',
+        'org.kde.yakuake',
+        '/yakuake/MainWindow_1',
+        'Get',
+        'org.qtproject.Qt.QWidget',
+        'visible'
+    ], universal_newlines=True).strip()
+    if visible == 'true':
+        check_call([
+            'qdbus',
+            'org.kde.yakuake',
+            '/yakuake/sessions',
+            'raiseSession',
+            sid,
+        ])
+    else:
+        check_call([
+            'qdbus',
+            'org.kde.yakuake',
+            '/yakuake/window',
+            'toggleWindowState'
+        ])
+
+    # run
+    print(f'Running {cmd}')
+    check_call([
+        'qdbus',
+        'org.kde.yakuake',
+        '/yakuake/sessions',
+        'runCommand',
+        ' '.join(cmd)
+    ])
+
+
+if __name__ == '__main__':
+    import sys
+    run_cmd(sys.argv[1:])

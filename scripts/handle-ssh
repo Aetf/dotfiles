@@ -1,0 +1,46 @@
+#! /usr/bin/env python3
+
+from urllib.parse import urlparse
+from subprocess import check_call, check_output
+
+
+def handle_ssh(url):
+    url = urlparse(url)
+
+    cmd = []
+
+    if url.scheme == 'ssh':
+        cmd += [
+            'ssh'
+        ]
+    else:
+        print(f"Invalid protocol {url.scheme}")
+        sys.exit(1)
+
+    if url.username:
+        cmd += [
+            '-l',
+            url.username
+        ]
+
+    if url.hostname:
+        cmd += [
+            url.hostname
+        ]
+    else:
+        print(f"Invalid hostname {url.hostname}")
+
+    if url.port:
+        if url.scheme == 'ssh':
+            cmd += [
+                '-p',
+                url.port
+            ]
+
+    check_call(['yakuake-exec'] + [str(elem) for elem in cmd])
+
+
+if __name__ == '__main__':
+    import sys
+    for elem in sys.argv[1:]:
+        handle_ssh(elem)
