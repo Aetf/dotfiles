@@ -3,8 +3,8 @@ Description=Jupyter lab
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/jupyter lab --config=/home/peifeng/.jupyter/jupyter_lab_config.py --app-dir=/home/peifeng/.jupyter/lab/app
-WorkingDirectory=/home/peifeng/develop/
+ExecStart=/usr/bin/jupyter lab --config=%h/.jupyter/lab/jupyter_lab_config.py --app-dir=%h/.jupyter/lab/app
+WorkingDirectory=%h/develop/
 Restart=always
 RestartSec=10
 #KillMode=mixed
