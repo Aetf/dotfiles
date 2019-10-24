@@ -1,0 +1,13 @@
+[Unit]
+Description=Jupyter lab
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/jupyter lab --config=/home/peifeng/.jupyter/jupyter_lab_config.py --app-dir=/home/peifeng/.jupyter/lab/app
+WorkingDirectory=/home/peifeng/develop/
+Restart=always
+RestartSec=10
+#KillMode=mixed
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,14 @@
+[Unit]
+Description=Minecraft Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Clear DISPLAY variable, which confuses ServerSync's awt package
+Environment=DISPLAY=
+WorkingDirectory=/home/peifeng/games/spongeserver/production/minecraft
+ExecStart=/usr/lib/jvm/java-8-openjdk/jre/bin/java -Xmx15G -Xms2G -jar forge-1.12.2-14.23.5.2838-universal.jar nogui
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
