@@ -2,6 +2,7 @@
 
 from urllib.parse import urlparse
 from subprocess import check_call, check_output
+import logging
 
 
 def handle_ssh(url):
@@ -14,7 +15,7 @@ def handle_ssh(url):
             'ssh'
         ]
     else:
-        print(f"Invalid protocol {url.scheme}")
+        logging.critical(f"Invalid protocol {url.scheme}")
         sys.exit(1)
 
     if url.username:
@@ -28,7 +29,7 @@ def handle_ssh(url):
             url.hostname
         ]
     else:
-        print(f"Invalid hostname {url.hostname}")
+        logging.error(f"Invalid hostname {url.hostname}")
 
     if url.port:
         if url.scheme == 'ssh':
@@ -37,10 +38,19 @@ def handle_ssh(url):
                 url.port
             ]
 
+    logging.debug(f"Running command {cmd}")
     check_call(['yakuake-exec'] + [str(elem) for elem in cmd])
 
 
 if __name__ == '__main__':
     import sys
+    import os
+    logpath = os.environ.get("YAKUAKE_EXEC_DEBUG", "")
+    if logpath:
+        logging.basicConfig(filename=logpath, level=logging.DEBUG)
+    else:
+        logging.disable(logging.DEBUG)
+    logging.debug(f"Got sysv argv: {sys.argv}")
+    logging.debug(f"My env: {os.environ}")
     for elem in sys.argv[1:]:
         handle_ssh(elem)

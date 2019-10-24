@@ -1,9 +1,11 @@
 #! /usr/bin/env python3
 
 from subprocess import check_call, check_output
+import logging
 
 
 def run_cmd(cmd):
+    logging.debug(f"Running command {cmd}")
     # add a new session
     sid = check_output([
         'qdbus',
@@ -11,6 +13,7 @@ def run_cmd(cmd):
         '/yakuake/sessions',
         'addSession'
     ], universal_newlines=True)
+    logging.debug(f"New session {sid}")
     # make sure the session is visible
     visible = check_output([
         'qdbus',
@@ -21,6 +24,7 @@ def run_cmd(cmd):
         'visible'
     ], universal_newlines=True).strip()
     if visible == 'true':
+        logging.debug(f"Switch to session {sid}")
         check_call([
             'qdbus',
             'org.kde.yakuake',
@@ -29,6 +33,7 @@ def run_cmd(cmd):
             sid,
         ])
     else:
+        logging.debug(f"Toggle window")
         check_call([
             'qdbus',
             'org.kde.yakuake',
@@ -37,7 +42,7 @@ def run_cmd(cmd):
         ])
 
     # run
-    print(f'Running {cmd}')
+    logging.debug(f'Running {cmd}')
     check_call([
         'qdbus',
         'org.kde.yakuake',
@@ -49,4 +54,11 @@ def run_cmd(cmd):
 
 if __name__ == '__main__':
     import sys
+    import os
+    logpath = os.environ.get("YAKUAKE_EXEC_DEBUG", "")
+    if os.environ.get("YAKUAKE_EXEC_DEBUG", ""):
+        logging.basicConfig(filename=logpath, level=logging.DEBUG)
+    else:
+        logging.disable(logging.DEBUG)
+
     run_cmd(sys.argv[1:])
