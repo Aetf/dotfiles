@@ -50,7 +50,7 @@ function _setup_powerline
     powerline-setup
 end
 switch $TERM
-    case 'xterm*' 'konsole' 'tmux'
+    case 'xterm*' 'konsole*' 'tmux'
         _setup_powerline
     case 'linux'
         set -x POWERLINE_CONFIG_OVERRIDES 'common.term_truecolor=false'
