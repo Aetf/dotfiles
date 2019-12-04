@@ -42,14 +42,13 @@ FORWARD_ENVS=(
 )
 
 FREE_HOSTS=(
-    'gpu-cn010'
-    'gpu-cn011'
-    'gpu-cn012'
-    'gpu-cn013'
-    'gpu-cn014'
-    'gpu-cn015'
-    'gpu-cn016'
-    'gpu-cn017'
+    #'gpu-cn001'
+    #'gpu-cn002'
+    #'gpu-cn003'
+    #'gpu-cn008'
+    #'gpu-cn017'
+    #'gpu-cn010'
+    #'gpu-cn014'
 )
 
 REQUESTED_NODE=1
@@ -135,7 +134,8 @@ trap 'clean_up 15' TERM
 request_exec_host() {
     jobid=$(bsub \
              -n $(($REQUESTED_NODE * $ARG_CORES_PER_NODE)) \
-             -R "span[hosts=1]" \
+             -R "span[ptile=40]" \
+             -W "72:00" \
              -M 2048 \
              -J interactive \
              -q "$ARG_QUEUE" \
@@ -406,7 +406,7 @@ eval set -- "$TEMP"
 
 ARG_NO_HEADER=false
 ARG_QUEUE=gpu_p100
-ARG_CORES_PER_NODE=80
+ARG_CORES_PER_NODE=40
 while true; do
   case "$1" in
     -h | --help )
