@@ -1,3 +1,10 @@
+Host mcsh
+    User root
+    HostName mcsh.unlimited-code.works
+    Port 8020
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
 Host github
     User git
     HostName github.com
@@ -81,6 +88,14 @@ Host symbiotic
     ControlMaster auto
     ControlPath ~/.ssh/masters/%n:%r@%h:%p
     ControlPersist yes
-Host *.utah.cloudlab.us
+Host clnode???
+    HostName %h.clemson.cloudlab.us
+    StrictHostKeyChecking no
+    ForwardAgent yes
+Host *.cloudlab.us
+    StrictHostKeyChecking no
+    ForwardAgent yes
+Host node-?
+    HostName %h.scaleml.gaia-pg0.clemson.cloudlab.us
     StrictHostKeyChecking no
     ForwardAgent yes
