@@ -31,6 +31,7 @@
 [diff]
 	submodule = log
 	tool = vimdiff
+	wsErrorHighlight = all
 [http]
 	proxy =
 [https]
@@ -48,3 +49,5 @@
 	pushInsteadOf = kde:
 [rerere]
 	enabled = 1
+[color "diff"]
+	whitespace = red reverse
