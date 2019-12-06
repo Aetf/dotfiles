@@ -7,7 +7,6 @@
         120
     ],
     "editor.smoothScrolling": true,
-    "editor.renderWhitespace":"boundary",
     "editor.cursorBlinking": "smooth",
     "editor.fontFamily": "'DejaVu Sans Mono'",
     "workbench.colorTheme": "Base16 Dark Eighties",
@@ -27,7 +26,12 @@
     "vim.useCtrlKeys": false,
     "vim.foldfix": false,
     "python.venvPath": "~/.local/venvs",
-    "workbench.iconTheme": "vscode-icons",
+    "python.venvFolders": [
+        "envs",
+        ".pyenv",
+        ".venv",
+        ".direnv"
+    ],
     "C_Cpp.intelliSenseEngine": "Default",
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
@@ -89,7 +93,6 @@
     ],
     "vim.useSystemClipboard": true,
     "python.linting.flake8CategorySeverity.F": "Warning",
-    "vsicons.dontShowNewVersionMessage": true,
     "explorer.confirmDragAndDrop": false,
     "explorer.autoReveal": false,
     "explorer.confirmDelete": false,
@@ -111,8 +114,121 @@
     ],
     "gitlens.codeLens.enabled": false,
     "gitlens.keymap": "chorded",
-    "terminal.integrated.fontFamily": "'DejaVu Sans Mono'",
+    "terminal.integrated.fontFamily": "'DejaVu Sans Mono for Powerline'",
     "python.terminal.activateEnvironment": false,
     "git.confirmSync": false,
-    "trailing-spaces.deleteModifiedLinesOnly": true
+    "trailing-spaces.deleteModifiedLinesOnly": true,
+    "editor.renderWhitespace": "boundary",
+    "files.trimTrailingWhitespace": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.tree.indent": 18,
+    "workbench.iconTheme": "vscode-icons",
+    "files.insertFinalNewline": true,
+    "[html]": {
+        "editor.defaultFormatter": "vscode.html-language-features"
+    },
+    "rust.mode": "rls",
+    "rust.actionOnSave": "check",
+    "rust.rustup": {
+        "nightlyToolchain": "nightly-x86_64-unknown-linux-gnu"
+    },
+    "rust.rls": {
+        "useRustfmt": true
+    },
+    "rust-client.channel": "nightly",
+    "rust.all_features": true,
+    "latex-workshop.intellisense.package.enabled": true,
+    "latex-workshop.intellisense.unimathsymbols.enabled": true,
+    "latex-workshop.intellisense.update.aggressive.enabled": true,
+    "latex-workshop.latex.outDir": "%DIR%/build",
+    "latex-workshop.latex.recipe.default": "lastUsed",
+    "latex-workshop.message.update.show": false,
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "latexmk_rconly",
+            "command": "latexmk",
+            "args": [
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "make",
+            "command": "make",
+            "args": [
+                "all"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "make 🔃",
+            "tools": [
+                "make"
+            ]
+        },
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "latexmk (latexmkrc)",
+            "tools": [
+                "latexmk_rconly"
+            ]
+        },
+        {
+            "name": "pdflatex ➞ bibtex ➞ pdflatex × 2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        }
+    ],
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.synctex.afterBuild.enabled": true,
+    "latex-workshop.chktex.enabled": true,
+    "todo-tree.highlights.enabled": true,
+    "git.suggestSmartCommit": false,
+    "python.formatting.provider": "black",
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }
