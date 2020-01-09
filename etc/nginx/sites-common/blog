@@ -1,0 +1,6 @@
+root /srv/http/blog;
+
+location / {
+}
+
+error_page 404 /404.html;

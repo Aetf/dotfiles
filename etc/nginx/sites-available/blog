@@ -1,7 +1,7 @@
 server {
 	listen 80;
 	listen [::]:80;
-	server_name unlimitedcodeworks.xyz www.unlimitedcodeworks.xyz unlimited-code.works www.unlimited-code.works;
+	server_name unlimitedcodeworks.xyz www.unlimitedcodeworks.xyz;
 
 	return 301 https://$server_name$request_uri;
 }
@@ -10,23 +10,36 @@ server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
 
-	server_name unlimitedcodeworks.xyz www.unlimitedcodeworks.xyz unlimited-code.works www.unlimited-code.works;
+	server_name unlimitedcodeworks.xyz www.unlimitedcodeworks.xyz;
 
 	access_log /var/log/nginx/sites/blog.access netdata;
 	error_log /var/log/nginx/sites/blog.error error;
 	rewrite_log on;
 
-	root /srv/http/blog;
+    include snippets/cert/unlimitedcodeworks.xyz.conf;
 
-	location / {
-	}
+    include sites-common/blog;
+}
 
-	error_page 404 /404.html;
+server {
+	listen 80;
+	listen [::]:80;
+	server_name unlimited-code.works www.unlimited-code.works;
 
-	# redirect server error pages to the static page /50x.html
-	#
-	#error_page 500 502 503 504 /50x.html;
-	#location = /50x.html {
-	#	root /usr/share/nginx/html;
-	#}
+	return 301 https://$server_name$request_uri;
+}
+
+server {
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
+
+	server_name unlimited-code.works www.unlimited-code.works;
+
+	access_log /var/log/nginx/sites/blog.access netdata;
+	error_log /var/log/nginx/sites/blog.error error;
+	rewrite_log on;
+
+    include snippets/cert/unlimited-code.works.conf;
+
+    include sites-common/blog;
 }
