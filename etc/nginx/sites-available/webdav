@@ -16,30 +16,9 @@ server {
 	error_log /var/log/nginx/sites/webdav.error error;
 	rewrite_log on;
 
-	ssl_certificate /etc/letsencrypt/live/unlimited-code.works/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/unlimited-code.works/privkey.pem;
+    include snippets/cert/unlimited-code.works.conf;
 
-    # auth_basic "ArchVPS WebDAV Authentication Required";
-
-	#location / {
-	#	root /srv/http/webdav;
-
-	#	# enable creating directories without trailing slash
-	#	# needed for macOS client
-	#	set $x $uri$request_method;
-	#	if ($x ~ [^/]MKCOL$) {
-	#		rewrite ^(.*)$ $1/;
-	#	}
-
-	#	dav_access user:rw group:rw all:r;
-	#	dav_methods PUT DELETE MKCOL COPY MOVE;
-	#	dav_ext_methods PROPFIND OPTIONS;
-	#	dav_ext_lock zone=archvps;
-	#	create_full_put_path on;
-
-	#}
-
-    location /dav.php/ {
+    location /remote.php/dav/ {
         # increase body size
 		client_body_temp_path /srv/http/tmp-body;
 		client_max_body_size 0;
@@ -50,27 +29,12 @@ server {
         proxy_set_header X-Original-Scheme $scheme;
         proxy_set_header X-Forwarded-Proto $scheme;
 
-		# forward to filerun server
-        proxy_set_header Host files.unlimited-code.works;
-        proxy_pass https://localhost:443/dav.php/;
+		# forward to nextcloud server
+        proxy_set_header Host next.unlimited-code.works;
+        proxy_pass https://localhost:443;
     }
 
-    #location / {
-    #    # include details about the original request
-    #    proxy_set_header X-Real-IP $remote_addr;
-    #    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    #    proxy_set_header X-Original-Scheme $scheme;
-    #    proxy_set_header X-Forwarded-Proto $scheme;
-
-	#	# forward to filerun server
-    #    proxy_set_header Host files.unlimited-code.works;
-    #    proxy_pass https://localhost:443/dav.php/;
-    #}
-
-	# redirect server error pages to the static page /50x.html
-	#
-	#error_page 500 502 503 504 /50x.html;
-	#location = /50x.html {
-	#	root /usr/share/nginx/html;
-	#}
+    location / {
+        deny all;
+    }
 }

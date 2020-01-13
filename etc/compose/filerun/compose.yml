@@ -36,7 +36,7 @@ services:
     ports:
       - "8010:80"
     volumes:
-      - /srv/http/filerun:/var/www/html
+      - /var/lib/filerun/html:/var/www/html
       - /home/aetf:/user-files
       - /srv/http/webdav:/webdav
       - ./tools:/tools
