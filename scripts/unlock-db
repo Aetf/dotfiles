@@ -1,0 +1,4 @@
+#! /bin/sh
+export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/1000/bus
+read password
+dbus-send --print-reply --session --dest=org.keepassxc.KeePassXC.MainWindow /keepassxc org.keepassxc.MainWindow.openDatabase string:/home/peifeng/sync/Stuff/AetfKeeDb.kdbx "string:$password" || true
