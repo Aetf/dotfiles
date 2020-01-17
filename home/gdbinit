@@ -15,11 +15,11 @@ register_qt_printers (None)
 from kde import register_kde_printers
 register_kde_printers (None)
 
-from libstdcxx.v6.printers import register_libstdcxx_printers
-register_libstdcxx_printers (None)
-
-from boost import register_printers
-register_printers(boost_version=(1,67,0))
+#from libstdcxx.v6.printers import register_libstdcxx_printers
+#register_libstdcxx_printers (None)
+#
+#from boost import register_printers
+#register_printers(boost_version=(1,67,0))
 
 end
 
