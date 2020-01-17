@@ -1,3 +1,9 @@
+Host mac
+    User aetf
+    HostName Aetf-Arch-Mac
+    ControlMaster auto
+    ControlPath ~/.ssh/masters/%n:%r@%h:%p
+    ControlPersist yes
 Host mcsh
     User root
     HostName mcsh.unlimited-code.works
