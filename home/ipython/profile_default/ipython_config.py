@@ -45,7 +45,8 @@ hasJupyterThemes = pkgutil.find_loader('jupyterthemes') is not None
 
 # A list of dotted module names of IPython extensions to load.
 if hasPowerline:
-    c.InteractiveShellApp.extensions.append('powerline.bindings.ipython.post_0_11')
+    pass
+    # c.InteractiveShellApp.extensions.append('powerline.bindings.ipython.post_0_11')
 
 # dotted module name of an IPython extension to load.
 # c.InteractiveShellApp.extra_extension = ''
@@ -63,7 +64,7 @@ if hasPowerline:
 
 # Configure matplotlib for interactive use with the default matplotlib backend.
 if hasMatplotlib:
-    c.InteractiveShellApp.matplotlib = 'auto'
+    # c.InteractiveShellApp.matplotlib = 'auto'
     # use jupyterthemes to style the graph
     if hasJupyterThemes:
         from jupyterthemes import jtplot
