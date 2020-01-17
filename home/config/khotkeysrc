@@ -1,9 +1,12 @@
+[$Version]
+update_info=spectacle_shortcuts.upd:spectacle-migrate-shortcuts
+
 [Data]
-DataCount=6
+DataCount=4
 
 [Data_1]
 Comment=KMenuEdit Global Shortcuts
-DataCount=7
+DataCount=3
 Enabled=true
 Name=KMenuEdit
 SystemGroup=1
@@ -14,17 +17,17 @@ Comment=
 ConditionsCount=0
 
 [Data_1_1]
-Comment=Comment
+Comment=Run Knosole
 Enabled=true
-Name=Search
+Name=Run Konsole
 Type=SIMPLE_ACTION_DATA
 
 [Data_1_1Actions]
 ActionsCount=1
 
 [Data_1_1Actions0]
-CommandURL=http://google.com
-Type=COMMAND_URL
+CommandURL=org.kde.konsole.desktop
+Type=MENUENTRY
 
 [Data_1_1Conditions]
 Comment=
@@ -35,21 +38,21 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_1_1Triggers0]
-Key=
+Key=Meta+T
 Type=SHORTCUT
-Uuid={d03619b6-9b3c-48cc-9d9c-a2aadb485550}
+Uuid={647b596c-4f9d-40f2-9626-de9d96d96175}
 
 [Data_1_2]
-Comment=Run Firefox
-Enabled=false
-Name=Run Firefox
+Comment=Run Browser
+Enabled=true
+Name=Run Vivaldi
 Type=SIMPLE_ACTION_DATA
 
 [Data_1_2Actions]
 ActionsCount=1
 
 [Data_1_2Actions0]
-CommandURL=firefox-nightly.desktop
+CommandURL=vivaldi-stable.desktop
 Type=MENUENTRY
 
 [Data_1_2Conditions]
@@ -63,19 +66,19 @@ TriggersCount=1
 [Data_1_2Triggers0]
 Key=Meta+F
 Type=SHORTCUT
-Uuid={6b890f0c-2af3-4b37-b106-8c8d6ff3da97}
+Uuid={520f6ddc-d574-46dd-9009-6adad88ec12b}
 
 [Data_1_3]
-Comment=Show KeePass
-Enabled=false
-Name=Run KeePass
+Comment=Run KeePassXC
+Enabled=true
+Name=Run KeepassXC
 Type=SIMPLE_ACTION_DATA
 
 [Data_1_3Actions]
 ActionsCount=1
 
 [Data_1_3Actions0]
-CommandURL=keepass.desktop
+CommandURL=org.keepassxc.KeePassXC.desktop
 Type=MENUENTRY
 
 [Data_1_3Conditions]
@@ -87,113 +90,9 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_1_3Triggers0]
-Key=
+Key=Meta+K
 Type=SHORTCUT
-Uuid={f991302d-5ab2-40c6-8a7f-7e9ac770b255}
-
-[Data_1_4]
-Comment=Dolphin
-Enabled=true
-Name=Run Dolphin
-Type=SIMPLE_ACTION_DATA
-
-[Data_1_4Actions]
-ActionsCount=1
-
-[Data_1_4Actions0]
-CommandURL=org.kde.dolphin.desktop
-Type=MENUENTRY
-
-[Data_1_4Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_1_4Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_1_4Triggers0]
-Key=Meta+E
-Type=SHORTCUT
-Uuid={9358411c-3651-4f4e-8529-d6208558c7f1}
-
-[Data_1_5]
-Comment=Run Knosole
-Enabled=true
-Name=Run Konsole
-Type=SIMPLE_ACTION_DATA
-
-[Data_1_5Actions]
-ActionsCount=1
-
-[Data_1_5Actions0]
-CommandURL=org.kde.konsole.desktop
-Type=MENUENTRY
-
-[Data_1_5Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_1_5Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_1_5Triggers0]
-Key=Meta+T
-Type=SHORTCUT
-Uuid={647b596c-4f9d-40f2-9626-de9d96d96175}
-
-[Data_1_6]
-Comment=Global keyboard shortcut to launch Konsole
-Enabled=true
-Name=Launch Konsole
-Type=MENUENTRY_SHORTCUT_ACTION_DATA
-
-[Data_1_6Actions]
-ActionsCount=1
-
-[Data_1_6Actions0]
-CommandURL=org.kde.konsole.desktop
-Type=MENUENTRY
-
-[Data_1_6Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_1_6Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_1_6Triggers0]
-Key=Ctrl+Alt+T
-Type=SHORTCUT
-Uuid={b245a7dc-692a-4cdc-afe3-5a342ffab28b}
-
-[Data_1_7]
-Comment=Comment
-Enabled=true
-Name=Run Vivaldi
-Type=SIMPLE_ACTION_DATA
-
-[Data_1_7Actions]
-ActionsCount=1
-
-[Data_1_7Actions0]
-CommandURL=vivaldi-stable.desktop
-Type=MENUENTRY
-
-[Data_1_7Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_1_7Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_1_7Triggers0]
-Key=Meta+F
-Type=SHORTCUT
-Uuid={520f6ddc-d574-46dd-9009-6adad88ec12b}
+Uuid={427a7068-5892-4dfe-8166-c22ec7dbd19e}
 
 [Data_2]
 Comment=This group contains various examples demonstrating most of the features of KHotkeys. (Note that this group and all its actions are disabled by default.)
@@ -611,9 +510,9 @@ Uuid={3f8a9fc4-0a29-48f1-9e8b-21b061cb76d6}
 
 [Data_3]
 Comment=Comment
-DataCount=3
-Enabled=true
-Name=Screenshots
+DataCount=2
+Enabled=false
+Name=KeePass
 SystemGroup=0
 Type=ACTION_DATA_GROUP
 
@@ -622,20 +521,17 @@ Comment=
 ConditionsCount=0
 
 [Data_3_1]
-Comment=Start the screenshot tool and show the GUI
+Comment=Comment
 Enabled=true
-Name=Start Screenshot Tool
+Name=KeePass AutoType
 Type=SIMPLE_ACTION_DATA
 
 [Data_3_1Actions]
 ActionsCount=1
 
 [Data_3_1Actions0]
-Arguments=
-Call=StartAgent
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
+CommandURL=keepass -auto-type
+Type=COMMAND_URL
 
 [Data_3_1Conditions]
 Comment=
@@ -646,25 +542,22 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_3_1Triggers0]
-Key=Print
+Key=Meta+Alt+K
 Type=SHORTCUT
-Uuid={87287090-baad-4e43-8462-42cc8113b9a5}
+Uuid={c869a41e-1b8c-4a47-b77d-83534790eac9}
 
 [Data_3_2]
 Comment=Comment
 Enabled=true
-Name=Take Full Screen Screenshot
+Name=KeePass AutoTypeSearch
 Type=SIMPLE_ACTION_DATA
 
 [Data_3_2Actions]
 ActionsCount=1
 
 [Data_3_2Actions0]
-Arguments=false
-Call=FullScreen
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
+CommandURL=keepass -e:AutoTypeSearch
+Type=COMMAND_URL
 
 [Data_3_2Conditions]
 Comment=
@@ -675,269 +568,35 @@ Comment=Simple_action
 TriggersCount=1
 
 [Data_3_2Triggers0]
-Key=Shift+Print
+Key=Meta+Ctrl+Alt+K
 Type=SHORTCUT
-Uuid={9e6d928f-7b49-4a99-a59b-dd2ac71557c0}
-
-[Data_3_3]
-Comment=Take a screenshot of the currently active window and save it
-Enabled=true
-Name=Take Active Window Screenshot
-Type=SIMPLE_ACTION_DATA
-
-[Data_3_3Actions]
-ActionsCount=1
-
-[Data_3_3Actions0]
-Arguments=true, false
-Call=ActiveWindow
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
-
-[Data_3_3Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_3_3Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_3_3Triggers0]
-Key=Meta+Print
-Type=SHORTCUT
-Uuid={dddf1020-708f-414b-810b-4ac960cc05e7}
+Uuid={94e17e54-5e7f-42c3-abe1-aae39dd892fb}
 
 [Data_4]
-Comment=Comment
-DataCount=2
-Enabled=false
-Name=KeePass
-SystemGroup=0
-Type=ACTION_DATA_GROUP
+Comment=invoke vimclip
+Enabled=true
+Name=vimclip
+Type=SIMPLE_ACTION_DATA
+
+[Data_4Actions]
+ActionsCount=1
+
+[Data_4Actions0]
+CommandURL=konsole -e vimclip
+Type=COMMAND_URL
 
 [Data_4Conditions]
 Comment=
 ConditionsCount=0
 
-[Data_4_1]
-Comment=Comment
-Enabled=true
-Name=KeePass AutoType
-Type=SIMPLE_ACTION_DATA
-
-[Data_4_1Actions]
-ActionsCount=1
-
-[Data_4_1Actions0]
-CommandURL=keepass -auto-type
-Type=COMMAND_URL
-
-[Data_4_1Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_4_1Triggers]
+[Data_4Triggers]
 Comment=Simple_action
 TriggersCount=1
 
-[Data_4_1Triggers0]
-Key=Meta+Alt+K
+[Data_4Triggers0]
+Key=Alt+Shift+V
 Type=SHORTCUT
-Uuid={c869a41e-1b8c-4a47-b77d-83534790eac9}
-
-[Data_4_2]
-Comment=Comment
-Enabled=true
-Name=KeePass AutoTypeSearch
-Type=SIMPLE_ACTION_DATA
-
-[Data_4_2Actions]
-ActionsCount=1
-
-[Data_4_2Actions0]
-CommandURL=keepass -e:AutoTypeSearch
-Type=COMMAND_URL
-
-[Data_4_2Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_4_2Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_4_2Triggers0]
-Key=Meta+Ctrl+Alt+K
-Type=SHORTCUT
-Uuid={94e17e54-5e7f-42c3-abe1-aae39dd892fb}
-
-[Data_5]
-Comment=Shortcuts for taking screenshots
-DataCount=4
-Enabled=true
-ImportId=spectacle
-Name=Screenshots
-SystemGroup=0
-Type=ACTION_DATA_GROUP
-
-[Data_5Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_5_1]
-Comment=Start the screenshot tool and show the GUI
-Enabled=true
-Name=Start Screenshot Tool
-Type=SIMPLE_ACTION_DATA
-
-[Data_5_1Actions]
-ActionsCount=1
-
-[Data_5_1Actions0]
-Arguments=
-Call=StartAgent
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
-
-[Data_5_1Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_5_1Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_5_1Triggers0]
-Key=
-Type=SHORTCUT
-Uuid={d3066442-bc04-4d91-b7c5-27e6c778937a}
-
-[Data_5_2]
-Comment=Take a full screen (all monitors) screenshot and save it
-Enabled=true
-Name=Take Full Screen Screenshot
-Type=SIMPLE_ACTION_DATA
-
-[Data_5_2Actions]
-ActionsCount=1
-
-[Data_5_2Actions0]
-Arguments=false
-Call=FullScreen
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
-
-[Data_5_2Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_5_2Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_5_2Triggers0]
-Key=
-Type=SHORTCUT
-Uuid={bffa8f60-63fd-4d80-8ac7-7ebf2cd8b66f}
-
-[Data_5_3]
-Comment=Take a screenshot of the currently active window and save it
-Enabled=true
-Name=Take Active Window Screenshot
-Type=SIMPLE_ACTION_DATA
-
-[Data_5_3Actions]
-ActionsCount=1
-
-[Data_5_3Actions0]
-Arguments=true, false
-Call=ActiveWindow
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
-
-[Data_5_3Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_5_3Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_5_3Triggers0]
-Key=
-Type=SHORTCUT
-Uuid={153351c7-e6f6-4eb2-96f8-11801532df31}
-
-[Data_5_4]
-Comment=Take a screenshot of a rectangular region you specify and save it
-Enabled=true
-Name=Take Rectangular Region Screenshot
-Type=SIMPLE_ACTION_DATA
-
-[Data_5_4Actions]
-ActionsCount=1
-
-[Data_5_4Actions0]
-Arguments=true
-Call=RectangularRegion
-RemoteApp=org.kde.Spectacle
-RemoteObj=/
-Type=DBUS
-
-[Data_5_4Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_5_4Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_5_4Triggers0]
-Key=Meta+Shift+Print
-Type=SHORTCUT
-Uuid={9106d96b-e049-403a-8308-cb83483e49fe}
-
-[Data_6]
-Comment=Comment
-DataCount=1
-Enabled=true
-Name=KeePassXC
-SystemGroup=0
-Type=ACTION_DATA_GROUP
-
-[Data_6Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_6_1]
-Comment=Start or raise KeePassXC
-Enabled=true
-Name=Raise MainWindow
-Type=SIMPLE_ACTION_DATA
-
-[Data_6_1Actions]
-ActionsCount=1
-
-[Data_6_1Actions0]
-CommandURL=keepassxc
-Type=COMMAND_URL
-
-[Data_6_1Conditions]
-Comment=
-ConditionsCount=0
-
-[Data_6_1Triggers]
-Comment=Simple_action
-TriggersCount=1
-
-[Data_6_1Triggers0]
-Key=Meta+K
-Type=SHORTCUT
-Uuid={84a433d8-f212-4207-af9a-1d1c59205e2d}
+Uuid={d0dd644b-0ab0-4436-a5a1-ba0bb98c1b99}
 
 [Gestures]
 Disabled=false

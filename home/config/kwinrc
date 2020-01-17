@@ -1,28 +1,29 @@
 [$Version]
-update_info=kwin.upd:replace-scalein-with-scale
+update_info=kwin.upd:replace-scalein-with-scale,kwin.upd:port-minimizeanimation-effect-to-js,kwin.upd:port-scale-effect-to-js,kwin.upd:port-dimscreen-effect-to-js,kwin.upd:auto-bordersize
 
 [Compositing]
 AnimationSpeed=3
 Backend=OpenGL
 Enabled=true
 GLColorCorrection=false
-GLCore=true
+GLCore=false
 GLPlatformInterface=egl
 GLPreferBufferSwap=a
 GLTextureFilter=2
-HiddenPreviews=5
+HiddenPreviews=6
 OpenGLIsUnsafe=false
 UnredirectFullscreen=false
+WindowsBlockCompositing=true
 XRenderSmoothScale=false
 
 [Desktops]
+Id_1=5bc86617-5a3d-4653-a8e0-7f3000999a22
 Number=1
 Rows=1
 
 [Effect-CoverSwitch]
 TabBox=true
 TabBoxAlternative=false
-zPosition=544
 
 [Effect-Cube]
 BorderActivate=9
@@ -36,16 +37,22 @@ BorderActivate=1
 Strength=10
 
 [Effect-FlipSwitch]
+Angle=10
 TabBox=false
 TabBoxAlternative=false
+XPosition=11
 
 [Effect-Glide]
 GlideAngle=0
 
+[Effect-MagicLamp]
+AnimationDuration=50
+
 [Effect-PresentWindows]
-BorderActivate=9
+BorderActivate=7
 BorderActivateAll=9
 BorderActivateClass=9
+MiddleButtonWindow=6
 
 [Effect-Zoom]
 EnableFocusTracking=true
@@ -85,6 +92,15 @@ CommandWindow2=Activate and pass click
 CommandWindow3=Activate and pass click
 CommandWindowWheel=Scroll
 
+[NightColor]
+Active=true
+EveningBeginFixed=1440
+LatitudeAuto=42.2776
+LatitudeFixed=42.2776
+LongitudeAuto=-83.7409
+LongitudeFixed=-83.7409
+MorningBeginFixed=0600
+
 [Plugins]
 activatelattelaunchermenuEnabled=false
 blurEnabled=true
@@ -94,16 +110,20 @@ cubeEnabled=true
 cubeslideEnabled=false
 desktopchangeosdEnabled=true
 diminactiveEnabled=true
-dimscreenEnabled=true
-enforcedecoEnabled=false
+dimscreenEnabled[$d]
+enforcedecoEnabled=true
+flipswitchEnabled=true
 glideEnabled[$d]
 highlightwindowEnabled=true
+krohnkiteEnabled=false
+kwin4_effect_dimscreenEnabled=true
 kwin4_effect_fadedesktopEnabled=false
+kwin4_effect_scaleEnabled=true
 kwin4_effect_scaleinEnabled[$d]
 max2NewVirtualDesktopEnabled=true
 minimizeallEnabled=false
 minimizeanimationEnabled[$d]
-scaleEnabled=true
+scaleEnabled[$d]
 sheetEnabled=true
 slideEnabled=true
 slidebackEnabled=true
@@ -117,8 +137,13 @@ PopupHideDelay=250
 TextOnly=false
 
 [Script-max2NewVirtualDesktop]
+blockWMClass=civ6
 keepNonEmptyDesktop=false
 trigger=FullscreenOnly
+
+[SubSession: 913940bb-94a6-4d7a-88ca-7cff91475c76]
+active=-1
+count=0
 
 [TabBox]
 ActivitiesMode=1
@@ -129,7 +154,7 @@ DesktopLayout=org.kde.breeze.desktop
 DesktopListLayout=org.kde.breeze.desktop
 DesktopMode=1
 HighlightWindows=true
-LayoutName=org.kde.breeze.desktop
+LayoutName=present_windows
 MinimizedMode=0
 MultiScreenMode=0
 ShowDesktopMode=0
@@ -166,7 +191,7 @@ ElectricBorderMaximize=true
 ElectricBorderTiling=true
 ElectricBorders=1
 FocusPolicy=ClickToFocus
-FocusStealingPreventionLevel=1
+FocusStealingPreventionLevel=0
 GeometryTip=false
 HideUtilityWindowsForInactive=true
 InactiveTabsSkipTaskbar=false
@@ -185,6 +210,7 @@ WindowSnapZone=10
 
 [org.kde.kdecoration2]
 BorderSize=NoSides
+BorderSizeAuto=false
 ButtonsOnLeft=XIAM
 ButtonsOnRight=F
 CloseOnDoubleClickOnMenu=false

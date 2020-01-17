@@ -1,11 +1,30 @@
 [1]
+Description=Window settings for wine
+clientmachine=localhost
+clientmachinematch=0
+size=3200,1859
+sizerule=2
+title=Diablo II
+titlematch=0
+types=1
+windowrole[$d]
+windowrolematch[$d]
+wmclass=game.exe wine
+wmclasscomplete=true
+wmclassmatch=1
+
+[2]
 Description=Window settings for virtualbox machine
 blockcompositing=true
 blockcompositingrule=2
 clientmachine=localhost
 clientmachinematch=0
-noborder[$d]
-noborderrule[$d]
+maximizehoriz[$d]
+maximizehorizrule[$d]
+maximizevert[$d]
+maximizevertrule[$d]
+placement[$d]
+placementrule[$d]
 title=Windows 10 [Running] - Oracle VM VirtualBox
 titlematch=1
 types=1
@@ -15,24 +34,16 @@ wmclass=virtualbox machine
 wmclasscomplete=false
 wmclassmatch=1
 
-[2]
+[3]
 Description=Fix Yakuake Shows Up In Taskbar
-clientmachine[$d]
-clientmachinematch[$d]
 maximizehoriz[$d]
 maximizehorizrule[$d]
 maximizevert[$d]
 maximizevertrule[$d]
-noborder[$d]
-noborderrule[$d]
-placement[$d]
-placementrule[$d]
 skipswitcher=true
 skipswitcherrule=2
 skiptaskbar=true
 skiptaskbarrule=2
-title[$d]
-titlematch[$d]
 types=1
 windowrole[$d]
 windowrolematch[$d]
@@ -40,37 +51,5 @@ wmclass=yakuake yakuake
 wmclasscomplete=true
 wmclassmatch=2
 
-[3]
-Description[$d]
-clientmachine[$d]
-clientmachinematch[$d]
-maximizehoriz[$d]
-maximizehorizrule[$d]
-maximizevert[$d]
-maximizevertrule[$d]
-skipswitcher[$d]
-skipswitcherrule[$d]
-skiptaskbar[$d]
-skiptaskbarrule[$d]
-title[$d]
-titlematch[$d]
-types[$d]
-windowrole[$d]
-windowrolematch[$d]
-wmclass[$d]
-wmclasscomplete[$d]
-wmclassmatch[$d]
-
-[4]
-Description[$d]
-skipswitcher[$d]
-skipswitcherrule[$d]
-skiptaskbar[$d]
-skiptaskbarrule[$d]
-types[$d]
-wmclass[$d]
-wmclasscomplete[$d]
-wmclassmatch[$d]
-
 [General]
-count=2
+count=3

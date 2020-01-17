@@ -10,8 +10,8 @@ Height 2160=641
 Width 3840=1578
 
 [InteractiveConsole]
-Geometry=\x01ÙÐË\x00\x02\x00\x00\x00\x00\x06\x00\x00\x01œ\x00\x00\nÇ\x00\x00\x05ÿ\x00\x00\x06\x00\x00\x01Ò\x00\x00\nÇ\x00\x00\x05ú\x00\x00\x00\x00\x00\x00\x00\x00\x0f\x00
-SplitterState=\x00\x00\x00ÿ\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x08Ž\x00\x00\x01*\x01ÿÿÿÿ\x01\x00\x00\x00\x02\x00
+Geometry=\x01\xd9\xd0\xcb\x00\x03\x00\x00\x00\x00\x06\x7f\x00\x00\x01\x9c\x00\x00\r\xa8\x00\x00\x05\xff\x00\x00\x06\x7f\x00\x00\x01\xd2\x00\x00\r\xaa\x00\x00\x05\xfa\x00\x00\x00\x00\x00\x00\x00\x00\x0f\x00\x00\x00\x06\x7f\x00\x00\x01\xd2\x00\x00\r\xaa\x00\x00\x05\xfa
+SplitterState=\x00\x00\x00\xff\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x08\x8e\x00\x00\x01*\x01\xff\xff\xff\xff\x01\x00\x00\x00\x02\x00
 
 [KFileDialog Settings]
 Recent Files[$e]=main.js,file:$HOME/develop/js/kwin-maxmize-to-new-desktop/contents/code/main.js
@@ -38,7 +38,7 @@ Overwrite Mode=false
 PageUp/PageDown Moves Cursor=false
 Remove Spaces=0
 ReplaceTabsDyn=true
-Show Spaces=true
+Show Spaces=0
 Show Tabs=true
 Smart Home=true
 Swap Directory=/home/peifeng/.local/share/kate/swaps
@@ -71,6 +71,7 @@ Bookmark Menu Sorting=0
 Default Mark Type=2
 Dynamic Word Wrap=false
 Dynamic Word Wrap Align Indent=80
+Dynamic Word Wrap At Static Marker=false
 Dynamic Word Wrap Indicators=1
 Fold First Line=false
 Folding Bar=true
@@ -81,6 +82,7 @@ Keyword Completion=true
 Line Modification=true
 Line Numbers=true
 Maximum Search History Size=100
+Mouse Paste At Cursor Position=false
 Persistent Selection=false
 Scroll Bar Marks=false
 Scroll Bar Mini Map All=false
@@ -99,9 +101,6 @@ Vi Relative Line Numbers=true
 Word Completion=true
 Word Completion Minimal Word Length=3
 Word Completion Remove Tail=true
-
-[PlasmaTransientsConfig]
-PreloadWeight[$d]
 
 [PlasmaViews][Panel 17][Horizontal3840]
 thickness=68
@@ -123,4 +122,4 @@ thickness=36
 1=DP-1
 
 [Updates]
-performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js
+performed=/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/obsolete_kickoffrc.js,/usr/share/plasma/shells/org.kde.plasma.desktop/contents/updates/move_desktop_layout_config.js
