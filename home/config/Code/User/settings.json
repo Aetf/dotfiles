@@ -230,5 +230,8 @@
     "python.formatting.provider": "black",
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
-    }
+    },
+    "latex-workshop.latex.texDirs": [
+        "lib"
+    ]
 }
