@@ -45,10 +45,10 @@ mountPathForBoot() {
 }
 
 clean() {
-    info "Remove unneeded conf file"
-    rm -f /boot/*.conf
+    info "Removing unneeded conf file"
+    find /boot -maxdepth 1 -type f -iname '*.conf' -print -delete
     # We are using /boot/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
-    rm -rf /boot/EFI/archlinux/refind_linux.conf
+    find /boot/EFI/archlinux -type f -name 'refind_linux.conf' -print -delete
 
     # Remove back icons if identical
     if [ -d /boot/EFI/refind/icons-backup ]; then
