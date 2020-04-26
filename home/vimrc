@@ -43,6 +43,39 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Neovim specific
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if has('nvim')
+    " Force to use system python internally which has python-neovim installed
+    if exists("$VIRTUAL_ENV") || exists("$CONDA_PREFIX")
+        let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
+    else
+        let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
+    endif
+    " Disable python2
+    let g:loaded_python_provider=1
+    let g:python_host_skip_check=1
+    " Use true colors
+    set termguicolors
+    " Load Archlinux specific vimfiles
+    set runtimepath^=/usr/share/vim/vimfiles
+    " ESC for exit terminal mode
+    tnoremap <Esc> <C-\><C-n>
+    " Window navigation in terminal mode
+    tnoremap <C-h> <C-\><C-n><C-w>h
+    tnoremap <C-j> <C-\><C-n><C-w>j
+    tnoremap <C-k> <C-\><C-n><C-w>k
+    tnoremap <C-l> <C-\><C-n><C-w>l
+    " ShaDa
+    set shada='1000,f1,<500,:100,/100,h,%
+    " Turn off list mode in terminal
+    autocmd TermOpen * setlocal nolist
+    " Live command preview
+    set inccommand=split
+endif
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Plugins
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Load plugins early so we can use them.
@@ -590,38 +623,6 @@ map <leader>q :e /tmp/workspace<cr>
 " Toggle paste mode on and off
 map <leader>pp :setlocal paste!<cr>
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Neovim specific
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if has('nvim')
-    " Force to use system python internally which has python-neovim installed
-    if exists("$VIRTUAL_ENV")
-        let g:python3_host_prog=substitute(system("which -a python3 | head -n2 | tail -n1"), "\n", '', 'g')
-    else
-        let g:python3_host_prog=substitute(system("which python3"), "\n", '', 'g')
-    endif
-    " Disable python2
-    let g:loaded_python_provider=1
-    let g:python_host_skip_check=1
-    " Use true colors
-    set termguicolors
-    " Load Archlinux specific vimfiles
-    set runtimepath^=/usr/share/vim/vimfiles
-    " ESC for exit terminal mode
-    tnoremap <Esc> <C-\><C-n>
-    " Window navigation in terminal mode
-    tnoremap <C-h> <C-\><C-n><C-w>h
-    tnoremap <C-j> <C-\><C-n><C-w>j
-    tnoremap <C-k> <C-\><C-n><C-w>k
-    tnoremap <C-l> <C-\><C-n><C-w>l
-    " ShaDa
-    set shada='1000,f1,<500,:100,/100,h,%
-    " Turn off list mode in terminal
-    autocmd TermOpen * setlocal nolist
-    " Live command preview
-    set inccommand=split
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions
