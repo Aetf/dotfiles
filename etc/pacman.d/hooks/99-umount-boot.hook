@@ -1,11 +1,13 @@
 [Trigger]
-Type = File
+Type = Path
 Operation = Install
 Operation = Upgrade
 Operation = Remove
 Target = boot/*
 Target = usr/lib/modules/*
 Target = usr/lib/initcpio/*
+Target = usr/lib/modprobe.d/*
+Target = etc/modprobe.d/*
 
 [Action]
 Description = Unmounting esp and boot partition...
