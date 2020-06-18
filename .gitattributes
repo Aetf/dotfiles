@@ -1,3 +1,4 @@
 *-appletsrc filter=crypt diff=crypt
 *.layout.latte filter=crypt diff=crypt
 npmrc filter=crypt diff=crypt
+arcrc filter=crypt diff=crypt
