@@ -1,0 +1,11 @@
+# Path to the root of your installation
+root /var/lib/qbittorrent;
+
+include snippets/sso.conf;
+
+location / {
+    proxy_http_version      1.1;
+    proxy_set_header        X-Forwarded-Host        $http_host;
+    proxy_set_header        Origin                  $scheme://$http_host;
+    proxy_pass              http://localhost:8113/;
+}
