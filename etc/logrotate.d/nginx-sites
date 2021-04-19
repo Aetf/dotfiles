@@ -1,0 +1,12 @@
+/var/log/nginx/sites/*.access
+/var/log/nginx/sites/*.error
+{
+    missingok
+    notifyempty
+    create 640 http log
+    sharedscripts
+    compress
+    postrotate
+        test ! -r /run/nginx.pid || kill -USR1 `cat /run/nginx.pid`
+    endscript
+}
