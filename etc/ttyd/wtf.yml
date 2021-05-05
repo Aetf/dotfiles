@@ -1,0 +1,108 @@
+wtf:
+  exitMessage:
+    display: false
+  mods:
+    systemctl_s3ql:
+      enabled: true
+      type: cmdrunner
+      title: S3 Remote Storage - Status
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "systemctl", "--lines=0", "status", "s3ql-storage.service"]
+      refreshInterval: 1
+      position:
+        top: 0
+        left: 0
+        height: 1
+        width: 4
+    journalctl_s3ql:
+      enabled: true
+      type: cmdrunner
+      title: S3 Remote Storage - Journal
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "journalctl", "--no-hostname", "-f", "-u", "s3ql-storage.service"]
+      tail: true
+      refreshInterval: 1
+      position:
+        top: 0
+        left: 4
+        height: 1
+        width: 8
+
+    systemctl_hath:
+      enabled: true
+      type: cmdrunner
+      title: Hath@Home - Status
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "systemctl", "--lines=0", "status", "hath.service"]
+      refreshInterval: 1
+      position:
+        top: 1
+        left: 0
+        height: 1
+        width: 4
+    journalctl_hath:
+      enabled: true
+      type: cmdrunner
+      title: Hath@Home - Journal
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "journalctl", "--no-hostname", "--output=cat", "-f", "-u", "hath.service"]
+      tail: true
+      refreshInterval: 1
+      position:
+        top: 1
+        left: 4
+        height: 1
+        width: 8
+
+    systemctl_syncthing:
+      enabled: true
+      type: cmdrunner
+      title: Syncthing - Status
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "systemctl", "--lines=0", "status", "syncthing@aetf.service"]
+      refreshInterval: 1
+      position:
+        top: 2
+        left: 0
+        height: 1
+        width: 4
+    journalctl_syncthing:
+      enabled: true
+      type: cmdrunner
+      title: Syncthing - Journal
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "journalctl", "--no-hostname", "--output=cat", "-f", "-u", "syncthing@aetf.service"]
+      tail: true
+      refreshInterval: 1
+      position:
+        top: 2
+        left: 4
+        height: 1
+        width: 8
+
+    systemctl_qbittorrent:
+      enabled: true
+      type: cmdrunner
+      title: qBittorrent - Status
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "systemctl", "--lines=0", "status", "qbittorrent-nox@qbt.service"]
+      refreshInterval: 1
+      position:
+        top: 3
+        left: 0
+        height: 1
+        width: 4
+    journalctl_qbittorrent:
+      enabled: true
+      type: cmdrunner
+      title: qBittorrent - Journal
+      cmd: env
+      args: ["SYSTEMD_COLORS=1", "journalctl", "--no-hostname", "--output=cat", "-f", "-u", "qbittorrent-nox@qbt.service"]
+      tail: true
+      refreshInterval: 1
+      position:
+        top: 3
+        left: 4
+        height: 1
+        width: 8
+
