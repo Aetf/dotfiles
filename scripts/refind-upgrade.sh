@@ -48,7 +48,7 @@ clean() {
     info "Removing unneeded conf file"
     find /boot -maxdepth 1 -type f -iname '*.conf' -print -delete
     # We are using /boot/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
-    find /boot/EFI/archlinux -type f -name 'refind_linux.conf' -print -delete
+    #find /boot/EFI/archlinux -type f -name 'refind_linux.conf' -print -delete
 
     # Remove back icons if identical
     if [ -d /boot/EFI/refind/icons-backup ]; then

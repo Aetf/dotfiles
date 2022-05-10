@@ -1,0 +1,39 @@
+[1]
+Description=Window settings for wine
+clientmachine=localhost
+clientmachinematch=0
+size=3200,1859
+sizerule=2
+title=Diablo II
+titlematch=0
+types=1
+wmclass=game.exe wine
+wmclasscomplete=true
+wmclassmatch=1
+
+[2]
+Description=Window settings for virtualbox machine
+blockcompositing=true
+blockcompositingrule=2
+clientmachine=localhost
+clientmachinematch=0
+title=Windows 10 [Running] - Oracle VM VirtualBox
+titlematch=1
+types=1
+wmclass=virtualbox machine
+wmclasscomplete=false
+wmclassmatch=1
+
+[3]
+Description=Fix Yakuake Shows Up In Taskbar
+skipswitcher=true
+skipswitcherrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+types=1
+wmclass=yakuake yakuake
+wmclasscomplete=true
+wmclassmatch=2
+
+[General]
+count=3

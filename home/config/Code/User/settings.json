@@ -233,5 +233,28 @@
     },
     "latex-workshop.latex.texDirs": [
         "lib"
+    ],
+    "rewrap.autoWrap.enabled": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "files.associations": {
+        "launch": "shellscript"
+    },
+    "latex-utilities.message.update.show": false,
+    "latex-workshop.latex.autoBuild.interval": 500,
+    "latex-workshop.latex.search.rootFiles.include": [
+        "*.tex"
+    ],
+    "latex-utilities.zotero.citeMethod": "vscode",
+    "[javascript]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "vscode.typescript-language-features"
+    },
+    "todo-tree.tree.showScanModeButton": false,
+    "latex-workshop.message.latexlog.exclude": [
+        "Token not allowed in a PDF string",
+        "Ignoring empty anchor",
+        "bbl"
     ]
 }

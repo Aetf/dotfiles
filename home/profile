@@ -45,9 +45,9 @@ done
 if [ -d $HOME/.cargo/bin ]; then
     PATH="$PATH:$HOME/.cargo/bin"
 fi
-## Spack executable
-if [ -d $HOME/.local/spack/bin ]; then
-    PATH=$"$HOME/.local/spack/bin:$PATH"
+## Python poetry executable
+if [ -d $HOME/.poetry/bin ]; then
+    PATH="$PATH:$HOME/.poetry/bin"
 fi
 
 export PATH

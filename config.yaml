@@ -1,0 +1,385 @@
+config:
+  backup: false
+  banner: false
+  create: true
+  longkey: true
+  link_on_import: link
+  dotpath: home
+  workdir: ~/.local/share/dotdrop/workdir
+dotfiles:
+  f_arcrc:
+    dst: "~/.arcrc"
+    src: "arcrc"
+    link: "link"
+  f_clang-format:
+    dst: "~/.clang-format"
+    src: "clang-format"
+    link: "link"
+  f_config_fish_completions_pac.fish:
+    dst: "~/.config/fish/completions/pac.fish"
+    src: "config/fish/completions/pac.fish"
+    link: "link"
+  f_config_fish_completions_venv.fish:
+    dst: "~/.config/fish/completions/venv.fish"
+    src: "config/fish/completions/venv.fish"
+    link: "link"
+  f_config_fish_functions_append.fish:
+    dst: "~/.config/fish/functions/append.fish"
+    src: "config/fish/functions/append.fish"
+    link: "link"
+  f_config_fish_functions_cdmk.fish:
+    dst: "~/.config/fish/functions/cdmk.fish"
+    src: "config/fish/functions/cdmk.fish"
+    link: "link"
+  f_config_fish_functions_cmatrix.fish:
+    dst: "~/.config/fish/functions/cmatrix.fish"
+    src: "config/fish/functions/cmatrix.fish"
+    link: "link"
+  f_config_fish_functions_confirm.fish:
+    dst: "~/.config/fish/functions/confirm.fish"
+    src: "config/fish/functions/confirm.fish"
+    link: "link"
+  f_config_fish_functions_cute.fish:
+    dst: "~/.config/fish/functions/cute.fish"
+    src: "config/fish/functions/cute.fish"
+    link: "link"
+  f_config_fish_functions_fallback_prompt.fish:
+    dst: "~/.config/fish/functions/fallback_prompt.fish"
+    src: "config/fish/functions/fallback_prompt.fish"
+    link: "link"
+  f_config_fish_functions_fzf_key_bindings.fish:
+    dst: "~/.config/fish/functions/fzf_key_bindings.fish"
+    src: "config/fish/functions/fzf_key_bindings.fish"
+    link: "link"
+  f_config_fish_functions_grepc.fish:
+    dst: "~/.config/fish/functions/grepc.fish"
+    src: "config/fish/functions/grepc.fish"
+    link: "link"
+  f_config_fish_functions_inve.fish:
+    dst: "~/.config/fish/functions/inve.fish"
+    src: "config/fish/functions/inve.fish"
+    link: "link"
+  f_config_fish_functions_java.fish:
+    dst: "~/.config/fish/functions/java.fish"
+    src: "config/fish/functions/java.fish"
+    link: "link"
+  f_config_fish_functions_kate.fish:
+    dst: "~/.config/fish/functions/kate.fish"
+    src: "config/fish/functions/kate.fish"
+    link: "link"
+  f_config_fish_functions_la.fish:
+    dst: "~/.config/fish/functions/la.fish"
+    src: "config/fish/functions/la.fish"
+    link: "link"
+  f_config_fish_functions_lla.fish:
+    dst: "~/.config/fish/functions/lla.fish"
+    src: "config/fish/functions/lla.fish"
+    link: "link"
+  f_config_fish_functions_ls.fish:
+    dst: "~/.config/fish/functions/ls.fish"
+    src: "config/fish/functions/ls.fish"
+    link: "link"
+  f_config_fish_functions_match.fish:
+    dst: "~/.config/fish/functions/match.fish"
+    src: "config/fish/functions/match.fish"
+    link: "link"
+  f_config_fish_functions_ps.fish:
+    dst: "~/.config/fish/functions/ps.fish"
+    src: "config/fish/functions/ps.fish"
+    link: "link"
+  f_config_fish_functions_rm.fish:
+    dst: "~/.config/fish/functions/rm.fish"
+    src: "config/fish/functions/rm.fish"
+    link: "link"
+  f_config_fish_functions_ssh.fish:
+    dst: "~/.config/fish/functions/ssh.fish"
+    src: "config/fish/functions/ssh.fish"
+    link: "link"
+  f_config_fish_functions_venv.fish:
+    dst: "~/.config/fish/functions/venv.fish"
+    src: "config/fish/functions/venv.fish"
+    link: "link"
+  f_config_fish_functions_vpscp.fish:
+    dst: "~/.config/fish/functions/vpscp.fish"
+    src: "config/fish/functions/vpscp.fish"
+    link: "link"
+  f_config_fish_functions_vpsfs.fish:
+    dst: "~/.config/fish/functions/vpsfs.fish"
+    src: "config/fish/functions/vpsfs.fish"
+    link: "link"
+  f_config_fish_functions_work.fish:
+    dst: "~/.config/fish/functions/work.fish"
+    src: "config/fish/functions/work.fish"
+    link: "link"
+  f_config_fish_functions_fish_greeting.fish:
+    dst: "~/.config/fish/functions/fish_greeting.fish"
+    src: "config/fish/functions/fish_greeting.fish"
+    link: "link"
+  f_config_fish_functions_kfg.fish:
+    dst: "~/.config/fish/functions/kfg.fish"
+    src: "config/fish/functions/kfg.fish"
+    link: "link"
+  f_config_fish_functions_cpwd.fish:
+    dst: "~/.config/fish/functions/cpwd.fish"
+    src: "config/fish/functions/cpwd.fish"
+    link: "link"
+  f_config_fish_functions_fk.fish:
+    dst: "~/.config/fish/functions/fk.fish"
+    src: "config/fish/functions/fk.fish"
+    link: "link"
+  f_config_fish_config.fish:
+    dst: "~/.config/fish/config.fish"
+    src: "config/fish/config.fish"
+    link: "link"
+  f_config_flake8:
+    dst: "~/.config/flake8"
+    src: "config/flake8"
+    link: "link"
+  f_config_kdesurc:
+    dst: "~/.config/kdesurc"
+    src: "config/kdesurc"
+    link: "link"
+  f_config_pip_pip.conf:
+    dst: "~/.config/pip/pip.conf"
+    src: "config/pip/pip.conf"
+    link: "link"
+  f_config_powerline_colorschemes_tmux_default.json:
+    dst: "~/.config/powerline/colorschemes/tmux/default.json"
+    src: "config/powerline/colorschemes/tmux/default.json"
+    link: "link"
+  f_config_powerline_themes_ipython_in.json:
+    dst: "~/.config/powerline/themes/ipython/in.json"
+    src: "config/powerline/themes/ipython/in.json"
+    link: "link"
+  f_config_powerline_themes_ipython_in2.json:
+    dst: "~/.config/powerline/themes/ipython/in2.json"
+    src: "config/powerline/themes/ipython/in2.json"
+    link: "link"
+  f_config_powerline_themes_ipython_out.json:
+    dst: "~/.config/powerline/themes/ipython/out.json"
+    src: "config/powerline/themes/ipython/out.json"
+    link: "link"
+  f_config_powerline_themes_ipython_rewrite.json:
+    dst: "~/.config/powerline/themes/ipython/rewrite.json"
+    src: "config/powerline/themes/ipython/rewrite.json"
+    link: "link"
+  f_config_powerline_themes_powerline.json:
+    dst: "~/.config/powerline/themes/powerline.json"
+    src: "config/powerline/themes/powerline.json"
+    link: "link"
+  f_config_powerline_themes_shell_continuation.json:
+    dst: "~/.config/powerline/themes/shell/continuation.json"
+    src: "config/powerline/themes/shell/continuation.json"
+    link: "link"
+  f_config_powerline_themes_shell_default.json:
+    dst: "~/.config/powerline/themes/shell/default.json"
+    src: "config/powerline/themes/shell/default.json"
+    link: "link"
+  f_config_powerline_themes_shell_default_leftonly.json:
+    dst: "~/.config/powerline/themes/shell/default_leftonly.json"
+    src: "config/powerline/themes/shell/default_leftonly.json"
+    link: "link"
+  f_config_powerline_themes_shell_select.json:
+    dst: "~/.config/powerline/themes/shell/select.json"
+    src: "config/powerline/themes/shell/select.json"
+    link: "link"
+  f_config_powerline_themes_shell___main__.json:
+    dst: "~/.config/powerline/themes/shell/__main__.json"
+    src: "config/powerline/themes/shell/__main__.json"
+    link: "link"
+  f_config_powerline_themes_tmux_default.json:
+    dst: "~/.config/powerline/themes/tmux/default.json"
+    src: "config/powerline/themes/tmux/default.json"
+    link: "link"
+  f_config_powerline_themes_vim___main__.json:
+    dst: "~/.config/powerline/themes/vim/__main__.json"
+    src: "config/powerline/themes/vim/__main__.json"
+    link: "link"
+  f_config_powerline_themes_vim_cmdwin.json:
+    dst: "~/.config/powerline/themes/vim/cmdwin.json"
+    src: "config/powerline/themes/vim/cmdwin.json"
+    link: "link"
+  f_config_powerline_themes_vim_default.json:
+    dst: "~/.config/powerline/themes/vim/default.json"
+    src: "config/powerline/themes/vim/default.json"
+    link: "link"
+  f_config_powerline_themes_vim_help.json:
+    dst: "~/.config/powerline/themes/vim/help.json"
+    src: "config/powerline/themes/vim/help.json"
+    link: "link"
+  f_config_powerline_themes_vim_plugin_commandt.json:
+    dst: "~/.config/powerline/themes/vim/plugin_commandt.json"
+    src: "config/powerline/themes/vim/plugin_commandt.json"
+    link: "link"
+  f_config_powerline_themes_vim_plugin_gundo-preview.json:
+    dst: "~/.config/powerline/themes/vim/plugin_gundo-preview.json"
+    src: "config/powerline/themes/vim/plugin_gundo-preview.json"
+    link: "link"
+  f_config_powerline_themes_vim_plugin_gundo.json:
+    dst: "~/.config/powerline/themes/vim/plugin_gundo.json"
+    src: "config/powerline/themes/vim/plugin_gundo.json"
+    link: "link"
+  f_config_powerline_themes_vim_plugin_nerdtree.json:
+    dst: "~/.config/powerline/themes/vim/plugin_nerdtree.json"
+    src: "config/powerline/themes/vim/plugin_nerdtree.json"
+    link: "link"
+  f_config_powerline_themes_vim_quickfix.json:
+    dst: "~/.config/powerline/themes/vim/quickfix.json"
+    src: "config/powerline/themes/vim/quickfix.json"
+    link: "link"
+  f_config_powerline_themes_vim_tabline.json:
+    dst: "~/.config/powerline/themes/vim/tabline.json"
+    src: "config/powerline/themes/vim/tabline.json"
+    link: "link"
+  f_config_powerline_config.json:
+    dst: "~/.config/powerline/config.json"
+    src: "config/powerline/config.json"
+    link: "link"
+  f_config_aria2_aria2-daemon.conf:
+    dst: "~/.config/aria2/aria2-daemon.conf"
+    src: "config/aria2/aria2-daemon.conf"
+    link: "link"
+  f_config_Code_User_settings.json:
+    dst: "~/.config/Code/User/settings.json"
+    src: "config/Code/User/settings.json"
+    link: "link"
+  f_config_pep8:
+    dst: "~/.config/pep8"
+    src: "config/pep8"
+    link: "link"
+  f_config_kcmfonts:
+    dst: "~/.config/kcmfonts"
+    src: "config/kcmfonts"
+    link: "link"
+  f_config_yakuakerc:
+    dst: "~/.config/yakuakerc"
+    src: "config/yakuakerc"
+    link: "link"
+  f_eslintrc:
+    dst: "~/.eslintrc"
+    src: "eslintrc"
+    link: "link"
+  f_gdb_helper.py:
+    dst: "~/.gdb/helper.py"
+    src: "gdb/helper.py"
+    link: "link"
+  f_gdb_kde.py:
+    dst: "~/.gdb/kde.py"
+    src: "gdb/kde.py"
+    link: "link"
+  f_gdb_qt.py:
+    dst: "~/.gdb/qt.py"
+    src: "gdb/qt.py"
+    link: "link"
+  f_gdbinit:
+    dst: "~/.gdbinit"
+    src: "gdbinit"
+    link: "link"
+  f_gnupg_gpg.conf:
+    dst: "~/.gnupg/gpg.conf"
+    src: "gnupg/gpg.conf"
+    link: "link"
+  f_ipython_profile_default_ipython_config.py:
+    dst: "~/.ipython/profile_default/ipython_config.py"
+    src: "ipython/profile_default/ipython_config.py"
+    link: "link"
+  f_ipython_profile_notebook_ipython_config.py:
+    dst: "~/.ipython/profile_notebook/ipython_config.py"
+    src: "ipython/profile_notebook/ipython_config.py"
+    link: "link"
+  f_ipython_profile_notebook_startup_01-asmarkdown.py:
+    dst: "~/.ipython/profile_notebook/startup/01-asmarkdown.py"
+    src: "ipython/profile_notebook/startup/01-asmarkdown.py"
+    link: "link"
+  f_jsbeautifyrc:
+    dst: "~/.jsbeautifyrc"
+    src: "jsbeautifyrc"
+    link: "link"
+  f_jupyter_jupyter_console_config.py:
+    dst: "~/.jupyter/jupyter_console_config.py"
+    src: "jupyter/jupyter_console_config.py"
+    link: "link"
+  f_jupyter_jupyter_notebook_config.py:
+    dst: "~/.jupyter/jupyter_notebook_config.py"
+    src: "jupyter/jupyter_notebook_config.py"
+    link: "link"
+  f_lldbinit:
+    dst: "~/.lldbinit"
+    src: "lldbinit"
+    link: "link"
+  f_local_share_konsole_Yakuake.profile:
+    dst: "~/.local/share/konsole/Yakuake.profile"
+    src: "local/share/konsole/Yakuake.profile"
+    link: "link"
+  f_local_share_applications_handle-ssh.desktop:
+    dst: "~/.local/share/applications/handle-ssh.desktop"
+    src: "local/share/applications/handle-ssh.desktop"
+    link: "link"
+  f_npmrc:
+    dst: "~/.npmrc"
+    src: "npmrc"
+    link: "link"
+  f_pypirc:
+    dst: "~/.pypirc"
+    src: "pypirc"
+    link: "link"
+  f_ssh_config:
+    dst: "~/.ssh/config"
+    src: "ssh/config"
+    link: "link"
+  f_tmux.conf:
+    dst: "~/.tmux.conf"
+    src: "tmux.conf"
+    link: "link"
+  f_vim_autoload_plug.vim:
+    dst: "~/.vim/autoload/plug.vim"
+    src: "vim/autoload/plug.vim"
+    link: "link"
+  f_vim_ginit.vim:
+    dst: "~/.vim/ginit.vim"
+    src: "vim/ginit.vim"
+    link: "link"
+  f_vim_ycm_extra_conf.py:
+    dst: "~/.vim/ycm_extra_conf.py"
+    src: "vim/ycm_extra_conf.py"
+    link: "link"
+  f_vimrc:
+    dst: "~/.vimrc"
+    src: "vimrc"
+    link: "link"
+  f_xbindkeysrc:
+    dst: "~/.xbindkeysrc"
+    src: "xbindkeysrc"
+    link: "link"
+  f_profile:
+    dst: "~/.profile"
+    src: "profile"
+    link: "link"
+  f_bashrc:
+    dst: "~/.bashrc"
+    src: "bashrc"
+    link: "link"
+  f_clang-tidy:
+    dst: "~/.clang-tidy"
+    src: "clang-tidy"
+    link: "link"
+  f_pam_environment:
+    dst: "~/.pam_environment"
+    src: "pam_environment"
+    link: "link"
+  f_xsession:
+    dst: "~/.xsession"
+    src: "xsession"
+    link: "link"
+  f_bash_profile:
+    dst: "~/.bash_profile"
+    src: "bash_profile"
+    link: "link"
+  f_gitconfig:
+    dst: "~/.gitconfig"
+    src: "gitconfig"
+    link: "link"
+profiles:
+  Abacus:
+    dotfiles:
+      - ALL

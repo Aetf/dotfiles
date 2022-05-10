@@ -17,7 +17,9 @@ Favorites=Yakuake.profile
 [Shortcuts]
 new-session=Ctrl+T
 next-session=Ctrl+Tab; Ctrl+PgDown
+next-terminal=none
 previous-session=Ctrl+Shift+Tab; Ctrl+PgUp
+previous-terminal=none
 rename-session=Alt+Shift+R
 view-full-screen=F11
 

@@ -3,6 +3,7 @@ Operation=Install
 Operation=Upgrade
 Type=Package
 Target=refind-efi
+Target=refind
 
 [Action]
 Description = Updating rEFInd on ESP

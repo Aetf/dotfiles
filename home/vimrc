@@ -72,6 +72,9 @@ Plug 'w0rp/ale'
 " support for editing fish scripts
 Plug 'dag/vim-fish'
 
+" support for toml
+Plug 'cespare/vim-toml'
+
 " support for qml
 Plug 'peterhoeg/vim-qml'
 

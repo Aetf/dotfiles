@@ -24,3 +24,5 @@ register_kde_printers (None)
 end
 
 directory ~/develop/c++/tensorflow
+directory /tmp/workspace/qtbase/src/dbus
+directory /tmp/workspace/qtbase/src/
