@@ -6,7 +6,7 @@ enable_push() {
     local old="https://github.com/"
     local new="git@github.com:"
     origin="${origin/#$old/$new}"
-    "$cmd" remote set-url origin "$origin"
+    "$cmd" remote set-url --push origin "$origin"
 }
 
 main() {
