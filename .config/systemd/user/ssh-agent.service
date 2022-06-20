@@ -1,0 +1,12 @@
+[Unit]
+Description=SSH key agent
+
+[Service]
+Type=simple
+# %t is $XDG_RUNTIME_DIR
+Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
+ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+Slice=background.slice
+
+[Install]
+WantedBy=default.target
