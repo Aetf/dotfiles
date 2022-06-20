@@ -10,3 +10,16 @@ curl -fLo /tmp/yadm https://github.com/TheLocehiliosan/yadm/raw/master/yadm && c
 export PATH=/tmp:$PATH
 yadm clone https://github.com/Aetf/dotfiles
 ```
+
+## Sparse checkout
+Some files are hidden by default to not clutter `$HOME`.
+To modify those files, use a worktree, which will by default have sparse checkout disabled.
+
+```sh
+y worktree add /tmp/dotfiles
+cd /tmp/dotfiles
+# work on files and commit
+y worktree remove /tmp/dotfiles
+y merge --ff-only dotfiles
+y branch -d dotfiles
+```
