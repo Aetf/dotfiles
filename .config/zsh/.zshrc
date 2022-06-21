@@ -130,6 +130,11 @@ fi
         fbin'yadm -> y'
         sbin'yadm'
             @TheLocehiliosan/yadm
+
+        # git-crypt for encryption yadm repo
+        from'gh-r' bpick"${toolinfo[git-crypt]}"
+        sbin'git-crypt* -> git-crypt'
+            @AGWA/git-crypt
     )
 
     ##################
