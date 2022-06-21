@@ -1,0 +1,8 @@
+#! /bin/sh
+ALL_INSTALL_FILE=`mktemp`
+BASE_DEVEL_FILE=`mktemp`
+pacman -Qet | sed -r 's/([^0-9]*) .*/\1/g' | sort > $ALL_INSTALL_FILE
+pacman -Qg base base-devel | sed -e 's/base //g' -e 's/base-devel //g' | sort | uniq > $BASE_DEVEL_FILE
+
+comm -23 $ALL_INSTALL_FILE $BASE_DEVEL_FILE
+rm $ALL_INSTALL_FILE $BASE_DEVEL_FILE

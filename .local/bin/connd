@@ -1,0 +1,27 @@
+#! /usr/bin/bash
+REFRESH_DURATION=30
+if [[ $# -ge 1 ]]; then
+    REFRESH_DURATION=$1
+fi
+let REFRESH=REFRESH_DURATION*60/5
+
+COUNT=0
+while [ "true" ]
+do
+    VPNCON=$(nmcli con show --active | grep vpn)
+    if [[ ${VPNCON}x = "x" ]]; then
+        echo "Disconnected, trying to reconnect..." >&2
+        (sleep 1s && nmcli con up 0ca74367-d23d-4ae8-bb40-839651d2ca56)
+        COUNT=0
+    else
+        echo "Aleady connected !"
+        let COUNT=COUNT+1
+        if [[ $COUNT -ge $REFRESH ]]; then
+            COUNT=0
+            echo "Force reconnect every $REFRESH_DURATION mins" >&2
+            (sleep 1s && nmcli con down 0ca74367-d23d-4ae8-bb40-839651d2ca56)
+            (sleep 1s && nmcli con up 0ca74367-d23d-4ae8-bb40-839651d2ca56)
+        fi
+    fi
+    sleep 5
+done

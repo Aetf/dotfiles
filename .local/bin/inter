@@ -1,0 +1,451 @@
+#! /bin/bash
+
+set -o errexit
+shopt -s nullglob
+
+FORWARD_ENVS=(
+'RUNNING_IN_TMUX'
+'INTER_SESSION'
+
+'CUDA_PATH'
+'CUDA_HOME'
+'CUDA_ROOT'
+'CUDA_LIB'
+'CUDA_INCLUDE'
+
+'TENSORFLOW_HOME'
+
+'PYTHONPATH'
+
+'LIBRARY_PATH'
+'LD_LIBRARY_PATH'
+'LD_RUN_PATH'
+'MANPATH'
+'PATH'
+'CPATH'
+
+'LAPACK_LINK'
+'LAPACK'
+'BLAS'
+'OPENBLAS'
+
+'HDF5_ROOT'
+'HDF5_MOD'
+'HDF5_INCLUDE'
+'HDF5_LIB'
+'HDF5_LINK'
+
+'GCC_ROOT'
+'GCC_LIB'
+
+'TMUX'
+)
+
+FREE_HOSTS=(
+    'gpu-cn010'
+    'gpu-cn011'
+    'gpu-cn012'
+    'gpu-cn013'
+    'gpu-cn014'
+    'gpu-cn015'
+    'gpu-cn016'
+    'gpu-cn017'
+)
+
+REQUESTED_NODE=1
+RUNTIME_DIR=$HOME/.local/run
+
+# Implementation below, Do NOT modify
+# ===============================================================================
+
+self=$(basename "$0")
+selfdir=$(dirname "$0")
+
+# Input: RUNTIME_DIR, exec_host, jobid, SESSION_ID
+safe_stop() {
+    pushd $RUNTIME_DIR >/dev/null
+    rm -f $(runtime_file)
+    if [[ "${jobid}" != "dummy" ]]; then
+        rmdir --ignore-fail-on-non-empty -p $(realpath --relative-to=$RUNTIME_DIR $(job_dir))
+    fi
+    popd >/dev/null
+}
+
+host_dir() {
+    echo "$RUNTIME_DIR/$exec_host"
+}
+
+job_dir() {
+    echo "$(host_dir)/$jobid"
+}
+
+runtime_file() {
+    echo "$(job_dir)/$SESSION_ID"
+}
+
+# Input: exec_host, jobid, RUNTIME_DIR, RUNTIME_FILE, SESSION_ID
+clean_up() {
+    SIGNAL=$1
+
+    if [[ ${exec_host}x = "x" ]]; then
+        if [[ ${jobid}x != "x" ]]; then
+            echo -e "\nCleaning up"
+            bkill $jobid
+            jobid=
+        fi
+    else
+        if [[ ${jobid}x != "x" ]]; then
+            if [[ ! -f $(runtime_file) ]]; then
+                # session might have been moved. Find new jobid
+                local old_jobid=$jobid
+                for dir in $(host_dir)/*; do
+                    jobid=$(basename $dir)
+                    if [[ -f $(runtime_file) ]]; then
+                        break
+                    fi
+                done
+                if [[ ! -f $(runtime_file) ]]; then
+                    # can't find the session. Attempt to stop job anyway
+                    jobid=$old_jobid
+                fi
+            fi
+            echo -e "\nCleaning up"
+            safe_stop
+            jobid=
+            exec_host=
+        fi
+    fi
+    if [[ "$SIGNAL" = "0" ]]; then
+        exit $2
+    elif [ -n "$SIGNAL" ]; then
+        trap $SIGNAL
+        kill -${SIGNAL} $$
+    else
+        exit
+    fi
+}
+trap 'clean_up 1' HUP
+trap 'clean_up 2' INT
+trap 'clean_up 3' QUIT
+trap 'clean_up 13' PIPE
+trap 'clean_up 15' TERM
+
+# Input: RUNTIME_DIR, REQUESTED_NODE, ARG_CORES_PER_NODE, ARG_QUEUE
+# Output: jobid, exec_host
+request_exec_host() {
+    jobid=$(bsub \
+             -n $(($REQUESTED_NODE * $ARG_CORES_PER_NODE)) \
+             -R "span[hosts=1]" \
+             -M 2048 \
+             -J interactive \
+             -q "$ARG_QUEUE" \
+             -o /dev/null \
+             bash -c "job_dir=$RUNTIME_DIR/\$(hostname)/\${LSB_JOBID}; mkdir -p \$job_dir; while [ -d \$job_dir ]; do sleep 1s; done;" \
+            | sed -rn 's/Job <([0-9]+)>.*$/\1/p')
+
+    echo "Submitted as job $jobid, waiting for job to be scheduled..."
+
+    while true; do
+        read stat exec_host <<< "$(bjobs -noheader -o 'STAT EXEC_HOST' $jobid)"
+        exec_host="$(echo "$exec_host" | sed -rn 's/^.*\*([^:]+)(:.*)?$/\1/p')"
+        if [[ ${exec_host}x = "x" ]]; then
+            echo -en "\rCurrent state: $stat"
+        else
+            echo -en "\rCurrent state: $stat @ $exec_host"
+        fi
+        [[ $stat != "RUN" ]] || { echo; break; }
+        sleep 0.5
+    done
+}
+
+# Input: RUNTIME_DIR, exec_host
+# Output: jobid
+find_job() {
+    jobid=
+    for ((i = 0; i < ${#FREE_HOSTS}; i++)); do
+        if [[ ${FREE_HOSTS[$i]} = $exec_host ]]; then
+            # these nodes are out of the list, and we don't need to request a placeholder job.
+            jobid="dummy"
+            mkdir -p $(job_dir)
+            break
+        fi
+    done
+
+    if [[ -z $jobid ]]; then
+        if [[ -d $(host_dir) ]]; then
+            for dir in $(host_dir)/*; do
+                jobid=$(basename $dir)
+                break
+            done
+            if [[ "${jobid}x" = "x" ]]; then
+                rmdir --ignore-fail-on-non-empty $(host_dir) 2>/dev/null
+            fi
+        fi
+        if [[ "${jobid}x" = "x" ]]; then
+            echo -n "Error: no existing interactive job found on the requested host!"
+            echo -e " Use $self without any arguments to create an interactive job first.\n"
+            usage
+            clean_up 0 1
+        fi
+    fi
+    echo "Using existing interactive job: $jobid"
+}
+
+# Input: RUNTIME_DIR, SESSION_ID, exec_host, jobid
+check_exec_host() {
+    local waited
+    while [[ ! -d $(job_dir) ]]; do
+        waited=" Done"
+        echo -en "\rWaiting for runtime file creation..."
+        sleep 0.5
+    done
+    echo $waited
+
+    # create session file
+    touch $(runtime_file)
+
+    for dir in $(host_dir)/*; do
+        existing_id=$(basename $dir)
+        if [[ $existing_id != $jobid ]]; then
+            echo "Warning: more than one LSB jobs scheduled on the same node: ${exec_host}. Check the resource request in the interactive script."
+            for sess in $dir/*; do
+                sess=$(basename $sess)
+                echo "Warning: moving session $sess from job $existing_id to job $jobid"
+                mv $dir/$sess $(job_dir)/$sess
+            done
+            echo "Warning: stopping existing job $existing_id on this node as they are not needed."
+            (jobid=$existing_id; safe_stop)
+        fi
+    done
+}
+
+gen_session_id() {
+    SESSION_ID=$(echo $RANDOM | md5sum | cut -c -8)
+}
+
+# Detect if running inside tmux.
+# output: RUNNING_IN_TMUX
+detect_tmux() {
+    if [[ ! -z $TMUX ]]; then
+        export RUNNING_IN_TMUX=1
+    fi
+}
+
+usage() {
+cat <<EOF
+Get interactive session on a compute node.
+
+Usage:
+  $self [options]
+  $self [options] <target-node>
+
+When used with the first form, a new placeholder job will be created and you will get access to a compute node scheduled by ConFlux.
+When <target-node> is specified, $self tries to reuse an existing placeholder job and ssh into <target-node> without creating
+new a placeholder job.
+
+Common environment variables created/modified by module loads are forwareded to the interactive session. The complete list of
+environment variables are defined in FORWARD_ENVS in the begining of the script.
+
+Note that there must already be at least an interactive session on the <target-node> before you can use the second form.
+
+Options:
+  -h --help                Show this message.
+  -q <queue>
+  --queue <queue>          Schedule the job on <queue>. Default: gpu_p100
+  -c <cores>
+  --cores-per-node <cores> Number of CPU cores per node in the queue. Default: 80
+  -l --list                List existing sessions and exit.
+  --noheader               Do not print header when listing sessions.
+  --complete               Print list of hosts for completion.
+  --print-complete         Print command for completion for bash.
+  --install                Modify bashrc to install the script.
+EOF
+}
+
+do_listing() {
+    if [[ -d $RUNTIME_DIR ]]; then
+        local header_printed=false
+        if $ARG_NO_HEADER; then
+            header_printed=true
+        fi
+        for host in $RUNTIME_DIR/*; do
+            exec_host="$(basename "$host")"
+            for job in $host/*; do
+                if ! $header_printed; then
+                    header_printed=true
+                    echo -e "Host\t\tSession\tPlaceholder"
+                fi
+                jobid="$(basename "$job")"
+                echo -e "${exec_host}\t$(ls -1q $(job_dir) | wc -l)\t${jobid}"
+                break
+            done
+        done
+    fi
+}
+
+do_complete() {
+    local word_list=()
+    if [[ -d $RUNTIME_DIR ]]; then
+        for host in $RUNTIME_DIR/*; do
+            exec_host="$(basename "$host")"
+            for job in $host/*; do
+                jobid="$(basename "$job")"
+                word_list+=("${exec_host}")
+                break
+            done
+        done
+    fi
+    word_list+=(${FREE_HOSTS[@]})
+    word_list=( `for i in ${word_list[@]}; do echo $i; done | sort -u` )
+    printf "%s\n" "${word_list[@]}"
+}
+
+do_inter() {
+    trap 'clean_up' exit
+    # Check if already on worker nodes
+    case $(hostname) in
+        ln*)
+            ;;
+        *)
+            echo "Error: You are already on worker node: $(hostname)"
+            clean_up 0 2;;
+    esac
+
+    # Initialize
+    mkdir -p $RUNTIME_DIR
+    gen_session_id
+
+    exec_host=$1
+    if [[ "${exec_host}x" = "x" ]]; then
+        request_exec_host
+    else
+        find_job
+    fi
+    check_exec_host
+    echo "Now ssh into target host: $exec_host"
+
+    export INTER_SESSION=$exec_host
+
+    # Forward environment variables
+    pattern=$(IFS="|" ; echo "${FORWARD_ENVS[*]}")
+    forward=$(env | egrep "^($pattern)")
+    forward="${forward//$'\n'/ }"
+
+    remotecmd="exec env $forward $SHELL --login"
+    # cd to same directory if under home
+    case "$(readlink -f .)/" in $(readlink -f $HOME)/*)
+        remotecmd="cd $(pwd); $remotecmd"
+    esac
+    ssh -t "$exec_host" "$remotecmd" || clean_up
+
+    clean_up
+}
+
+try_upgrade() {
+    local my_version=2
+    local existing_version=$(cat $RUNTIME_DIR/.version 2>/dev/null)
+    if [[ ${existing_version}x = "x" ]]; then
+        existing_version=0
+    fi
+    if [[ $existing_version < $my_version ]]; then
+        rm -rf $RUNTIME_DIR
+        mkdir -p $RUNTIME_DIR
+        echo $my_version > $RUNTIME_DIR/.version
+    elif [[ $existing_version > $my_version ]]; then
+        echo "Error: seems you have used a newer version of the script. Abort."
+        clean_up 0 3
+    fi
+}
+
+check_virtualenv() {
+    if [[ ! -z $VIRTUAL_ENV ]]; then
+        echo "Error: please deactivate virtual environment before using this script. Abort."
+        clean_up 0 4
+    fi
+}
+
+do_print_complete() {
+cat <<EOF
+_inter() {
+    local cur
+    COMPREPLY=()
+    cur=\${COMP_WORDS[COMP_CWORD]}
+    case "\$cur" in
+        -*)
+            COMPREPLY=( \$(compgen -W '-h -l -q -c --help --list --complete --noheader --print-complete --queue --cores-per-node' -- \$cur) );;
+        *)
+            COMPREPLY=( \$(compgen -W "\$($self --complete)" -- \$cur) );;
+    esac
+    return 0
+}
+complete -F _inter inter
+EOF
+}
+
+do_install() {
+    cat >> $HOME/.bashrc <<EOF
+# Setup inter
+export PATH=\$PATH:$selfdir
+[ -s "$selfdir/$self" ] && eval "\$($self --print-complete)"
+EOF
+    echo -e "\e[1;33m==>\e[0m \e[1mInstallation complete!\e[0m\n"
+    echo -e "\e[1;33m==>\e[0m \e[1mQuick Manual:\e[0m"
+    usage
+}
+
+# --- main starts from here ---
+# NOTE: This requires GNU getopt.  On Mac OS X and FreeBSD, you have to install this
+# separately; see below.
+TEMP=`getopt -o hlq:c: --long help,list,complete,print-complete,install,queue:,cores-per-node: \
+             -n "$self" -- "$@"`
+
+if [ $? != 0 ] ; then usage >&2; exit 1 ; fi
+
+# Note the quotes around `$TEMP': they are essential!
+eval set -- "$TEMP"
+
+ARG_NO_HEADER=false
+ARG_QUEUE=gpu_p100
+ARG_CORES_PER_NODE=80
+while true; do
+  case "$1" in
+    -h | --help )
+        usage
+        exit ;;
+    -v | --version )
+        # nothing
+        shift ;;
+    -l | --list )
+        do_listing
+        exit ;;
+    --no-header )
+        ARG_NO_HEADER=true;
+        shift ;;
+    -q | --queue )
+        case "$2" in
+            "") shift 2 ;;
+            *) ARG_QUEUE=$2 ; shift 2 ;;
+        esac ;;
+    -c | --cores-per-node )
+        case "$2" in
+            "") shift 2 ;;
+            *) ARG_CORES_PER_NODE=$2 ; shift 2 ;;
+        esac ;;
+    --complete )
+        do_complete
+        exit ;;
+    --print-complete )
+        do_print_complete
+        exit ;;
+    --install )
+        do_install
+        exit ;;
+    -- ) shift; break ;;
+    * ) break ;;
+  esac
+done
+
+check_virtualenv
+detect_tmux
+try_upgrade
+do_inter "$@"

@@ -1,0 +1,168 @@
+#!/bin/sh
+#==============================================================================
+# mount.vdi
+#   Copyright (C) Elan Ruusamäe <glen@pld-linux.org>, 2008
+#
+#   This program is free software; you can redistribute it and/or
+#   modify it under the terms of the GNU General Public License as
+#   published by the Free Software Foundation; either version 2 of
+#   the License, or (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+#   General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public
+#   License along with this program; if not, write to:
+#   Free Software Foundation, Inc., 51 Franklin St, Fifth Floor,
+#   Boston, MA  02110-1301  USA
+#
+#   -- For details, see the file named "LICENSE.GPLv2"
+#==============================================================================
+
+# Sanitize environment
+export PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Commands
+LOSETUP=/sbin/losetup
+MOUNT=/bin/mount
+PARTED=/usr/sbin/parted
+SED=/bin/sed
+
+PROGRAM=${0##*/}
+MOUNTARGS=
+OPTIONS=
+FSTYPE=
+
+USAGE="<VDI image> <mountpoint> [-o options,...]
+
+Options:
+      partition=<number>              Specify partition to mount
+      fstype=<fstype>                 Specify FS type instead of autodetecting
+"
+
+# This is braindead, two first args are dev and mountpoint if invoked from
+# mount(1), but could be option if invoked from mount.vdi(1)
+if [ -n "$1" ] && [[ "$1" != -* ]]; then
+    DEVICE=$1
+    shift
+fi
+if [ -n "$1" ] && [[ "$1" != -* ]]; then
+    MOUNTPOINT=$1
+    shift
+fi
+
+while :; do
+    case "$1" in
+    -h | "-?" )
+        echo >&2 "Usage: $PROGRAM $USAGE"
+        exit 0 ;;
+    -o)
+        OPTIONS="$2";
+        shift ;;
+    -n)
+        MOUNTARGS="$MOUNTARGS $1"
+        ;;
+    -?* )
+        echo >&2 "$PROGRAM: unrecognized option: $1"
+        exit 1 ;;
+    *)
+        break ;;
+    esac
+    shift
+done
+
+if [ -z "$DEVICE" ]; then
+    echo >&2 "$PROGRAM: device to mount not specified"
+    exit 1
+fi
+
+if [ -z "$MOUNTPOINT" ]; then
+    echo >&2 "$PROGRAM: mount point not specified"
+    exit 1
+fi
+
+if [ ! -f "$DEVICE" ]; then
+    echo >&2 "$PROGRAM: $DEVICE is not a file"
+    exit 1
+fi
+
+if [ ! -d "$MOUNTPOINT" ]; then
+    echo >&2 "$PROGRAM: $MOUNTPOINT is not a directory"
+    exit 1
+fi
+
+# check magic
+magic=$(head -n 1 "$DEVICE")
+case "$magic" in
+"<<< innotek VirtualBox Disk Image >>>")
+    ;;
+"<<< Sun VirtualBox Disk Image >>>")
+    ;;
+"<<< Oracle VM VirtualBox Disk Image >>>")
+    ;;
+*)
+    echo >&2 "$PROGRAM: $DEVICE: bad magic, not VDI image"
+    exit 1
+esac
+
+MOUNTOPTIONS=
+PARTITION=
+OFFSET=
+OLDIFS=$IFS
+IFS=", "
+for opt in $OPTIONS; do
+    KEY=${opt%=*};
+    VAL=${opt#*=};
+    case "$KEY" in
+    part|partition)
+        PARTITION="$VAL"
+        ;;
+    fstype)
+        FSTYPE="$VAL"
+        ;;
+    *)
+        if [ -z "$MOUNTOPTIONS" ]; then
+            MOUNTOPTIONS="$opt"
+        else
+            MOUNTOPTIONS="$MOUNTOPTIONS,$opt"
+        fi
+    ;;
+    esac
+done
+IFS="$OLDIFS"
+
+if [ -z "$PARTITION" ]; then
+    echo >&2 "$PROGRAM: missing partition option"
+    exit 1
+fi
+
+# offset when disk starts
+dskoff=8704
+
+# find free loop device. XXX race possible
+imgdev=$($LOSETUP -f) || exit 1
+$LOSETUP $imgdev -o $dskoff "$DEVICE"
+dump=$($PARTED -s -m $imgdev unit B print)
+$LOSETUP -d $imgdev || exit 1
+
+partoff=$(echo "$dump" | $SED -ne "s/^$PARTITION:"'\([0-9]*\)B:.*/\1/p')
+OFFSET=$((dskoff + partoff))
+
+if [ -z "$partoff" -o -z "$OFFSET" ]; then
+    echo >&2 "$PROGRAM: couldn't figure out offset, perhaps out of range?"
+    exit 1
+fi
+
+if [ -z "$MOUNTOPTIONS" ]; then
+    MOUNTOPTIONS="loop,offset=$OFFSET"
+else
+    MOUNTOPTIONS="$MOUNTOPTIONS,loop,offset=$OFFSET"
+fi
+
+# $MOUNTPOINT might not exist as mount can try to read it from /etc/fstab
+$MOUNT $MOUNTARGS ${FSTYPE:+-t "$FSTYPE"} ${MOUNTOPTIONS:+-o "$MOUNTOPTIONS"} "$DEVICE" "$MOUNTPOINT"
+if [ $? -ne 0 ]; then
+    echo >&2 "$PROGRAM: error mounting $DEVICE"
+fi

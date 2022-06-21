@@ -1,0 +1,2 @@
+#! /bin/sh
+env DISPLAY=:0.0 /usr/lib/kde4/libexec/kscreenlocker_greet --immediateLock &

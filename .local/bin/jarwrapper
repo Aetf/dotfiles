@@ -1,0 +1,5 @@
+#! /bin/sh
+# jarwrapper - the wrapper for binfmt_misc/jar
+
+JAVA_PATH="normaljava.sh"
+exec $JAVA_PATH -jar "$@"
