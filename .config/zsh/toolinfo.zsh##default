@@ -1,0 +1,25 @@
+() {
+    local os_arch="$(uname -s)-$(uname -m)"
+    case "$os_arch" in
+        Linux-x86_64)
+            toolinfo[fzf]='*linux*amd64*'
+            toolinfo[exa]='*linux*x86_64*musl*'
+            toolinfo[delta]='*x86_64*linux*musl*'
+            toolinfo[fd]='*x86_64*linux*musl*'
+            toolinfo[ripgrep]='*x86_64*linux*musl*'
+            toolinfo[bat]='*x86_64*linux*musl*'
+            toolinfo[volta]='*linux*openssl-1.1*'
+            toolinfo[git-crypt]='*linux*'
+            ;;
+        Darwin-arm64)
+            toolinfo[fzf]='*darwin*arm64*'
+            #toolinfo[exa]='*linux*x86_64*musl*'
+            #toolinfo[delta]='*x86_64*linux*musl*'
+            #toolinfo[fd]='*x86_64*linux*musl*'
+            #toolinfo[ripgrep]='*x86_64*linux*musl*'
+            #toolinfo[bat]='*x86_64*linux*musl*'
+            toolinfo[volta]='*macos*aarch64*'
+            #toolinfo[git-crypt]='*linux*'
+            ;;
+    esac
+}

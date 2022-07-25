@@ -1,0 +1,205 @@
+diff --git a/Src/input.c b/Src/input.c
+index 9787ded..18228b3 100644
+--- a/Src/input.c
++++ b/Src/input.c
+@@ -80,11 +80,6 @@
+ /**/
+ int SHIN;
+ 
+-/* buffered shell input for non-interactive shells */
+-
+-/**/
+-FILE *bshin;
+-
+ /* != 0 means we are reading input from a string */
+  
+ /**/
+@@ -129,7 +124,116 @@ static struct instacks *instack, *instacktop;
+ 
+ static int instacksz = INSTACK_INITIAL;
+ 
+-/* Read a line from bshin.  Convert tokens and   *
++/* Size of buffer for non-interactive command input */
++
++#define SHINBUFSIZE 8192
++
++/* Input buffer for non-interactive command input */
++static char *shinbuffer;
++
++/* Pointer into shinbuffer */
++static char *shinbufptr;
++
++/* End of contents read into shinbuffer */
++static char *shinbufendptr;
++
++/* Entry on SHIN buffer save stack */
++struct shinsaveentry {
++    /* Next entry on stack */
++    struct shinsaveentry *next;
++    /* Saved shinbuffer */
++    char *buffer;
++    /* Saved shinbufptr */
++    char *ptr;
++    /* Saved shinbufendptr */
++    char *endptr;
++};
++
++/* SHIN buffer save stack */
++static struct shinsaveentry *shinsavestack;
++
++/* Reset the input buffer for SHIN, discarding any pending input */
++
++/**/
++void
++shinbufreset(void)
++{
++    shinbufendptr = shinbufptr = shinbuffer;
++}
++
++/* Allocate a new shinbuffer
++ *
++ * Only called at shell initialisation and when saving on the stack.
++ */
++
++/**/
++void
++shinbufalloc(void)
++{
++    shinbuffer = zalloc(SHINBUFSIZE);
++    shinbufreset();
++}
++
++/* Save entry on SHIN buffer save stack */
++
++/**/
++void
++shinbufsave(void)
++{
++    struct shinsaveentry *entry =
++	(struct shinsaveentry *)zalloc(sizeof(struct shinsaveentry));
++
++    entry->next = shinsavestack;
++    entry->buffer = shinbuffer;
++    entry->ptr = shinbufptr;
++    entry->endptr = shinbufendptr;
++
++    shinsavestack = entry;
++
++    shinbufalloc();
++}
++
++/* Restore entry from SHIN buffer save stack */
++
++/**/
++void
++shinbufrestore(void)
++{
++    struct shinsaveentry *entry = shinsavestack;
++
++    zfree(shinbuffer, SHINBUFSIZE);
++
++    shinbuffer = entry->buffer;
++    shinbufptr = entry->ptr;
++    shinbufendptr = entry->endptr;
++
++    shinsavestack = entry->next;
++    zfree(entry, sizeof(struct shinsaveentry));
++}
++
++/* Get a character from SHIN, -1 if none available */
++
++/**/
++static int
++shingetchar(void)
++{
++    int nread;
++
++    if (shinbufptr < shinbufendptr)
++	return STOUC(*shinbufptr++);
++
++    shinbufreset();
++    do {
++	errno = 0;
++	nread = read(SHIN, shinbuffer, SHINBUFSIZE);
++    } while (nread < 0 && errno == EINTR);
++    if (nread <= 0)
++	return -1;
++    shinbufendptr = shinbuffer + nread;
++    return STOUC(*shinbufptr++);
++}
++
++/* Read a line from SHIN.  Convert tokens and   *
+  * null characters to Meta c^32 character pairs. */
+ 
+ /**/
+@@ -147,11 +251,7 @@ shingetline(void)
+     winch_unblock();
+     dont_queue_signals();
+     for (;;) {
+-	/* Can't fgets() here because we need to accept '\0' bytes */
+-	do {
+-	    errno = 0;
+-	    c = fgetc(bshin);
+-	} while (c < 0 && errno == EINTR);
++	c = shingetchar();
+ 	if (c < 0 || c == '\n') {
+ 	    winch_block();
+ 	    restore_queue_signals(q);
+@@ -555,6 +655,7 @@ inpush(char *str, int flags, Alias inalias)
+ 	if ((instacktop->alias = inalias))
+ 	    inalias->inuse = 1;
+     } else {
++	instacktop->alias = NULL;
+ 	/* If we are continuing an alias expansion, record the alias
+ 	 * expansion in new set of flags (do we need this?)
+ 	 */
+@@ -691,6 +792,7 @@ char *input_hasalias(void)
+     {
+ 	if (!(flags & INP_CONT))
+ 	    break;
++	DPUTS(instackptr == instack, "BUG: continuation at bottom of instack");
+ 	instackptr--;
+ 	if (instackptr->alias)
+ 	    return instackptr->alias->node.nam;
+diff --git a/Src/zdharma_continuum/zinit.c b/Src/zdharma_continuum/zinit.c
+index f665d9c..c4d2fa7 100644
+--- a/Src/zdharma_continuum/zinit.c
++++ b/Src/zdharma_continuum/zinit.c
+@@ -626,7 +626,6 @@ custom_source(char *s)
+     int tempfd = -1, fd, cj;
+     zlong oldlineno;
+     int oldshst, osubsh, oloops;
+-    FILE *obshin;
+     char *old_scriptname = scriptname, *us;
+     char *old_scriptfilename = scriptfilename;
+     unsigned char *ocs;
+@@ -652,7 +651,6 @@ custom_source(char *s)
+ 
+     /* save the current shell state */
+     fd        = SHIN;            /* store the shell input fd                  */
+-    obshin    = bshin;          /* store file handle for buffered shell input */
+     osubsh    = subsh;           /* store whether we are in a subshell        */
+     cj        = thisjob;         /* store our current job number              */
+     oldlineno = lineno;          /* store our current lineno                  */
+@@ -665,7 +663,7 @@ custom_source(char *s)
+ 
+     if (!prog) {
+ 	SHIN = tempfd;
+-	bshin = fdopen(SHIN, "r");
++	shinbufsave();
+     }
+     subsh  = 0;
+     lineno = 1;
+@@ -735,10 +733,10 @@ custom_source(char *s)
+     if (prog)
+ 	freeeprog(prog);
+     else {
+-	fclose(bshin);
++	close(SHIN);
+ 	fdtable[SHIN] = FDT_UNUSED;
+ 	SHIN = fd;		     /* the shell input fd                   */
+-	bshin = obshin;		     /* file handle for buffered shell input */
++	shinbufrestore();
+     }
+     subsh = osubsh;                  /* whether we are in a subshell         */
+     thisjob = cj;                    /* current job number                   */

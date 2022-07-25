@@ -18,10 +18,13 @@ source "${ZINIT[BIN_DIR]}/zinit.zsh"
 # autoload -Uz _zinit
 # (( ${+_comps} )) && _comps[zinit]=_zinit
 # A binary Zsh module which transparently and automatically compiles sourced scripts
-if [[ ! -f "${ZINIT[MODULE_DIR]}/Src/zdharma_continuum/zinit.so" ]]; then
+module_path+=( "${ZINIT[MODULE_DIR]}/Src" )
+# first try silently load the module
+if ! zmodload -s zdharma_continuum/zinit; then
+    # load our patched .zinit-build-module
+    source "$ZDOTDIR/scripts/build-zinit-module"
     zinit module build
 fi
-module_path+=( "${ZINIT[MODULE_DIR]}/Src" )
 zmodload zdharma_continuum/zinit &>/dev/null
 ### End of Zinit installer's chunk
 
@@ -85,57 +88,87 @@ fi
         atload'!_zsh_autosuggest_start'
             @zsh-users/zsh-autosuggestions
 
-        # fzf the fuzzy finder
-        multisrc'shell/{completion,key-bindings}.zsh' blockf trackbinds bindmap'^T -> \\ef'
-            @junegunn/fzf
-
-        id-as'fzf-bin'
-        from'gh-r' bpick"${toolinfo[fzf]}"
-        as'null' sbin'fzf'
-            @junegunn/fzf
-
-        # exa the better ls
-        from'gh-r' bpick"${toolinfo[exa]}"
-        mv'completions/exa.zsh -> completions/_exa.zsh'
-        fbin'bin/exa -> ls'
-        sbin'bin/exa'
-            @ogham/exa
-
-        # delta the better diff
-        from'gh-r' bpick"${toolinfo[delta]}"
-        sbin'*/delta'
-            @dandavison/delta
-
-        # fd the better find
-        from'gh-r' bpick"${toolinfo[fd]}"
-        sbin'*/fd'
-            @sharkdp/fd
-
-        # ripgrep the better grep
-        from'gh-r' bpick"${toolinfo[ripgrep]}"
-        sbin'*/rg'
-            @BurntSushi/ripgrep
-
-        # bat the better cat
-        from'gh-r' bpick"${toolinfo[bat]}"
-        sbin'*/bat'
-            @sharkdp/bat
-
-        # volta to manage nodejs
-        from'gh-r' bpick"${toolinfo[volta]}"
-        sbin'volta*'
-            @volta-cli/volta
-
         # yadm to manage dotfiles (this is the binary used after bootstrap)
         fbin'yadm -> y'
         sbin'yadm'
             @TheLocehiliosan/yadm
 
-        # git-crypt for encryption yadm repo
-        from'gh-r' bpick"${toolinfo[git-crypt]}"
-        sbin'git-crypt* -> git-crypt'
-            @AGWA/git-crypt
+        # fzf the fuzzy finder
+        multisrc'shell/{completion,key-bindings}.zsh' blockf trackbinds bindmap'^T -> \\ef'
+            @junegunn/fzf
     )
+    # conditionally add tool binaries
+    if [ ! -z "${toolinfo[fzf]}" ]; then
+        wait0a+=(
+            id-as'fzf-bin'
+            from'gh-r' bpick"${toolinfo[fzf]}"
+            as'null' sbin'fzf'
+                @junegunn/fzf
+        )
+    fi
+    if [ ! -z "${toolinfo[exa]}" ]; then
+        wait0a+=(
+            # exa the better ls
+            from'gh-r' bpick"${toolinfo[exa]}"
+            mv'completions/exa.zsh -> completions/_exa.zsh'
+            fbin'bin/exa -> ls'
+            sbin'bin/exa'
+                @ogham/exa
+        )
+    fi
+
+    if [ ! -z "${toolinfo[delta]}" ]; then
+        wait0a+=(
+            # delta the better diff
+            from'gh-r' bpick"${toolinfo[delta]}"
+            sbin'*/delta'
+                @dandavison/delta
+        )
+    fi
+    if [ ! -z "${toolinfo[fd]}" ]; then
+        wait0a+=(
+            # fd the better find
+            from'gh-r' bpick"${toolinfo[fd]}"
+            sbin'*/fd'
+                @sharkdp/fd
+        )
+    fi
+
+    if [ ! -z "${toolinfo[ripgrep]}" ]; then
+        wait0a+=(
+            # ripgrep the better grep
+            from'gh-r' bpick"${toolinfo[ripgrep]}"
+            sbin'*/rg'
+                @BurntSushi/ripgrep
+        )
+    fi
+
+    if [ ! -z "${toolinfo[bat]}" ]; then
+        wait0a+=(
+            # bat the better cat
+            from'gh-r' bpick"${toolinfo[bat]}"
+            sbin'*/bat'
+                @sharkdp/bat
+        )
+    fi
+
+    if [ ! -z "${toolinfo[volta]}" ]; then
+        wait0a+=(
+            # volta to manage nodejs
+            from'gh-r' bpick"${toolinfo[volta]}"
+            sbin'volta*'
+                @volta-cli/volta
+        )
+    fi
+
+    if [ ! -z "${toolinfo[git-crypt]}" ]; then
+        wait0a+=(
+            # git-crypt for encryption yadm repo
+            from'gh-r' bpick"${toolinfo[git-crypt]}"
+            sbin'git-crypt* -> git-crypt'
+                @AGWA/git-crypt
+        )
+    fi
 
     ##################
     # Wait'0b' block #
@@ -157,7 +190,7 @@ fi
         # can't use atpull because that is run before soucing the file
         # atload'[[ -f modules/Src/aloxaf/fzftab.so ]] || build-fzf-tab-module'
         # TODO: workaround zdharma-continuum/zinit#315, that any cd in atload will trigger infinite recursion
-        atload'[[ -f modules/Src/aloxaf/fzftab.so ]] || (func=$(where build-fzf-tab-module); zsh -c "FZF_TAB_HOME=$FZF_TAB_HOME; $func; build-fzf-tab-module")'
+        atload'[[ -n modules/Src/aloxaf/fzftab.(so|bundle)(#qN) ]] || (func=$(where build-fzf-tab-module); zsh -c "FZF_TAB_HOME=$FZF_TAB_HOME; $func; (hash nproc &>/dev/null || alias nproc=sysctl -n hw.physicalcpu) build-fzf-tab-module")'
         # don't mess with our fpath
         blockf
             @Aloxaf/fzf-tab

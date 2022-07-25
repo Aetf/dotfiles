@@ -6,9 +6,26 @@ alias ll='ls -l'
 alias la='ls -aa'
 alias lla='ls -aal'
 alias ps='ps xawf -eo pid,user,args'
-alias rm='rm -I --preserve-root'
 alias p='paru'
 alias open='handlr open'
+
+() {{
+    touch /tmp/test
+    if rm --preserve-root /tmp/test &>/dev/null ; then
+        alias rm='rm -I --preserve-root'
+    else
+        alias rm='rm -I'
+    fi
+} always {
+    command rm -f /tmp/test
+}}
+
+() {
+    if ! hash nproc &>/dev/null; then
+        alias nproc='sysctl -n hw.physicalcpu'
+    fi
+}
+
 function cdmk() {
     mkdir -p "$@"
     cd $1
