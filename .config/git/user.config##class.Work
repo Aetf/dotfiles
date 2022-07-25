@@ -1,0 +1,4 @@
+# vi: set filetype=gitconfig
+[user]
+	email = pfyu@google.com
+	name = Peifeng Yu
