@@ -1,7 +1,14 @@
 # load conda
-if [ -f /opt/mambaforge/etc/profile.d/conda.sh ]; then
-    source /opt/mambaforge/etc/profile.d/conda.sh
-fi
-if [ -f /opt/mambaforge/etc/profile.d/mamba.sh ]; then
-    source /opt/mambaforge/etc/profile.d/mamba.sh
-fi
+() {
+    local candidates=(
+        "/opt/mambaforge/etc/profile.d/mamba.sh"
+        "/opt/mambaforge/etc/profile.d/conda.sh"
+        "/opt/homebrew/Caskroom/miniconda/base/etc/profile.d/conda.sh"
+    )
+    for candidate in $candidates; do
+        if [ -f "$candidate" ]; then
+            source "$candidate"
+        fi
+    done
+}
+
