@@ -2,6 +2,7 @@
 	path = .config/nvim
 	url = https://github.com/Aetf/ucw.nvim.git
 	branch = main
+	update = rebase
 [submodule ".local/share/zathura/base16-zathura"]
 	path = .local/share/zathura/base16-zathura
 	url = https://github.com/HaoZeke/base16-zathura.git
