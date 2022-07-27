@@ -1,7 +1,7 @@
 # This is to workaround zinit-module build issue on macos
 # See https://github.com/zdharma-continuum/zinit-module/issues/3
 
-readonly ZINIT_MODULE_URL=https://github.com/zdharma-continuum/zinit-module.git
+ZINIT_MODULE_URL=https://github.com/zdharma-continuum/zinit-module.git
 
 # The following is copied from `zinit module build` with modifications to
 # apply zsh 5.8.1 patch and macos CFLAGS modifications.
