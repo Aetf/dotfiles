@@ -6,7 +6,8 @@ main() {
     cd "$(yadm rev-parse --show-toplevel)"
 
     echo "Init submodules"
-    yadm submodule update --recursive --init
+    yadm submodule update --recursive --init --remote
+    yadm smundetach
 }
 
 main
