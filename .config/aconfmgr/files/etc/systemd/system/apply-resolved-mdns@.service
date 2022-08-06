@@ -1,0 +1,11 @@
+[Unit]
+Description=Apply mdns settings for systemd-resolved for unmanaged network %i
+After=network.target
+Wants=systemd-resolved.service
+
+[Service]
+Type=OneShot
+ExecStart=/usr/bin/systemd-resolve --set-mdns=yes -i %i
+
+[Install]
+WantedBy=multi-user.target

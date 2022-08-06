@@ -1,0 +1,26 @@
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# /dev/nvme0n1p1 LABEL=ESP
+#UUID=5267-4BE2      	/efi      	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro	0 2
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/         	btrfs     	rw,relatime,ssd,space_cache,subvol=@	0 0
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/home      	btrfs     	rw,relatime,ssd,space_cache,subvol=@home	0 0
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/var      	btrfs     	rw,relatime,ssd,space_cache,subvol=@var	0 0
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/root     	btrfs     	rw,relatime,ssd,space_cache,subvol=@root	0 0
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/.snapshots	btrfs     	rw,relatime,ssd,space_cache,subvol=@snapshots	0 0
+
+# /dev/mapper/root LABEL=ArchRoot UUID=63fa4dc9-655b-4214-9576-972151d98f03
+/dev/mapper/root	/.swapfiles	btrfs     	rw,relatime,ssd,space_cache,subvol=@swapfiles	0 0
+
+/.swapfiles/hibernate           	none      	swap      	defaults,discard,x-systemd.device-timeout=5s  	0 0

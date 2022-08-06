@@ -1,0 +1,233 @@
+#!/usr/bin/env python
+from __future__ import print_function, division, absolute_import
+import filecmp
+import glob
+import os
+import sys
+import shutil
+import time
+import subprocess as sp
+from contextlib import contextmanager
+
+try:
+    from subprocess import DEVNULL
+except ImportError:
+    DEVNULL = open(os.devnull, 'wb')
+
+
+# Default values
+REFIND_INSTALL_SCRIPT="/usr/bin/refind-install"
+REFIND_MKDEFAULT_SCRIPT="/usr/bin/refind-mkdefault"
+MAX_RETRY=2
+RETRY_WAIT_SEC=5
+ESP_MOUNTPOINT="/efi"
+
+BEGIN_MARK="# BEGIN refind-upgrade managed block"
+END_MARK="# END refind-upgrade managed block"
+
+
+def info(msg):
+    print("==> {}".format(msg), file=sys.stderr)
+
+
+def err(msg):
+    print("==> ERROR: {}".format(msg), file=sys.stderr)
+    sys.exit(1)
+
+
+def warning(msg):
+    print("==> WARNING: {}".format(msg), file=sys.stderr)
+
+
+@contextmanager
+def mount_esp(mountpoint):
+    """With esp mounted. ESP will be restored upon exit"""
+    info("Mounting ESP on {}".format(mountpoint))
+    sp.check_call(["mount-esp", mountpoint])
+    try:
+        yield
+    finally:
+        info("Restoring {} previous mount status".format(mountpoint))
+        sp.check_call(["umount", mountpoint])
+
+
+def main():
+    try:
+        with mount_esp(ESP_MOUNTPOINT):
+            try_install()
+            install_configs()
+            clean()
+    except Exception as e:
+        err("{}".format(e))
+
+
+def try_install():
+    # skip if already have latest version
+    refind_bin = "refind/refind_x64.efi"
+    if not filecmp.cmp(os.path.join(ESP_MOUNTPOINT, "EFI", refind_bin),
+                       os.path.join("/usr/share", refind_bin),
+                       shallow=False):
+        ensure_script()
+        info("Installing refind")
+        sp.check_call([REFIND_INSTALL_SCRIPT])
+    else:
+        info("rEFInd already installed, making sure it is the default")
+        sp.check_call([REFIND_MKDEFAULT_SCRIPT])
+
+
+def ensure_script():
+    count = 0
+    while not os.access(REFIND_INSTALL_SCRIPT, os.X_OK):
+        count += 1
+        warning("Waiting for {} to be ready for {} seconds".format(REFIND_INSTALL_SCRIPT, RETRY_WAIT_SEC))
+        time.sleep(RETRY_WAIT_SEC)
+
+        if count > MAX_RETRY:
+            err("Exceeded max retry times, abort")
+
+
+def install_configs():
+    refind_root = os.path.join(ESP_MOUNTPOINT, "EFI/refind")
+    refind_etc_overlay = "/etc/refind.d/overlay"
+
+    info("Installing overlay files")
+    try:
+        os.makedirs(refind_etc_overlay)
+    except FileExistsError:
+        pass
+    install_overlay(refind_etc_overlay, refind_root)
+
+    info("Configuring refind")
+    refind_conf = os.path.join(refind_root, "refind.conf")
+    refind_conf_sample = os.path.join(refind_root, "refind.conf-sample")
+    # always starts with the sample conf
+    if os.path.isfile(refind_conf_sample):
+        shutil.move(refind_conf_sample, refind_conf)
+
+    # make sure the main config file includes all $refind_root/*.conf
+    confs = sorted([
+        os.path.basename(conf)
+        for conf in glob.glob(os.path.join(refind_root, '*.conf'))
+        if os.path.basename(conf) != 'refind.conf'
+    ])
+    blockinfile(
+        refind_conf, [
+            'include {}'.format(conf)
+            for conf in confs
+        ],
+        mark0=BEGIN_MARK,
+        mark1=END_MARK
+    )
+
+
+def install_overlay(src, dest):
+    for dirpath, _, filenames in os.walk(src, followlinks=True):
+        reldir = os.path.relpath(dirpath, src)
+        for name in filenames:
+            relpath = os.path.join(reldir, name)
+
+            abs_src = os.path.join(src, relpath)
+            abs_dest = os.path.join(dest, relpath)
+
+            real_src = os.path.realpath(abs_src)
+            if os.path.exists(abs_dest) and filecmp.cmp(abs_src, abs_dest, shallow=False):
+                continue
+            print('{} -> {}'.format(abs_src, abs_dest))
+            sp.check_call(['install', '-D', real_src, abs_dest])
+
+
+def blockinfile(filepath, block_lines, mark0, mark1):
+    def genlines(lines, block_lines):
+        found = False
+        in_block = False
+        for line in lines:
+            line = line.strip()
+            if line == mark0:
+                found = True
+                in_block = True
+                yield line
+                for bline in block_lines:
+                    yield bline.strip()
+            elif line == mark1:
+                in_block = False
+                yield line
+            else:
+                if not in_block:
+                    yield line
+        if not found:
+            yield mark0
+            for bline in block_lines:
+                yield bline.strip()
+            yield mark1
+            
+    with open(filepath) as f:
+        lines = f.readlines()
+    new_content = '\n'.join(genlines(lines, block_lines)) + '\n'
+    with open(filepath, 'w') as f:
+        f.write(new_content)
+
+
+def dir_diff_flatten(dcmp):
+    """Flaten the dcmp object recursively, return any diff"""
+    left_only = [
+        os.path.join(dcmp.left, path)
+        for path in dcmp.left_only
+    ]
+    right_only = [
+        os.path.join(dcmp.right, path)
+        for path in dcmp.right_only
+    ]
+    diff_files = [
+        os.path.join(dcmp.left, path)
+        for path in dcmp.common_funny + dcmp.diff_files + dcmp.funny_files
+    ]
+    for sd in dcmp.subdirs.values():
+        sd_left_only, sd_right_only, sd_diff = dir_diff_flatten(sd)
+        left_only += sd_left_only
+        right_only += sd_right_only
+        diff_files += sd_diff
+    return left_only, right_only, diff_files
+
+
+def clean():
+    # We are using /efi/EFI/refind/manual.conf to provide boot menus, no need for the auto generated one.
+    info("Removing unneeded conf file")
+    sp.check_call([
+        "find",
+        "/boot",
+        "-type", "f",
+        "-name", "refind_linux.conf",
+        "-print",
+        "-delete"
+    ])
+
+    refind_root = os.path.join(ESP_MOUNTPOINT, "EFI/refind")
+    icons=os.path.join(refind_root, "icons")
+    icons_backup=os.path.join(refind_root, "icons-backup")
+
+    # Remove back icons if identical
+    if os.path.isdir(icons_backup):
+        dcmp = filecmp.dircmp(icons, icons_backup)
+        left, right, diff = dir_diff_flatten(dcmp)
+        if left + right + diff:
+            warning("Detected updated icons, check and remove ${icons_backup} if needed")
+            print('--> Different files')
+            for path in diff:
+                print(path)
+            print('--> Only in {}'.format(icons))
+            for path in left:
+                print(path)
+            print('--> Only in {}'.format(icons_backup))
+            for path in right:
+                print(path)
+        else:
+            info("Removing identical icons-backup")
+            try:
+                shutil.rmtree(icons_backup)
+            except Exception as e:
+                warning("Failed to remove {}: {}".format(icons_backup, e))
+
+
+if __name__ == "__main__":
+    main()
+

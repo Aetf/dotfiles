@@ -1,0 +1,85 @@
+# The path of the database file
+dbPath: "/etc/fan2go/fan2go.db"
+
+# Allow the fan initialization sequence to run in parallel for all configured fans
+runFanInitializationInParallel: false
+# The maximum difference between consecutive RPM measurements to
+# consider a fan speed "settled"
+maxRpmDiffForSettledFan: 10
+
+# The rate to poll temperature sensors at
+tempSensorPollingRate: 200ms
+# The number of temp sensor values to keep in a rolling window array
+tempRollingWindowSize: 10
+
+# The rate to poll fan RPM input sensors at
+rpmPollingRate: 1s
+# The number of rpm sensor values to keep in a rolling window array
+rpmRollingWindowSize: 10
+
+# The rate to update fan speed targets at
+controllerAdjustmentTickRate: 200ms
+
+# A list of fans to control
+fans:
+  # A user defined ID.
+  # Used for logging only
+  - id: cpu0
+    hwmon:
+      platform: dell_smm-isa-0
+      index: 1
+    neverStop: no
+    curve: combined
+    startPwm: 64
+  - id: cpu1
+    hwmon:
+      platform: dell_smm-isa-0
+      index: 2
+    neverStop: no
+    curve: combined
+    startPwm: 64
+
+# A list of sensors to monitor
+sensors:
+  - id: cpu_package
+    hwmon:
+      platform: coretemp-isa-0
+      index: 1
+  - id: mainboard
+    hwmon:
+      platform: pch_cometlake-virtual-0
+      index: 1
+
+# A list of control curves which can be utilized by fans
+# or other curves
+curves:
+  - id: cpu_curve
+    # The type of curve configuration, one of: linear | function
+    linear:
+      # The sensor ID to use as a temperature input
+      sensor: cpu_package
+      steps:
+        50: 0
+        55: 64
+        65: 192
+  - id: mainboard_curve
+    # The type of curve configuration, one of: linear | function
+    linear:
+      # The sensor ID to use as a temperature input
+      sensor: mainboard
+      steps:
+        50: 0
+        65: 64
+        75: 192
+  - id: combined
+    function:
+      type: maximum
+      curves:
+        - cpu_curve
+        - mainboard_curve
+
+statistics:
+  # Whether to enable the prometheus exporter or not
+  enabled: false
+  # The port to expose the exporter on
+  port: 9000

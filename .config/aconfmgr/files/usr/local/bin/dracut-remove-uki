@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+set -e
+
+ESP_MOUNTPOINT=/efi
+
+remove_gen() {
+	local line=$1
+
+	read -r pkgbase < "/${line}"
+
+	find "${ESP_MOUNTPOINT}/EFI/Linux" -type f -iname "Arch-${pkgbase}"'*.efi' -exec echo '--> rm {}' ';' -delete
+}
+
+echo "==> Mounting ESP partition at ${ESP_MOUNTPOINT}"
+mount-esp "${ESP_MOUNTPOINT}"
+mkdir -p -- "${ESP_MOUNTPOINT}/EFI/Linux"
+
+if [ -t 0 ]; then
+	for line in /usr/lib/modules/*/pkgbase; do
+		remove_gen "$line"
+	done
+else
+	while read -r line; do
+		if [[ "$line" == 'usr/lib/modules/'+([^/])'/pkgbase' ]]; then
+			remove_gen "$line"
+		fi
+	done
+fi
+
+echo "==> Unmounting ESP partition at ${ESP_MOUNTPOINT}"
+umount "${ESP_MOUNTPOINT}"

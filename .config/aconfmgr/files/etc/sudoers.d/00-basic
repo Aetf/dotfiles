@@ -1,0 +1,11 @@
+# Ansible managed
+
+# Basic setup for wheel and passwordless sudo
+%wheel ALL=(ALL) ALL
+
+
+# Locale settings
+Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET FC_LANG"
+
+# Other settings
+Defaults env_keep += "CCACHE_DIR EDITOR JAVA_HOME LOGNAME VISUAL SSH_AGENT_PID SSH_AUTH_SOCK TIME VBOX_USB"

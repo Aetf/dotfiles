@@ -1,0 +1,8 @@
+[Unit]
+Description=Automount /mnt/Aetf-Laptop
+
+[Automount]
+Where=/mnt/Aetf-Laptop
+
+[Install]
+WantedBy=multi-user.target

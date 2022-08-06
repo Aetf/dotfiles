@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<policy target="ACCEPT">
+  <masquerade/>
+  <ingress-zone name="veth"/>
+  <egress-zone name="ANY"/>
+</policy>

@@ -1,0 +1,9 @@
+[Trigger]
+Operation=Remove
+Type=Path
+Target = usr/lib/modules/**/*
+
+[Action]
+Description = Ensure the vfat kernel module is available for EFI manipulation
+When=PreTransaction
+Exec=/usr/bin/modprobe vfat

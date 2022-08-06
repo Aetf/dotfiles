@@ -1,0 +1,16 @@
+# V4l2 introduces metadata camera, that only generates metadata. This creates a problem for
+# other applications to distinguish these.
+# See https://www.kernel.org/doc/html/v4.15/media/uapi/v4l/dev-meta.html
+
+# On XPS 9700, there are two cameras: one for normal color video, the other for IR camera.
+# Thus in total there are 4 camera device nodes created.
+# The following rules give them static names
+
+# Set env for later matching, because idVendor and idProduct is on different parent node
+# than bInterfaceNumber used later, and udev rules can only match on a single parent node.
+SUBSYSTEM=="video4linux", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="5510", ENV{CAMERA_VENDOR_PRODUCT}="0bda:5510"
+
+SUBSYSTEM=="video4linux", ATTR{index}=="0", ENV{CAMERA_VENDOR_PRODUCT}="0bda:5510", ATTRS{bInterfaceNumber}=="00", GROUP="video", SYMLINK+="cams/builtin-color"
+SUBSYSTEM=="video4linux", ATTR{index}=="1", ENV{CAMERA_VENDOR_PRODUCT}="0bda:5510", ATTRS{bInterfaceNumber}=="00", GROUP="video", SYMLINK+="cams/builtin-color-meta"
+SUBSYSTEM=="video4linux", ATTR{index}=="0", ENV{CAMERA_VENDOR_PRODUCT}="0bda:5510", ATTRS{bInterfaceNumber}=="02", GROUP="video", SYMLINK+="cams/builtin-ir"
+SUBSYSTEM=="video4linux", ATTR{index}=="1", ENV{CAMERA_VENDOR_PRODUCT}="0bda:5510", ATTRS{bInterfaceNumber}=="02", GROUP="video", SYMLINK+="cams/builtin-ir-meta"

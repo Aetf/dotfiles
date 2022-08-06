@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -e
+
+ESP=/dev/disk/by-label/ESP
+ESP_MOUNTPOINT=${1:-/efi}
+
+if findmnt "$ESP" "$ESP_MOUNTPOINT" &> /dev/null; then
+    mount --bind "$ESP_MOUNTPOINT" "$ESP_MOUNTPOINT"
+else
+    mount "$ESP" "$ESP_MOUNTPOINT"
+fi

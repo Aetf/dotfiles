@@ -1,0 +1,10 @@
+#%PAM-1.0
+
+auth       sufficient  pam_unix.so use_first_pass debug
+# clear the authtok previously set because it's wrong and we don't want to affect later modules
+auth       required    pam_kernel_keyring clear
+auth       sufficient  pam_unix.so
+auth       sufficient  pam_python.so  /usr/lib/security/howdy/pam.py
+auth       sufficient  pam_fprintd.so timeout=10 # debug
+-auth      sufficient  pam_systemd_home.so
+auth       [default=die]               pam_faillock.so      authfail

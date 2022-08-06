@@ -1,0 +1,16 @@
+# Ansible managed
+
+[Unit]
+Description=Update timezone info based on geoip location
+Wants=network-online.target
+After=network-online.target network.target
+
+[Service]
+Type=idle
+RemainAfterExit=yes
+ExecStart=/usr/bin/tzupdate
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

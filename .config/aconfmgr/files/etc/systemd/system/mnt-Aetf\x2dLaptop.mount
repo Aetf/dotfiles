@@ -1,0 +1,15 @@
+[Unit]
+Description=Mount Aetf-Laptop
+After=nss-lookup.target
+Wants=nss-lookup.target
+
+[Mount]
+What=//aetf-laptop.zt.unlimited-code.works/Share
+Where=/mnt/Aetf-Laptop
+Options=_netdev,iocharset=utf8,rw,noperm,credentials=/etc/samba/credentials/Aetf-Laptop
+Type=cifs
+TimeoutSec=10
+ForceUnmount=true
+
+[Install]
+WantedBy=multi-user.target

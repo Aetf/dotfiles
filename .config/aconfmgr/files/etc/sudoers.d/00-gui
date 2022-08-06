@@ -1,0 +1,14 @@
+# Ansible managed
+
+# Locale settings
+Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET FC_LANG"
+
+# HiDPI settings
+Defaults env_keep += "GDK_DPI_SCALE GDK_SCALE QT_AUTO_SCREEN_SCALE_FACTOR QT_SCREEN_SCALE_FACTORS"
+
+# Desktop environment. Sepcifically, XDG_SESSION_COOKIE allows
+# sudo-run commands to inherit the callers' ConsoleKit session
+Defaults env_keep += "DESKTOP_SESSION GS_LIB GTK_MODULES XDG_SESSION_COOKIE"
+
+# Input methods
+Defaults env_keep += "XMODIFIERS GTK_IM_MODULE QT_IM_MODULE QT_IM_SWITCHER"

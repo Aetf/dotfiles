@@ -1,0 +1,16 @@
+This folder has no use in booted OS environment.
+It is used by dracut-install-uki to collect them
+and pass to dracut for use in building unified
+kernel images.
+
+In /etc/dracut.conf.d/defaults.conf, hostonly-cmdline
+must be disabled to not let dracut automatically
+detect kernel command line.
+
+Note that dracut-install-uki builds two version of the kernel image:
+1) a normal image that includes
+    - `/etc/dracut.conf.d/cmdline.d/*.conf`
+    - `/etc/dracut.conf.d/cmdline.d/normal/*.conf`
+2) a fallback image that includes
+    - `/etc/dracut.conf.d/cmdline.d/*.conf`
+    - `/etc/dracut.conf.d/cmdline.d/fallback/*.conf`

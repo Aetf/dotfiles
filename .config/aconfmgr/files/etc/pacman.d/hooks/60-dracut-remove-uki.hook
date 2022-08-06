@@ -1,0 +1,16 @@
+[Trigger]
+Type = Path
+Operation = Remove
+Target = usr/lib/modules/*/pkgbase
+
+[Trigger]
+Type = Package
+Operation = Remove
+Target = dracut
+Target = dracut-git
+
+[Action]
+Description = Removing unified kernel images...
+When = PreTransaction
+Exec = /usr/local/bin/dracut-remove-uki
+NeedsTargets
