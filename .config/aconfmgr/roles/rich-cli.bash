@@ -2,6 +2,9 @@ AddPackage kmscon-patched-git # Terminal emulator based on Kernel Mode Setting (
 CopyFile /etc/kmscon/kmscon.conf
 CreateLink /etc/systemd/system/autovt@.service /usr/lib/systemd/system/kmsconvt@.service
 
+# This will read ~/.config/user-tmpfiles.d/* to create directories
+SystemdEnable --type user systemd /usr/lib/systemd/user/systemd-tmpfiles-setup.service
+
 AddPackage man-db # A utility for reading man pages
 AddPackage man-pages # Linux man pages
 

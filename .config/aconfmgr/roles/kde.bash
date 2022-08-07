@@ -1,11 +1,7 @@
 # Login
+CopyFile /etc/sddm.conf.d/hidpi.conf
+CopyFile /etc/sddm.conf.d/kde_settings.conf
 IgnorePath '/usr/share/sddm/themes/*'
-CreateLink /etc/systemd/system/display-manager.service /usr/lib/systemd/system/sddm-plymouth.service
-CreateFile /etc/sddm.conf > /dev/null
-CopyFile /etc/sddm.conf.d/hidpi.conf '' aetf aetf
-CopyFile /etc/sddm.conf.d/kde_settings.conf '' aetf aetf
-SetFileProperty /etc/sddm.conf.d group aetf
-SetFileProperty /etc/sddm.conf.d owner aetf
 
 # Plasma DE
 AddPackage plasma-meta # Meta package to install KDE Plasma
@@ -55,8 +51,8 @@ AddPackage pipewire-alsa # Low-latency audio/video router and processor - ALSA c
 AddPackage pipewire-jack # Low-latency audio/video router and processor - JACK support
 AddPackage pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
 AddPackage wireplumber # Session / policy manager implementation for PipeWire
-# TODO: use systemd enable
-CreateLink /etc/systemd/user/pipewire-session-manager.service /usr/lib/systemd/user/wireplumber.service
+# Enable wireplumber by default for all users
+SystemdEnable --type user wireplumber /usr/lib/systemd/user/wireplumber.service
 
 AddPackage alsa-utils # Advanced Linux Sound Architecture - Utilities
 AddPackage pavucontrol-qt # A Pulseaudio mixer in Qt (port of pavucontrol)

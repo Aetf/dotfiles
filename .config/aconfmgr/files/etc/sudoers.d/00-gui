@@ -1,5 +1,3 @@
-# Ansible managed
-
 # Locale settings
 Defaults env_keep += "LANG LANGUAGE LINGUAS LC_* _XKB_CHARSET FC_LANG"
 

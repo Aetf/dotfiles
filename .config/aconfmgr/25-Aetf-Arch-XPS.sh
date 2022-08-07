@@ -1,6 +1,5 @@
 MatchHost || return 0
 
-AddRole booting-refind
 AddRole base
 AddRole network-nm
 AddRole rich-cli
@@ -11,6 +10,7 @@ AddRole font
 AddRole docker
 
 AddRole kde
+SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
 AddRole cjk
 
 AddRole kvm
@@ -28,14 +28,17 @@ AddRole tzupdate
 # Booting
 AddPackage linux-zen # The Linux ZEN kernel and modules
 AddPackage linux-zen-headers # Headers and scripts for building modules for the Linux ZEN kernel
+AddPackage intel-ucode # Microcode update files for Intel CPUs
+AddPackage edk2-shell # EDK2 UEFI Shell
+
+## Bootloader and uki infra
+AddRole refind
+AddRole initramfs-dracut
 
 CopyFile /etc/pixmaps/dell.bmp
 CreateLink /etc/pixmaps/oemlogo.bmp dell.bmp
 
-AddPackage intel-ucode # Microcode update files for Intel CPUs
-AddPackage edk2-shell # EDK2 UEFI Shell
-
-# configure refind
+## configure refind
 AddPackage refind-theme-regular-git # A simplistic clean and minimal theme for rEFInd
 CopyFile /etc/refind.d/overlay/00-theme.conf
 CopyFile /etc/refind.d/overlay/90-user.conf
@@ -47,11 +50,10 @@ CopyFile /etc/refind.d/overlay/fonts/source-code-pro-32.png
 CreateLink /etc/refind.d/overlay/oemlogo.bmp /etc/pixmaps/oemlogo.bmp
 CreateLink /etc/refind.d/overlay/refind-theme-regular /usr/share/refind/themes/refind-theme-regular/
 
-# configure dracut for initramfs
+## configure dracut for initramfs
 CopyFile /etc/dracut.conf.d/blacklist-nouveau.conf
 CopyFile /etc/dracut.conf.d/uefi.conf
 CopyFile /etc/dracut.conf.d/unused-modules.conf
-
 
 CopyFile /etc/dracut.conf.d/cmdline.d/block.conf
 CopyFile /etc/dracut.conf.d/cmdline.d/disable-audit.conf
@@ -62,7 +64,7 @@ CopyFile /etc/dracut.conf.d/cmdline.d/normal/plymouth.conf
 CopyFile /etc/dracut.conf.d/cmdline.d/fallback/break.conf
 CopyFile /etc/dracut.conf.d/cmdline.d/fallback/verbose.conf
 
-# configure plymouth
+## configure plymouth
 AddRole plymouth-oemlogo
 CopyFile /etc/dracut.conf.d/install.d/normal/plymouth-oemlogo-font.conf
 
@@ -88,8 +90,7 @@ AddPackage linux-firmware # Firmware files for Linux
 AddPackage sof-firmware # Sound Open Firmware
 
 # Bluetooth
-# TODO: use systemd enable
-CreateLink /etc/systemd/system/dbus-org.bluez.service /usr/lib/systemd/system/bluetooth.service
+SystemdEnable bluez /usr/lib/systemd/system/bluetooth.service
 
 # Video
 AddPackage intel-media-driver # Intel Media Driver for VAAPI — Broadwell+ iGPUs
@@ -108,8 +109,8 @@ CopyFile /etc/udev/rules.d/80-nvidia-pm.rules
 AddPackage nvidia-container-runtime # NVIDIA opencontainer runtime fork to expose GPU devices to containers.
 
 # Wifi
-CreateLink /etc/systemd/system/systemd-rfkill.service /dev/null
-CreateLink /etc/systemd/system/systemd-rfkill.socket /dev/null
+SystemdMask systemd-rfkill.service system
+SystemdMask systemd-rfkill.socket system
 
 # Touchpad
 AddPackage libinput-three-finger-drag # Input device management and event handling library

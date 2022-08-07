@@ -1,5 +1,3 @@
-# Ansible managed
-
 [Unit]
 Description=Update timezone info based on geoip location
 Wants=network-online.target

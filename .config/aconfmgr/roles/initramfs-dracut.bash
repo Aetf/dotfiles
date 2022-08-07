@@ -1,5 +1,4 @@
 CopyFile /usr/local/bin/mount-esp 755
-CopyFile /etc/pacman.d/hooks/ensure-vfat.hook
 
 AddPackage dracut
 AddOptionalPackage dracut \
@@ -16,15 +15,12 @@ CopyFile /etc/dracut.conf.d/early-kms.conf
 CreateDir /etc/dracut.conf.d/install.d/normal
 CreateDir /etc/dracut.conf.d/install.d/fallback
 
+# Each file in these directory adds kernel command line that go
+# into the  final UKI
 CopyFile /etc/dracut.conf.d/cmdline.d/README
 
-
+# Save current running kernel's modules
 AddPackage mkmm # Moviuro's Kernel Module Manager
 CreateLink /etc/pacman.d/hooks/10-mkmm-tmpfs-post.hook /usr/share/mkmm/10-mkmm-tmpfs-post.hook
 CreateLink /etc/pacman.d/hooks/10-mkmm-tmpfs-pre.hook /usr/share/mkmm/10-mkmm-tmpfs-pre.hook
-
-
-AddPackage refind-git # rEFInd Boot Manager - git version (Aetf fixed)
-CopyFile /usr/local/bin/refind-upgrade 755
-CopyFile /etc/pacman.d/hooks/refind.hook
-
+# systemctl enable mkmm-bleach.service
