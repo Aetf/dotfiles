@@ -25,10 +25,10 @@ def msg2(msg):
     print('--> {}'.format(msg), flush=True)
 
 
-def get_conf_lines(base, preset):
+def get_conf_lines(base, preset, conf_dir=DRACUT_CONF_DIR):
     conf_files = chain(
-        glob.glob(os.path.join(DRACUT_CONF_DIR, base, '*.conf')),
-        glob.glob(os.path.join(DRACUT_CONF_DIR, base, preset, '*.conf')),
+        glob.glob(os.path.join(conf_dir, base, '*.conf')),
+        glob.glob(os.path.join(conf_dir, base, preset, '*.conf')),
     )
     for conf in conf_files:
         with open(conf) as f:
@@ -43,7 +43,7 @@ def get_conf_lines(base, preset):
 def get_cmdline(preset='normal'):
     cmdline = []
 
-    for line in get_conf_lines('cmdline.d', preset):
+    for line in get_conf_lines('cmdline.d', preset, conf_dir='/etc/kernel'):
         if line:
             cmdline.append(line)
 

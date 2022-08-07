@@ -2,6 +2,7 @@ MatchHost || return 0
 
 AddRole base
 AddRole network-nm
+AddRole zerotier
 AddRole rich-cli
 AddRole packaging
 AddRole ssh
@@ -51,18 +52,19 @@ CreateLink /etc/refind.d/overlay/oemlogo.bmp /etc/pixmaps/oemlogo.bmp
 CreateLink /etc/refind.d/overlay/refind-theme-regular /usr/share/refind/themes/refind-theme-regular/
 
 ## configure dracut for initramfs
+CopyFile /etc/dracut.conf.d/early-kms.conf
 CopyFile /etc/dracut.conf.d/blacklist-nouveau.conf
-CopyFile /etc/dracut.conf.d/uefi.conf
 CopyFile /etc/dracut.conf.d/unused-modules.conf
 
-CopyFile /etc/dracut.conf.d/cmdline.d/block.conf
-CopyFile /etc/dracut.conf.d/cmdline.d/disable-audit.conf
-CopyFile /etc/dracut.conf.d/cmdline.d/s3-sleep.conf
+## kernel command lines
+CopyFile /etc/kernel/cmdline.d/block.conf
+CopyFile /etc/kernel/cmdline.d/disable-audit.conf
+CopyFile /etc/kernel/cmdline.d/s3-sleep.conf
 
-CopyFile /etc/dracut.conf.d/cmdline.d/normal/plymouth.conf
+CopyFile /etc/kernel/cmdline.d/normal/plymouth.conf
 
-CopyFile /etc/dracut.conf.d/cmdline.d/fallback/break.conf
-CopyFile /etc/dracut.conf.d/cmdline.d/fallback/verbose.conf
+CopyFile /etc/kernel/cmdline.d/fallback/break.conf
+CopyFile /etc/kernel/cmdline.d/fallback/verbose.conf
 
 ## configure plymouth
 AddRole plymouth-oemlogo
@@ -104,6 +106,7 @@ AddPackage nvidia-dkms # NVIDIA drivers - module sources
 AddPackage nvidia-prime # NVIDIA Prime Render Offload configuration and utilities
 CopyFile /etc/modprobe.d/nvidia-power.conf
 CopyFile /etc/udev/rules.d/80-nvidia-pm.rules
+CopyFile /etc/pacman.d/confs/no-nvidia-vulkan.conf
 
 # TODO: if docker
 AddPackage nvidia-container-runtime # NVIDIA opencontainer runtime fork to expose GPU devices to containers.
@@ -124,11 +127,14 @@ AddPackage tlp-rdw # Linux Advanced Power Management - Radio Device Wizard
 CopyFile /etc/tlp.d/cpu.conf
 CopyFile /etc/tlp.d/pci-pm.conf
 CopyFile /etc/tlp.d/rdw.conf
+SystemdEnable tlp /usr/lib/systemd/system/tlp.service
 
 CopyFile /etc/fan2go/fan2go.db 600
 CopyFile /etc/fan2go/fan2go.yaml
 CopyFile /etc/fancontrol
 
+# Auto load sensor modules on boot
+SystemdEnable lm_sensors /usr/lib/systemd/system/lm_sensors.service
 CopyFile /etc/conf.d/lm_sensors
 
 # Printers
@@ -144,3 +150,15 @@ CopyFile /etc/firewalld/zones/libvirt.xml
 CopyFile /etc/firewalld/zones/trusted.xml
 CopyFile /etc/firewalld/zones/veth.xml
 
+# Additional apps
+AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired by pacgraph
+AddPackage ventoy-bin # A new multiboot USB solution
+AddPackage github-cli # The GitHub CLI
+AddPackage dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
+AddPackage hexo-cli # Command line interface for Hexo
+AddPackage pulumi # Modern Infrastructure as Code
+AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
+AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets
+AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility
+CopyFile /etc/pam.d/testpam
+AddPackage syncthing

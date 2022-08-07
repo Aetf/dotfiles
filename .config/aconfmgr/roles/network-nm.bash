@@ -7,6 +7,8 @@ AddPackage networkmanager-vpnc # NetworkManager VPN plugin for VPNC
 AddOptionalPackage networkmanager-vpnc \
     libnma-gtk4 'GUI support (GTK 4)' `# NetworkManager GUI client library (GTK4)`
 
+SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager.service
+SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-wait-online.service
 
 CreateLink /etc/resolv.conf /run/NetworkManager/resolv.conf
 CopyFile /etc/NetworkManager/conf.d/ignore-docker.conf

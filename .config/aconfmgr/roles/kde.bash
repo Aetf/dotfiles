@@ -22,6 +22,10 @@ AddOptionalPackage kio-extra \
 AddOptionalPackage kde-gtk-config \
     xsettingsd 'apply settings to GTK applications on the fly' `# Provides settings to X11 applications via the XSETTINGS specification`
 
+# This will ensure ~/downloads, ~/documents etc.
+SystemdEnable --type user xdg-user-dirs /usr/lib/systemd/user/xdg-user-dirs-update.service
+
+
 AddPackage flatpak # Linux application sandboxing and distribution framework (formerly xdg-app)
 
 # Theme
@@ -52,6 +56,8 @@ AddPackage pipewire-jack # Low-latency audio/video router and processor - JACK s
 AddPackage pipewire-pulse # Low-latency audio/video router and processor - PulseAudio replacement
 AddPackage wireplumber # Session / policy manager implementation for PipeWire
 # Enable wireplumber by default for all users
+SystemdEnable --type user pipewire /usr/lib/systemd/user/pipewire.socket
+SystemdEnable --type user pipewire-pulse /usr/lib/systemd/user/pipewire-pulse.socket
 SystemdEnable --type user wireplumber /usr/lib/systemd/user/wireplumber.service
 
 AddPackage alsa-utils # Advanced Linux Sound Architecture - Utilities
@@ -64,6 +70,7 @@ AddPackage qpwgraph # PipeWire Graph Qt GUI Interface
 # Devices
 AddPackage piper # GTK application to configure gaming mice
 AddPackage yubikey-manager-qt # Cross-platform application for configuring any YubiKey over all USB transports
+SystemdEnable pcsclite /usr/lib/systemd/system/pcscd.socket
 
 AddPackage cups
 AddPackage print-manager # A tool for managing print jobs and printers
@@ -71,6 +78,7 @@ AddPackage system-config-printer # A CUPS printer configuration tool and status 
 AddOptionalPackage system-config-printer \
     cups-pk-helper "PolicyKit helper to configure cups with fine-grained privileges" `# A helper that makes system-config-printer use PolicyKit`\
     python-pysmbc 'SMB browser support' `# Python 3 bindings for libsmbclient`
+SystemdEnable cups /usr/lib/systemd/system/cups.socket
 
 AddPackage sane-airscan # SANE - SANE backend for AirScan (eSCL) and WSD document scanners
 CopyFile /etc/sane.d/dll.conf

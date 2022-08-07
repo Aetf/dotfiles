@@ -1,0 +1,15 @@
+[Match]
+Name=wl*
+
+[Network]
+DHCP=yes
+# IgnoreCarrierLoss=3s ensures that systemd-networkd will not re-configure the interface (e.g., release and re-acquire a
+# DHCP lease) for a short period (3 seconds in this example) while the wireless interface roams to another access point
+# within the same wireless network (SSID), which translates to shorter downtime when roaming.
+IgnoreCarrierLoss=3s
+
+# https://wiki.archlinux.org/title/Systemd-networkd#Wired_and_wireless_adapters_on_the_same_machine
+[DHCPv4]
+RouteMetric=20
+[IPv6AcceptRA]
+RouteMetric=20

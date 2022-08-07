@@ -9,8 +9,8 @@ detect kernel command line.
 
 Note that dracut-install-uki builds two version of the kernel image:
 1) a normal image that includes
-    - `/etc/dracut.conf.d/cmdline.d/*.conf`
-    - `/etc/dracut.conf.d/cmdline.d/normal/*.conf`
+    - `/etc/kernel/cmdline.d/*.conf`
+    - `/etc/kernel/cmdline.d/normal/*.conf`
 2) a fallback image that includes
-    - `/etc/dracut.conf.d/cmdline.d/*.conf`
-    - `/etc/dracut.conf.d/cmdline.d/fallback/*.conf`
+    - `/etc/kernel/cmdline.d/*.conf`
+    - `/etc/kernel/cmdline.d/fallback/*.conf`
