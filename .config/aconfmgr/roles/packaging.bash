@@ -33,7 +33,7 @@ sed -i -E 's/^#?MAKEFLAGS=.+$/MAKEFLAGS="-j$(nproc)"/g' "$f"
 ## In-memory build dir
 sed -i -E 's|^#?BUILDDIR=.+$|BUILDDIR=/tmp/makepkg|g' "$f"
 ## Set packager
-sed -i -E 's/^#?PACKAGER=.+$/PACKAGER=Aetf <aetf@unlimited-code.works>/g' "$f"
+sed -i -E 's/^#?PACKAGER=.+$/PACKAGER="Aetf <aetf@unlimited-code.works>"/g' "$f"
 
 # Helpful tools for package dev
 AddPackage pacman-contrib # Contributed scripts and tools for pacman systems
