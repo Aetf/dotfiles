@@ -16,7 +16,7 @@ MatchHost || return 0
 AddRole base
 
 # For filesystem layout, we rely on systemd-gpt-auto-generator, so make sure /etc/fstab is clean.
-GetPackageOriginalFile filesystem /etc/fstab
+GetPackageOriginalFile filesystem /etc/fstab >/dev/null
 # Rest of the configs asumes ESP mounted at /efi, so let's create that directory.
 # From systemd doc:
 # > Mount and automount units for the EFI System Partition (ESP) are generated on EFI systems.

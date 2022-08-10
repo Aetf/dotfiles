@@ -2,7 +2,7 @@
 AddPackage reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
 
 # Make pacman read configs from the directory
-CreateFile /etc/pacman.d/confs/empty.conf
+CreateFile /etc/pacman.d/confs/empty.conf >/dev/null
 cat >>"$(GetPackageOriginalFile pacman /etc/pacman.conf)" <<EOF
 # BEGIN aconfmgr MANAGED BLOCK
 [options]
@@ -40,11 +40,11 @@ sed -i -E 's/^#?PACKAGER=.+$/PACKAGER="Aetf <aetf@unlimited-code.works>"/g' "$f"
 AddPackage pacman-contrib # Contributed scripts and tools for pacman systems
 AddPackage devtools # Tools for Arch Linux package maintainers
 AddPackage debuginfod # Handle ELF object files and DWARF debugging information (debuginfod)
-AddPackage downgrade # Bash script for downgrading one or more packages to a version in your cache or the A.L.A.
+AddPackage --foreign downgrade # Bash script for downgrading one or more packages to a version in your cache or the A.L.A.
 AddPackage namcap # A Pacman package analyzer
 
 ## AUR helper
-AddPackage paru # Feature packed AUR helper
+AddPackage --foreign paru # Feature packed AUR helper
 AddOptionalPackage paru \
     asp "downloading repo pkgbuilds" `# Arch Linux build source file management tool`
 cat >> "$(GetPackageOriginalFile paru /etc/paru.conf)" <<EOF

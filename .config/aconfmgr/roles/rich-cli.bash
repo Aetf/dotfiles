@@ -1,4 +1,4 @@
-AddPackage kmscon-patched-git # Terminal emulator based on Kernel Mode Setting (KMS) (forked and patched version)
+AddPackage --foreign kmscon-patched-git # Terminal emulator based on Kernel Mode Setting (KMS) (forked and patched version)
 CopyFile /etc/kmscon/kmscon.conf
 # defer because it's hard to build kmscon now
 # SystemdEnable --name kmsconvt@tty1.service kmscon-patched-git /usr/lib/systemd/system/kmsconvt@.service
@@ -26,8 +26,8 @@ AddPackage powertop # A tool to diagnose issues with power consumption and power
 AddPackage iotop # View I/O usage of processes
 AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
 
-AddPackage rnr # A CLI tool to rename files and directories that supports regex.
+AddPackage --foreign rnr # A CLI tool to rename files and directories that supports regex.
 AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
-AddPackage handlr-bin # Powerful alternative to xdg-utils written in Rust
+AddPackage --foreign handlr-bin # Powerful alternative to xdg-utils written in Rust
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
 

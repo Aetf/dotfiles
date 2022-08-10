@@ -1,1 +1,1 @@
-AddPackage k3s
+AddPackage --foreign k3s
