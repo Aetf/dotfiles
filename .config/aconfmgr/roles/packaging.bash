@@ -2,6 +2,7 @@
 AddPackage reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
 
 # Make pacman read configs from the directory
+CreateFile /etc/pacman.d/confs/empty.conf
 cat >>"$(GetPackageOriginalFile pacman /etc/pacman.conf)" <<EOF
 # BEGIN aconfmgr MANAGED BLOCK
 [options]
