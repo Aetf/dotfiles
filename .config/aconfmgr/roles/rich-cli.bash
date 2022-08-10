@@ -1,6 +1,7 @@
 AddPackage kmscon-patched-git # Terminal emulator based on Kernel Mode Setting (KMS) (forked and patched version)
 CopyFile /etc/kmscon/kmscon.conf
-SystemdEnable --name kmsconvt@tty1.service kmscon-patched-git /usr/lib/systemd/system/kmsconvt@.service
+# defer because it's hard to build kmscon now
+# SystemdEnable --name kmsconvt@tty1.service kmscon-patched-git /usr/lib/systemd/system/kmsconvt@.service
 CreateLink /etc/systemd/system/autovt@.service /usr/lib/systemd/system/kmsconvt@.service
 
 # This will read ~/.config/user-tmpfiles.d/* to create directories
