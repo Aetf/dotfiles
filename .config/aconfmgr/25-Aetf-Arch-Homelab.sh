@@ -9,8 +9,30 @@ MatchHost || return 0
 #   * partitions and filesystems are created using systemd-gpt-auto-generator compatible types
 #     + no need to create /etc/fstab
 #   * `base` package installed
+#     + `git`, `openssh`, `sudo`, `neovim`
 #   * timezone (`/etc/localtime`) and time adjusted (`/etc/adjtime`)
 #   * user account created with uid/gid 1000
+#     + user has sudo access
+#       - `sudo` installed
+#       - `wheel` group configured in sudoers
+#       - user belongs to `wheel` group
+
+# Base system installation
+#   * create partitions & filesystems
+#   * mount to /mnt, /mnt/efi
+#   * pacstrap /mnt base git openssh sudo neovim
+#   * arch-chroot /mnt
+#   * echo "Hostname" > /etc/hostname
+#   * ln -sf /usr/share/zoneinfo/America/Los_Angles /etc/localtime
+#   * hwclock --systohc
+#   * echo "%wheel ALL=ALL (ALL)" /etc/sudoers.d/wheel
+#   * useradd -m -U -G wheel aetf
+#   * passwd aetf
+#   * su aetf
+#   * curl -JOL .... yadm
+#   * yadm clone https://github.com/Aetf/dotfiles
+#   * cd /tmp && git clone https://CyberShadow/aconfmgr
+#   * cd aconfmgr && ./aconfmgr -c ~/.config/aconfmgr apply
 
 # First ack the base installation.
 AddRole base
