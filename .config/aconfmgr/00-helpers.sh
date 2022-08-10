@@ -2,7 +2,8 @@
 
 # Helper functions
 function Host() {
-    local host=$(uname -n)
+    #local host=$(uname -n)
+    local host=$(cat /etc/hostname)
     printf "$host"
 }
 
