@@ -88,7 +88,7 @@ AddRole packaging
 AddRole rich-cli
 
 # Rust is a must on any system, especially for rust-scripts
-AddRole rust-dev
+#AddRole rust-dev
 
 # Rest of the machine will be managed by k8s
 AddRole k8s

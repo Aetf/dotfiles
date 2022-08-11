@@ -44,10 +44,34 @@ AddPackage --foreign downgrade # Bash script for downgrading one or more package
 AddPackage namcap # A Pacman package analyzer
 
 ## AUR helper
-AddPackage --foreign paru # Feature packed AUR helper
-AddOptionalPackage paru \
+AddPackage --foreign paru-bin # Feature packed AUR helper
+AddOptionalPackage paru-bin \
     asp "downloading repo pkgbuilds" `# Arch Linux build source file management tool`
-cat >> "$(GetPackageOriginalFile paru /etc/paru.conf)" <<EOF
+cat > "$(CreateFile /etc/paru.conf)" <<'EOF'
+#
+# $PARU_CONF
+# /etc/paru.conf
+# ~/.config/paru/paru.conf
+#
+# See the paru.conf(5) manpage for options
+
+#
+# GENERAL OPTIONS
+#
+[options]
+PgpFetch
+Devel
+Provides
+DevelSuffixes = -git -cvs -svn -bzr -darcs -always -hg -fossil
+
+#
+# Binary OPTIONS
+#
+#[bin]
+#FileManager = vifm
+#MFlags = --skippgpcheck
+#Sudo = doas
+
 # Custom options
 [options]
 BottomUp
