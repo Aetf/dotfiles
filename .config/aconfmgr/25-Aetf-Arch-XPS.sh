@@ -1,30 +1,7 @@
 MatchHost || return 0
 
 AddRole base
-AddRole network-nm
-AddRole zerotier
-AddRole rich-cli
 AddRole packaging
-AddRole ssh
-AddRole font
-
-AddRole docker
-
-AddRole kde
-SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
-AddRole cjk
-
-AddRole kvm
-AddRole games
-AddRole samba
-
-AddRole latex
-AddRole android-dev
-AddRole rust-dev
-AddRole cpp-dev
-AddRole python-dev
-AddRole multimedia
-AddRole tzupdate
 
 # Booting
 AddPackage linux-zen # The Linux ZEN kernel and modules
@@ -78,6 +55,32 @@ AddPackage xfsprogs # XFS filesystem utilities
 CopyFile /etc/fstab
 CopyFile /etc/systemd/system/mnt-Aetf\\x2dLaptop.automount
 CopyFile /etc/systemd/system/mnt-Aetf\\x2dLaptop.mount
+
+IsBootstrap && return 0
+
+AddRole network-nm
+AddRole zerotier
+AddRole rich-cli
+AddRole ssh
+AddRole font
+
+AddRole docker
+
+AddRole kde
+SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
+AddRole cjk
+
+AddRole kvm
+AddRole games
+AddRole samba
+
+AddRole latex
+AddRole android-dev
+AddRole rust-dev
+AddRole cpp-dev
+AddRole python-dev
+AddRole multimedia
+AddRole tzupdate
 
 # Login: face cam, fingerprint
 AddPackage fprintd # D-Bus service to access fingerprint readers

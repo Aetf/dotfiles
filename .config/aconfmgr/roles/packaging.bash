@@ -2,7 +2,9 @@
 AddPackage reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
 
 # Make pacman read configs from the directory
+## Create the directory structure first to avoid pacman get confused
 CreateFile /etc/pacman.d/confs/empty.conf >/dev/null
+## Append the config
 cat >>"$(GetPackageOriginalFile pacman /etc/pacman.conf)" <<EOF
 # BEGIN aconfmgr MANAGED BLOCK
 [options]
@@ -44,9 +46,11 @@ AddPackage --foreign downgrade # Bash script for downgrading one or more package
 AddPackage namcap # A Pacman package analyzer
 
 ## AUR helper
-AddPackage --foreign paru-bin # Feature packed AUR helper
-AddOptionalPackage paru-bin \
+AddPackage --foreign paru # Feature packed AUR helper
+AddOptionalPackage paru \
     asp "downloading repo pkgbuilds" `# Arch Linux build source file management tool`
+# Directly create the file without getting it from the package to avoid building
+# it while generating config
 cat > "$(CreateFile /etc/paru.conf)" <<'EOF'
 #
 # $PARU_CONF
@@ -86,4 +90,3 @@ LocalRepo
 EOF
 ### local AUR repo (also needs config in paru)
 CopyFile /etc/pacman.d/confs/local-aur.conf
-

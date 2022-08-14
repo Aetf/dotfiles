@@ -237,3 +237,4 @@ function SystemdMask() {
 
     CreateLink "/etc/systemd/${type}/${unit}" /dev/null
 }
+

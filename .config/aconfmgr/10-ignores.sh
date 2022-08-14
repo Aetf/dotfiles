@@ -1,4 +1,5 @@
-IgnorePath '/.*'
+IgnorePath '/.swapfiles'
+IgnorePath '/.snapshots'
 IgnorePath '/**/UNMOUNTED'
 IgnorePath '*/lost+found/*'
 
