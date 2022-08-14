@@ -26,6 +26,7 @@ SystemdMask ldconfig.service
 
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
 
+AddPackage unzip # For extracting and viewing files in .zip archives
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
 AddPackage lzip # A lossless file compressor based on the LZMA algorithm
 AddPackage gzip # GNU compression utility

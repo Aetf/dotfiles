@@ -90,3 +90,11 @@ LocalRepo
 EOF
 ### local AUR repo (also needs config in paru)
 CopyFile /etc/pacman.d/confs/local-aur.conf
+if IsBootstrap; then
+### The following path is ignored which means they will always be created
+### but we only do this in bootstrap to avoid overwriting existing files
+    CopyFile /var/lib/repo/local-aur/local-aur.db
+    CopyFile /var/lib/repo/local-aur/local-aur.db.tar.zst
+    CopyFile /var/lib/repo/local-aur/local-aur.files
+    CopyFile /var/lib/repo/local-aur/local-aur.files.tar.zst
+fi
