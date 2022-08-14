@@ -56,8 +56,8 @@ fi
         # Load any plugin specific settings, these are all variable settings, so we load them first
         pick'index.zsh'
             $ZDOTDIR/config.d
-        # for the sbin ice
-        @zdharma-continuum/z-a-bin-gem-node
+        # for the fbin/sbin ice
+        @zdharma-continuum/zinit-annex-bin-gem-node
         # And then the powerlevel10k prompt, with fast gitstatus, config is in $ZDOTDIR/config.d/purepower.zsh
         @romkatv/powerlevel10k
     )
@@ -89,8 +89,9 @@ fi
             @zsh-users/zsh-autosuggestions
 
         # yadm to manage dotfiles (this is the binary used after bootstrap)
-        fbin'yadm -> y'
         sbin'yadm'
+        sbin'yadm -> y'
+        # fbin'yadm -> y'
             @TheLocehiliosan/yadm
 
         # fzf the fuzzy finder
