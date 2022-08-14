@@ -8,5 +8,11 @@ CopyFile /etc/systemd/system/systemd-networkd-wait-online.service.d/wait-for-onl
 # and systemd-resolved to provide DNS resolving and alike
 SystemdEnable systemd /usr/lib/systemd/system/systemd-resolved.service
 ## the recommanded way to use systemd-resolved is to use stub-resolv.conf
-CreateLink /etc/resolv.conf /run/systemd/resolve/stub-resolv.conf
+### In bootstrap, we are in chroot environment, /etc/resolv.conf is
+### bind-mounted from the outside system, so it is not possible to modify.
+if IsBootstrap; then
+    IgnorePath /etc/resolv.conf
+else
+    CreateLink /etc/resolv.conf /run/systemd/resolve/stub-resolv.conf
+fi
 
