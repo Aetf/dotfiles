@@ -28,6 +28,5 @@ AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
 
 AddPackage --foreign rnr # A CLI tool to rename files and directories that supports regex.
 AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
-AddPackage --foreign handlr-bin # Powerful alternative to xdg-utils written in Rust
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
 

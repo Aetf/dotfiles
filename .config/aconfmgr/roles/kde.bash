@@ -47,6 +47,7 @@ AddPackage plasma5-applets-window-title # Plasma 5 applet that shows the applica
 AddPackage wev # tool for debugging wayland events, similar to xev
 AddPackage neovide # No Nonsense Neovim Client in Rust
 AddPackage wl-clipboard # Command-line copy/paste utilities for Wayland
+AddPackage --foreign handlr-bin # Powerful alternative to xdg-utils written in Rust
 CopyFile /etc/sudoers.d/00-gui
 
 # A/V

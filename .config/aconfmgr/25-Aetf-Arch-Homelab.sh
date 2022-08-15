@@ -57,6 +57,7 @@ CopyFile /etc/systemd/network/25-wireless.network
 AddRole packaging
 
 # Now the system boots, we stop here and leave further complex setups after reboot
+## MANUAL: remember to run locale-gen
 IsBootstrap && return 0
 
 # Further networking configurations
