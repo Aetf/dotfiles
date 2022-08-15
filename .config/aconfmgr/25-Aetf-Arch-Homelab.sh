@@ -36,9 +36,9 @@ CreateLink /etc/pixmaps/oemlogo.bmp /usr/share/systemd/bootctl/splash-arch.bmp
 CopyFile /etc/dracut.conf.d/unused-modules.conf
 ## Load nvme kernel module even we don't install nvme-cli package
 CopyFile /etc/dracut.conf.d/nvme.conf
-## dracut will automatically add btrfs kernel module when the cli is present in
-## system
+## Make sure btrfs is included
 AddPackage btrfs-progs # Btrfs filesystem utilities
+CopyFile /etc/dracut.conf.d/btrfs.conf
 
 # After the kernel boots up, we need network,
 echo "Aetf-Arch-Homelab" > "$(CreateFile /etc/hostname)"
