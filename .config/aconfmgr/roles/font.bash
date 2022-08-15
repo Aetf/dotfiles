@@ -1,11 +1,11 @@
 # Fonts
-AddPackage adobe-source-code-pro-fonts # Monospaced font family for user interface and coding environments
-AddPackage nerd-fonts-hack # Patched font Hack from nerd-fonts library
+AddPackage --foreign nerd-fonts-hack # Patched font Hack from nerd-fonts library
 AddPackage noto-fonts-cjk # Google Noto CJK fonts
 AddPackage noto-fonts-emoji # Google Noto emoji fonts
 AddPackage noto-fonts-extra # Google Noto TTF fonts - additional variants
 
-
+# TODO: check the following
+return 0
 
 CreateLink /etc/fonts/conf.d/10-hinting-slight.conf /usr/share/fontconfig/conf.default/10-hinting-slight.conf
 CreateLink /etc/fonts/conf.d/10-scale-bitmap-fonts.conf /usr/share/fontconfig/conf.default/10-scale-bitmap-fonts.conf

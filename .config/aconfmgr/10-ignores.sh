@@ -3,7 +3,10 @@ IgnorePath '/.snapshots'
 IgnorePath '/**/UNMOUNTED'
 IgnorePath '*/lost+found/*'
 
-IgnorePath '/efi/*'
+# Ignore subdirectories in /efi separately so that /efi itself is kept
+IgnorePath '/efi/EFI/*'
+IgnorePath '/efi/loader/*'
+
 IgnorePath '/var/*'
 IgnorePath '/opt/*'
 IgnorePath '/usr/lib*/*'

@@ -20,7 +20,9 @@ GetPackageOriginalFile filesystem /etc/fstab >/dev/null
 # > listed in fstab(5)) or where the /boot/ (or /efi/) mount point is non-empty, no mount units are
 # > generated.
 CreateDir /efi
-# TODO: check the automount timeout option
+# Add mount timeout check the automount timeout option
+CopyFile /etc/systemd/system/efi.automount.d/idletimeout.conf
+CopyFile /etc/systemd/system/efi.mount.d/permission.conf
 
 # Now we config following the bootup sequence.
 # To boot the system, we use systemd-boot which is simple enough for server usage.
@@ -39,9 +41,6 @@ CopyFile /etc/dracut.conf.d/nvme.conf
 ## Make sure btrfs is included
 AddPackage btrfs-progs # Btrfs filesystem utilities
 CopyFile /etc/dracut.conf.d/btrfs.conf
-
-# After the kernel boots up, we need network,
-echo "Aetf-Arch-Homelab" > "$(CreateFile /etc/hostname)"
 
 ## For wireless connection, iwd is used
 ## MANUAL: connect and save wifi password

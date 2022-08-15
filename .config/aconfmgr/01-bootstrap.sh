@@ -59,4 +59,4 @@ function IsBootstrap() {
 
 
 # Always create the stamp in config
-date -u +"%Y-%m-%dT%H:%M:%SZ" > $(CreateFile /.bootstrapped)
+CreateFile /.bootstrapped >/dev/null

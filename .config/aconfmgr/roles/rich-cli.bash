@@ -7,6 +7,9 @@ CreateLink /etc/systemd/system/autovt@.service /usr/lib/systemd/system/kmsconvt@
 # This will read ~/.config/user-tmpfiles.d/* to create directories
 SystemdEnable --type user systemd /usr/lib/systemd/user/systemd-tmpfiles-setup.service
 
+# Useful fonts
+AddRole font
+
 AddPackage man-db # A utility for reading man pages
 AddPackage man-pages # Linux man pages
 
@@ -30,3 +33,5 @@ AddPackage --foreign rnr # A CLI tool to rename files and directories that suppo
 AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
 
+# Use polkit to provide some alternative to sudo, used by neovim
+AddPackage polkit
