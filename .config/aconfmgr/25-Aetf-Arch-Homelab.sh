@@ -75,5 +75,29 @@ AddRole rich-cli
 # Rust is a must on any system, especially for rust-scripts
 AddRole rust-dev
 
+# Samba service
+AddRole samba
+## Mount multiple disks here
+CreateNtfsMount "/dev/disk/by-label/AetfのHD.Ultra" "/srv/share/I"
+CreateNtfsMount "/dev/disk/by-label/Elements" "/srv/share/Y"
+
 # Rest of the machine will be managed by k8s
 AddRole k8s
+## This server is a worker
+cat >$(CreateFile /etc/systemd/system/k3s.service.env) <<EOF
+K3S_URL=https://aetf-arch-vps.zt.unlimited-code.works:6443
+K3S_ARGS=agent
+EOF
+cat >$(CreateFile /etc/rancher/k3s/config.yaml) <<EOF
+---
+kubelet-arg:
+- feature-gates=EphemeralContainers=true
+
+# cluster
+token-file: /etc/rancher/k3s/ucw.token
+
+# agent networking
+node-ip: 10.144.180.10
+node-external-ip: 192.168.70.85
+flannel-iface: ztqu3dzpfj
+EOF

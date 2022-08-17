@@ -238,3 +238,25 @@ function SystemdMask() {
     CreateLink "/etc/systemd/${type}/${unit}" /dev/null
 }
 
+# Create and enable systemd mount unit
+#
+#
+function CreateNtfsMount() {
+    local what=$1
+    local where=$2
+    local name=$(systemd-escape --path --suffix=mount "$where")
+    local unit="/etc/systemd/system/$name"
+    cat >$(CreateFile "$unit") <<EOF
+[Unit]
+Description=Mount $what
+[Mount]
+What=$what
+Where=$where
+Type=ntfs3
+Options=nohidden,sys_immutable,gid=1000,dmask=002,fmask=003
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    SystemdEnable --from-file "$unit"
+}
