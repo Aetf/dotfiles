@@ -30,6 +30,12 @@
 
 	# for each submodule, checkout the branch configured in .gitmodules
 	smundetach = sm foreach 'git config -f $toplevel/.gitmodules --get submodule.\"$name\".update \"rebase|merge\" >/dev/null && git checkout $(git config -f $toplevel/.gitmodules --get --default main submodule.\"$name\".branch) || :'
+
+	# reapply attributes, e.g. smudge filters
+	reattr = !sh -c "\"git stash save; \
+                   rm .git/index; \
+                   git checkout HEAD -- \\\"$(git rev-parse --show-toplevel)\\\"; \
+                   git stash pop\""
 [difftool]
 	prompt = false
 [diff]
