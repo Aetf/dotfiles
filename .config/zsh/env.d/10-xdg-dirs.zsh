@@ -50,3 +50,6 @@ export KDEHOME="$XDG_CONFIG_HOME"/kde4
 
 ## gtk 2
 export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
+
+## kubectl
+export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
