@@ -8,18 +8,22 @@ MatchHost || return 0
 # First ack the base installation.
 AddRole base
 
-# For filesystem layout, we rely on systemd-gpt-auto-generator, so make sure /etc/fstab is clean.
+# For filesystem layout, we rely on systemd-gpt-auto-generator, so make sure
+# /etc/fstab is clean.
 GetPackageOriginalFile filesystem /etc/fstab >/dev/null
-# Rest of the configs asumes ESP mounted at /efi, so let's create that directory.
-# From systemd doc:
-# > Mount and automount units for the EFI System Partition (ESP) are generated on EFI systems.
-# > The ESP is mounted to /boot/ (except if an Extended Boot Loader partition exists, see below),
-# > unless a mount point directory /efi/ exists, in which case it is mounted there. Since this
-# > generator creates an automount unit, the mount will only be activated on-demand, when accessed.
-# > On systems where /boot/ (or /efi/ if it exists) is an explicitly configured mount (for example,
-# > listed in fstab(5)) or where the /boot/ (or /efi/) mount point is non-empty, no mount units are
-# > generated.
-CreateDir /efi
+# Rest of the configs asumes ESP mounted at /efi, from systemd doc:
+#   Mount and automount units for the EFI System Partition (ESP) are generated
+#   on EFI systems. The ESP is mounted to /boot/ (except if an Extended Boot
+#   Loader partition exists, see below), unless a mount point directory /efi/
+#   exists, in which case it is mounted there. Since this generator creates an
+#   automount unit, the mount will only be activated on-demand, when accessed.
+#   On systems where /boot/ (or /efi/ if it exists) is an explicitly configured
+#   mount (for example, listed in fstab(5)) or where the /boot/ (or /efi/) mount
+#   point is non-empty, no mount units are generated.
+# aconfmgr doesn't track directories when all the contents are ignored, so this
+# is actually commented out
+# CreateDir /efi
+
 # Add mount timeout check the automount timeout option
 CopyFile /etc/systemd/system/efi.automount.d/idletimeout.conf
 CopyFile /etc/systemd/system/efi.mount.d/permission.conf

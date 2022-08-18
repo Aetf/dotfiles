@@ -3,7 +3,13 @@
 AddPackage $FOREIGN ksmbd-tools # Userspace tools for the ksmbd kernel SMB server
 
 # Create the common share directory
-CreateDir /srv/share "0755" 1000 1000
+cat >$(CreateFile /srv/share/README.md) << EOF
+# Common Share Directory
+The content in this directory is by default shared in samba
+EOF
+## Ignore any files one level below
+IgnorePath /srv/share/*/*
+
 cat >$(CreateFile /etc/ksmbd/smb.conf) <<EOF
 [nas]
     path = /srv/share

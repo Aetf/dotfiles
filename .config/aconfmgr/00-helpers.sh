@@ -260,3 +260,11 @@ EOF
 
     SystemdEnable --from-file "$unit"
 }
+
+# Create an empty directory. The stdin for the function is used as the readme
+# content.
+#
+# echo "readme content" | EmptyDir /path/to/dir
+function EmptyDir() {
+    cat >$(CreateFile "$1"/README.md)
+}
