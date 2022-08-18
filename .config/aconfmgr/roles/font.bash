@@ -1,5 +1,5 @@
 # Fonts
-AddPackage --foreign nerd-fonts-hack # Patched font Hack from nerd-fonts library
+AddPackage $FOREIGN nerd-fonts-hack # Patched font Hack from nerd-fonts library
 AddPackage noto-fonts-cjk # Google Noto CJK fonts
 AddPackage noto-fonts-emoji # Google Noto emoji fonts
 AddPackage noto-fonts-extra # Google Noto TTF fonts - additional variants

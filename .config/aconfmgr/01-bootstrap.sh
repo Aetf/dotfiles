@@ -26,7 +26,8 @@
 #     + user belongs to the `wheel` group
 #   * AUR helper is installed
 #     + only AUR packages with simple dependencies shall be installed in this
-#     stage, as the builtin AUr package handler has limited functionality
+#     stage, as the builtin AUR package handler has limited functionality
+#     + AUR local repo configured
 #
 # [1]: https://wiki.archlinux.org/title/Installation_guide#Localization
 
@@ -60,3 +61,11 @@ function IsBootstrap() {
 
 # Always create the stamp in config
 CreateFile /.bootstrapped >/dev/null
+
+# Since packages in AUR local repo is not considered foreign, we need to change
+# the desired config depending on whether we are in bootstrap or not
+if IsBootstrap; then
+    FOREIGN="--foreign"
+else
+    FOREIGN=""
+fi

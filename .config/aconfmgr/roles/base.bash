@@ -36,10 +36,10 @@ AddPackage git-filter-repo # Quickly rewrite git repository history (filter-bran
 AddPackage git-lfs # Git extension for versioning large files
 
 AddPackage neovim # Fork of Vim aiming to improve user experience, plugins, and GUIs
-AddPackage --foreign neovim-symlinks # Runs neovim if vi or vim is called
+AddPackage $FOREIGN neovim-symlinks # Runs neovim if vi or vim is called
 
 AddPackage rsync # A fast and versatile file copying tool for remote and local files
 AddPackage tmux # A terminal multiplexer
 
-AddPackage --foreign aconfmgr-git # A configuration manager for Arch Linux
+AddPackage $FOREIGN aconfmgr-git # A configuration manager for Arch Linux
 

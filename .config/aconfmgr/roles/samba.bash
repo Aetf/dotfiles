@@ -1,6 +1,6 @@
 # Use kernel space ksmbd server
 
-AddPackage --foreign ksmbd-tools # Userspace tools for the ksmbd kernel SMB server
+AddPackage $FOREIGN ksmbd-tools # Userspace tools for the ksmbd kernel SMB server
 
 # Create the common share directory
 CreateDir /srv/share "0755" 1000 1000
