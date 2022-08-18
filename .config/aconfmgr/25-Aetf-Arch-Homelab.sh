@@ -59,6 +59,13 @@ CopyFile /etc/systemd/network/25-wireless.network
 # The last thing is to setup pacman and install packages for AUR
 AddRole packaging
 
+# Disable gnupg agents on server, we will rely on gpg agent forwarding via SSH
+SystemdMask gpg-agent.service user
+SystemdMask gpg-agent.socket user
+SystemdMask gpg-agent-ssh.socket user
+SystemdMask gpg-agent-browser.socket user
+SystemdMask gpg-agent-extra.socket user
+
 # Now the system boots, we stop here and leave further complex setups after reboot
 ## MANUAL: remember to run locale-gen
 IsBootstrap && return 0
