@@ -71,6 +71,24 @@ AddRole zerotier
 # And reachable via ssh
 AddRole ssh
 
+# Disk management
+AddPackage smartmontools
+SystemdEnable smartmontools /usr/lib/systemd/system/smartd.service
+## Configure smartd monitoring
+CopyFile /etc/smartd.conf
+## Use s-nail to send mail when smartd finds an error
+AddPackage s-nail # for sending email
+### Configured sending via master@unlimited-code.works using gmail
+CopyFile /etc/mail.rc 600
+### smartd by default will not select account
+CopyFile /usr/local/bin/smartd-mail 755
+
+# Temp management
+AddPackage lm_sensors
+## System specific sensor module loading
+CopyFile /etc/conf.d/lm_sensors
+SystemdEnable lm_sensors /usr/lib/systemd/system/lm_sensors.service
+
 # Additional userspace configurations
 
 # Many familiar cli tools

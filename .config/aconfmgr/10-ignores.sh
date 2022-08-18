@@ -36,6 +36,7 @@ IgnorePath '/etc/luks-keys/*'
 IgnorePath '/etc/ssh/*_key*'
 IgnorePath '/etc/lvm/*'
 IgnorePath '/etc/os-release'
+IgnorePath '/etc/rancher/node/*'
 
 IgnorePath '/etc/ssl/*'
 IgnorePath '/etc/ca-certificates/*'
@@ -60,4 +61,3 @@ IgnorePath '/etc/cups/*'
 IgnorePath '/etc/printcap'
 
 IgnorePath '/etc/libvirt/*'
-# IgnorePath '/etc/systemd/*/*.wants/*'

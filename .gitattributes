@@ -1,1 +1,2 @@
 .config/npm/npmrc filter=git-crypt diff=git-crypt
+**/mail.rc filter=git-crypt diff=git-crypt
