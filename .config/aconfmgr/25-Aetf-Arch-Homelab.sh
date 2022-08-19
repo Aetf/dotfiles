@@ -48,7 +48,12 @@ CopyFile /etc/dracut.conf.d/btrfs.conf
 
 ## For wireless connection, iwd is used
 ## MANUAL: connect and save wifi password
+AddPackage linux-firmware
 AddPackage iwd
+SystemdEnable iwd /usr/lib/systemd/system/iwd.service
+### Ignore iwd configs which is host specific
+IgnorePath '/etc/iwd'
+IgnorePath '/etc/iwd/*'
 
 ## Then systemd-networkd and systemd-resolvd are used to manage the interfaces.
 AddRole network-systemd
@@ -130,3 +135,22 @@ node-ip: 10.144.180.10
 node-external-ip: 192.168.70.85
 flannel-iface: ztqu3dzpfj
 EOF
+
+# FUTURE: there's no fan driver for the motherboard yet
+
+# Hardware quirks
+AddRole fwupd
+
+# The Samsung 980 EVO NVME SSD constantly report 84C high temp warning on one
+# sensor. The report is likely false alarms.
+# See https://us.community.samsung.com/t5/Monitors-and-Memory/SSD-980-heat-spikes-to-84-C-183-F/td-p/2002779
+# It is reported that this is related to power saving mode and the following
+# kernel parameter can somehow reduce the frequency the issue happens by
+# preventing SSD from entering nvme power management state autonomously.
+echo "nvme_core.default_ps_max_latency_us=1500" \
+    >$(CreateFile /etc/kernel/cmdline.d/samsung-evo-980-84c-fix.conf)
+
+# APC UPS
+AddPackage apcupsd
+SystemdEnable apcupsd /usr/lib/systemd/system/apcupsd.service
+
