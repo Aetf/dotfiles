@@ -1,6 +1,7 @@
 # Use kernel space ksmbd server
 
 AddPackage $FOREIGN ksmbd-tools # Userspace tools for the ksmbd kernel SMB server
+SystemdEnable ksmbd-tools /usr/lib/systemd/system/ksmbd.service
 
 # Create the common share directory
 cat >$(CreateFile /srv/share/README.md) << EOF
