@@ -1,3 +1,4 @@
 *.zwc
 ._zinit
 .zcompdump
+toolinfo.zsh
