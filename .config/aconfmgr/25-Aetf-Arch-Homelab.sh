@@ -115,6 +115,10 @@ AddRole samba
 CreateNtfsMount "/dev/disk/by-label/AetfのHD.Ultra" "/srv/share/I"
 CreateNtfsMount "/dev/disk/by-label/Elements" "/srv/share/Y"
 
+# Windows VM
+AddRole kvm
+AddRole kvm-homelab
+
 # Rest of the machine will be managed by k8s
 AddRole k8s
 ## This server is a worker
@@ -149,6 +153,10 @@ AddRole fwupd
 # preventing SSD from entering nvme power management state autonomously.
 echo "nvme_core.default_ps_max_latency_us=1500" \
     >$(CreateFile /etc/kernel/cmdline.d/samsung-evo-980-84c-fix.conf)
+
+# PCIE ASPM will cause error in 8086:7abc PCIE device
+echo "pcie_aspm=off" \
+    >$(CreateFile /etc/kernel/cmdline.d/disable-pcie-aspm.conf)
 
 # APC UPS
 AddPackage apcupsd

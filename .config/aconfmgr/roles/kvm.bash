@@ -1,28 +1,38 @@
-AddPackage libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
-AddOptionalPackage libvirt \
-    dnsmasq 'required for default NAT/DHCP for guests' `# Lightweight, easy to configure DNS forwarder and DHCP server` \
-    iptables-nft 'required for default NAT networking' `# Linux kernel packet control tool (using nft interface)` \
-    dmidecode 'DMI system info support' `# Desktop Management Interface table related utilities`
-
+# Headless full-system emulation for x86_64 only
 AddPackage qemu-base
-
+AddPackage swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
+AddPackage edk2-ovmf # Firmware for Virtual Machines (x86_64, i686)
+AddPackage libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
 SystemdEnable libvirt /usr/lib/systemd/system/libvirtd.service
 SystemdEnable libvirt /usr/lib/systemd/system/virtlogd.socket
 SystemdEnable libvirt /usr/lib/systemd/system/virtlockd.socket
 SystemdEnable libvirt /usr/lib/systemd/system/libvirtd.socket
 SystemdEnable libvirt /usr/lib/systemd/system/libvirtd-ro.socket
+## These are auto created
+IgnorePath '/etc/libvirt/nwfilter/*'
 
-AddPackage edk2-ovmf # Firmware for Virtual Machines (x86_64, i686)
+# Make sure our user belongs to the kvm group
+cat > "$(CreateFile /etc/sysusers.d/kvm-user.conf)" <<EOF
+m aetf kvm
+EOF
 
-AddPackage virt-manager # Desktop user interface for managing virtual machines
-AddPackage virt-viewer # A lightweight interface for interacting with the graphical display of virtualized guest OS.
+# Create an iso directory for ISOs that the system qemu can access
+# Note the write and sticky bit in group, so files created in this directory can
+# automatically be accessible to the kvm group.
+CreateDir /isos 2775 "qemu" "kvm"
+cat >> "$(CreateFile /isos/README.md '' 'qemu' 'kvm')" << 'EOF'
+# ISOs for System Virtual Machines
+This directory is owned by the `kvm` group and is group writable with the sticky
+bit set. If the user belongs to the `kvm` group, simply put files in this
+directory and it will be accessible by bare qemu and/or libvirt qemu.
+EOF
+IgnorePath /isos/*.iso
 
-AddPackage guestfs-tools # Tools for accessing and modifying guest disk images
-# Dependency chain:
-# syslinux -> libguestfs -> guestfs-tools
-# But we don't need syslinux
-## Tell pacman to not extract it
-CopyFile /etc/pacman.d/confs/no-syslinux.conf
-## Tell aconfmgr the file isn't there
-SetFileProperty /boot/syslinux deleted y
-
+# Configure libvirt to use kvm group to launch qemu and don't mess with iso
+# permissions
+cat >> "$(GetPackageOriginalFile libvirt /etc/libvirt/qemu.conf)" <<EOF
+# -- Managed by aconfmgr
+# Match the bare qemu setup to run as the kvm group so it can access /isos
+group = "kvm"
+# -- End managed by aconfmgr
+EOF

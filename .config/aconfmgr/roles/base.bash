@@ -15,16 +15,21 @@ echo "LANG=en_US.UTF-8" > "$(CreateFile /etc/locale.conf)"
 # Make sure users in wheel group can sudo
 CopyFile /etc/sudoers.d/00-basic
 
-# Some system fixes
-## We used to need rng-tools during startup to make sure /dev/random nonblocking,
-## but that's not necessary since linux 5.6
-## See: https://github.com/torvalds/linux/commit/30c08efec8884fb106b8e57094baa51bb4c44e32
-
-## Pacman already runs ldconfig after updating/installing packages, so
-## this is useless and just slows down the boot.
-SystemdMask ldconfig.service
-
+# Basic system
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
+
+## We slightly abuse systemd-sysusers to create our human user as we only want a
+## simple local user anyway.
+cat > "$(CreateFile /etc/sysusers.d/aetf.conf)" <<EOF
+# Slightly abuse systemd-sysusers to create our human user as we simply want a
+# local user anyway.
+u aetf 1000:1000 "The one and only human operator" /home/aetf /usr/bin/zsh
+m aetf users
+# We are the wheel!
+m aetf wheel
+EOF
+## MANUAL: make sure to create the home dir
+#CreateDir /home/aetf "750" "aetf" "users"
 
 AddPackage unzip # For extracting and viewing files in .zip archives
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
@@ -42,4 +47,13 @@ AddPackage rsync # A fast and versatile file copying tool for remote and local f
 AddPackage tmux # A terminal multiplexer
 
 AddPackage $FOREIGN aconfmgr-git # A configuration manager for Arch Linux
+
+# Some system fixes
+## We used to need rng-tools during startup to make sure /dev/random nonblocking,
+## but that's not necessary since linux 5.6
+## See: https://github.com/torvalds/linux/commit/30c08efec8884fb106b8e57094baa51bb4c44e32
+
+## Pacman already runs ldconfig after updating/installing packages, so
+## this is useless and just slows down the boot.
+SystemdMask ldconfig.service
 

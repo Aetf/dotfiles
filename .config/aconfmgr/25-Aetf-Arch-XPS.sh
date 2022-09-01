@@ -71,6 +71,18 @@ SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
 AddRole cjk
 
 AddRole kvm
+AddPackage virt-manager # Desktop user interface for managing virtual machines
+AddPackage virt-viewer # A lightweight interface for interacting with the graphical display of virtualized guest OS.
+
+AddPackage guestfs-tools # Tools for accessing and modifying guest disk images
+# Dependency chain:
+# syslinux -> libguestfs -> guestfs-tools
+# But we don't need syslinux
+## Tell pacman to not extract it
+CopyFile /etc/pacman.d/confs/no-syslinux.conf
+## Tell aconfmgr the file isn't there
+SetFileProperty /boot/syslinux deleted y
+
 AddRole games
 AddRole samba
 

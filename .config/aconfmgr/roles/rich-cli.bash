@@ -18,6 +18,7 @@ AddPackage man-pages # Linux man pages
 
 AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage nmap # Utility for network discovery and security auditing
+AddPackage usbutils
 AddPackage lshw # A small tool to provide detailed information on the hardware configuration of the machine.
 AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
