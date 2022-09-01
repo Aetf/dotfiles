@@ -253,12 +253,23 @@ Description=Mount $what
 What=$what
 Where=$where
 Type=ntfs3
-Options=nohidden,sys_immutable,gid=1000,dmask=002,fmask=003
+Options=noauto,nofail,nohidden,sys_immutable,gid=1000,dmask=002,fmask=003
 [Install]
 WantedBy=multi-user.target
 EOF
 
-    SystemdEnable --from-file "$unit"
+    local autoname=$(systemd-escape --path --suffix=automount "$where")
+    local autounit="/etc/systemd/system/$autoname"
+    cat >$(CreateFile "$autounit") <<EOF
+[Unit]
+Description= Auto mount $what
+[Automount]
+Where=$where
+[Install]
+WantedBy=multi-user.target
+EOF
+
+    SystemdEnable --from-file "$autounit"
 }
 
 # Create an empty directory. The stdin for the function is used as the readme
