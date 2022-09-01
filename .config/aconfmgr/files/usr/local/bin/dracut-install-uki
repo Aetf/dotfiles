@@ -124,8 +124,8 @@ def gen(pkgbase_path, args):
 
 @contextmanager
 def mount_esp(mountpoint):
-    EFI = Path(mountpoint) / 'EFI'
-    if EFI.is_dir():
+    EFI = os.path.join(mountpoint, 'EFI')
+    if os.path.isdir(EFI):
         yield
     else:
         msg("Mounting ESP partition at {}".format(mountpoint))
