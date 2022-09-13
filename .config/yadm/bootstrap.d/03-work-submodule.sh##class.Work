@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+main() {
+    # Enable work submodule
+    yadm gitconfig 'submodule..config/work.active' true
+
+    echo "Init submodules again for work"
+    yadm submodule update --recursive --init --remote
+    # for each submodule, checkout the branch configured in .gitmodules
+    yadm smundetach
+}
+
+main

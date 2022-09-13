@@ -7,3 +7,6 @@
 	path = .local/share/zathura/base16-zathura
 	url = https://github.com/HaoZeke/base16-zathura.git
 	branch = main
+[submodule ".config/work"]
+	path = .config/work
+	url = sso://user/pfyu/dotfiles
