@@ -10,3 +10,5 @@
 [submodule ".config/work"]
 	path = .config/work
 	url = sso://user/pfyu/dotfiles
+	branch = main
+	update = rebase
