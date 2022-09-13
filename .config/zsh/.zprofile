@@ -1,3 +1,5 @@
+# Source ordering: .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
+
 # Include anything in env.d
 # (*) is the glob qualifier for executable file
 # see http://zsh.sourceforge.net/Doc/Release/Expansion.html#Glob-Qualifiers

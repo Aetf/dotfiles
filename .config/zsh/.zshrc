@@ -1,3 +1,5 @@
+# Source ordering: .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
+
 if [[ "$ZPROF" = true ]]; then
     zmodload zsh/zprof
 fi

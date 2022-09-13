@@ -1,3 +1,5 @@
+# Source ordering: .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
+
 # Make sure everything is read from $XDG_CONFIG_HOME
 export ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
 
@@ -61,5 +63,52 @@ function autodetect_path() {
     done
     for pkgconfig_dir in $pkg/lib*/pkgconfig(FN); do
         uappend pkg_config_path $pkgconfig_dir
+    done
+}
+
+# Get the absolute path to the caller's encolsing script.
+# When called from another function, use the optional
+# [NESTED] parameter to skip.
+# Usage:
+#   scriptpath [NESTED]
+# Example:
+#   scriptpath 1
+# See https://stackoverflow.com/a/55172834
+# See https://stackoverflow.com/a/28336473
+function scriptpath() {
+    local nested=${1:-0}
+
+    # https://zsh.sourceforge.io/Doc/Release/Zsh-Modules.html#The-zsh_002fparameter-Module
+    zmodload zsh/parameter
+
+    # funcfiletrace gives the file path to the caller of the current function
+    # when not nested, the first element is the caller, otherwise, add nested
+    # levels.
+    local level=1
+    (( level = $level + $nested ))
+    local caller="${funcfiletrace[$level]}"
+    # remove the tailing line number, e.g. /path/to/script.zsh:3
+    caller="${caller%:*}"
+    # make it absolute, and resolve symlinks
+    caller="${caller:A}"
+    printf '%s' "$caller"
+}
+
+function indexer() {
+    # caller of this function, so nested=1
+    local caller=$(scriptpath 1)
+
+    setopt null_glob
+
+    # :h to remove the last path component, to get caller directory
+    for f in ${caller:h}/*.zsh; do
+        case $f in
+            */index.zsh)
+                continue
+                ;;
+            *)
+                source "$f"
+                ;;
+        esac
     done
 }
