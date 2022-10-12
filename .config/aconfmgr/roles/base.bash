@@ -57,3 +57,6 @@ AddPackage $FOREIGN aconfmgr-git # A configuration manager for Arch Linux
 ## this is useless and just slows down the boot.
 SystemdMask ldconfig.service
 
+## Without auditd running, kernel audit events will flood the kmsg
+## See: https://github.com/systemd/systemd/issues/15324#issuecomment-610327560
+SystemdEnable auditd
