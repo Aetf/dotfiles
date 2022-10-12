@@ -8,15 +8,25 @@ cat >$(CreateFile /etc/pacman.d/confs/no-libvirt-default-net.conf) <<EOF
 NoExtract = etc/libvirt/qemu/networks/default.xml
 EOF
 
+## Prevent some kernel driver from loading
+cat >$(CreateFile /etc/modprobe.d/kvm-blacklist.conf) <<EOF
+# even though vfio-pci should be loaded first so nouveau doesn't have a chance
+# to take the GPU, block it to reduce some resource usage
+blacklist nouveau
+# the bluetooth device will be passed in as USB device, preventing loading the
+# kernel bt driver to avoid it messing with the device at all
+blacklist btusb bluetooth
+EOF
+
 # Isolate passthrough devices
 
 ## NVIDIA GTX 3090 [10de:2204]
 ## NVIDIA GTX 3090 audio controller [10de:1aef]
 ## Samsung NVME SSD EVO 970 Pro [144d:a808]
-## PCIE USB 3.0 card [1106:3483]
+## Startech PCIE USB 3.0 card [1b21:3042]
 ##     (connecting the monitor USB hub, which has mouse and keybaord)
 cat >$(CreateFile /etc/modprobe.d/kvm-vfio.conf) <<EOF
-options vfio-pci ids=10de:2204,10de:1aef,144d:a808,1106:3483
+options vfio-pci ids=10de:2204,10de:1aef,144d:a808,1b21:3042
 EOF
 
 # Load vfio driver early
