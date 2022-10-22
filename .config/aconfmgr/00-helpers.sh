@@ -253,7 +253,7 @@ Description=Mount $what
 What=$what
 Where=$where
 Type=ntfs3
-Options=noauto,nofail,nohidden,sys_immutable,gid=1000,dmask=002,fmask=003
+Options=noauto,nofail,nohidden,gid=1000,dmask=002,fmask=113
 [Install]
 WantedBy=multi-user.target
 EOF
