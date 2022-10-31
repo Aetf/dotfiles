@@ -177,6 +177,15 @@ fi
         )
     fi
 
+    if [ ! -z "${toolinfo[just]}" ]; then
+        wait0a+=(
+            # git-crypt for encryption yadm repo
+            from'gh-r' bpick"${toolinfo[just]}"
+            sbin'just'
+                @casey/just
+        )
+    fi
+
     ##################
     # Wait'0b' block #
     ##################
