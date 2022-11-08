@@ -96,8 +96,12 @@ fi
         # fbin'yadm -> y'
             @TheLocehiliosan/yadm
 
-        # fzf the fuzzy finder
-        multisrc'shell/{completion,key-bindings}.zsh' blockf trackbinds bindmap'^T -> \\ef'
+        # fzf the fuzzy finder integration with zsh
+        blockf
+        trackbinds
+        multisrc'shell/{completion,key-bindings}.zsh'
+        sbin'bin/*'
+        bindmap'^T -> \\ef'
             @junegunn/fzf
     )
     # conditionally add tool binaries
