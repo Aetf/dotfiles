@@ -1,7 +1,8 @@
 # Ack the base installation
 AddPackage base
 
-# TODO: check if systemd-timesyncd is enabled by default
+# Enable ntp time sync
+SystemdEnable systemd /usr/lib/systemd/system/systemd-timesyncd.service
 
 # For basic localization, we'll enable both en and ch, but en_US.UTF8 will be the default
 cat >> "$(GetPackageOriginalFile glibc /etc/locale.gen)" <<EOF
@@ -59,4 +60,4 @@ SystemdMask ldconfig.service
 
 ## Without auditd running, kernel audit events will flood the kmsg
 ## See: https://github.com/systemd/systemd/issues/15324#issuecomment-610327560
-SystemdEnable auditd
+SystemdEnable audit /usr/lib/systemd/system/auditd.service
