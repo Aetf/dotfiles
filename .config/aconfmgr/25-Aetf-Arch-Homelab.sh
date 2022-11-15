@@ -114,6 +114,7 @@ AddRole samba
 ## Mount multiple disks here
 CreateNtfsMount "/dev/disk/by-label/AetfのHD.Ultra" "/srv/share/I"
 CreateNtfsMount "/dev/disk/by-label/Elements" "/srv/share/Y"
+AddRole zfs
 
 # Windows VM
 AddRole kvm
