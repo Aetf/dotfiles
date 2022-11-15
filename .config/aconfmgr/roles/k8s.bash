@@ -1,4 +1,5 @@
 AddPackage $FOREIGN k3s-1.24-bin
+AddPackage kubectl
 SystemdEnable k3s-1.24-bin /usr/lib/systemd/system/k3s.service
 
 # Node feature isn't configuration
