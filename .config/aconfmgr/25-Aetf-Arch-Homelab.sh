@@ -34,6 +34,7 @@ CopyFile /etc/systemd/system/efi.mount.d/permission.conf
 
 # We use stock Archlinux kernel with intel ucode upgrades
 AddPackage linux
+AddPackage linux-headers # for DKMS
 AddPackage intel-ucode
 
 # The bootloader loads unified kernel image (UKI)
@@ -109,12 +110,11 @@ AddRole rich-cli
 # Rust is a must on any system, especially for rust-scripts
 AddRole rust-dev
 
+# Mount multiple disks here
+AddRole nas
+
 # Samba service
 AddRole samba
-## Mount multiple disks here
-CreateNtfsMount "/dev/disk/by-label/AetfのHD.Ultra" "/srv/share/I"
-CreateNtfsMount "/dev/disk/by-label/Elements" "/srv/share/Y"
-AddRole zfs
 
 # Windows VM
 AddRole kvm
