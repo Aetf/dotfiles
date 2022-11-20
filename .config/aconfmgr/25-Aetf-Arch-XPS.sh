@@ -53,8 +53,6 @@ AddPackage btrfs-progs # Btrfs filesystem utilities
 AddPackage zfs-dkms # Kernel modules for the Zettabyte File System.
 AddPackage xfsprogs # XFS filesystem utilities
 CopyFile /etc/fstab
-CopyFile /etc/systemd/system/mnt-Aetf\\x2dLaptop.automount
-CopyFile /etc/systemd/system/mnt-Aetf\\x2dLaptop.mount
 
 IsBootstrap && return 0
 
@@ -62,7 +60,6 @@ AddRole network-nm
 AddRole zerotier
 AddRole rich-cli
 AddRole ssh
-AddRole font
 
 AddRole docker
 
@@ -70,37 +67,29 @@ AddRole kde
 SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
 AddRole cjk
 
-AddRole kvm
-AddPackage virt-manager # Desktop user interface for managing virtual machines
-AddPackage virt-viewer # A lightweight interface for interacting with the graphical display of virtualized guest OS.
-
-AddPackage guestfs-tools # Tools for accessing and modifying guest disk images
-# Dependency chain:
-# syslinux -> libguestfs -> guestfs-tools
-# But we don't need syslinux
-## Tell pacman to not extract it
-CopyFile /etc/pacman.d/confs/no-syslinux.conf
-## Tell aconfmgr the file isn't there
-SetFileProperty /boot/syslinux deleted y
-
 AddRole games
-AddRole samba
 
 AddRole latex
-AddRole android-dev
+# AddRole android-dev
 AddRole rust-dev
 AddRole cpp-dev
 AddRole python-dev
 AddRole multimedia
 AddRole tzupdate
 
-# Login: face cam, fingerprint
+# Login: fingerprint
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage libfprint-2-tod1-xps9300-bin # Proprietary driver for the fingerprint reader on the Dell XPS 13 9300 - direct from Dell's Ubuntu repo
-AddPackage howdy # Windows Hello for Linux
+# AddPackage howdy # Windows Hello for Linux
 CopyFile /etc/pam.d/system-auth
-CopyFile /etc/pam.d/system-auth-chain
-CopyFile /etc/pam.d/system-login
+
+## Use kernel_keyring to try login using disk encryption password
+awk -i inplace -f - "$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" <<'EOF'
+/^auth\s+include\s+system-auth/ {
+  print "-auth      optional   pam_kernel_keyring.so"
+}
+{ print $0 }
+EOF
 
 # Sound
 AddPackage linux-firmware # Firmware files for Linux
@@ -158,6 +147,12 @@ AddPackage hplip # Drivers for HP DeskJet, OfficeJet, Photosmart, Business Inkje
 # Keyboard
 AddPackage zsa-udev # Udev rules for ZSA Keyboards (for boot flash mode)
 
+# Donot autosuspend usb hub on the dock for faster switch
+cat >$(CreateFile /etc/udev/rules.d/85-usb-no-suspend.rules) <<'EOF'
+# Donot autosuspend usb hub on the dock for faster switch
+ACTION=="add", SUBSYSTEM=="usb", ATTR{busnum}=="1", ATTR{idVendor}=="1d6b", ATTR{idProduct}=="0002", TEST=="power/control", ATTR{power/control}="on"
+EOF
+
 # Firewall
 CopyFile /etc/firewalld/policies/nat.xml
 CopyFile /etc/firewalld/zones/home.xml
@@ -175,5 +170,5 @@ AddPackage pulumi # Modern Infrastructure as Code
 AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
 AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets
 AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility
-CopyFile /etc/pam.d/testpam
 AddPackage syncthing
+AddPackage packwiz-git # A command line tool for creating minecraft modpacks.

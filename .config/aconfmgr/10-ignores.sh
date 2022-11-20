@@ -18,6 +18,7 @@ IgnorePath '/usr/share/glib-2.0/*'
 IgnorePath '/usr/share/info/dir'
 IgnorePath '/usr/share/perl5/*'
 IgnorePath '/usr/share/waydroid-extra/*'
+IgnorePath '/usr/share/.mono/*'
 
 IgnorePath '/boot/efi_backup/*'
 

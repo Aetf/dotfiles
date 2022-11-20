@@ -4,11 +4,10 @@ auth       required                    pam_faillock.so      preauth
 # Optionally use requisite above if you do not want to prompt for the password
 # on locked accounts.
 # Invoke pam_unix twice, the first time only using previous password, and reset any wrong authtok
-auth       [success=6 default=reset]   pam_unix.so use_first_pass quiet nodelay
+auth       [success=5 default=reset]   pam_unix.so use_first_pass quiet nodelay
 auth       required                    pam_kernel_keyring.so clear
--auth      [success=4 default=ignore]  pam_systemd_home.so
-auth       [success=3 default=ignore]  pam_unix.so try_first_pass debug
-auth       [success=2 default=ignore]  pam_python.so  /usr/lib/security/howdy/pam.py
+-auth      [success=3 default=ignore]  pam_systemd_home.so
+auth       [success=2 default=ignore]  pam_unix.so try_first_pass debug
 auth       [success=1 default=ignore]  pam_fprintd.so timeout=10 # debug
 auth       [default=die]               pam_faillock.so      authfail
 auth       optional                    pam_permit.so

@@ -47,7 +47,7 @@ AddPackage plasma5-applets-window-title # Plasma 5 applet that shows the applica
 AddPackage wev # tool for debugging wayland events, similar to xev
 AddPackage neovide # No Nonsense Neovim Client in Rust
 AddPackage wl-clipboard # Command-line copy/paste utilities for Wayland
-AddPackage $FOREIGN handlr-bin # Powerful alternative to xdg-utils written in Rust
+# AddPackage $FOREIGN handlr-bin # Powerful alternative to xdg-utils written in Rust
 CopyFile /etc/sudoers.d/00-gui
 
 # A/V
@@ -152,20 +152,11 @@ AddPackage joplin # A note taking and to-do application with synchronization cap
 
 # Browser
 AddPackage vivaldi # An advanced browser made with the power user in mind.
-AddPackage google-chrome # The popular and trusted web browser by Google (Stable Channel)
 AddPackage firefox # Standalone web browser from mozilla.org
 
 # Comm
 AddPackage discord # All-in-one voice and text chat for gamers that's free and secure.
 AddPackage element-desktop # Glossy Matrix collaboration client — desktop version.
-AddPackage slack-desktop # Slack Desktop (Beta) for Linux
-AddOptionalPackage slack-desktop \
-    libappindicator-gtk3 'Systray indicator support' `# Allow applications to extend a menu via Ayatana indicators in Unity, KDE or Systray`
-AddPackage teams # Microsoft Teams for Linux is your chat-centered workspace in Office 365
-AddOptionalPackage teams \
-    libappindicator-gtk3 'Systray indicator support' `# Allow applications to extend a menu via Ayatana indicators in Unity, KDE or Systray`
-AddPackage teamviewer # All-In-One Software for Remote Support and Online Meetings
-CopyFile /etc/teamviewer/global.conf 600
 
 AddPackage akvcam-dkms # Virtual camera for Linux
 CopyFile /etc/akvcam/config.ini
