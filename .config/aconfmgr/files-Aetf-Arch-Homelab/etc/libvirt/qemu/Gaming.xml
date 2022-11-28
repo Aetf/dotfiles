@@ -96,9 +96,6 @@ or other application using the libvirt API.
     <controller type='usb' index='0' model='qemu-xhci'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
-    <controller type='sata' index='0'>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
-    </controller>
     <controller type='pci' index='0' model='pcie-root'/>
     <controller type='pci' index='1' model='pcie-root-port'>
       <model name='pcie-root-port'/>
@@ -156,6 +153,9 @@ or other application using the libvirt API.
     </controller>
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x0b' slot='0x00' function='0x0'/>
+    </controller>
+    <controller type='sata' index='0'>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
     </controller>
     <interface type='direct' trustGuestRxFilters='yes'>
       <mac address='52:54:00:b1:54:aa'/>
@@ -217,15 +217,6 @@ or other application using the libvirt API.
       </source>
       <alias name='ua-USBBluetooth'/>
       <address type='usb' bus='0' port='1'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source startupPolicy='optional'>
-        <vendor id='0x0951'/>
-        <product id='0x1718'/>
-        <address bus='1' device='10'/>
-      </source>
-      <alias name='ua-HyperX'/>
-      <address type='usb' bus='0' port='2'/>
     </hostdev>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>

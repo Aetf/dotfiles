@@ -33,8 +33,8 @@ CopyFile /etc/systemd/system/efi.mount.d/permission.conf
 # MANUAL: install bootloader to disk `bootctl install`
 
 # We use stock Archlinux kernel with intel ucode upgrades
-AddPackage linux
-AddPackage linux-headers # for DKMS
+AddPackage linux-lts
+AddPackage linux-lts-headers # for DKMS
 AddPackage intel-ucode
 
 # The bootloader loads unified kernel image (UKI)
