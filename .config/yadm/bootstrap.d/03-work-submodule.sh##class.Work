@@ -1,13 +1,22 @@
 #!/usr/bin/env bash
 
 main() {
+    local WORK_PATH=.config/work
     # Enable work submodule
-    yadm gitconfig 'submodule..config/work.active' true
+    yadm gitconfig "submodule.${WORK_PATH}.active" true
 
     echo "Init submodules again for work"
     yadm submodule update --recursive --init --remote
     # for each submodule, checkout the branch configured in .gitmodules
     yadm smundetach
+
+    if [[ -x "${WORK_PATH}/bootstrap" ]]; then
+        echo "Run init in work submodule"
+        if ! "${WORK_PATH}/bootstrap"; then
+            echo "Error: bootstrap '$bootstrap' failed" >&2
+            exit 1
+        fi
+    fi
 }
 
 main
