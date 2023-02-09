@@ -27,6 +27,9 @@ GetPackageOriginalFile filesystem /etc/fstab >/dev/null
 # Add mount timeout check the automount timeout option
 CopyFile /etc/systemd/system/efi.automount.d/idletimeout.conf
 CopyFile /etc/systemd/system/efi.mount.d/permission.conf
+# Enable periodic fstrim
+SystemdEnable util-linux /usr/lib/systemd/system/fstrim.timer
+
 
 # Now we config following the bootup sequence.
 # To boot the system, we use systemd-boot which is simple enough for server usage.
