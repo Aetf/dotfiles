@@ -124,13 +124,17 @@ def gen(pkgbase_path, args):
 
 @contextmanager
 def mount_esp(mountpoint):
-    msg("Mounting ESP partition at {}".format(mountpoint))
-    sp.check_call(['mount-esp', mountpoint])
-    try:
+    EFI = os.path.join(mountpoint, 'EFI')
+    if os.path.isdir(EFI):
         yield
-    finally:
-        msg("Unmounting ESP partition at {}".format(mountpoint))
-        sp.check_call(['umount', mountpoint])
+    else:
+        msg("Mounting ESP partition at {}".format(mountpoint))
+        sp.check_call(['mount-esp', mountpoint])
+        try:
+            yield
+        finally:
+            msg("Unmounting ESP partition at {}".format(mountpoint))
+            sp.check_call(['umount', mountpoint])
 
 
 def gather_pkgbase_lines(args):
