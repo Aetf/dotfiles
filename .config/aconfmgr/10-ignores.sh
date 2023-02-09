@@ -61,3 +61,4 @@ IgnorePath '/etc/fwupd/remotes.d/*'
 IgnorePath '/etc/cups/*'
 IgnorePath '/etc/printcap'
 
+IgnorePath '/etc/audit/audit.rules'
