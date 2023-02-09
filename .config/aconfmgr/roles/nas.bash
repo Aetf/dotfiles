@@ -22,7 +22,7 @@ cat >$(CreateFile /etc/systemd/system/zfs-zed.service.d/std-path.conf) <<'EOF'
 RuntimeDirectory=zed
 StateDirectory=zed
 ExecStart=
-ExecStart=/usr/bin/zed -F -s $STATE_DIRECTORY/zed.state -p $RUNTIME_DIRECTORY/zed.pid
+ExecStart=/usr/bin/zed -F -s ${STATE_DIRECTORY}/zed.state -p ${RUNTIME_DIRECTORY}/zed.pid
 EOF
 
 # Periodic scrub
