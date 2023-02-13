@@ -163,3 +163,4 @@ CopyFile /etc/akvcam/config.ini
 CopyFile /etc/akvcam/default_frame.bmp
 CopyFile /etc/modules-load.d/akvcam.conf
 
+AddRole ntfs
