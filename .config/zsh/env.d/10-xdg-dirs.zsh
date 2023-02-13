@@ -53,3 +53,7 @@ export GTK2_RC_FILES="$XDG_CONFIG_HOME"/gtk-2.0/gtkrc
 
 ## kubectl
 export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
+
+## Boto used by gcloud
+## https://cloud.google.com/storage/docs/boto-gsutil
+export BOTO_CONFIG="$XDG_CONFIG_HOME/gcloud/boto.cfg"
