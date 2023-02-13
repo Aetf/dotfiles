@@ -50,7 +50,6 @@ CopyFile /etc/dracut.conf.d/install.d/normal/plymouth-oemlogo-font.conf
 # Filesystem
 AddPackage lvm2 # Logical Volume Manager 2 utilities
 AddPackage btrfs-progs # Btrfs filesystem utilities
-AddPackage zfs-dkms # Kernel modules for the Zettabyte File System.
 AddPackage xfsprogs # XFS filesystem utilities
 CopyFile /etc/fstab
 
