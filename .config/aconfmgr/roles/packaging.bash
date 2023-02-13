@@ -25,7 +25,7 @@ CopyFile /etc/pacman.d/confs/parallel.conf
 CopyFile /etc/pacman.d/confs/fancy.conf
 
 ## Make sure we can compile packages
-AddPackageGroup base-devel
+AddPackage base-devel
 AddPackage mold # A Modern Linker
 
 # AUR packages
