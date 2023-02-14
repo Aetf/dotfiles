@@ -4,6 +4,13 @@ if [[ "$ZPROF" = true ]]; then
     zmodload zsh/zprof
 fi
 
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # initial hash definition for zinit
 declare -A ZINIT
 ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
@@ -30,12 +37,6 @@ fi
 zmodload zdharma_continuum/zinit &>/dev/null
 ### End of Zinit installer's chunk
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
 
 () {{
     # Functions to make configuration less verbose
@@ -55,6 +56,8 @@ fi
     #     Prompt     #
     ##################
     local early=(
+        # async library
+        @mafredri/zsh-async
         # Load any plugin specific settings, these are all variable settings, so we load them first
         pick'index.zsh'
             $ZDOTDIR/config.d
@@ -62,6 +65,8 @@ fi
         @zdharma-continuum/zinit-annex-bin-gem-node
         # And then the powerlevel10k prompt, with fast gitstatus, config is in $ZDOTDIR/config.d/purepower.zsh
         @romkatv/powerlevel10k
+        # vi-mode
+        @jeffreytse/zsh-vi-mode
     )
 
     ######################
