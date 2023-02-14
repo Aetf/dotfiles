@@ -111,4 +111,8 @@ function indexer() {
                 ;;
         esac
     done
+    # Also source direct level plugins
+    for f in ${caller:h}/*/*.plugin.zsh; do
+        source "$f"
+    done
 }
