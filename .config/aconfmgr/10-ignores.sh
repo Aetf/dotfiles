@@ -62,3 +62,7 @@ IgnorePath '/etc/cups/*'
 IgnorePath '/etc/printcap'
 
 IgnorePath '/etc/audit/audit.rules'
+
+# systemd-creds, see https://systemd.io/CREDENTIALS/
+IgnorePath '/etc/credstore'
+IgnorePath '/etc/credstore.encrypted'
