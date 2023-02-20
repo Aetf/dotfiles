@@ -12,6 +12,7 @@ SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager.service
 SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-wait-online.service
 
 CopyFile /etc/NetworkManager/conf.d/ignore-docker.conf
+CopyFile /etc/NetworkManager/conf.d/ignore-zerotier.conf
 
 # and systemd-resolved to provide DNS resolving and alike
 # networkmanager will automatically use systemd-resolved if the symlink is present
