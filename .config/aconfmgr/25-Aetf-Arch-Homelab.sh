@@ -32,8 +32,10 @@ SystemdEnable util-linux /usr/lib/systemd/system/fstrim.timer
 
 
 # Now we config following the bootup sequence.
-# To boot the system, we use systemd-boot which is simple enough for server usage.
+# To boot the system, we use systemd-boot that comes with systemd.
+# It is simple enough for server usage.
 # MANUAL: install bootloader to disk `bootctl install`
+SystemdEnable systemd /usr/lib/systemd/system/systemd-boot-update.service
 
 # We use stock Archlinux kernel with intel ucode upgrades
 AddPackage linux-lts
