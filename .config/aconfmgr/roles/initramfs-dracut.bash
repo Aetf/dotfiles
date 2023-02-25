@@ -22,7 +22,7 @@ CopyFile /etc/kernel/cmdline.d/README
 ## Skipped in bootstrapping, because issues with gpg key retrieval
 if ! IsBootstrap; then
     AddPackage $FOREIGN mkmm # Moviuro's Kernel Module Manager
-    CreateLink /etc/pacman.d/hooks/10-mkmm-tmpfs-post.hook /usr/share/mkmm/10-mkmm-tmpfs-post.hook
+    CreateLink /etc/pacman.d/hooks/65-mkmm-tmpfs-post.hook /usr/share/mkmm/65-mkmm-tmpfs-post.hook
     CreateLink /etc/pacman.d/hooks/10-mkmm-tmpfs-pre.hook /usr/share/mkmm/10-mkmm-tmpfs-pre.hook
     SystemdEnable mkmm /usr/lib/systemd/system/mkmm-bleach.service
 fi
