@@ -6,7 +6,9 @@ IgnorePath '/usr/share/sddm/themes/*'
 # Plasma DE
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddOptionalPackage plasma-meta \
-    plasma-sdk 'Development tools' `# Applications useful for Plasma development`
+    plasma-sdk 'Development tools' `# Applications useful for Plasma development` \
+    flatpak-kcm 'Manage Flatpak applications from systemsettings' `# Flatpak Permissions Management KCM`
+    
 AddOptionalPackage plasma-workspace \
     appmenu-gtk-module 'global menu support for GTK2 and some GTK3 applications' `# Application Menu GTK+ Module`
 AddPackage plasma-systemmonitor # An interface for monitoring system sensors, process information and other system resources
