@@ -1,5 +1,5 @@
 
-AddPackage mambaforge # Conda and Mamba package managers configured to use conda-forge.
+AddPackage micromamba-bin # Conda and Mamba package managers configured to use conda-forge.
 
 AddPackage python-black # Uncompromising Python code formatter
 AddPackage python-keyring # Store and access your passwords safely
