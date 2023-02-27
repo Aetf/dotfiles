@@ -15,6 +15,8 @@ fi
 declare -A ZINIT
 ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
 ZINIT[BIN_DIR]="$ZINIT[HOME_DIR]/bin"
+ZINIT[ZCOMPDUMP_PATH]="$XDG_CACHE_HOME/zsh/zcompdump"
+mkdir -p "$XDG_CACHE_HOME/zsh"
 ### Added by Zinit's installer
 if [[ ! -f "${ZINIT[BIN_DIR]}/zinit.zsh" ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing DHARMA Initiative Plugin Manager (zdharma-continuum/zinit)…%f"
@@ -91,10 +93,6 @@ zmodload zdharma_continuum/zinit &>/dev/null
         as'completion' blockf
             $ZDOTDIR/completions.d
 
-        ver'master'
-        atload'!_zsh_autosuggest_start'
-            @zsh-users/zsh-autosuggestions
-
         # yadm to manage dotfiles (this is the binary used after bootstrap)
         sbin'yadm'
         sbin'yadm -> y'
@@ -141,6 +139,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
         wait0a+=(
             # fd the better find
             from'gh-r' bpick"${toolinfo[fd]}"
+            mv'*/_fd -> _fd'
             sbin'*/fd'
                 @sharkdp/fd
         )
@@ -196,6 +195,10 @@ zmodload zdharma_continuum/zinit &>/dev/null
     ##################
     local wait0b=(
         pick'index.zsh'
+        blockf
+        # some extra program may call compinit prematurelly (e.g. micromamba)
+        # we eargly load compinit but don't call it yet such that they don't do it.
+        autoload'compinit'
             $ZDOTDIR/extra.d
     )
 
@@ -203,11 +206,14 @@ zmodload zdharma_continuum/zinit &>/dev/null
     # Wait'0c' block #
     ##################
     local wait0c=(
+        ver'master'
+        #atload'!_zsh_autosuggest_start'
+            @zsh-users/zsh-autosuggestions
+
         # change zsh completion to use fzf.
         # This must be load after compinit but before other plugins which wrap widgets
-        # zicompinit is simply "autoload -F compinit; compinit ${ZINIT[COMPINIT_OPTS]}"
-        # -C will skip security permission checks when dump file is present, speeding things up
-        atinit"mkdir -p $XDG_CACHE_HOME/zsh; ZINIT[COMPINIT_OPTS]='-C -d $XDG_CACHE_HOME/zsh/zcompdump'; zicompinit"
+        # zicompinit is simply "autoload -Uz compinit; compinit ${ZINIT[COMPINIT_OPTS]}"
+        atinit"zicompinit"
         # can't use atpull because that is run before soucing the file
         # atload'[[ -f modules/Src/aloxaf/fzftab.so ]] || build-fzf-tab-module'
         # TODO: workaround zdharma-continuum/zinit#315, that any cd in atload will trigger infinite recursion
@@ -224,6 +230,8 @@ zmodload zdharma_continuum/zinit &>/dev/null
     ##################
     # Actual loading #
     ##################
+    # light mode disables tracking of what plugin does and disables plugin
+    # unloading, but is faster.
     zt light-mode for "${early[@]}"
     zt light-mode for "${triggers[@]}"
     zt 0a light-mode for "${wait0a[@]}"
