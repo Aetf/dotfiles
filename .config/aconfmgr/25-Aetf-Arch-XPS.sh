@@ -63,7 +63,7 @@ AddRole ssh
 AddRole docker
 
 AddRole kde
-SystemdEnable plymouth /usr/lib/systemd/system/sddm-plymouth.service
+SystemdEnable sddm /usr/lib/systemd/system/sddm.service
 AddRole cjk
 
 AddRole games
