@@ -36,3 +36,9 @@ cat >> "$(GetPackageOriginalFile libvirt /etc/libvirt/qemu.conf)" <<EOF
 group = "kvm"
 # -- End managed by aconfmgr
 EOF
+
+# Silence split lock detection warnings
+# See https://lwn.net/Articles/816918/
+cat > "$(CreateFile /etc/kernel/cmdline.d/kvm-split-lock.conf)" <<EOF
+split_lock_detect=off
+EOF
