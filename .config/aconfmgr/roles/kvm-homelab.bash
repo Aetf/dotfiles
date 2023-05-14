@@ -53,5 +53,5 @@ EOF
 # See https://ahelpme.com/linux/howto-do-qemu-full-virtualization-with-macvtap-networking/
 CopyFile /etc/libvirt/qemu/Gaming.xml 600
 ## Autostart
-CreateLink /etc/libvirt/qemu/autostart/Gaming.xml /etc/libvirt/qemu/Gaming.xml
+#CreateLink /etc/libvirt/qemu/autostart/Gaming.xml /etc/libvirt/qemu/Gaming.xml
 
