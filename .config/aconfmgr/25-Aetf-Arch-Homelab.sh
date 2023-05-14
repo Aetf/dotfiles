@@ -151,6 +151,11 @@ EOF
 # Hardware quirks
 AddRole fwupd
 
+# Thunderbolt userspace management tools
+## No need to enable its systemd service, it will be activated by dbus
+## automatically.
+AddPackage bolt # Thunderbolt 3 device manager
+
 # The Samsung 980 EVO NVME SSD constantly report 84C high temp warning on one
 # sensor. The report is likely false alarms.
 # See https://us.community.samsung.com/t5/Monitors-and-Memory/SSD-980-heat-spikes-to-84-C-183-F/td-p/2002779
