@@ -9,7 +9,7 @@
             toolinfo[ripgrep]='*x86_64*linux*musl*'
             toolinfo[bat]='*x86_64*linux*musl*'
             toolinfo[volta]='*linux*'
-            toolinfo[git-crypt]='*linux*'
+            #toolinfo[git-crypt]='*linux*'
             toolinfo[just]='*x86_64*linux*musl*'
             ;;
         Darwin-arm64)
