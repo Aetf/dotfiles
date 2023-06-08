@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Systemd only supports reading user presets from
+# {/etc,/run,/usr/lib}/systemd/user-presets/*.preset
+# we implement additoinal logic here to also read from
+# $XDG_CONFIG_HOME/systemd/user-presets/*.preset
+# by copying files to /run/systemd/user-preset/.
+# There is also a work counterpart that runs as part of 59-work-submodule
+# to copy work specific presets. They will overrite files
+# of the same name here.
+main() {
+    echo "Copying ${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user-preset to /run/systemd/user-preset"
+    sudo mkdir -p /run/systemd/user-preset
+    sudo cp -L ${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user-preset/*.preset /run/systemd/user-preset
+    sudo chmod 644 /run/systemd/user-preset/*.preset
+}
+
+main

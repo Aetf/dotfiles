@@ -2,7 +2,7 @@
 
 # enable systemd user services to their preset value
 main() {
-    systemctl preset --user ssh-agent.service
+    systemctl --user preset-all
 }
 
 main
