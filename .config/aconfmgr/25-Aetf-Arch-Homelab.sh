@@ -182,3 +182,10 @@ echo "pcie_aspm=off" \
 AddPackage apcupsd
 SystemdEnable apcupsd /usr/lib/systemd/system/apcupsd.service
 
+# Misc apps
+AddPackage qbittorrent-nox git-crypt nethogs
+SystemdEnable --name qbittorrent-nox@aetf.service qbittorrent-nox /usr/lib/systemd/system/qbittorrent-nox@.service
+cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.conf) <<EOF
+[Service]
+Environment=QBT_WEBUI_PORT=9876
+EOF
