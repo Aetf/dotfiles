@@ -63,8 +63,17 @@ IgnorePath '/etc/iwd/*'
 
 ## Then systemd-networkd and systemd-resolvd are used to manage the interfaces.
 AddRole network-systemd
-## We setup DHCP on both Ethernet and WiFi network interfaces.
-CopyFile /etc/systemd/network/20-wired.network
+## The network setup is a little bit involved such that the VM (using macvtap)
+## can communicate with the host directly.
+## see https://gist.github.com/lukasnellen/d597f52441d6ca65ea0f0c79c9c170e7
+##
+### Create a MACVLAN interface
+CopyFile /etc/systemd/network/10-macvlan.netdev
+### Make sure the macvlan0 interface is associated with the wired Ethernet interface
+CopyFile /etc/systemd/network/15-wired.network
+### Configure DHCP on the macvlan interface
+CopyFile /etc/systemd/network/20-macvlan.network
+### WiFi interface uses simple DHCP
 CopyFile /etc/systemd/network/25-wireless.network
 
 # The last thing is to setup pacman and install packages for AUR
