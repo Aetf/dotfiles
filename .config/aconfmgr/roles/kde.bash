@@ -112,6 +112,8 @@ AddOptionalPackage kate \
     svgpart 'svg preview' `# A KPart for viewing SVGs`
 
 AddPackage kdeconnect # Adds communication between KDE and your smartphone
+AddOptionalPackage kdeconnect \
+    sshfs "remote filesystem browser" `# FUSE client based on the SSH File Transfer Protocol`
 AddPackage kdialog # A utility for displaying dialog boxes from shell scripts
 AddPackage kdiff3 # A file comparator/merge tool
 AddPackage kolourpaint # Paint Program
