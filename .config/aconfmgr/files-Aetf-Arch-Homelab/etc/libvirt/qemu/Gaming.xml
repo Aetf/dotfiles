@@ -5,7 +5,7 @@ OVERWRITTEN AND LOST. Changes to this xml configuration should be made using:
 or other application using the libvirt API.
 -->
 
-<domain type='kvm'>
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>Gaming</name>
   <uuid>46370265-17db-4baa-883e-b0ad88fc9913</uuid>
   <metadata>
@@ -55,10 +55,11 @@ or other application using the libvirt API.
   <os firmware='efi'>
     <type arch='x86_64' machine='pc-q35-7.0'>hvm</type>
     <firmware>
+      <feature enabled='no' name='enrolled-keys'/>
       <feature enabled='yes' name='secure-boot'/>
     </firmware>
-    <loader secure='yes'/>
-    <boot dev='hd'/>
+    <loader readonly='yes' secure='yes' type='pflash'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
+    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd'>/var/lib/libvirt/qemu/nvram/Gaming_VARS.fd</nvram>
     <smbios mode='sysinfo'/>
   </os>
   <features>
@@ -73,6 +74,7 @@ or other application using the libvirt API.
     <kvm>
       <hidden state='on'/>
     </kvm>
+    <smm state='on'/>
   </features>
   <cpu mode='maximum' check='partial'>
     <topology sockets='1' dies='1' cores='6' threads='2'/>
@@ -93,6 +95,12 @@ or other application using the libvirt API.
   </pm>
   <devices>
     <emulator>/usr/bin/qemu-system-x86_64</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='/var/lib/libvirt/images/empty-4g.qcow2'/>
+      <target dev='vda' bus='virtio'/>
+      <address type='pci' domain='0x0000' bus='0x0c' slot='0x00' function='0x0'/>
+    </disk>
     <controller type='usb' index='0' model='qemu-xhci'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
@@ -151,6 +159,11 @@ or other application using the libvirt API.
       <target chassis='11' port='0x11'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x1'/>
     </controller>
+    <controller type='pci' index='12' model='pcie-root-port'>
+      <model name='pcie-root-port'/>
+      <target chassis='12' port='0x12'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x2'/>
+    </controller>
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x0b' slot='0x00' function='0x0'/>
     </controller>
@@ -200,6 +213,7 @@ or other application using the libvirt API.
       <source>
         <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
       </source>
+      <boot order='1'/>
       <alias name='ua-NVME970Pro'/>
       <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
     </hostdev>
@@ -218,6 +232,7 @@ or other application using the libvirt API.
       <alias name='ua-USBBluetooth'/>
       <address type='usb' bus='0' port='1'/>
     </hostdev>
+    <watchdog model='itco' action='reset'/>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>
     </memballoon>
@@ -226,4 +241,10 @@ or other application using the libvirt API.
       <address type='pci' domain='0x0000' bus='0x0a' slot='0x00' function='0x0'/>
     </rng>
   </devices>
+  <qemu:commandline>
+    <qemu:arg value='-D'/>
+    <qemu:arg value='/tmp/qemu.log'/>
+    <qemu:arg value='-d'/>
+    <qemu:arg value='guest_errors,strace'/>
+  </qemu:commandline>
 </domain>
