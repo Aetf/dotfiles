@@ -32,6 +32,7 @@ EOF
 ## MANUAL: make sure to create the home dir
 #CreateDir /home/aetf "750" "aetf" "users"
 
+AddPackage unrar # The RAR uncompression program
 AddPackage unzip # For extracting and viewing files in .zip archives
 AddPackage zip # Compressor/archiver for creating and modifying zipfiles
 AddPackage lzip # A lossless file compressor based on the LZMA algorithm

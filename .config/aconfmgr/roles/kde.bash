@@ -7,8 +7,9 @@ IgnorePath '/usr/share/sddm/themes/*'
 AddPackage plasma-meta # Meta package to install KDE Plasma
 AddOptionalPackage plasma-meta \
     plasma-sdk 'Development tools' `# Applications useful for Plasma development` \
-    flatpak-kcm 'Manage Flatpak applications from systemsettings' `# Flatpak Permissions Management KCM`
-    
+    flatpak-kcm 'Manage Flatpak applications from systemsettings' `# Flatpak Permissions Management KCM` \
+    plymouth-kcm 'Configure Plymouth from systemsettings' `# KCM to manage the Plymouth (Boot) theme`
+
 AddOptionalPackage plasma-workspace \
     appmenu-gtk-module 'global menu support for GTK2 and some GTK3 applications' `# Application Menu GTK+ Module`
 AddPackage plasma-systemmonitor # An interface for monitoring system sensors, process information and other system resources
@@ -37,7 +38,7 @@ AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
 AddPackage arc-kde # Arc theme for KDE Plasma 5
 
-AddPackage syncthingtray # Tray application for Syncthing
+AddPackage syncthingtray-qt6 # Tray application for Syncthing
 AddPackage plasma5-applets-eventcalendar # An extended calendar plasmoid with daily weather forecasts and events from Google Calendar. Also includes a timer and 24 hour forecast graph.
 AddPackage plasma5-applets-latte-spacer # Plasma applet that acts as a spacer between applets
 AddPackage plasma5-applets-window-appmenu # Plasma 5 applet in order to show the window appmenu
@@ -129,10 +130,11 @@ AddPackage qbittorrent # An advanced BitTorrent client programmed in C++, based 
 
 AddPackage partitionmanager # A KDE utility that allows you to manage disks, partitions, and file systems
 AddOptionalPackage kpmcore \
-    fatresize 'FAT resize support' `# A utility to resize FAT filesystems using libparted`
+    fatresize 'FAT resize support' `# A utility to resize FAT filesystems using libparted` \
+    exfatprogs 'exFAT support' `# exFAT filesystem userspace utilities for the Linux Kernel exfat driver`
 
 AddPackage elisa # A simple music player aiming to provide a nice experience for its users
-AddPackage qmplay2 # QMPlay2 is a video and audio player which can play most formats and codecs
+AddPackage baka-mplayer # A free and open source, cross-platform, libmpv based multimedia player. Qt5 build.
 
 AddPackage gwenview # A fast and easy to use image viewer
 AddPackage qview # qView is a Qt image viewer designed with minimalism and usability in mind.

@@ -10,7 +10,6 @@ AddPackage kwave # A sound editor
 AddPackage inkscape # Professional vector graphics editor
 AddOptionalPackage inkscape \
     scour 'optimized SVG output, some extensions' `# An SVG scrubber`
-AddPackage inkscape-open-symbols-git # Open source icon sets to use as Inkscape symbols
 # graphicsmagic -> inkscape
 AddOptionalPackage graphicsmagic \
     libwmf 'wmf module' `# A library for reading vector images in Microsoft's native Windows Metafile Format (WMF)`
