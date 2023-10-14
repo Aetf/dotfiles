@@ -90,6 +90,9 @@ awk -i inplace -f - "$(GetPackageOriginalFile pambase /etc/pam.d/system-login)" 
 { print $0 }
 EOF
 
+# Hardware quirks
+AddRole fwupd
+
 # Sound
 AddPackage linux-firmware # Firmware files for Linux
 AddPackage sof-firmware # Sound Open Firmware
