@@ -38,8 +38,8 @@ SystemdEnable util-linux /usr/lib/systemd/system/fstrim.timer
 SystemdEnable systemd /usr/lib/systemd/system/systemd-boot-update.service
 
 # We use stock Archlinux kernel with intel ucode upgrades
-AddPackage linux-lts
-AddPackage linux-lts-headers # for DKMS
+AddPackage linux
+AddPackage linux-headers # for DKMS
 AddPackage intel-ucode
 
 # The bootloader loads unified kernel image (UKI)
@@ -159,6 +159,9 @@ EOF
 
 # Hardware quirks
 AddRole fwupd
+
+# Intel GPU
+AddPackage intel-gpu-tools
 
 # Thunderbolt userspace management tools
 ## No need to enable its systemd service, it will be activated by dbus
