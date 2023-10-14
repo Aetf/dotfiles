@@ -18,9 +18,9 @@ AddPackage colord-kde # Interfaces and session daemon to colord for KDE
 AddPackage xdg-desktop-portal # Desktop integration portals for sandboxed apps
 AddPackage kio-gdrive # KIO Slave to access Google Drive
 AddOptionalPackage kio \
-    kdoctools "for the help kioslave" `# Documentation generation from docbook`
-AddOptionalPackage kio-extra \
-    kimageformats "thumbnails for additional image formats" `# Image format plugins for Qt5` \
+    kdoctools5 "for the help kioslave" `# Documentation generation from docbook`
+AddOptionalPackage kio-extras \
+    kimageformats5 "thumbnails for additional image formats" `# Image format plugins for Qt5` \
     qt5-imageformats 'thumbnails for additional image formats' `# Plugins for additional image formats: TIFF, MNG, TGA, WBMP`
 AddOptionalPackage kde-gtk-config \
     xsettingsd 'apply settings to GTK applications on the fly' `# Provides settings to X11 applications via the XSETTINGS specification`
@@ -38,7 +38,7 @@ AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
 AddPackage arc-kde # Arc theme for KDE Plasma 5
 
-AddPackage syncthingtray-qt6 # Tray application for Syncthing
+AddPackage syncthingtray # Tray application for Syncthing
 AddPackage plasma5-applets-eventcalendar # An extended calendar plasmoid with daily weather forecasts and events from Google Calendar. Also includes a timer and 24 hour forecast graph.
 AddPackage plasma5-applets-latte-spacer # Plasma applet that acts as a spacer between applets
 AddPackage plasma5-applets-window-appmenu # Plasma 5 applet in order to show the window appmenu
