@@ -154,7 +154,7 @@ AddOptionalPackage poppler \
     poppler-data 'highly recommended encoding data to display PDF documents with certain encodings and characters' `# Encoding data for the poppler PDF rendering library`
 
 AddPackage zotero-bin # Zotero Standalone. Is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.
-AddPackage joplin # A note taking and to-do application with synchronization capabilities - CLI App
+AddPackage obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
 
 # Browser
 AddPackage vivaldi # An advanced browser made with the power user in mind.
