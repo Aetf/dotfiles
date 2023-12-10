@@ -158,6 +158,8 @@ AddPackage obsidian # A powerful knowledge base that works on top of a local fol
 
 # Browser
 AddPackage vivaldi # An advanced browser made with the power user in mind.
+AddOptionalPackage vivaldi \
+    vivaldi-ffmpeg-codecs  'playback of proprietary video/audio' `# additional support for proprietary codecs for vivaldi`
 AddPackage firefox # Standalone web browser from mozilla.org
 
 # Comm
