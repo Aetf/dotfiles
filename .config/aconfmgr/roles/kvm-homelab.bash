@@ -55,3 +55,6 @@ CopyFile /etc/libvirt/qemu/Gaming.xml 600
 ## Autostart
 CreateLink /etc/libvirt/qemu/autostart/Gaming.xml /etc/libvirt/qemu/Gaming.xml
 
+CopyFile /etc/libvirt/qemu/haos.xml 600
+## Autostart
+CreateLink /etc/libvirt/qemu/autostart/haos.xml /etc/libvirt/qemu/haos.xml
