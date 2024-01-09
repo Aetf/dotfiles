@@ -4,6 +4,8 @@ Name=macvlan0
 [Network]
 DHCP=yes
 IPForward=yes
+MulticastDNS=yes
+IPv6AcceptRA=yes
 
 # https://wiki.archlinux.org/title/Systemd-networkd#Wired_and_wireless_adapters_on_the_same_machine
 [DHCPv4]

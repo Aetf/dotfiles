@@ -3,4 +3,6 @@ Name=enp8s0
 
 [Network]
 MACVLAN=macvlan0
+IPv6AcceptRA=no
+DHCP=no
 
