@@ -1,0 +1,6 @@
+[Match]
+Name=enp8s0
+
+[Network]
+MACVLAN=macvlan0
+
