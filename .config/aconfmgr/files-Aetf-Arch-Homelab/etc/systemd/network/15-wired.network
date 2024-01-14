@@ -1,8 +1,8 @@
 [Match]
-Name=enp8s0
+Name=enp*
 
 [Network]
-MACVLAN=macvlan0
-IPv6AcceptRA=no
 DHCP=no
+IPv6AcceptRA=no
+MACVLAN=macvlan0
 

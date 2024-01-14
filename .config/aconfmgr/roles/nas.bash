@@ -2,7 +2,7 @@
 
 # zfs related setup
 AddPackage $FOREIGN zfs-utils
-AddPackage $FOREIGN zfs-dkms
+AddPackage zfs-linux-lts
 
 # Disable dracut zfs boot module as we don't boot with that,
 # also the module makes the system unbootable due to a missing service file

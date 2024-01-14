@@ -38,8 +38,7 @@ SystemdEnable util-linux /usr/lib/systemd/system/fstrim.timer
 SystemdEnable systemd /usr/lib/systemd/system/systemd-boot-update.service
 
 # We use stock Archlinux kernel with intel ucode upgrades
-AddPackage linux
-AddPackage linux-headers # for DKMS
+AddPackage linux-lts
 AddPackage intel-ucode
 
 # The bootloader loads unified kernel image (UKI)
@@ -165,6 +164,7 @@ AddRole fwupd
 # Intel GPU
 AddPackage intel-gpu-tools
 
+
 # Thunderbolt userspace management tools
 ## No need to enable its systemd service, it will be activated by dbus
 ## automatically.
@@ -178,6 +178,9 @@ AddPackage bolt # Thunderbolt 3 device manager
 # preventing SSD from entering nvme power management state autonomously.
 echo "nvme_core.default_ps_max_latency_us=1500" \
     >$(CreateFile /etc/kernel/cmdline.d/samsung-evo-980-84c-fix.conf)
+AddPackage nvme-cli
+# nvme generated files
+IgnorePath '/etc/nvme/*'
 
 # APC UPS
 AddPackage apcupsd
