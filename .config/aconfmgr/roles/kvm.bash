@@ -1,5 +1,8 @@
 # Headless full-system emulation for x86_64 only
 AddPackage qemu-base
+AddOptionalPackage qemu-base \
+    qemu-hw-usb-host 'for host USB support' \
+    qemu-hw-usb-redirect 'for USB redirect support'
 AddPackage swtpm # Libtpms-based TPM emulator with socket, character device, and Linux CUSE interface
 AddPackage edk2-ovmf # Firmware for Virtual Machines (x86_64, i686)
 AddPackage libvirt # API for controlling virtualization engines (openvz,kvm,qemu,virtualbox,xen,etc)
@@ -10,6 +13,7 @@ SystemdEnable libvirt /usr/lib/systemd/system/libvirtd.socket
 SystemdEnable libvirt /usr/lib/systemd/system/libvirtd-ro.socket
 ## These are auto created
 IgnorePath '/etc/libvirt/nwfilter/*'
+IgnorePath '/etc/libvirt/storage/*'
 
 # Make sure our user belongs to the kvm group
 cat > "$(CreateFile /etc/sysusers.d/kvm-user.conf)" <<EOF
