@@ -177,10 +177,6 @@ AddPackage bolt # Thunderbolt 3 device manager
 echo "nvme_core.default_ps_max_latency_us=1500" \
     >$(CreateFile /etc/kernel/cmdline.d/samsung-evo-980-84c-fix.conf)
 
-# PCIE ASPM will cause error in 8086:7abc PCIE device
-echo "pcie_aspm=off" \
-    >$(CreateFile /etc/kernel/cmdline.d/disable-pcie-aspm.conf)
-
 # APC UPS
 AddPackage apcupsd
 SystemdEnable apcupsd /usr/lib/systemd/system/apcupsd.service
