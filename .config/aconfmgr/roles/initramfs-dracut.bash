@@ -17,6 +17,8 @@ CreateDir /etc/dracut.conf.d/install.d/fallback
 
 # Each file in these directory adds kernel command line that go into the final UKI
 CopyFile /etc/kernel/cmdline.d/README
+CopyFile /etc/kernel/cmdline.d/normal/.gitkeep
+CopyFile /etc/kernel/cmdline.d/fallback/.gitkeep
 
 # Save current running kernel's modules
 ## Skipped in bootstrapping, because issues with gpg key retrieval
