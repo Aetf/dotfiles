@@ -51,6 +51,8 @@ CopyFile /etc/dracut.conf.d/nvme.conf
 ## Make sure btrfs is included
 AddPackage btrfs-progs # Btrfs filesystem utilities
 CopyFile /etc/dracut.conf.d/btrfs.conf
+## Make sure usb keyboard is usable early on
+CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
 
 ## For wireless connection, iwd is used
 ## MANUAL: connect and save wifi password

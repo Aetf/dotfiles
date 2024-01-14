@@ -32,6 +32,8 @@ CreateLink /etc/refind.d/overlay/refind-theme-regular /usr/share/refind/themes/r
 CopyFile /etc/dracut.conf.d/early-kms.conf
 CopyFile /etc/dracut.conf.d/blacklist-nouveau.conf
 CopyFile /etc/dracut.conf.d/unused-modules.conf
+### Make sure usb keyboard is usable early on
+CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
 
 ## kernel command lines
 CopyFile /etc/kernel/cmdline.d/block.conf
