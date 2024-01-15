@@ -1,8 +1,8 @@
 [Match]
-Name=enp*
+Name=enp7s0
 
 [Network]
 DHCP=no
 IPv6AcceptRA=no
 MACVLAN=macvlan0
-
+VLAN=iot
