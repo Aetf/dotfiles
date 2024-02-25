@@ -1,10 +1,11 @@
 [Match]
-Name=macvlan0
+Name=kvmbr0
 
 [Network]
 DHCP=yes
-IPForward=yes
-MulticastDNS=yes
+
+IPForward=no
+MulticastDNS=no
 IPv6AcceptRA=yes
 
 # https://wiki.archlinux.org/title/Systemd-networkd#Wired_and_wireless_adapters_on_the_same_machine
@@ -12,5 +13,3 @@ IPv6AcceptRA=yes
 RouteMetric=10
 [IPv6AcceptRA]
 RouteMetric=10
-
-

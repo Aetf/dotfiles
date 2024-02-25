@@ -14,7 +14,7 @@ or other application using the libvirt API.
       <libosinfo:os id="http://libosinfo.org/linux/2022"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>2097152</memory>
+  <memory unit='KiB'>4194304</memory>
   <currentMemory unit='KiB'>2097152</currentMemory>
   <vcpu placement='static'>2</vcpu>
   <os firmware='efi'>
@@ -133,10 +133,10 @@ or other application using the libvirt API.
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
-    <interface type='direct' trustGuestRxFilters='yes'>
+    <interface type='bridge'>
       <mac address='52:54:00:8c:5d:10'/>
-      <source dev='iot' mode='bridge'/>
-      <model type='virtio'/>
+      <source bridge='kvmbr0'/>
+      <model type='e1000'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <console type='pty'>

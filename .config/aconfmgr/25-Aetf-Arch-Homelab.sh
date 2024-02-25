@@ -64,18 +64,21 @@ IgnorePath '/etc/iwd/*'
 
 ## Then systemd-networkd and systemd-resolvd are used to manage the interfaces.
 AddRole network-systemd
-## The network setup is a little bit involved such that the VM (using macvtap)
-## can communicate with the host directly.
-## see https://gist.github.com/lukasnellen/d597f52441d6ca65ea0f0c79c9c170e7
-##
-### Create a MACVLAN interface
-CopyFile /etc/systemd/network/10-macvlan.netdev
-### Make sure the macvlan0 interface is associated with the wired Ethernet interface
+## Connectivity of the host itself
 CopyFile /etc/systemd/network/15-wired.network
-### Configure DHCP on the macvlan interface
-CopyFile /etc/systemd/network/20-macvlan.network
-### WiFi interface uses simple DHCP
 CopyFile /etc/systemd/network/25-wireless.network
+## The network setup is a little bit involved: VMs are connected to VLAN 2.
+## VMs are on a bridged network, where the uplink of the bridge is a vlan
+## subinterface of the main ethernet interface.
+### Create the vlan subinterface for iot
+CopyFile /etc/systemd/network/11-iot.netdev
+### Create the bridge
+CopyFile /etc/systemd/network/10-kvmbr0.netdev
+### Also give the bridge an IP address on the IoT network, so the host can
+### access IoT devices directly
+CopyFile /etc/systemd/network/25-kvmbr0.network
+### Connect iot interface to bridge
+CopyFile /etc/systemd/network/20-iot-kvmbr0.network
 
 # The last thing is to setup pacman and install packages for AUR
 AddRole packaging
