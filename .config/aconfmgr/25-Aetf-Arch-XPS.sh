@@ -114,7 +114,7 @@ AddPackage nvidia-dkms # NVIDIA drivers - module sources
 AddPackage nvidia-prime # NVIDIA Prime Render Offload configuration and utilities
 CopyFile /etc/modprobe.d/nvidia-power.conf
 CopyFile /etc/udev/rules.d/80-nvidia-pm.rules
-CopyFile /etc/pacman.d/confs/no-nvidia-vulkan.conf
+# CopyFile /etc/pacman.d/confs/no-nvidia-vulkan.conf
 
 # TODO: if docker
 AddPackage nvidia-container-runtime # NVIDIA opencontainer runtime fork to expose GPU devices to containers.
