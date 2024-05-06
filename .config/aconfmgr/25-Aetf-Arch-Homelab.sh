@@ -141,14 +141,13 @@ AddRole kvm-homelab
 # Rest of the machine will be managed by k8s
 AddRole k8s
 ## This server is a worker
-cat >$(CreateFile /etc/systemd/system/k3s.service.env) <<EOF
+cat >$(CreateFile /etc/conf.d/k3s) <<EOF
 K3S_URL=https://aetf-arch-vps.zt.unlimited-code.works:6443
 K3S_ARGS=agent
 EOF
 cat >$(CreateFile /etc/rancher/k3s/config.yaml) <<EOF
 ---
-kubelet-arg:
-- feature-gates=EphemeralContainers=true
+kubelet-arg: []
 
 # cluster
 token-file: /etc/rancher/k3s/ucw.token
