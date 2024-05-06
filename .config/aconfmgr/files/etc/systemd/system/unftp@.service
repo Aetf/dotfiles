@@ -1,0 +1,14 @@
+[Unit]
+Description=unftp server for user %I
+Wants=network-online.target
+After=network-online.target network.target
+
+[Service]
+User=%i
+Type=simple
+ExecStart=/usr/bin/unftp
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
