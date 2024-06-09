@@ -116,14 +116,13 @@ zmodload zdharma_continuum/zinit &>/dev/null
                 @junegunn/fzf
         )
     fi
-    if [ ! -z "${toolinfo[exa]}" ]; then
+    if [ ! -z "${toolinfo[eza]}" ]; then
         wait0a+=(
-            # exa the better ls
-            from'gh-r' bpick"${toolinfo[exa]}"
-            mv'completions/exa.zsh -> completions/_exa.zsh'
-            fbin'bin/exa -> ls'
-            sbin'bin/exa'
-                @ogham/exa
+            # eza the better ls
+            from'gh-r' bpick"${toolinfo[eza]}"
+            fbin'eza -> ls'
+            sbin'eza'
+                @eza-community/eza
         )
     fi
 

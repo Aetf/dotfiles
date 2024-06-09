@@ -2,4 +2,5 @@
 ._zinit
 .zcompdumps/*
 .zcompdump
+.zcompcache
 toolinfo.zsh
