@@ -159,6 +159,14 @@ or other application using the libvirt API.
       <alias name='ua-USB3Hub'/>
       <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
     </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source guestReset='on'>
+        <vendor id='0x8087'/>
+        <product id='0x0032'/>
+      </source>
+      <alias name='ua-USBBluetooth'/>
+      <address type='usb' bus='0' port='1'/>
+    </hostdev>
     <watchdog model='itco' action='reset'/>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
