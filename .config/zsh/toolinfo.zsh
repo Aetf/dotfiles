@@ -1,1 +1,0 @@
-toolinfo.zsh##default
