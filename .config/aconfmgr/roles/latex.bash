@@ -20,3 +20,4 @@ AddPackage texlive-music # TeX Live - Music typesetting packages
 AddPackage texlive-pictures # TeX Live - Packages for drawings graphics
 AddPackage texlive-pstricks # TeX Live - Additional PSTricks packages
 AddPackage texlive-publishers # TeX Live - LaTeX classes and packages for specific publishers
+AddPackage texlive-binextra # TeX Live - TeX auxiliary programs
