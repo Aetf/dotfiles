@@ -38,6 +38,15 @@ function htop() {
     env TERM=screen HTOPRC=$htoprc htop "$@"
 }
 
+# Better cd that goes to file's parent directory automatically
+function cd() {
+    if [[ -a "$1" ]]; then
+        builtin cd "${1%/*}"
+    else
+        builtin cd "$@"
+    fi
+}
+
 # A handy in mem workspace,
 # created by systemd-tmpfiles-setup
 # and have a shortcurt: alias work='cd ~work'

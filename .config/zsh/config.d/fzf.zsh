@@ -15,4 +15,4 @@ typeset -g FZF_CTRL_T_COMMAND="fd --type f --no-ignore-vcs --follow . . $HOME"
 typeset -g FZF_ALT_C_COMMAND="fd --type d --no-ignore-vcs --follow . . $HOME"
 # use exa to show entries of the directory in the preview window
 # the preview window can be scrolled by ctrl+UP and ctrl+DOWN
-typeset -g FZF_ALT_C_OPTS="--preview 'exa --tree --level=2 --color=always {}'"
+typeset -g FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {}'"
