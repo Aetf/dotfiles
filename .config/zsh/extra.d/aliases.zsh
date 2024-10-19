@@ -41,7 +41,7 @@ function htop() {
 
 # Better cd that goes to file's parent directory automatically
 function cd() {
-    if [[ -a "$1" ]]; then
+    if [[ -n "$1" && ! -d "$1" ]]; then
         builtin cd "${1%/*}"
     else
         builtin cd "$@"
