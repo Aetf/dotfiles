@@ -48,6 +48,13 @@ function cd() {
     fi
 }
 
+# Gmailctl doesn't support xdg config dir
+# See https://github.com/mbrt/gmailctl/issues/144
+function gmailctl() {
+    mkdir -p "$GMAILCTL_CONFIG_DIR"
+    command gmailctl --config="$GMAILCTL_CONFIG_DIR" "$@"
+}
+
 # A handy in mem workspace,
 # created by systemd-tmpfiles-setup
 # and have a shortcurt: alias work='cd ~work'

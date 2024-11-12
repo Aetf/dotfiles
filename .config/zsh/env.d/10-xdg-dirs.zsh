@@ -57,3 +57,6 @@ export KUBECONFIG="$XDG_CONFIG_HOME/kube/config"
 ## Boto used by gcloud
 ## https://cloud.google.com/storage/docs/boto-gsutil
 export BOTO_CONFIG="$XDG_CONFIG_HOME/gcloud/boto.cfg"
+
+## Gmailctl
+export GMAILCTL_CONFIG_DIR="$XDG_CONFIG_HOME/gmailctl"
