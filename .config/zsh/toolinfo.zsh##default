@@ -18,7 +18,7 @@
             #toolinfo[fd]='*x86_64*linux*musl*'
             #toolinfo[ripgrep]='*x86_64*linux*musl*'
             #toolinfo[bat]='*x86_64*linux*musl*'
-            toolinfo[volta]='*macos*aarch64*'
+            toolinfo[volta]='*macos*'
             #toolinfo[git-crypt]='*linux*'
             toolinfo[just]='*aarch64*apple*'
             ;;
