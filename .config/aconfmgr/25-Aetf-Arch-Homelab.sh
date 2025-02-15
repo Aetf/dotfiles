@@ -154,7 +154,7 @@ token-file: /etc/rancher/k3s/ucw.token
 
 # agent networking
 node-ip: 10.144.180.10
-node-external-ip: 192.168.70.85
+node-external-ip: 192.168.80.238
 flannel-iface: ztqu3dzpfj
 EOF
 
