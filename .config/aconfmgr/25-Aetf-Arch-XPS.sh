@@ -124,7 +124,7 @@ SystemdMask systemd-rfkill.service system
 SystemdMask systemd-rfkill.socket system
 
 # Touchpad
-AddPackage libinput-three-finger-drag # Input device management and event handling library
+AddPackage libinput # Input device management and event handling library
 
 # Camera
 CopyFile /etc/udev/rules.d/83-webcam.rules
