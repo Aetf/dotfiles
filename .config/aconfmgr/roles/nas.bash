@@ -1,5 +1,11 @@
 # Our zfs based NAS setup
 
+# Disk enclosure setup
+CopyFile /etc/udev/rules.d/92-scsi-sg.rules
+AddPackage lsscsi
+AddPackage sg3_utils
+AddPackage $FOREIGN ledmonutils
+
 # zfs related setup
 AddPackage $FOREIGN zfs-utils
 AddPackage zfs-linux-lts
