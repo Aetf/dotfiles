@@ -4,6 +4,8 @@ AddPackage $FOREIGN ksmbd-tools # Userspace tools for the ksmbd kernel SMB serve
 SystemdEnable ksmbd-tools /usr/lib/systemd/system/ksmbd.service
 
 cat >$(CreateFile /etc/ksmbd/ksmbd.conf) <<EOF
+[global]
+    deadtime = 10
 [nas]
     path = /mnt/nas
     read only = no
