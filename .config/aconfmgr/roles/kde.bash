@@ -38,13 +38,7 @@ AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
 AddPackage arc-kde # Arc theme for KDE Plasma 5
 
-AddPackage syncthingtray # Tray application for Syncthing
-AddPackage plasma5-applets-eventcalendar # An extended calendar plasmoid with daily weather forecasts and events from Google Calendar. Also includes a timer and 24 hour forecast graph.
-AddPackage plasma5-applets-latte-spacer # Plasma applet that acts as a spacer between applets
-AddPackage plasma5-applets-window-appmenu # Plasma 5 applet in order to show the window appmenu
-AddPackage plasma5-applets-window-buttons # Plasma 5 applet in order to show window buttons in your panels
-AddPackage plasma5-applets-window-title # Plasma 5 applet that shows the application title and icon for active window
-
+AddPackage syncthingtray-qt6 # Tray application for Syncthing
 
 # CLI utils
 AddPackage neovide # No Nonsense Neovim Client in Rust
