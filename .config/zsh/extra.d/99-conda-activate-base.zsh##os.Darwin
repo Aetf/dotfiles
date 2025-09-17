@@ -1,1 +1,5 @@
-conda activate dev
+() {
+    if (( $+commands[conda] )); then
+        conda activate dev
+    fi
+}
