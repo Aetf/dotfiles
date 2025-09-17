@@ -21,6 +21,8 @@ IgnorePath '/usr/share/waydroid-extra/*'
 IgnorePath '/usr/share/.mono/*'
 
 IgnorePath '/boot/efi_backup/*'
+IgnorePath '/boot/*.img'
+IgnorePath '/boot/vmlinuz*'
 
 # Host specific
 IgnorePath '/etc/adjtime'
