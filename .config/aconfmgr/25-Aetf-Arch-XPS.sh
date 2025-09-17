@@ -107,17 +107,22 @@ AddPackage intel-media-driver # Intel Media Driver for VAAPI — Broadwell+ iGPU
 AddPackage mesa-utils # Essential Mesa utilities
 AddPackage libva-utils # Intel VA-API Media Applications and Scripts for libva
 AddPackage vdpauinfo # Command line utility for querying the capabilities of a VDPAU device
-AddOptionalPackage mesa \
-    libva-mesa-driver 'for accelerated video playback' `# VA-API implementation for gallium`
+AddOptionalPackage mesa
 
 AddPackage nvidia-dkms # NVIDIA drivers - module sources
 AddPackage nvidia-prime # NVIDIA Prime Render Offload configuration and utilities
+AddPackage nvidia-utils
 CopyFile /etc/modprobe.d/nvidia-power.conf
-CopyFile /etc/udev/rules.d/80-nvidia-pm.rules
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-resume.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-suspend.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-hibernate.service
+SystemdEnable nvidia-utils /usr/lib/systemd/system/nvidia-suspend-then-hibernate.service
+CopyFile /etc/modprobe.d/nvidia-modeset.conf
+# CopyFile /etc/udev/rules.d/80-nvidia-pm.rules
 # CopyFile /etc/pacman.d/confs/no-nvidia-vulkan.conf
 
 # TODO: if docker
-AddPackage nvidia-container-runtime # NVIDIA opencontainer runtime fork to expose GPU devices to containers.
+#AddPackage nvidia-container-runtime # NVIDIA opencontainer runtime fork to expose GPU devices to containers.
 
 # Wifi
 SystemdMask systemd-rfkill.service system
