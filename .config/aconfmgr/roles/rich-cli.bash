@@ -20,7 +20,7 @@ AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage usbutils
 AddPackage lshw # A small tool to provide detailed information on the hardware configuration of the machine.
-AddPackage gnu-netcat # GNU rewrite of netcat, the network piping application
+AddPackage openbsd-netcat
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage cpupower # Linux kernel tool to examine and tune power saving related features of your processor
 AddPackage hexyl # Colored command-line hex viewer
@@ -36,3 +36,14 @@ AddPackage dua-cli # A tool to conveniently learn about the disk usage of direct
 
 # Use polkit to provide some alternative to sudo, used by neovim
 AddPackage polkit
+
+# Packages for k8s management
+AddPackage k9s
+AddPackage cmctl
+AddPackage talosctl
+
+# Packages for managing emails
+AddPackage gmailctl
+
+# Networking debugging
+AddPackage mdns-scan

@@ -5,7 +5,7 @@ AddPackage ttf-times-new-roman # Times New Roman font from Microsoft
 
 AddPackage biber # A Unicode-capable BibTeX replacement for biblatex users
 
-AddPackage tectonic-git # Modernized, complete, self-contained TeX/LaTeX engine, powered by XeTeX and TeXLive
+AddPackage tectonic # Modernized, complete, self-contained TeX/LaTeX engine, powered by XeTeX and TeXLive
 
 AddPackage texlive-basic # TeX Live - Essential programs and files
 IgnorePath '/usr/share/texmf-dist/ls-R'

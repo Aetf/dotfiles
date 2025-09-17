@@ -49,6 +49,7 @@ AddPackage rsync # A fast and versatile file copying tool for remote and local f
 AddPackage tmux # A terminal multiplexer
 
 AddPackage $FOREIGN aconfmgr-git # A configuration manager for Arch Linux
+AddPackage git-crypt # Transparent file encryption in Git, needed by yadm
 
 # Some system fixes
 ## We used to need rng-tools during startup to make sure /dev/random nonblocking,

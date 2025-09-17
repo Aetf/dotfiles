@@ -174,7 +174,6 @@ AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired b
 AddPackage ventoy-bin # A new multiboot USB solution
 AddPackage github-cli # The GitHub CLI
 AddPackage dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
-AddPackage hexo-cli # Command line interface for Hexo
 AddPackage pulumi # Modern Infrastructure as Code
 AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
 AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets

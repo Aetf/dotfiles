@@ -1,5 +1,6 @@
 # Generate mirrorlist
 AddPackage reflector # A Python 3 module and script to retrieve and filter the latest Pacman mirror list.
+AddPackage aurpublish # PKGBUILD management/upload framework for the Arch User Repository
 
 # Make pacman read configs from the directory
 ## Create the directory structure first to avoid pacman get confused

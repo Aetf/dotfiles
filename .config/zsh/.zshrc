@@ -182,13 +182,21 @@ zmodload zdharma_continuum/zinit &>/dev/null
 
     if [ ! -z "${toolinfo[just]}" ]; then
         wait0a+=(
-            # git-crypt for encryption yadm repo
+            # just for better make
             from'gh-r' bpick"${toolinfo[just]}"
             sbin'just'
                 @casey/just
         )
     fi
 
+    if [ ! -z "${toolinfo[uv]}" ]; then
+        wait0a+=(
+            # uv for python
+            from'gh-r' bpick"${toolinfo[uv]}"
+            sbin'uv'
+                @astral-sh/uv
+        )
+    fi
     ##################
     # Wait'0b' block #
     ##################

@@ -11,9 +11,9 @@ AddOptionalPackage plasma-meta \
     plymouth-kcm 'Configure Plymouth from systemsettings' `# KCM to manage the Plymouth (Boot) theme`
 
 AddOptionalPackage plasma-workspace \
-    appmenu-gtk-module 'global menu support for GTK2 and some GTK3 applications' `# Application Menu GTK+ Module`
+    appmenu-gtk-module 'global menu support for GTK2 and some GTK3 applications' `# Application Menu GTK+ Module` \
+    kwayland-integration 'Wayland integration for Qt5 applications' `# Provides integration plugins for various KDE frameworks for the wayland windowing system`
 AddPackage plasma-systemmonitor # An interface for monitoring system sensors, process information and other system resources
-AddPackage plasma-wayland-session # Plasma Wayland session
 AddPackage colord-kde # Interfaces and session daemon to colord for KDE
 AddPackage xdg-desktop-portal # Desktop integration portals for sandboxed apps
 AddPackage kio-gdrive # KIO Slave to access Google Drive
@@ -32,18 +32,20 @@ SystemdEnable --type user xdg-user-dirs /usr/lib/systemd/user/xdg-user-dirs-upda
 AddPackage flatpak # Linux application sandboxing and distribution framework (formerly xdg-app)
 
 # Theme
-AddPackage latte-dock-git # Latte is a dock based on plasma frameworks that provides an elegant and intuitive experience for your tasks and plasmoids
+#AddPackage latte-dock-git # Latte is a dock based on plasma frameworks that provides an elegant and intuitive experience for your tasks and plasmoids
 AddPackage kvantum-theme-arc # Arc theme for Kvantum
 AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
-AddPackage arc-kde # Arc theme for KDE Plasma 5
 
 AddPackage syncthingtray-qt6 # Tray application for Syncthing
+AddPackage plasma6-applets-window-title
+AddPackage plasma-applet-window-buttons
 
 # CLI utils
 AddPackage neovide # No Nonsense Neovim Client in Rust
 AddPackage wl-clipboard # Command-line copy/paste utilities for Wayland
 AddPackage handlr-regex # Powerful alternative to xdg-utils written in Rust
+AddPackage rclone
 CopyFile /etc/sudoers.d/00-gui
 
 # A/V
@@ -90,7 +92,7 @@ AddPackage konsole # KDE terminal emulator
 # Apps
 AddPackage ark # Archiving Tool
 AddOptionalPackage ark \
-    p7zip '7Z format support' `# Command-line file archiver with high compression ratio` \
+    7zip '7Z format support' `# File archiver for extremely high compression` \
     unarchiver 'RAR format support' `# RAR format support`
 AddPackage dolphin # KDE File Manager
 AddOptionalPackage dolphin \
@@ -127,10 +129,12 @@ AddOptionalPackage kpmcore \
     exfatprogs 'exFAT support' `# exFAT filesystem userspace utilities for the Linux Kernel exfat driver`
 
 AddPackage elisa # A simple music player aiming to provide a nice experience for its users
-AddPackage baka-mplayer # A free and open source, cross-platform, libmpv based multimedia player. Qt5 build.
+AddPackage haruna
 
 AddPackage gwenview # A fast and easy to use image viewer
 AddPackage qview # qView is a Qt image viewer designed with minimalism and usability in mind.
+
+AddPackage libreoffice-fresh # office
 
 AddPackage simplescreenrecorder # A feature-rich screen recorder that supports X11 and OpenGL.
 AddPackage spectacle # KDE screenshot capture utility
@@ -148,6 +152,8 @@ AddOptionalPackage poppler \
 
 AddPackage zotero-bin # Zotero Standalone. Is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.
 AddPackage obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
+
+AddPackage yubikey-personalization-gui
 
 # Browser
 AddPackage vivaldi # An advanced browser made with the power user in mind.
