@@ -34,6 +34,8 @@ CopyFile /etc/dracut.conf.d/blacklist-nouveau.conf
 CopyFile /etc/dracut.conf.d/unused-modules.conf
 ### Make sure usb keyboard is usable early on
 CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
+### make sure resume from hibernation works
+CopyFile /etc/dracut.conf.d/resume-from-hibernate.conf
 
 ## kernel command lines
 CopyFile /etc/kernel/cmdline.d/block.conf
