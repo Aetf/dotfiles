@@ -162,12 +162,12 @@ zmodload zdharma_continuum/zinit &>/dev/null
         )
     fi
 
-    if [ ! -z "${toolinfo[volta]}" ]; then
+    if [ ! -z "${toolinfo[mise]}" ]; then
         wait0a+=(
             # volta to manage nodejs
-            from'gh-r' bpick"${toolinfo[volta]}"
-            sbin'volta*'
-                @volta-cli/volta
+            from'gh-r' bpick"${toolinfo[mise]}"
+            sbin'bin/mise'
+                @jdx/mise
         )
     fi
 

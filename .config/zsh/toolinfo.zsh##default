@@ -8,10 +8,10 @@
             toolinfo[fd]='*x86_64*linux*musl*'
             toolinfo[ripgrep]='*x86_64*linux*musl*'
             toolinfo[bat]='*x86_64*linux*musl*'
-            toolinfo[volta]='*linux.*'
             #toolinfo[git-crypt]='*linux*'
             toolinfo[just]='*x86_64*linux*musl*'
             toolinfo[uv]='*x86_64*linux*musl*'
+            toolinfo[mise]='*linux-x64-musl.tar.gz'
             ;;
         Darwin-arm64)
             toolinfo[fzf]='*darwin*arm64*'
@@ -19,7 +19,7 @@
             #toolinfo[fd]='*x86_64*linux*musl*'
             #toolinfo[ripgrep]='*x86_64*linux*musl*'
             #toolinfo[bat]='*x86_64*linux*musl*'
-            toolinfo[volta]='*macos*'
+            toolinfo[mise]='*macos-arm64.tar.gz'
             #toolinfo[git-crypt]='*linux*'
             toolinfo[just]='*aarch64*apple*'
             toolinfo[uv]='*aarch64*apple*darwin*'
