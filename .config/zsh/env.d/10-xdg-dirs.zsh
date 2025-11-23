@@ -12,7 +12,7 @@ export PYTHONHISTFILE=$XDG_CACHE_HOME/python/history
 ## .sqlite_history
 export SQLITE_HISTORY=$XDG_CACHE_HOME/sqlite/history
 
-## .wgetrc (which contains settings for hist-file .wget-hsts)
+## .wgetrc (which contains settings for hsts-file .wget-hsts)
 export WGETRC=$XDG_CONFIG_HOME/wget/wgetrc
 
 ## GnuPG
