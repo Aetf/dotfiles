@@ -1,7 +1,7 @@
 # reference: https://github.com/romkatv/powerlevel10k/issues/2212
 () {
     function prompt_mise() {
-        local plugins=("${(@f)$(mise ls --local 2>/dev/null | awk '!/\(symlink\)/ && $3!="~/.tool-versions" && $3!="~/.config/mise/config.toml" {print $1, $2}')}")
+        local plugins=("${(@f)$(mise ls --local --installed 2>/dev/null | awk '!/\(symlink\)/ && $3!="~/.tool-versions" && $3!="~/.config/mise/config.toml" {print $1, $2}')}")
         local plugin
         for plugin in ${(k)plugins}; do
             local parts=("${(@s/ /)plugin}")

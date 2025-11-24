@@ -171,6 +171,15 @@ zmodload zdharma_continuum/zinit &>/dev/null
         )
     fi
 
+    if [ ! -z "${toolinfo[jaq]}" ]; then
+        wait0a+=(
+            # volta to manage nodejs
+            from'gh-r' bpick"${toolinfo[jaq]}"
+            sbin'jaq* -> jaq'
+                @01mf02/jaq
+        )
+    fi
+
     if [ ! -z "${toolinfo[git-crypt]}" ]; then
         wait0a+=(
             # git-crypt for encryption yadm repo
