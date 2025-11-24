@@ -11,7 +11,7 @@
             #toolinfo[git-crypt]='*linux*'
             toolinfo[just]='*x86_64*linux*musl*'
             toolinfo[uv]='*x86_64*linux*musl*'
-            toolinfo[mise]='*linux-x64-musl.tar.gz'
+            toolinfo[mise]='*linux-x64.tar.gz'
             ;;
         Darwin-arm64)
             toolinfo[fzf]='*darwin*arm64*'
