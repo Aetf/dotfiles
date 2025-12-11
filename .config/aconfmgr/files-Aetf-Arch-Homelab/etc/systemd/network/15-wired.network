@@ -2,8 +2,6 @@
 Name=enp7s0
 
 [Network]
-VLAN=iot
-
 DHCP=yes
 IPForward=yes
 MulticastDNS=yes
