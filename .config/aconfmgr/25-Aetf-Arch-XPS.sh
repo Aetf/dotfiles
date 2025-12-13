@@ -60,6 +60,10 @@ CopyFile /etc/fstab
 IsBootstrap && return 0
 
 AddRole network-nm
+# Additionally disable WiFi when connected to Ethernet
+CopyFile /etc/NetworkManager/dispatcher.d/99-wifi-auto-toggle
+SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-dispatcher.service
+
 AddRole zerotier
 AddRole rich-cli
 AddRole ssh
