@@ -1,0 +1,17 @@
+{
+    "from": "User",
+    "host_type": "octoprint",
+    "name": "QidiPlus4",
+    "preset_name": "X-Plus 4",
+    "preset_names": "X-Plus 4",
+    "print_host": "qidi-plus4.iot.home.arpa",
+    "printer_technology": "FFF",
+    "printhost_apikey": "",
+    "printhost_authorization_type": "key",
+    "printhost_cafile": "",
+    "printhost_password": "",
+    "printhost_port": "",
+    "printhost_ssl_ignore_revoke": "0",
+    "printhost_user": "",
+    "version": "02.03.01.70"
+}

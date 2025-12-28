@@ -1,0 +1,17 @@
+{
+    "compatible_printers": "",
+    "default_filament_colour": [
+        "#f5bee9"
+    ],
+    "filament_id": "P5edf7da",
+    "filament_settings_id": [
+        "Polymaker PETG High Speed Teal @X-Plus 4 0.4 nozzle"
+    ],
+    "filament_start_gcode": [
+        "; Filament start gcode"
+    ],
+    "from": "User",
+    "inherits": "Polymaker PETG High Speed @X-Plus 4 0.4 nozzle",
+    "name": "Polymaker PETG High Speed Teal @X-Plus 4 0.4 nozzle",
+    "version": "2.3.1.70"
+}

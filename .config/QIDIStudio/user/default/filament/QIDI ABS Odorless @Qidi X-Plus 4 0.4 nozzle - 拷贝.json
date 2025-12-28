@@ -1,0 +1,21 @@
+{
+    "complete_print_exhaust_fan_speed": [
+        "50"
+    ],
+    "default_filament_colour": [
+        "#C0BFBC"
+    ],
+    "filament_extruder_variant": [
+        "Direct Drive Standard"
+    ],
+    "filament_settings_id": [
+        "QIDI ABS Odorless @Qidi X-Plus 4 0.4 nozzle - 拷贝"
+    ],
+    "from": "User",
+    "inherits": "QIDI ABS Odorless @Qidi X-Plus 4 0.4 nozzle",
+    "name": "QIDI ABS Odorless @Qidi X-Plus 4 0.4 nozzle - 拷贝",
+    "textured_plate_temp_initial_layer": [
+        "110"
+    ],
+    "version": "2.3.1.70"
+}
