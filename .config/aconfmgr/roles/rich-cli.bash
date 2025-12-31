@@ -43,7 +43,7 @@ AddPackage cmctl
 AddPackage talosctl
 
 # Packages for managing emails
-AddPackage gmailctl
+#AddPackage $FOREIGN gmailctl
 
 # Networking debugging
-AddPackage mdns-scan
+#AddPackage $FOREIGN mdns-scan

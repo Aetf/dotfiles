@@ -195,3 +195,11 @@ cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.co
 [Service]
 Environment=QBT_WEBUI_PORT=9876
 EOF
+
+# As a volunteer for distcc
+AddPackage distcc
+CopyFile /etc/conf.d/distccd
+SystemdEnable --name distccd.service distcc /usr/lib/systemd/system/distccd.service
+
+# podman
+AddRole docker
