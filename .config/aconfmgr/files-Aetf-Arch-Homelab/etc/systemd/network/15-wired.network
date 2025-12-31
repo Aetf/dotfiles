@@ -7,6 +7,9 @@ IPForward=yes
 MulticastDNS=yes
 IPv6AcceptRA=yes
 
+# Any VLAN netdev to be created on top of this device
+VLAN=iot
+
 # https://wiki.archlinux.org/title/Systemd-networkd#Wired_and_wireless_adapters_on_the_same_machine
 [DHCPv4]
 RouteMetric=10

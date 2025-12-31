@@ -2,8 +2,6 @@
 Name=kvmbr0
 
 [Network]
-VLAN=iot
-
 DHCP=yes
 
 IPForward=no
