@@ -7,8 +7,9 @@ AddPackage sg3_utils
 AddPackage $FOREIGN ledmonutils
 
 # zfs related setup
+AddPackage linux-lts-headers
 AddPackage $FOREIGN zfs-utils
-AddPackage zfs-linux-lts
+AddPackage zfs-dkms
 
 # Disable dracut zfs boot module as we don't boot with that,
 # also the module makes the system unbootable due to a missing service file
