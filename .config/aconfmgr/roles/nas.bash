@@ -50,6 +50,11 @@ cat > "$(CreateFile /etc/sysusers.d/nas.conf)" <<EOF
 g nas 10000
 EOF
 
+# Create access for Aetf
+cat > "$(CreateFile /etc/sysusers.d/aetf-nas.conf)" <<EOF
+m aetf nas
+EOF
+
 # Create access for Music Assistant
 cat > "$(CreateFile /etc/sysusers.d/music_assistant.conf)" <<EOF
 u! music_assistant - "Music Assistant Samba Access"
