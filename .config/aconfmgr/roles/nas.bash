@@ -41,3 +41,16 @@ SystemdEnable --name zfs-scrub-monthly@nas.timer zfs-utils /usr/lib/systemd/syst
 
 # For hdparm
 AddPackage hdparm
+
+# Permission & Access
+
+# Create a samba user group so the whole NAS can use one group
+cat > "$(CreateFile /etc/sysusers.d/nas.conf)" <<EOF
+g nas 10000
+EOF
+
+# Create access for Music Assistant
+cat > "$(CreateFile /etc/sysusers.d/music_assistant.conf)" <<EOF
+u! music_assistant - "Music Assistant Samba Access"
+m music_assistant nas
+EOF
