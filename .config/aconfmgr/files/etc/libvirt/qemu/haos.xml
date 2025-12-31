@@ -23,8 +23,8 @@ or other application using the libvirt API.
       <feature enabled='no' name='enrolled-keys'/>
       <feature enabled='yes' name='secure-boot'/>
     </firmware>
-    <loader readonly='yes' secure='yes' type='pflash'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
-    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd'>/var/lib/libvirt/qemu/nvram/haos_VARS.fd</nvram>
+    <loader readonly='yes' secure='yes' type='pflash' format='raw'>/usr/share/edk2/x64/OVMF_CODE.secboot.4m.fd</loader>
+    <nvram template='/usr/share/edk2/x64/OVMF_VARS.4m.fd' templateFormat='raw' format='raw'>/var/lib/libvirt/qemu/nvram/haos_VARS.fd</nvram>
     <boot dev='hd'/>
   </os>
   <features>
@@ -159,12 +159,17 @@ or other application using the libvirt API.
       <alias name='ua-USB3Hub'/>
       <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
     </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source guestReset='on'>
-        <vendor id='0x8087'/>
-        <product id='0x0032'/>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
       </source>
-      <alias name='ua-USBBluetooth'/>
+      <alias name='ua-WifiBluetoothCard'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x10c4'/>
+        <product id='0xea60'/>
+      </source>
       <address type='usb' bus='0' port='1'/>
     </hostdev>
     <watchdog model='itco' action='reset'/>
