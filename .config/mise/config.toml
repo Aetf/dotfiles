@@ -1,0 +1,9 @@
+[tools]
+cargo-binstall = "latest"
+
+[settings]
+
+[settings.npm]
+
+[settings.cargo]
+binstall = true
