@@ -6,9 +6,19 @@ alias ls='eza --classify --icons --links --group --header --modified --accessed 
 alias ll='ls -l'
 alias la='ls -aa'
 alias lla='ls -aal'
-alias ps='ps xawf -eo pid,user,args'
 alias p='paru'
-alias open='handlr open'
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    alias open='xdg-open'
+fi
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # macOS equivalent (flat view, wide output)
+    alias ps='ps axww -o pid,user,command'
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linux equivalent (forest view)
+    alias ps='ps xawf -eo pid,user,args'
+fi
 
 () {{
     touch /tmp/test
@@ -60,7 +70,3 @@ function gmailctl() {
 # and have a shortcurt: alias work='cd ~work'
 export work=/dev/shm/$USER/workspace
 alias work='cd ~work'
-
-# The ansible dotfiles
-export spec=$HOME/.local/spec
-alias spec='cd ~spec'
