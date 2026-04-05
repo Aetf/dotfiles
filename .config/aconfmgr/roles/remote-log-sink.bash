@@ -15,4 +15,4 @@ CopyFile /etc/syslog-ng/remote-only.conf
 # Make sure destination files are rotated
 AddPackage logrotate # Rotates system logs automatically
 CopyFile /etc/logrotate.d/syslog-remote
-SystemdEnable logrotate /usr/lib/systemd/system/logrotate.service
+SystemdEnable logrotate /usr/lib/systemd/system/logrotate.timer
