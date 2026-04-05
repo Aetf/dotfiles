@@ -142,6 +142,10 @@ AddRole kvm-homelab
 AddRole k8s
 ## This server is a worker
 cat >$(CreateFile /etc/conf.d/k3s) <<EOF
+# K3S_URL=
+# K3S_TOKEN=
+# K3S_NODE_NAME=
+# K3S_ARGS=
 K3S_URL=https://aetf-arch-vps.zt.unlimited-code.works:6443
 K3S_ARGS=agent
 EOF
