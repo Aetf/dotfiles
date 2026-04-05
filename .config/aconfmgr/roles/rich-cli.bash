@@ -16,22 +16,20 @@ AddPackage man-pages # Linux man pages
 # This will be handled in k8s as a service that runs on multiple machines
 # AddPackage syncthing # Open Source Continuous Replication / Cluster Synchronization Thing
 
-AddPackage traceroute # Tracks the route taken by packets over an IP network
-AddPackage nmap # Utility for network discovery and security auditing
 AddPackage usbutils
 AddPackage lshw # A small tool to provide detailed information on the hardware configuration of the machine.
-AddPackage openbsd-netcat
 AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and Metalink
 AddPackage cpupower # Linux kernel tool to examine and tune power saving related features of your processor
 AddPackage hexyl # Colored command-line hex viewer
+
 AddPackage ps_mem # List processes by memory usage
 AddPackage htop # Interactive process viewer
 AddPackage powertop # A tool to diagnose issues with power consumption and power management
 AddPackage iotop # View I/O usage of processes
-AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
+
+AddPackage lsof # Lists open files for running Unix processes
 
 AddPackage $FOREIGN rnr # A CLI tool to rename files and directories that supports regex.
-AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
 
 # Use polkit to provide some alternative to sudo, used by neovim
@@ -47,3 +45,9 @@ AddPackage talosctl
 
 # Networking debugging
 #AddPackage $FOREIGN mdns-scan
+AddPackage traceroute # Tracks the route taken by packets over an IP network
+AddPackage nmap # Utility for network discovery and security auditing
+AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
+AddPackage socat # Multipurpose relay
+AddPackage openbsd-netcat
+AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
