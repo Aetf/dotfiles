@@ -223,4 +223,12 @@ AddRole docker
 AddRole remote-log-sink
 
 # Jellyfin discovery relay
-Copy /etc/systemd/system/jellyfin-discovery-relay.service
+CopyFile /etc/systemd/system/jellyfin-discovery-relay.service
+SystemdEnable --from-file /etc/systemd/system/jellyfin-discovery-relay.service
+
+# qemu binfmt.d
+CopyFile /etc/binfmt.d/qemu-aarch64-static.conf
+CopyFile /etc/binfmt.d/qemu-aarch64_be-static.conf
+CopyFile /etc/binfmt.d/qemu-arm-static.conf
+CopyFile /etc/binfmt.d/qemu-armeb-static.conf
+
