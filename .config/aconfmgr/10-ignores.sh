@@ -68,3 +68,6 @@ IgnorePath '/etc/audit/audit.rules'
 # systemd-creds, see https://systemd.io/CREDENTIALS/
 IgnorePath '/etc/credstore'
 IgnorePath '/etc/credstore.encrypted'
+
+# k3s generated access file
+IgnorePath '/etc/rancher/k3s/k3s.yaml'
