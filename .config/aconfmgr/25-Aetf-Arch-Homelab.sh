@@ -110,7 +110,14 @@ CopyFile /etc/smartd.conf
 ## Use s-nail to send mail when smartd finds an error
 AddPackage s-nail # for sending email
 ### Configured sending via master@unlimited-code.works using gmail
-CopyFile /etc/mail.rc 600
+cat >> "$(GetPackageOriginalFile s-nail /etc/mail.rc)" <<EOF
+account Google {
+   # Localize options, forget them when changing t he account
+   localopts yes
+   set mta=smtp://pfyu817:kbxnmlxsmniftrwx@smtp.gmail.com:587 smtp-use-starttls
+   set from="Aetf <master@unlimited-code.works>"
+}
+EOF
 ### smartd by default will not select account
 CopyFile /usr/local/bin/smartd-mail 755
 
