@@ -1,0 +1,2 @@
+# load SCSI generic (sg) driver for disk enclosure
+SUBSYSTEM=="scsi", DRIVERS=="ses", RUN+="/sbin/modprobe -bv sg"
