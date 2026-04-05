@@ -203,3 +203,6 @@ SystemdEnable --name distccd.service distcc /usr/lib/systemd/system/distccd.serv
 
 # podman
 AddRole docker
+
+# Remote log sink
+AddRole remote-log-sink

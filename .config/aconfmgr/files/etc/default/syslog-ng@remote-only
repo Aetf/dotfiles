@@ -1,0 +1,5 @@
+CONFIG_FILE=/etc/syslog-ng/remote-only.conf
+PERSIST_FILE=/var/lib/syslog-ng/syslog-ng-remote-only.persist
+CONTROL_FILE=/run/syslog-ng-remote-only.ctl
+PID_FILE=/run/syslog-ng-remote-only.pid
+OTHER_OPTIONS="--enable-core"

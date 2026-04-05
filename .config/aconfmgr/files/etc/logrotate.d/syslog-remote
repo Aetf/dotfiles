@@ -1,0 +1,13 @@
+/var/log/remote/*.log {
+    daily                   # Rotate the file once a day
+    rotate 7                # Keep 7 days worth of old logs before deleting them
+    compress                # Compress old logs using gzip
+    delaycompress           # Delay compression of the most recent rotated file by one cycle
+    missingok               # Don't throw an error if the log file doesn't exist
+    notifempty              # Don't rotate the file if it is empty
+    create 0640 root log    # Recreate the new empty file with these permissions
+    sharedscripts           # Only run postrotate single time for all matching files
+    postrotate
+        /bin/kill -HUP $(car /run/syslog-ng-remote-only.pid 2>/dev/null) 2>/dev/null || true
+    endscript
+}
