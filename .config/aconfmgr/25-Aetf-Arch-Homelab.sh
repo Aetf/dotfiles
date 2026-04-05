@@ -221,3 +221,6 @@ AddRole docker
 
 # Remote log sink
 AddRole remote-log-sink
+
+# Jellyfin discovery relay
+Copy /etc/systemd/system/jellyfin-discovery-relay.service

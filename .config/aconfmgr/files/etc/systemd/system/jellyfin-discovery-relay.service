@@ -1,0 +1,21 @@
+[Unit]
+Description=Jellyfin UDP Broadcast Relay
+After=network.target k3s.service
+Requires=k3s.service
+
+[Service]
+Type=simple
+# Replace 10.43.x.y with your actual Jellyfin Service ClusterIP
+Environment="JELLYFIN_SVC_IP=127.0.0.1"
+Environment="PORT=7359"
+
+# socat syntax:
+# 1. UDP4-RECVFROM: Listen on port 7359, accept broadcast, fork a new process for each packet.
+# 2. UDP4-SENDTO: Forward the payload to the K8s Service IP.
+ExecStart=/usr/bin/socat UDP4-RECVFROM:${PORT},broadcast,fork UDP4-SENDTO:${JELLYFIN_SVC_IP}:${PORT}
+
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
