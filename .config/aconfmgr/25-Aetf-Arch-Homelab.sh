@@ -205,6 +205,10 @@ SystemdEnable --name qbittorrent-nox@aetf.service qbittorrent-nox /usr/lib/syste
 cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.conf) <<EOF
 [Service]
 Environment=QBT_WEBUI_PORT=9876
+Environment=QBT_WEBUI_ADDRESS='*'
+StateDirectory=qBittorrent
+ExecStart=
+ExecStart=/usr/bin/qbittorrent-nox --profile=/var/lib/qBittorrent --relative-fastresume
 EOF
 
 # As a volunteer for distcc
