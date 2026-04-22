@@ -1,0 +1,5 @@
+# Always use pcsc
+disable-ccid
+
+card-timeout 5
+pcsc-shared

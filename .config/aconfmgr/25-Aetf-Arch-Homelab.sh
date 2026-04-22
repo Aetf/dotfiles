@@ -84,6 +84,7 @@ CopyFile /etc/systemd/network/20-iot-kvmbr0.network
 AddRole packaging
 
 # Disable gnupg agents on server, we will rely on gpg agent forwarding via SSH
+AddPackage gnupg
 SystemdMask gpg-agent.service user
 SystemdMask gpg-agent.socket user
 SystemdMask gpg-agent-ssh.socket user

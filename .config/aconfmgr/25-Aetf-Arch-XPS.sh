@@ -66,6 +66,7 @@ SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-dispatcher.s
 
 AddRole zerotier
 AddRole rich-cli
+AddRole pgp-physical
 AddRole ssh
 
 AddRole docker

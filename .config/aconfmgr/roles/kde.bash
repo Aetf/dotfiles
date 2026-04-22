@@ -69,7 +69,6 @@ AddPackage qpwgraph # PipeWire Graph Qt GUI Interface
 # Devices
 AddPackage piper # GTK application to configure gaming mice
 AddPackage yubikey-manager-qt # Cross-platform application for configuring any YubiKey over all USB transports
-SystemdEnable pcsclite /usr/lib/systemd/system/pcscd.socket
 
 AddPackage cups
 AddPackage print-manager # A tool for managing print jobs and printers

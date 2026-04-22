@@ -14,4 +14,9 @@ PasswordAuthentication no
 KbdInteractiveAuthentication no
 EOF
 
+# Allow gpg-agent forwarding to delete stale UDS
+cat > "$(CreateFile /etc/ssh/sshd_config.d/allow-uds-unlink.conf)" <<EOF
+StreamLocalBindUnlink yes
+EOF
+
 SystemdEnable openssh /usr/lib/systemd/system/sshd.service
