@@ -1,8 +1,5 @@
 # Source ordering: .zshenv → [.zprofile if login] → [.zshrc if interactive] → [.zlogin if login] → [.zlogout sometimes]
 
-# Make sure everything is read from $XDG_CONFIG_HOME
-export ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
-
 # Stable unique append and prepend, won't change order if the value is present
 function uprepend() {
     local varname=$1
@@ -116,3 +113,8 @@ function indexer() {
         source "$f"
     done
 }
+
+# Make sure everything is read from $XDG_CONFIG_HOME
+export ZDOTDIR=${XDG_CONFIG_HOME:-$HOME/.config}/zsh
+source ${ZDOTDIR}/env.d/index.zsh
+
