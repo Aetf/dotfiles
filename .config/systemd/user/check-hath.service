@@ -1,0 +1,7 @@
+[Unit]
+Description=Health check for the Hentai@Home client in k8s
+
+[Service]
+Type=oneshot
+Environment=KUBECONFIG=%h/.config/kube/config
+ExecStart=%h/.local/bin/check-hath
