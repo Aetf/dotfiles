@@ -222,6 +222,7 @@ SystemdEnable apcupsd /usr/lib/systemd/system/apcupsd.service
 
 # Misc apps
 AddPackage qbittorrent-nox git-crypt nethogs
+AddPackage claude-code # An agentic coding tool that lives in your terminal
 SystemdEnable --name qbittorrent-nox@aetf.service qbittorrent-nox /usr/lib/systemd/system/qbittorrent-nox@.service
 cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.conf) <<EOF
 [Service]
