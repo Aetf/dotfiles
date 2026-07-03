@@ -13,3 +13,7 @@ CreateLink /etc/fonts/conf.d/30-metric-aliases.conf /usr/share/fontconfig/conf.a
 
 # Fallback to Noto CJK font when glyphs are missing
 CopyFile /etc/fonts/conf.d/50-cjk-sc.conf
+
+# Default preset enabled by fontconfig's post-upgrade script; the link is
+# intentionally unowned by the package so we have to record it ourselves
+CreateLink /etc/fonts/conf.d/48-guessfamily.conf /usr/share/fontconfig/conf.default/48-guessfamily.conf
