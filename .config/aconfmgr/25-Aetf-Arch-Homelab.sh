@@ -1,6 +1,7 @@
 MatchHost || return 0
 
-# This host serves as the homelab server in house, joining the k8s cluster as a worker.
+# This host serves as the homelab server in house, acting as the k8s cluster's
+# control-plane (embedded etcd).
 # As such, it has the minimal amount of packages.
 
 # We first make sure bootstrapping is completed
@@ -148,26 +149,45 @@ AddRole kvm-homelab
 
 # Rest of the machine will be managed by k8s
 AddRole k8s
-## This server is a worker
-cat >$(CreateFile /etc/conf.d/k3s) <<EOF
-# K3S_URL=
-# K3S_TOKEN=
-# K3S_NODE_NAME=
-# K3S_ARGS=
-K3S_URL=https://aetf-arch-vps.zt.unlimited-code.works:6443
-K3S_ARGS=agent
-EOF
+## This host is the cluster server (took over from aetf-arch-vps, which is now
+## an agent), so /etc/conf.d/k3s agent env vars are no longer needed.
 cat >$(CreateFile /etc/rancher/k3s/config.yaml) <<EOF
 ---
+# k3s deployment
+write-kubeconfig-mode: "644"
+disable:
+- traefik
+- local-storage
+
+# Use embedded etcd.
+# This also migrates from existing single-node sqlite
+cluster-init: true
+
 kubelet-arg: []
+kube-controller-manager-arg:
+  - "node-monitor-grace-period=120s"
+  - "node-monitor-period=10s"
 
-# cluster
-token-file: /etc/rancher/k3s/ucw.token
+# =====================
+# api server networking
+# =====================
+bind-address: 10.144.180.10
+advertise-address: 10.144.180.10
+# additional IP to add in TLS cert
+tls-san:
+- 10.144.180.10
+- aetf-arch-homelab.zt.unlimited-code.works
 
+# =====================
 # agent networking
+# =====================
+#node-ip: 10.144.160.212
 node-ip: 10.144.180.10
+#node-external-ip: 45.77.144.92
 node-external-ip: 192.168.80.238
 flannel-iface: ztqu3dzpfj
+# server only
+flannel-backend: host-gw
 EOF
 
 # FUTURE: there's no fan driver for the motherboard yet

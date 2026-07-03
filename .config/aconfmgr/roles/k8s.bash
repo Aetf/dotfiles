@@ -1,7 +1,7 @@
-AddPackage $FOREIGN k3s-1.33-bin
+AddPackage $FOREIGN k3s-1.34-bin
 AddPackage kubectl
 AddPackage cmctl
-SystemdEnable k3s-1.33-bin /usr/lib/systemd/system/k3s.service
+SystemdEnable k3s-1.34-bin /usr/lib/systemd/system/k3s.service
 
 # Node feature isn't configuration
 IgnorePath /etc/kubernetes/node-feature-discovery/*
