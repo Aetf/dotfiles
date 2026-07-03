@@ -1,0 +1,28 @@
+[Unit]
+Description=Samsung TV Relay
+Wants=network-online.target
+After=network-online.target nss-lookup.target
+
+[Service]
+Type=simple
+Environment="TV_IP=Samsung.home.arpa"
+# The broadcast IP of the TV's VLAN (e.g., if VLAN is 192.168.20.0/24, use 192.168.20.255)
+Environment="TV_SUBNET_BROADCAST=192.168.80.255"
+# The IP of your homelab on the Home Assistant VLAN
+Environment="HOMELAB_HA_IP=aetf-arch-homelab.home.arpa"
+
+# Using 'fork' and 'reuseaddr' ensures it handles multiple Home Assistant connections gracefully.
+# 1. TCP 8001: Unencrypted WebSocket
+# 2. TCP 8002: Secure WebSocket (WSS)
+# 3. UDP 9: Wake-on-LAN Broadcast Forwarding
+ExecStart=/bin/bash -c "\
+  socat TCP4-LISTEN:8001,bind=${HOMELAB_HA_IP},fork,reuseaddr TCP4:${TV_IP}:8001 & \
+  socat TCP4-LISTEN:8002,bind=${HOMELAB_HA_IP},fork,reuseaddr TCP4:${TV_IP}:8002 & \
+  socat UDP4-RECVFROM:9,bind=${HOMELAB_HA_IP},broadcast,fork UDP4-SENDTO:${TV_SUBNET_BROADCAST}:9,broadcast & \
+  wait"
+
+Restart=always
+RestartSec=1
+
+[Install]
+WantedBy=multi-user.target

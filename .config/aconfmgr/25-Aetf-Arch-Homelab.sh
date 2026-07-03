@@ -247,6 +247,11 @@ AddRole remote-log-sink
 CopyFile /etc/systemd/system/jellyfin-discovery-relay.service
 SystemdEnable --from-file /etc/systemd/system/jellyfin-discovery-relay.service
 
+# Samsung TV relay, bridging Home Assistant to the TV across VLANs
+# (socat comes from the rich-cli role)
+CopyFile /etc/systemd/system/samsung-tv-relay.service
+SystemdEnable --from-file /etc/systemd/system/samsung-tv-relay.service
+
 # qemu binfmt.d
 CopyFile /etc/binfmt.d/qemu-aarch64-static.conf
 CopyFile /etc/binfmt.d/qemu-aarch64_be-static.conf
