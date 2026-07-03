@@ -26,6 +26,8 @@ IgnorePath '/boot/vmlinuz*'
 
 # Host specific
 IgnorePath '/etc/adjtime'
+# Fallback stub written by systemd
+IgnorePath '/etc/vconsole.conf'
 IgnorePath '/etc/crypttab'
 IgnorePath '/etc/hostname'
 IgnorePath '/etc/localtime'
