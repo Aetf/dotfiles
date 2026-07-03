@@ -48,8 +48,6 @@ AddPackage namcap # A Pacman package analyzer
 
 ## AUR helper
 AddPackage $FOREIGN paru # Feature packed AUR helper
-AddOptionalPackage paru \
-    asp "downloading repo pkgbuilds" `# Arch Linux build source file management tool`
 # Directly create the file without getting it from the package to avoid building
 # it while generating config
 cat > "$(CreateFile /etc/paru.conf)" <<'EOF'

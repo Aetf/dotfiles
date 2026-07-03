@@ -22,7 +22,6 @@ AddPackage aria2 # Download utility that supports HTTP(S), FTP, BitTorrent, and 
 AddPackage cpupower # Linux kernel tool to examine and tune power saving related features of your processor
 AddPackage hexyl # Colored command-line hex viewer
 
-AddPackage ps_mem # List processes by memory usage
 AddPackage htop # Interactive process viewer
 AddPackage powertop # A tool to diagnose issues with power consumption and power management
 AddPackage iotop # View I/O usage of processes
