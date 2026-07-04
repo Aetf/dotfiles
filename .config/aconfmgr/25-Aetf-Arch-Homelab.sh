@@ -113,6 +113,8 @@ CopyFile /etc/smartd.conf
 AddPackage s-nail # for sending email
 ### Configured sending via master@unlimited-code.works using gmail
 cat >> "$(GetPackageOriginalFile s-nail /etc/mail.rc)" <<EOF
+# Required since s-nail 14.9.25 for the new-style smtp:// mta URL below
+set v15-compat
 account Google {
    # Localize options, forget them when changing t he account
    localopts yes

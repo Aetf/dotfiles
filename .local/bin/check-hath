@@ -25,8 +25,7 @@ mkdir -p "$STATE_DIR"
 notify() {
     local subject=$1 body=$2
     echo "$subject"
-    # v15-compat: the smtp:// URL in /etc/mail.rc needs it on current s-nail
-    printf '%s\n' "$body" | mail -Sv15-compat -A Google -s "[check-hath] $subject" "$MAILTO" || true
+    printf '%s\n' "$body" | mail -A Google -s "[check-hath] $subject" "$MAILTO" || true
 }
 
 # cooled_down NAME -> succeeds (and refreshes the stamp) at most once per

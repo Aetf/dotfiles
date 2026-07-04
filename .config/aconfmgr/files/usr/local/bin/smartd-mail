@@ -1,3 +1,2 @@
 #! /usr/bin/env bash
-# v15-compat: required since s-nail 14.9.25 for the smtp:// URL in /etc/mail.rc
-exec mail -Sv15-compat -A Google "$@"
+exec mail -A Google "$@"
