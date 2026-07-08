@@ -227,6 +227,13 @@ AddPackage qbittorrent-nox git-crypt nethogs
 AddPackage claude-code # An agentic coding tool that lives in your terminal
 SystemdEnable --name qbittorrent-nox@aetf.service qbittorrent-nox /usr/lib/systemd/system/qbittorrent-nox@.service
 cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.conf) <<EOF
+[Unit]
+# Torrent data lives on the ZFS pool. Without this ordering the service can
+# win the boot race against zfs mounting (zfs-mount-generator provides
+# mnt-nas.mount) and flag every torrent as missingFiles, which happened on
+# the 2026-07-02 boot (438 of 443 torrents).
+RequiresMountsFor=/mnt/nas
+
 [Service]
 Environment=QBT_WEBUI_PORT=9876
 Environment=QBT_WEBUI_ADDRESS='*'
