@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily UDM-SE health and drift check
+
+[Timer]
+OnCalendar=*-*-* 08:23:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target

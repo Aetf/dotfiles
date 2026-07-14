@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Daily UDM-SE health check: config drift, container health, and wildcard
+# cert expiry (the May-July 2026 cert incident failed silently for two months;
+# this closes that class of failure). Alerts by mail, logs to user journal.
+set -uo pipefail
+MAILTO=pfyu817@gmail.com
+issues=()
+
+# 1. Config drift vs the yadm-managed sources of truth
+drift=$("$HOME/.config/gw-config/deploy.sh" --check 2>/dev/null | grep -v '^$' || true)
+[[ -n $drift ]] && issues+=("config drift on gw:"$'\n'"$drift")
+
+# 2. Both nspawn containers running
+running=$(ssh -o BatchMode=yes -o ConnectTimeout=10 gw 'machinectl list --no-legend' 2>/dev/null)
+for m in adguard caddy; do
+    grep -q "^$m " <<<"$running" || issues+=("container $m not running")
+done
+
+# 3. Wildcard cert served and not close to expiry
+end=$(echo | timeout 10 openssl s_client -connect adguard.lan.ucw.phd:443 \
+    -servername adguard.lan.ucw.phd 2>/dev/null | openssl x509 -noout -enddate 2>/dev/null | cut -d= -f2)
+if [[ -z $end ]]; then
+    issues+=("cannot fetch *.lan.ucw.phd certificate (TLS down?)")
+else
+    days=$(( ($(date -d "$end" +%s) - $(date +%s)) / 86400 ))
+    (( days < 21 )) && issues+=("*.lan.ucw.phd cert expires in ${days}d (renewal failing?)")
+fi
+
+if (( ${#issues[@]} )); then
+    printf '%s\n\n' "${issues[@]}"
+    printf '%s\n\n' "${issues[@]}" | mail -A Google -s "[check-gw] ${#issues[@]} issue(s)" "$MAILTO" || true
+    exit 0
+fi
+echo "healthy: no drift, containers up, cert valid ${days}d more"

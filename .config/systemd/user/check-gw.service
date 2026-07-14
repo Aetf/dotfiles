@@ -1,0 +1,6 @@
+[Unit]
+Description=UDM-SE health and drift check
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/check-gw
