@@ -4,12 +4,22 @@ Manages all customization on the Ubiquiti UDM-SE gateway (`ssh gw`,
 root@dmse.home.arpa), aconfmgr-style: this directory is the source of truth,
 fully version-controlled by yadm; `deploy.sh` pushes it to the device.
 
-The UDM cannot be rebuilt declaratively — firmware owns the OS and **firmware
-updates wipe everything outside `/data`**. Strategy:
+The UDM cannot be rebuilt declaratively — firmware owns the OS. The actual
+persistence model across firmware updates (verified on this device against
+six updates, 2025-12 through 2026-06, via dpkg.log reinstall events and /etc
+file mtimes):
+
+| What | Survives firmware updates? |
+|---|---|
+| `/data` | always (documented) |
+| hand-placed files in `/etc` (nspawn units, systemd units, wants symlinks) | **yes in practice** — survived all six observed updates; Ubiquiti migrates /etc, but it is undocumented, so don't bet the recovery path on it |
+| dpkg/apt-installed packages (systemd-container, rsync, …) | **no — wiped every single update**; `dpkg.log` shows `install … <none>` reinstalls after each one |
+
+Strategy:
 
 1. all custom state lives in `/data` on the device,
-2. `on_boot.d` scripts idempotently reinstall the volatile parts (`/etc`) at
-   every boot (udm-boot from unifios-utilities),
+2. `on_boot.d` scripts idempotently reinstall packages (load-bearing at every
+   update) and restore `/etc` bits (insurance for major jumps/factory reset),
 3. this repo mirrors the sources of truth and small backups.
 
 ## Layout

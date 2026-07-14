@@ -15,10 +15,17 @@ if ! command -v rsync >/dev/null; then
     apt -y install rsync || yes | dpkg -i /data/custom/dpkg/rsync_*.deb
 fi
 
-# Firmware updates wipe /etc; reinstall the nspawn unit files from the
-# persistent mirror (synced there by gw-config's deploy.sh) BEFORE the
-# machines get linked and started below, or they would come up without
-# their bridge/network config.
+# Firmware update persistence model (verified against 6 updates,
+# 2025-12..2026-06, via dpkg.log and file mtimes):
+#   - /data always persists
+#   - hand-placed files in /etc have SURVIVED every observed update
+#     (Ubiquiti migrates /etc), but this is undocumented behavior
+#   - dpkg/apt-installed packages are WIPED on every update
+# So the package reinstalls here are load-bearing every single update,
+# while this nspawn restore is insurance against a major-version jump
+# or factory reset where /etc migration might not happen. It runs
+# BEFORE the machines get linked and started below, so they never come
+# up without their bridge/network config.
 if [ -d /data/gw-config/nspawn ]; then
     mkdir -p /etc/systemd/nspawn
     if ! diff -rq /data/gw-config/nspawn /etc/systemd/nspawn >/dev/null 2>&1; then
