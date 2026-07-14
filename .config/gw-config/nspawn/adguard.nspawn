@@ -1,0 +1,10 @@
+[Exec]
+Boot=on
+Capability=all
+ResolvConf=off
+
+[Network]
+Bridge=br5
+
+[Files]
+Bind=/data:/data

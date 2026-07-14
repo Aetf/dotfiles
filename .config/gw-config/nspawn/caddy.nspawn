@@ -1,0 +1,16 @@
+[Exec]
+Boot=on
+KillSignal=SIGKILL
+Capability=all
+ResolvConf=off
+Environment=XDG_CONFIG_HOME=/data/caddy/config
+Environment=XDG_DATA_HOME=/data/caddy/data
+Environment=HOME=/data/caddy
+Environment=S6_KILL_GRACETIME=0
+WorkingDirectory=/data/caddy
+
+[Network]
+Bridge=br5
+
+[Files]
+Bind=/data:/data

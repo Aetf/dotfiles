@@ -1,0 +1,68 @@
+{
+	email "aetf@unlimited-code.works"
+	debug
+	admin unix//data/caddy/data/caddy/caddy-admin.sock
+}
+
+*.lan.ucw.phd {
+	tls {
+		dns cloudflare {file./data/caddy/secrets/cf_token}
+		resolvers 1.1.1.1
+	}
+
+	@tube host tube.lan.ucw.phd
+	handle @tube {
+		reverse_proxy aetf-arch-homelab.home.arpa:8096
+	}
+
+	@bt host bt.lan.ucw.phd
+	handle @bt {
+		reverse_proxy aetf-arch-homelab.home.arpa:9876
+	}
+
+	@dns host dns.lan.ucw.phd
+	handle @dns {
+		reverse_proxy 10.0.5.3
+	}
+
+	@gw host gw.lan.ucw.phd
+	handle @gw {
+		reverse_proxy https://dmse.home.arpa {
+			transport http {
+				tls
+				tls_insecure_skip_verify
+			}
+		}
+	}
+
+	@spool host spool.lan.ucw.phd
+	handle @spool {
+		reverse_proxy aetf-arch-homelab.home.arpa:8000
+	}
+
+	# Fallback for otherwise unhandled domains
+	handle {
+		abort
+	}
+}
+
+http://tube {
+	redir https://tube.lan.ucw.phd{uri} permanent
+}
+
+http://bt {
+	redir https://bt.lan.ucw.phd{uri} permanent
+}
+
+http://dns {
+	redir https://dns.lan.ucw.phd{uri} permanent
+}
+
+http://gw {
+	redir https://gw.lan.ucw.phd{uri} permanent
+}
+
+# go.home.arpa {
+# 	tls internal
+# 	reverse_proxy aetf-arch-homelab.home.arpa:12345
+# }
