@@ -1,0 +1,10 @@
+[Unit]
+Description=Weekly pull of UDM-SE config backups
+
+[Timer]
+OnCalendar=Mon *-*-* 07:41:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target

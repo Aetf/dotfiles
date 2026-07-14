@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Pull small config backups from the UDM-SE into the yadm-managed gw-config
+# dir. Committing is left to the operator: changes show up in yadm status.
+set -euo pipefail
+G=$HOME/.config/gw-config/backups
+
+rsync -rtq gw:/data/unifi/data/backup/autobackup/ "$G/unifi/" 2>/dev/null
+rsync -tq gw:/data/custom/machines/adguard/opt/AdGuardHome/AdGuardHome.yaml \
+    "$G/adguard/AdGuardHome.yaml" 2>/dev/null
+ssh gw 'du -sh /data/custom/machines/* 2>/dev/null; echo; machinectl list --no-legend' \
+    2>/dev/null > "$G/machines-manifest.txt"
+
+echo "pulled: $(ls "$G/unifi" | grep -c '\.unf$') unf backups, adguard yaml, machines manifest"

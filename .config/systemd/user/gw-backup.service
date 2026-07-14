@@ -1,0 +1,6 @@
+[Unit]
+Description=Pull UDM-SE config backups into gw-config
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/gw-backup-pull
