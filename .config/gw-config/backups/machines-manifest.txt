@@ -3,3 +3,10 @@
 
 adguard container systemd-nspawn debian 12     10.0.5.3...
 caddy   container systemd-nspawn alpine 3.23.0 10.0.5.180...
+
+--- versions ---
+            Firmware: 5.1.19 (5.1.19)
+caddy: v2.10.2 h1:g/gTYjGMD0dec+UgMw8SnfmJ3I9+M2TdvoRL/Ovu6U8=
+AdGuard Home, version v0.107.77
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+PRETTY_NAME="Alpine Linux v3.23"

@@ -12,8 +12,12 @@ file mtimes):
 | What | Survives firmware updates? |
 |---|---|
 | `/data` | always (documented) |
-| hand-placed files in `/etc` (nspawn units, systemd units, wants symlinks) | **yes in practice** — survived all six observed updates; Ubiquiti migrates /etc, but it is undocumented, so don't bet the recovery path on it |
-| dpkg/apt-installed packages (systemd-container, rsync, …) | **no — wiped every single update**; `dpkg.log` shows `install … <none>` reinstalls after each one |
+| `/etc/systemd` (nspawn units, unit files, wants symlinks) | yes — upstream nspawn-container addon docs state: "When the firmware is updated, /data and /etc/systemd are preserved, but /var and /usr are deleted." Matches all six observed updates. |
+| dpkg/apt-installed packages (systemd-container, rsync, …) | **no — wiped every single update** (they live in /usr, /var); `dpkg.log` shows `install … <none>` reinstalls after each one |
+
+(This setup follows the `nspawn-container` addon from
+unifi-utilities/unifi-common-addons; written for UniFi OS 4.x, works
+unchanged on 5.x as of 5.1.19.)
 
 Strategy:
 
@@ -60,6 +64,32 @@ Related homelab-side automation (also yadm-managed):
   - ACME propagation check MUST NOT use AdGuard (`resolvers 1.1.1.1`): AdGuard
     rewrites `*.lan.ucw.phd` and eats the `_acme-challenge` TXT lookups. This
     caused the May–July 2026 silent renewal failure.
+
+## Updating components
+
+Versions are recorded weekly in `backups/machines-manifest.txt` (gw-backup
+timer), so version history lives in yadm alongside config history.
+
+- **caddy** (custom binary with the cloudflare DNS module — NOT from apk, do
+  not `apk upgrade` it):
+
+  ```bash
+  ssh gw 'chroot /data/custom/machines/caddy /usr/bin/caddy upgrade'   # keeps modules
+  ssh gw 'systemctl restart systemd-nspawn@caddy.service'
+  ```
+
+  (`caddy upgrade` downloads the matching build with the same plugin set from
+  caddyserver.com. Fallback: caddyserver.com/api/download?os=linux&arch=arm64&p=github.com/caddy-dns/cloudflare)
+
+- **AdGuardHome** (official /opt install, has a built-in updater — easiest is
+  the web UI update button; CLI equivalent):
+
+  ```bash
+  ssh gw 'chroot /data/custom/machines/adguard /opt/AdGuardHome/AdGuardHome --update'
+  ssh gw 'systemctl restart systemd-nspawn@adguard.service'
+  ```
+
+- After either: run `check-gw` (or wait for the daily timer) to verify.
 
 ## Firmware update recovery runbook
 

@@ -7,7 +7,13 @@ G=$HOME/.config/gw-config/backups
 rsync -rtq gw:/data/unifi/data/backup/autobackup/ "$G/unifi/" 2>/dev/null
 rsync -tq gw:/data/custom/machines/adguard/opt/AdGuardHome/AdGuardHome.yaml \
     "$G/adguard/AdGuardHome.yaml" 2>/dev/null
-ssh gw 'du -sh /data/custom/machines/* 2>/dev/null; echo; machinectl list --no-legend' \
+ssh gw 'du -sh /data/custom/machines/* 2>/dev/null; echo
+    machinectl list --no-legend; echo
+    echo "--- versions ---"
+    ubnt-device-info summary 2>/dev/null | grep Firmware
+    /data/custom/machines/caddy/usr/bin/caddy version 2>/dev/null | sed "s/^/caddy: /"
+    /data/custom/machines/adguard/opt/AdGuardHome/AdGuardHome --version 2>/dev/null
+    grep -h PRETTY /data/custom/machines/*/etc/os-release 2>/dev/null' \
     2>/dev/null > "$G/machines-manifest.txt"
 
 echo "pulled: $(ls "$G/unifi" | grep -c '\.unf$') unf backups, adguard yaml, machines manifest"
