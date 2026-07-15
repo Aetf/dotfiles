@@ -16,3 +16,9 @@ CopyFile /etc/syslog-ng/remote-only.conf
 AddPackage logrotate # Rotates system logs automatically
 CopyFile /etc/logrotate.d/syslog-remote
 SystemdEnable logrotate /usr/lib/systemd/system/logrotate.timer
+
+# Let the human operator (and the resident agent) read the collected logs
+# (destination files are root:log 0640) without sudo.
+cat > "$(CreateFile /etc/sysusers.d/aetf-log.conf)" <<EOF
+m aetf log
+EOF
