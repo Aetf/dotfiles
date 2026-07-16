@@ -13,6 +13,9 @@ SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-wait-online.
 
 CopyFile /etc/NetworkManager/conf.d/ignore-docker.conf
 CopyFile /etc/NetworkManager/conf.d/ignore-zerotier.conf
+# Forward the home LAN's private reverse (PTR) zones to the active connection's
+# DNS (systemd-resolved won't by default). Roam-safe. See file header.
+CopyFile /etc/NetworkManager/conf.d/lan-reverse-dns.conf
 
 # and systemd-resolved to provide DNS resolving and alike
 # networkmanager will automatically use systemd-resolved if the symlink is present
