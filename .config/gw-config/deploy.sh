@@ -17,6 +17,10 @@ rsync "${flags[@]}" on_boot.d/ gw:/data/on_boot.d/
 rsync "${flags[@]}" nspawn/ gw:/data/gw-config/nspawn/
 rsync "${flags[@]}" nspawn/ gw:/etc/systemd/nspawn/
 rsync "${flags[@]}" caddy/Caddyfile gw:/data/caddy/config/caddy/Caddyfile
+# In-container customizations (rootfs lives under /data, survives firmware
+# updates; scoped to dirs we own — never rsync a whole container /etc).
+rsync "${flags[@]}" containers/adguard/etc/systemd/network/80-container-host0.network.d/ \
+    gw:/data/custom/machines/adguard/etc/systemd/network/80-container-host0.network.d/
 
 if [[ $mode != --check ]]; then
     ssh gw 'chmod +x /data/on_boot.d/*.sh && systemctl daemon-reload' 2>/dev/null

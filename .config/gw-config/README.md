@@ -36,6 +36,7 @@ Strategy:
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
 | `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 13G) |
+| `containers/adguard/` | `/data/custom/machines/adguard/` (same subpaths, scoped per-dir rsync) | deliberate in-container config; currently the networkd IPv6-token drop-in |
 
 ## Workflow
 
@@ -55,6 +56,15 @@ Related homelab-side automation (also yadm-managed):
 
 - **adguard** (debian 12, 10.0.5.3): DNS for the whole house. Rootfs at
   `/data/custom/machines/adguard`. Config backup: `backups/adguard/`.
+  - IPv6: the container does SLAAC with a static interface token
+    (`containers/adguard/…/ipv6-token.conf`, `Token=static:::10.0.5.3`), so its
+    v6 addresses are always `<advertised prefix>::a00:503` and follow prefix
+    changes automatically. When the ULA/GUA prefix changes, only the UniFi
+    `dns-server` DHCPv6 option needs updating — nothing in the container.
+  - AdGuard treats a client as "local" (eligible for private-PTR resolution
+    via `local_ptr_upstreams`) by *source address* against the default
+    private set (RFC1918 + `fc00::/7`). Clients therefore need a ULA to get
+    reverse DNS over IPv6 — GUA-only VLANs get NXDOMAIN (bitten 2026-07).
 - **caddy** (alpine, 10.0.5.180): reverse proxy for `*.lan.ucw.phd`.
   - Wildcard cert via Let's Encrypt DNS-01 (cloudflare).
   - CF API token lives ONLY in `/data/caddy/secrets/cf_token` (0600), read by
@@ -106,8 +116,16 @@ timer), so version history lives in yadm alongside config history.
 
 ## Container rebuild recipes (if rootfs is lost)
 
+These are recipes, not automation: this repo alone cannot recreate the
+containers from zero (rootfs is not tracked). Repo + recipe below + the
+secrets/keys listed per container should be sufficient.
+
 - caddy: alpine miniroot + `apk add caddy caddy-dns-cloudflare openssh` (or the
   custom build with the cloudflare module), copy `caddy/Caddyfile`, recreate
   `/data/caddy/secrets/cf_token`.
+  - not in repo: `/etc/ssh/authorized_keys` (homelab key) + host keys —
+    re-add the homelab pubkey after rebuild; host keys regenerate.
 - adguard: debootstrap bookworm + AdGuardHome install script, restore
-  `backups/adguard/AdGuardHome.yaml`.
+  `backups/adguard/AdGuardHome.yaml`, run `./deploy.sh` to push the
+  `containers/adguard/` in-container config (networkd IPv6-token drop-in),
+  restart the container.
