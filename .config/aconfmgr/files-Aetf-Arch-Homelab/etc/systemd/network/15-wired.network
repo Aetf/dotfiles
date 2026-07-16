@@ -7,6 +7,16 @@ IPForward=yes
 MulticastDNS=yes
 IPv6AcceptRA=yes
 
+# Route private-range reverse (PTR) lookups to the LAN DNS reached via this
+# link (AdGuard, 10.0.5.3). systemd-resolved deliberately excludes the RFC1918
+# reverse zones from the implicit "~." default route, so without these explicit
+# route-only domains it answers NXDOMAIN locally instead of asking upstream —
+# even though AdGuard/UniFi hold the records. nsswitch ("resolve
+# [!UNAVAIL=return] ... dns") makes that NXDOMAIN final. Fixes reverse lookups
+# generally (getent/ssh), and lets the remote syslog sink name files by sender
+# hostname (rpi) instead of IP. Covers iot/default-LAN/lab subnets.
+Domains=~90.168.192.in-addr.arpa ~80.168.192.in-addr.arpa ~5.0.10.in-addr.arpa
+
 # Associate any VLAN netdev to be created
 VLAN=iot
 
