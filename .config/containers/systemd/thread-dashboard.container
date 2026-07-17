@@ -5,7 +5,9 @@ After=network-online.target
 
 [Container]
 Image=localhost/thread-dashboard:latest
-PublishPort=8480:8480
+# Host networking: mDNS discovery of HomeKit accessory names needs multicast
+# on the IoT-VLAN interface (kvmbr0); the app listens on :8480 directly.
+Network=host
 Volume=thread-dashboard-data:/data
 # LAN IPs used deliberately: mDNS for homeassistant.local can resolve to an
 # unreachable address from containers.
