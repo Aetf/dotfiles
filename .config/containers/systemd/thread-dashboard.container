@@ -1,0 +1,23 @@
+[Unit]
+Description=Thread network monitoring dashboard
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=localhost/thread-dashboard:latest
+PublishPort=8480:8480
+Volume=thread-dashboard-data:/data
+# LAN IPs used deliberately: mDNS for homeassistant.local can resolve to an
+# unreachable address from containers.
+Environment=OTBR_BASE=http://rpi.iot.home.arpa:8081
+Environment=MATTER_WS=ws://192.168.90.243:5580/ws
+Environment=HA_URL=http://192.168.90.243:8123
+Environment=HA_PUBLIC_URL=https://haos.unlimited-code.works
+Environment=BASE_URL=https://thread.lan.ucw.phd
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
