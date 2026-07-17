@@ -40,6 +40,11 @@
 		reverse_proxy aetf-arch-homelab.home.arpa:8000
 	}
 
+	@thread host thread.lan.ucw.phd
+	handle @thread {
+		reverse_proxy aetf-arch-homelab.home.arpa:8480
+	}
+
 	# Fallback for otherwise unhandled domains
 	handle {
 		abort
