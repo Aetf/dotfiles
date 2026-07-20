@@ -6,9 +6,12 @@ set -uo pipefail
 MAILTO=pfyu817@gmail.com
 issues=()
 
-# 1. Config drift vs the yadm-managed sources of truth
-drift=$("$HOME/.config/gw-config/deploy.sh" --check 2>/dev/null | grep -v '^$' || true)
-[[ -n $drift ]] && issues+=("config drift on gw:"$'\n'"$drift")
+# 1. Config drift vs the yadm-managed sources of truth. deploy.sh --check emits
+# a diff-style report (unified diff for text, mode values for perm drift, and
+# NEW/DELETE for missing files) so the mail is actionable as-is; keep its blank
+# lines, they separate the per-file entries.
+drift=$("$HOME/.config/gw-config/deploy.sh" --check 2>/dev/null || true)
+[[ -n ${drift//[[:space:]]/} ]] && issues+=("config drift on gw (repo is source of truth; run gw-config/deploy.sh to apply):"$'\n'"$drift")
 
 # 2. Both nspawn containers running
 running=$(ssh -o BatchMode=yes -o ConnectTimeout=10 gw 'machinectl list --no-legend' 2>/dev/null)
