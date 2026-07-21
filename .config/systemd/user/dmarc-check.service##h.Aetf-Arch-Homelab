@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily DMARC aggregate-report triage
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+# Generous: a report with failures triggers one or more claude calls.
+TimeoutStartSec=600
+ExecStart=/usr/bin/podman run --rm \
+    --env-file %h/.config/dmarc-check/env \
+    --volume %h/.claude/.credentials.json:/root/.claude/.credentials.json:rw \
+    --volume dmarc-check-data:/state \
+    localhost/dmarc-check:latest
