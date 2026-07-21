@@ -1,3 +1,14 @@
 #! /usr/bin/env bash
 
 yadm alt
+
+# Sync mise-managed global tools with the possibly-updated config. Project
+# pins live in ~/.config/mise/conf.d/*.toml host alternates; a host that
+# defines a projects:sync task gets its post-install glue (image builds,
+# unit reloads) run too. Failures must not block the pull.
+if command -v mise >/dev/null 2>&1; then
+    mise install || echo "warning: mise install failed" >&2
+    if mise tasks ls 2>/dev/null | grep -q '^projects:sync'; then
+        mise run projects:sync || echo "warning: mise run projects:sync failed" >&2
+    fi
+fi
