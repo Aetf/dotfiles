@@ -3,4 +3,4 @@ Description=Pull UDM-SE config backups into gw-config
 
 [Service]
 Type=oneshot
-ExecStart=%h/.local/bin/gw-backup-pull
+ExecStart=%h/.local/share/mise/shims/gw-backup-pull
