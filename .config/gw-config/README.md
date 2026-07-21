@@ -47,9 +47,11 @@ Strategy:
 yadm add ~/.config/gw-config && yadm commit   # every logical step
 ```
 
-Related homelab-side automation (also yadm-managed):
-- `~/.local/bin/gw-backup-pull` + `gw-backup.timer` (weekly) — refresh `backups/`
-- `~/.local/bin/check-gw` + `check-gw.timer` (daily) — drift, container health,
+Related homelab-side automation (scripts live in the separate
+[homelab-ops](https://github.com/Aetf/homelab-ops) repo, installed via
+mise shims; the timers are yadm-managed `##h` alternates):
+- `gw-backup-pull` + `gw-backup.timer` (weekly) — refresh `backups/`
+- `check-gw` + `check-gw.timer` (daily) — drift, container health,
   and `*.lan.ucw.phd` cert expiry alerts (mail)
 
 ## Containers (systemd-nspawn on the UDM)
