@@ -111,17 +111,16 @@ SystemdEnable smartmontools /usr/lib/systemd/system/smartd.service
 CopyFile /etc/smartd.conf
 ## Use s-nail to send mail when smartd finds an error
 AddPackage s-nail # for sending email
-### Configured sending via master@unlimited-code.works using gmail
+### Configured sending via master@unlimited-code.works using gmail.
+### The account definition with credentials lives in a separate git-crypted
+### drop-in, since this script itself is not encrypted (mail.rc is sourced by
+### any user running mail, so the drop-in is 640 root:aetf for smartd + check-hath).
 cat >> "$(GetPackageOriginalFile s-nail /etc/mail.rc)" <<EOF
-# Required since s-nail 14.9.25 for the new-style smtp:// mta URL below
+# Required since s-nail 14.9.25 for the new-style smtp:// mta URL
 set v15-compat
-account Google {
-   # Localize options, forget them when changing t he account
-   localopts yes
-   set mta=smtp://pfyu817:kbxnmlxsmniftrwx@smtp.gmail.com:587 smtp-use-starttls
-   set from="Aetf <master@unlimited-code.works>"
-}
+source /etc/mail.d/google.rc
 EOF
+CopyFile /etc/mail.d/google.rc 640 root aetf
 ### smartd by default will not select account
 CopyFile /usr/local/bin/smartd-mail 755
 
