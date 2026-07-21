@@ -3,3 +3,4 @@
 .config/gmailctl/credentials.json filter=git-crypt diff=git-crypt
 .config/gmailctl/token.json filter=git-crypt diff=git-crypt
 .config/kube/config filter=git-crypt diff=git-crypt
+.config/gw-config/backups/** filter=git-crypt diff=git-crypt
