@@ -1,0 +1,19 @@
+[Unit]
+Description=kluster-code Pulumi state backend (Postgres via podman compose)
+Documentation=file:%h/kluster-code/deploy/state-backend/README.md
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+TimeoutStartSec=300
+WorkingDirectory=%h/kluster-code
+# Published ports bind to the ZeroTier IP, which is assigned late at boot; wait for it.
+ExecStartPre=/usr/bin/bash -c 'until ip -4 addr show ztqu3dzpfj 2>/dev/null | grep -q "inet 10.144.180.10"; do sleep 2; done'
+ExecStartPre=%h/kluster-code/deploy/state-backend/init.sh
+ExecStart=/usr/bin/podman compose -f deploy/state-backend/compose.yaml up -d
+ExecStop=/usr/bin/podman compose -f deploy/state-backend/compose.yaml down
+
+[Install]
+WantedBy=default.target
