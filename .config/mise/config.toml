@@ -1,5 +1,10 @@
 [tools]
 cargo-binstall = "latest"
+# Node was installed but pinned nowhere, so every shim failed with
+# "No version is set for shim: npm" and anything needing npm was unusable -
+# notably Mason's npm-backed language servers (pyright, vscode-json-language-server)
+# for the Neovim config.
+node = "25"
 
 [settings]
 
