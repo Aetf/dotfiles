@@ -5,6 +5,7 @@ cargo-binstall = "latest"
 # notably Mason's npm-backed language servers (pyright, vscode-json-language-server)
 # for the Neovim config.
 node = "25"
+tree-sitter = "latest"
 
 [settings]
 
