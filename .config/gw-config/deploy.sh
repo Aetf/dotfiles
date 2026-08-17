@@ -29,12 +29,18 @@ pairs=(
 
 is_text() { LC_ALL=C grep -Iq . "$1" 2>/dev/null; }
 
+# A file is secret iff it is git-crypt filtered (single source of truth:
+# ~/.gitattributes), so new secret paths are redacted without touching this
+# script. Paths are repo-relative; CWD is the gw-config dir inside the yadm
+# worktree, so relative resolution works.
+is_secret() { yadm check-attr filter -- "$1" 2>/dev/null | grep -q 'filter: git-crypt'; }
+
 # Render one drifted path (relative to the pair's dest dir) as a readable entry.
 describe_change() {
     local code=$1 lpath=$2 rpath=$3
     # Never print secret material: check-gw mails this output.
     local secret=0
-    [[ $lpath == secrets/* ]] && secret=1
+    is_secret "$lpath" && secret=1
     if [[ $code == '*deleting' ]]; then
         echo "  DELETE  $rpath"
         echo "          exists on gw, not in repo; apply would remove it"
