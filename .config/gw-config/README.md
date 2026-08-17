@@ -36,7 +36,7 @@ Strategy:
 | `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
-| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 15G, but 14G of that is AdGuardHome query-log/stats data + journal) |
+| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (~450M adguard / ~70M caddy after the 2026-08-17 state separation) |
 | `containers/adguard/` | `/data/custom/machines/adguard/` (same subpaths, scoped per-dir rsync) | deliberate in-container config; currently the networkd IPv6-token drop-in |
 
 ## Workflow
@@ -58,7 +58,12 @@ mise shims; the timers are yadm-managed `##h` alternates):
 ## Containers (systemd-nspawn on the UDM)
 
 - **adguard** (debian 12, 10.0.5.3): DNS for the whole house. Rootfs at
-  `/data/custom/machines/adguard`. Config backup: `backups/adguard/`.
+  `/data/custom/machines/adguard` (software-only since 2026-08-17: state —
+  AdGuardHome.yaml, query-log/stats `data/`, updater's agh-backup — lives in
+  `/data/adguard`, wired by the `AdGuardHome.service.d/10-state-dir.conf`
+  drop-in setting `-c/-w`; journald capped by `journald.conf.d/00-size.conf`,
+  the old unbounded 4G journal was vacuumed). Rootfs is therefore wipeable,
+  ready for image-based deploys. Config backup: `backups/adguard/`.
   - IPv6: the container does SLAAC with a static interface token
     (`containers/adguard/…/ipv6-token.conf`, `Token=static:::10.0.5.3`), so its
     v6 addresses are always `<advertised prefix>::a00:503` and follow prefix
@@ -144,10 +149,12 @@ secrets/keys listed per container should be sufficient.
   gw-config owns nspawn units, on_boot, runtime config, and backups.
 - adguard: debootstrap bookworm + AdGuardHome install script (installer
   creates `/etc/systemd/system/AdGuardHome.service` — reference copy in
-  `backups/adguard/`, and enables it), restore
-  `backups/adguard/AdGuardHome.yaml`, run `./deploy.sh` to push the
-  `containers/adguard/` in-container config (networkd IPv6-token drop-in),
-  restart the container.
+  `backups/adguard/`, and enables it), run `./deploy.sh` to push the
+  `containers/adguard/` in-container config (networkd IPv6-token drop-in,
+  state-dir + journald drop-ins), restart the container. State: if
+  `/data/adguard` survived it just reattaches; otherwise restore
+  `backups/adguard/AdGuardHome.yaml` to `/data/adguard/` (stats/query log
+  are lost in that case).
 
 ## Drift audit (last run 2026-08-16 — both containers clean)
 
