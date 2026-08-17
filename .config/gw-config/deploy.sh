@@ -24,6 +24,7 @@ pairs=(
     "nspawn/|/etc/systemd/nspawn/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
     "containers/adguard/etc/systemd/network/80-container-host0.network.d/|/data/custom/machines/adguard/etc/systemd/network/80-container-host0.network.d/"
+    "secrets/cf_token|/data/caddy/secrets/cf_token"
 )
 
 is_text() { LC_ALL=C grep -Iq . "$1" 2>/dev/null; }
@@ -31,6 +32,9 @@ is_text() { LC_ALL=C grep -Iq . "$1" 2>/dev/null; }
 # Render one drifted path (relative to the pair's dest dir) as a readable entry.
 describe_change() {
     local code=$1 lpath=$2 rpath=$3
+    # Never print secret material: check-gw mails this output.
+    local secret=0
+    [[ $lpath == secrets/* ]] && secret=1
     if [[ $code == '*deleting' ]]; then
         echo "  DELETE  $rpath"
         echo "          exists on gw, not in repo; apply would remove it"
@@ -40,12 +44,14 @@ describe_change() {
     if [[ $attrs == '+++++++++' ]]; then
         echo "  NEW     $rpath"
         echo "          missing on gw; apply would create it"
-        if is_text "$lpath"; then sed 's/^/          + /' "$lpath"; fi
+        if (( ! secret )) && is_text "$lpath"; then sed 's/^/          + /' "$lpath"; fi
         return
     fi
     if [[ ${attrs:0:1} == c || ${attrs:1:1} == s ]]; then   # content differs
         echo "  CHANGED $rpath"
-        if is_text "$lpath"; then
+        if (( secret )); then
+            echo "          content differs (secret, redacted)"
+        elif is_text "$lpath"; then
             { diff -u --label "gw:$rpath (live)" --label "repo:$lpath (wanted)" \
                 <(ssh -n gw cat -- "$rpath" 2>/dev/null) "$lpath" || true; } \
                 | sed 's/^/          /'

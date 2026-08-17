@@ -33,6 +33,7 @@ Strategy:
 | `on_boot.d/` | `/data/on_boot.d/` | boot-time (re)install scripts |
 | `nspawn/` | `/data/gw-config/nspawn/` (mirror) **and** `/etc/systemd/nspawn/` (live) | `0-setup-system.sh` restores live copies from the mirror after firmware updates |
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
+| `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
 | `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 15G, but 14G of that is AdGuardHome query-log/stats data + journal) |
@@ -78,10 +79,13 @@ mise shims; the timers are yadm-managed `##h` alternates):
     cloudflare DNS + caddy-l4 modules. Caddyfile path comes from
     `XDG_CONFIG_HOME=/data/caddy/config` set in `nspawn/caddy.nspawn`.
   - Wildcard cert via Let's Encrypt DNS-01 (cloudflare).
-  - CF API token lives ONLY in `/data/caddy/secrets/cf_token` (0600), read by
-    the Caddyfile `{file./data/caddy/secrets/cf_token}` placeholder at parse
-    time. To rotate: overwrite that file (no trailing newline), then
-    `systemctl restart systemd-nspawn@caddy.service`.
+  - CF API token: source of truth is `secrets/cf_token` here (git-crypt in
+    yadm), deployed to `/data/caddy/secrets/cf_token` (0600), read by the
+    Caddyfile `{file./data/caddy/secrets/cf_token}` placeholder at parse
+    time. To rotate: overwrite the repo file (no trailing newline), commit,
+    `./deploy.sh`, then `systemctl restart systemd-nspawn@caddy.service`.
+    Rotation is PENDING as of 2026-08-17: this token sat in plaintext in
+    homelab-containers' git history.
   - ACME propagation check MUST NOT use AdGuard (`resolvers 1.1.1.1`): AdGuard
     rewrites `*.lan.ucw.phd` and eats the `_acme-challenge` TXT lookups. This
     caused the May–July 2026 silent renewal failure.
@@ -117,8 +121,10 @@ timer), so version history lives in yadm alongside config history.
 3. Verify: `machinectl list` shows adguard+caddy; DNS works; then
    `./deploy.sh --check` from the homelab should be clean.
 4. Full gateway loss: restore UniFi config on replacement hardware from the
-   newest `backups/unifi/*.unf`, then redo steps above (machines rootfs from
-   whatever offline copy exists — rootfs is not in this repo).
+   newest `backups/unifi/*.unf`, then redo steps above. caddy rootfs:
+   rebuild via `just deploy caddy` in `~/homelab-containers`. adguard
+   rootfs: from whatever offline copy exists — not in any repo (pruned-tar
+   backup still TODO; goes away once adguard is image-built too).
 
 ## Container rebuild recipes (if rootfs is lost)
 
