@@ -5,4 +5,5 @@
 .config/gmailctl/token.json filter=git-crypt diff=git-crypt
 .config/kube/config filter=git-crypt diff=git-crypt
 .config/gw-config/backups/** filter=git-crypt diff=git-crypt
+.config/gw-config/secrets/** filter=git-crypt diff=git-crypt
 .config/dmarc-check/env filter=git-crypt diff=git-crypt
