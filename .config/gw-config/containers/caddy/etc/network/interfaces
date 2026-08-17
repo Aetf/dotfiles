@@ -1,0 +1,2 @@
+auto host0
+iface host0 inet dhcp

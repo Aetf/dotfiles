@@ -35,8 +35,10 @@ Strategy:
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
-| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 13G) |
+| `backups/caddy/` | ← pulled from caddy container rootfs | apk `world` + `repositories` snapshot (rebuild reference) |
+| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 15G, but 14G of that is AdGuardHome query-log/stats data + journal) |
 | `containers/adguard/` | `/data/custom/machines/adguard/` (same subpaths, scoped per-dir rsync) | deliberate in-container config; currently the networkd IPv6-token drop-in |
+| `containers/caddy/` | `/data/custom/machines/caddy/` (same subpaths, scoped per-dir rsync) | s6-rc.d service definitions, sshd drop-in, network/interfaces |
 
 ## Workflow
 
@@ -68,6 +70,15 @@ mise shims; the timers are yadm-managed `##h` alternates):
     private set (RFC1918 + `fc00::/7`). Clients therefore need a ULA to get
     reverse DNS over IPv6 — GUA-only VLANs get NXDOMAIN (bitten 2026-07).
 - **caddy** (alpine, 10.0.5.180): reverse proxy for `*.lan.ucw.phd`.
+  - Init inside the container is **s6-overlay** (3.2.1.0, hand-installed
+    tarballs — `/init`, `/package/*`; NOT openrc, NOT from apk). Services are
+    s6-rc.d definitions tracked in `containers/caddy/etc/s6-overlay/s6-rc.d/`:
+    `ifup` (oneshot), `sshd`, and `caddy` — whose `run` script also bridges
+    caddy's sd_notify READY=1 to s6 readiness via a background socat listener
+    (this is why `socat` is in the apk world).
+  - caddy itself is NOT an apk package: custom `/usr/bin/caddy` binary with the
+    cloudflare DNS module. Caddyfile path comes from
+    `XDG_CONFIG_HOME=/data/caddy/config` set in `nspawn/caddy.nspawn`.
   - Wildcard cert via Let's Encrypt DNS-01 (cloudflare).
   - CF API token lives ONLY in `/data/caddy/secrets/cf_token` (0600), read by
     the Caddyfile `{file./data/caddy/secrets/cf_token}` placeholder at parse
@@ -122,12 +133,42 @@ These are recipes, not automation: this repo alone cannot recreate the
 containers from zero (rootfs is not tracked). Repo + recipe below + the
 secrets/keys listed per container should be sufficient.
 
-- caddy: alpine miniroot + `apk add caddy caddy-dns-cloudflare openssh` (or the
-  custom build with the cloudflare module), copy `caddy/Caddyfile`, recreate
-  `/data/caddy/secrets/cf_token`.
-  - not in repo: `/etc/ssh/authorized_keys` (homelab key) + host keys —
-    re-add the homelab pubkey after rebuild; host keys regenerate.
-- adguard: debootstrap bookworm + AdGuardHome install script, restore
+- caddy (recipe corrected 2026-08-16 after the audit below; the old one said
+  `apk add caddy` which does not match the real container at all):
+  1. alpine 3.23 miniroot; `apk add` the `backups/caddy/world` list
+     (ifupdown-ng, musl-utils, openssh, socat).
+  2. s6-overlay 3.2.1.0: extract `s6-overlay-noarch.tar.xz` +
+     `s6-overlay-aarch64.tar.xz` (github.com/just-containers/s6-overlay) into
+     `/` — provides `/init`, `/package/*`, s6-rc skeleton.
+  3. custom caddy binary → `/usr/bin/caddy`:
+     caddyserver.com/api/download?os=linux&arch=arm64&p=github.com/caddy-dns/cloudflare
+  4. `./deploy.sh` pushes s6-rc.d service defs, sshd drop-in,
+     `etc/network/interfaces`, and the Caddyfile.
+  5. manual: root password (`etc/shadow` is modified), homelab pubkey →
+     `/etc/ssh/authorized_keys` (host keys regenerate),
+     `/data/caddy/secrets/cf_token`, `setup-timezone`.
+- adguard: debootstrap bookworm + AdGuardHome install script (installer
+  creates `/etc/systemd/system/AdGuardHome.service` — reference copy in
+  `backups/adguard/`, and enables it), restore
   `backups/adguard/AdGuardHome.yaml`, run `./deploy.sh` to push the
   `containers/adguard/` in-container config (networkd IPv6-token drop-in),
   restart the container.
+
+## Drift audit (last run 2026-08-16 — both containers clean)
+
+Answers "what was hand-edited in the containers beyond what this repo tracks",
+aconfmgr-style: baseline = package manager ownership, everything else is
+either repo-tracked, recipe-covered, or noise. Rerun after any ad-hoc ssh
+session you are not sure about.
+
+- adguard (dpkg): `chroot /data/custom/machines/adguard dpkg -V` → empty
+  (no packaged file modified). Orphan scan: all files minus
+  `/var/lib/dpkg/info/*.list` (normalize usr-merge aliases:
+  `sed -E "s,^/(bin|sbin|lib64|lib32|libx32|lib)/,/usr/\1/,"`), pruning
+  var/cache var/log var/lib/{apt,dpkg,systemd} tmp run opt/AdGuardHome →
+  only debootstrap/postinst noise + the two known files (ipv6-token.conf,
+  AdGuardHome.service).
+- caddy (apk): `chroot ... /sbin/apk audit` + orphan scan against
+  `awk -F: '/^F:/{d=$2} /^R:/{print "/"d"/"$2}' lib/apk/db/installed` →
+  everything accounted for: s6-overlay install (+ its s6-rc.d tree, now
+  tracked), custom caddy binary, ssh keys/drop-in, `U etc/shadow`.
