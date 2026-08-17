@@ -24,9 +24,6 @@ pairs=(
     "nspawn/|/etc/systemd/nspawn/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
     "containers/adguard/etc/systemd/network/80-container-host0.network.d/|/data/custom/machines/adguard/etc/systemd/network/80-container-host0.network.d/"
-    "containers/caddy/etc/s6-overlay/s6-rc.d/|/data/custom/machines/caddy/etc/s6-overlay/s6-rc.d/"
-    "containers/caddy/etc/ssh/sshd_config.d/permit-root.conf|/data/custom/machines/caddy/etc/ssh/sshd_config.d/permit-root.conf"
-    "containers/caddy/etc/network/interfaces|/data/custom/machines/caddy/etc/network/interfaces"
 )
 
 is_text() { LC_ALL=C grep -Iq . "$1" 2>/dev/null; }

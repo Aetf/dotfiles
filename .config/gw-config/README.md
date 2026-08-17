@@ -35,10 +35,8 @@ Strategy:
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
-| `backups/caddy/` | ← pulled from caddy container rootfs | apk `world` + `repositories` snapshot (rebuild reference) |
 | `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (adguard is 15G, but 14G of that is AdGuardHome query-log/stats data + journal) |
 | `containers/adguard/` | `/data/custom/machines/adguard/` (same subpaths, scoped per-dir rsync) | deliberate in-container config; currently the networkd IPv6-token drop-in |
-| `containers/caddy/` | `/data/custom/machines/caddy/` (same subpaths, scoped per-dir rsync) | s6-rc.d service definitions, sshd drop-in, network/interfaces |
 
 ## Workflow
 
@@ -134,11 +132,10 @@ secrets/keys listed per container should be sufficient.
   rootfs tar via `podman build --output type=tar` and does
   stop/wipe/extract/start on gw). Rebuild = `just deploy` there.
   Only `/data/caddy/*` (state, secrets, Caddyfile) survives a deploy; that is
-  gw-config's and the backups' job.
-  NOTE (2026-08-17): `containers/caddy/` here duplicates
-  `homelab-containers/caddy/rootfs/` (added before realizing the build repo
-  covers it) — pending consolidation, the build repo is canonical for image
-  content; keep only runtime config here.
+  gw-config's and the backups' job. Image content is deliberately NOT
+  duplicated here (a short-lived `containers/caddy/` copy was removed
+  2026-08-17); the split is: build repo owns what is inside the image,
+  gw-config owns nspawn units, on_boot, runtime config, and backups.
 - adguard: debootstrap bookworm + AdGuardHome install script (installer
   creates `/etc/systemd/system/AdGuardHome.service` — reference copy in
   `backups/adguard/`, and enables it), restore
@@ -162,5 +159,7 @@ session you are not sure about.
   AdGuardHome.service).
 - caddy (apk): `chroot ... /sbin/apk audit` + orphan scan against
   `awk -F: '/^F:/{d=$2} /^R:/{print "/"d"/"$2}' lib/apk/db/installed` →
-  everything accounted for: s6-overlay install (+ its s6-rc.d tree, now
-  tracked), custom caddy binary, ssh keys/drop-in, `U etc/shadow`.
+  everything accounted for: s6-overlay + s6-rc.d tree and custom caddy
+  binary (all from the homelab-containers build), ssh keys/drop-in,
+  `U etc/shadow`. For an image-built container, drift audit simplifies to
+  diffing live rootfs against the build tarball.
