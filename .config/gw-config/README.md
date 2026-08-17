@@ -70,14 +70,14 @@ mise shims; the timers are yadm-managed `##h` alternates):
     private set (RFC1918 + `fc00::/7`). Clients therefore need a ULA to get
     reverse DNS over IPv6 — GUA-only VLANs get NXDOMAIN (bitten 2026-07).
 - **caddy** (alpine, 10.0.5.180): reverse proxy for `*.lan.ucw.phd`.
-  - Init inside the container is **s6-overlay** (3.2.1.0, hand-installed
-    tarballs — `/init`, `/package/*`; NOT openrc, NOT from apk). Services are
-    s6-rc.d definitions tracked in `containers/caddy/etc/s6-overlay/s6-rc.d/`:
+  - Built from `~/homelab-containers/caddy` (see rebuild section below). Init
+    inside the container is **s6-overlay** (3.2.1.0; NOT openrc, NOT from
+    apk). Services are s6-rc.d definitions from the build repo's `rootfs/`:
     `ifup` (oneshot), `sshd`, and `caddy` — whose `run` script also bridges
     caddy's sd_notify READY=1 to s6 readiness via a background socat listener
     (this is why `socat` is in the apk world).
-  - caddy itself is NOT an apk package: custom `/usr/bin/caddy` binary with the
-    cloudflare DNS module. Caddyfile path comes from
+  - caddy itself is NOT an apk package: xcaddy-built `/usr/bin/caddy` with the
+    cloudflare DNS + caddy-l4 modules. Caddyfile path comes from
     `XDG_CONFIG_HOME=/data/caddy/config` set in `nspawn/caddy.nspawn`.
   - Wildcard cert via Let's Encrypt DNS-01 (cloudflare).
   - CF API token lives ONLY in `/data/caddy/secrets/cf_token` (0600), read by
@@ -93,16 +93,11 @@ mise shims; the timers are yadm-managed `##h` alternates):
 Versions are recorded weekly in `backups/machines-manifest.txt` (gw-backup
 timer), so version history lives in yadm alongside config history.
 
-- **caddy** (custom binary with the cloudflare DNS module — NOT from apk, do
-  not `apk upgrade` it):
-
-  ```bash
-  ssh gw 'chroot /data/custom/machines/caddy /usr/bin/caddy upgrade'   # keeps modules
-  ssh gw 'systemctl restart systemd-nspawn@caddy.service'
-  ```
-
-  (`caddy upgrade` downloads the matching build with the same plugin set from
-  caddyserver.com. Fallback: caddyserver.com/api/download?os=linux&arch=arm64&p=github.com/caddy-dns/cloudflare)
+- **caddy**: bump the caddy builder image tag in
+  `~/homelab-containers/caddy/Containerfile`, then `just deploy` there.
+  Do NOT `chroot ... caddy upgrade` in place — the running binary would
+  silently diverge from the build definition and be reverted by the next
+  deploy.
 
 - **AdGuardHome** (official /opt install, has a built-in updater — easiest is
   the web UI update button; CLI equivalent):
@@ -133,20 +128,17 @@ These are recipes, not automation: this repo alone cannot recreate the
 containers from zero (rootfs is not tracked). Repo + recipe below + the
 secrets/keys listed per container should be sufficient.
 
-- caddy (recipe corrected 2026-08-16 after the audit below; the old one said
-  `apk add caddy` which does not match the real container at all):
-  1. alpine 3.23 miniroot; `apk add` the `backups/caddy/world` list
-     (ifupdown-ng, musl-utils, openssh, socat).
-  2. s6-overlay 3.2.1.0: extract `s6-overlay-noarch.tar.xz` +
-     `s6-overlay-aarch64.tar.xz` (github.com/just-containers/s6-overlay) into
-     `/` — provides `/init`, `/package/*`, s6-rc skeleton.
-  3. custom caddy binary → `/usr/bin/caddy`:
-     caddyserver.com/api/download?os=linux&arch=arm64&p=github.com/caddy-dns/cloudflare
-  4. `./deploy.sh` pushes s6-rc.d service defs, sshd drop-in,
-     `etc/network/interfaces`, and the Caddyfile.
-  5. manual: root password (`etc/shadow` is modified), homelab pubkey →
-     `/etc/ssh/authorized_keys` (host keys regenerate),
-     `/data/caddy/secrets/cf_token`, `setup-timezone`.
+- caddy: NOT a recipe — the container is a build artifact of
+  `~/homelab-containers/caddy` (Containerfile: xcaddy with cloudflare +
+  caddy-l4 modules, s6-overlay, `rootfs/` overlay; `just deploy` builds the
+  rootfs tar via `podman build --output type=tar` and does
+  stop/wipe/extract/start on gw). Rebuild = `just deploy` there.
+  Only `/data/caddy/*` (state, secrets, Caddyfile) survives a deploy; that is
+  gw-config's and the backups' job.
+  NOTE (2026-08-17): `containers/caddy/` here duplicates
+  `homelab-containers/caddy/rootfs/` (added before realizing the build repo
+  covers it) — pending consolidation, the build repo is canonical for image
+  content; keep only runtime config here.
 - adguard: debootstrap bookworm + AdGuardHome install script (installer
   creates `/etc/systemd/system/AdGuardHome.service` — reference copy in
   `backups/adguard/`, and enables it), restore
