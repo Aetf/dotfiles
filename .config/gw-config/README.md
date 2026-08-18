@@ -90,8 +90,8 @@ mise shims; the timers are yadm-managed `##h` alternates):
     Caddyfile `{file./data/caddy/secrets/cf_token}` placeholder at parse
     time. To rotate: overwrite the repo file (no trailing newline), commit,
     `./deploy.sh`, then `systemctl restart systemd-nspawn@caddy.service`.
-    Rotation is PENDING as of 2026-08-17: this token sat in plaintext in
-    homelab-containers' git history.
+    (Last rotated 2026-08-18, after the old one sat in plaintext in
+    homelab-containers' git history.)
   - ACME propagation check MUST NOT use AdGuard (`resolvers 1.1.1.1`): AdGuard
     rewrites `*.lan.ucw.phd` and eats the `_acme-challenge` TXT lookups. This
     caused the May–July 2026 silent renewal failure.
