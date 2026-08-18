@@ -202,7 +202,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
         wait0a+=(
             # uv for python
             from'gh-r' bpick"${toolinfo[uv]}"
-            sbin'uv'
+            sbin'uv' sbin'uvx'
                 @astral-sh/uv
         )
     fi
