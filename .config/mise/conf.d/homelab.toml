@@ -9,7 +9,7 @@
 # which is the stable path the systemd user units use.
 
 [tools]
-"vfox:Aetf/homelab-ops" = "a9814f7d1a04082ffd1e14575489c7ea77a931ff"
+"vfox:Aetf/homelab-ops" = "c6ffbf133d8f3a775fa7969cd43ca276268ca7bd"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
 [tasks."projects:sync"]

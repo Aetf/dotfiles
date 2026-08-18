@@ -1,0 +1,6 @@
+[Unit]
+Description=Reconcile deployed homelab-containers targets with origin/main
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/mise/shims/autodeploy-containers
