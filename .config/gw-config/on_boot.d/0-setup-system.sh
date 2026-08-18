@@ -36,6 +36,11 @@ fi
 
 mkdir -p /var/lib/machines
 for machine in $(ls /data/custom/machines/); do
+	# Deploys (homelab-containers `just deploy`) keep rollback rootfs
+	# copies next to the live ones; those must never be linked/started.
+	case "$machine" in
+		*.old|*.new|*.failed) continue ;;
+	esac
 	if [ ! -e "/var/lib/machines/$machine" ]; then
 		ln -s "/data/custom/machines/$machine" "/var/lib/machines/"
 		machinectl enable $machine

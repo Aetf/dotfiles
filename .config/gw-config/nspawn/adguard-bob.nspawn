@@ -1,0 +1,24 @@
+[Exec]
+Boot=on
+# s6-overlay (alpine image) does not do a clean SIGTERM shutdown; without
+# these, stop leaves stale s6-supervise procs that wedge the unit cgroup
+# (219/CGROUP on next start — bitten 2026-08-17). Same combo as caddy.nspawn.
+KillSignal=SIGKILL
+Environment=S6_KILL_GRACETIME=0
+# Instance identity: the image's ifup oneshot reads this (with-contenv) and
+# does `ip token set` before host0 comes up, so the SLAAC address is always
+# <prefix>::a00:504. The IPv4 twin (10.0.5.4) is a UniFi DHCP reservation
+# keyed on this machine's veth MAC (derived from the machine name — renaming
+# the machine changes the MAC and orphans the reservation).
+Environment=IPV6_TOKEN=::10.0.5.4
+Capability=all
+ResolvConf=off
+
+[Network]
+Bridge=br5
+
+[Files]
+# Per-instance state dir on the host, mapped onto the instance-agnostic
+# container path: the image (userfilters symlink), the live AdGuardHome.yaml
+# and the s6 run script all keep referencing /data/adguard.
+Bind=/data/adguard-bob:/data/adguard
