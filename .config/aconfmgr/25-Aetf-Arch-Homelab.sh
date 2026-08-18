@@ -138,6 +138,9 @@ AddRole rich-cli
 # Rust is a must on any system, especially for rust-scripts
 AddRole rust-dev
 
+# HackRF One, driving the fireplace remote over 315 MHz
+AddRole sdr
+
 # Mount multiple disks here
 AddRole nas
 
@@ -189,6 +192,15 @@ node-external-ip: 192.168.80.238
 flannel-iface: ztqu3dzpfj
 # server only
 flannel-backend: host-gw
+EOF
+cat >$(CreateFile /etc/systemd/system/k3s.service.d/override.conf) <<EOF
+[Unit]
+# Several NodePVs (media-pv, sync-nas-pv, hath-pv, immich-pv) bind-mount
+# directories under /mnt/nas into pods. Without this ordering k3s can win
+# the boot race against zfs mounting (zfs-mount-generator provides
+# mnt-nas.mount) and kubelet would bind-mount empty directories into pods
+# -- same race qbittorrent-nox hit on the 2026-07-02 boot.
+RequiresMountsFor=/mnt/nas
 EOF
 
 # FUTURE: there's no fan driver for the motherboard yet
@@ -267,3 +279,7 @@ CopyFile /etc/binfmt.d/qemu-aarch64_be-static.conf
 CopyFile /etc/binfmt.d/qemu-arm-static.conf
 CopyFile /etc/binfmt.d/qemu-armeb-static.conf
 
+
+AddPackage github-cli
+AddPackage google-cloud-cli
+AddPackage aws-cli-v2
