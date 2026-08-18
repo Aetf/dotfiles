@@ -1,5 +1,10 @@
 [Exec]
 Boot=on
+# s6-overlay (alpine image) does not do a clean SIGTERM shutdown; without
+# these, stop leaves stale s6-supervise procs that wedge the unit cgroup
+# (219/CGROUP on next start — bitten 2026-08-17). Same combo as caddy.nspawn.
+KillSignal=SIGKILL
+Environment=S6_KILL_GRACETIME=0
 Capability=all
 ResolvConf=off
 

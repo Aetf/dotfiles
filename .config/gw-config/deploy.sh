@@ -23,9 +23,6 @@ pairs=(
     "nspawn/|/data/gw-config/nspawn/"
     "nspawn/|/etc/systemd/nspawn/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
-    "containers/adguard/etc/systemd/network/80-container-host0.network.d/|/data/custom/machines/adguard/etc/systemd/network/80-container-host0.network.d/"
-    "containers/adguard/etc/systemd/system/AdGuardHome.service.d/|/data/custom/machines/adguard/etc/systemd/system/AdGuardHome.service.d/"
-    "containers/adguard/etc/systemd/journald.conf.d/|/data/custom/machines/adguard/etc/systemd/journald.conf.d/"
     "secrets/cf_token|/data/caddy/secrets/cf_token"
 )
 

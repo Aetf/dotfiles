@@ -36,8 +36,7 @@ Strategy:
 | `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
-| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (~450M adguard / ~70M caddy after the 2026-08-17 state separation) |
-| `containers/adguard/` | `/data/custom/machines/adguard/` (same subpaths, scoped per-dir rsync) | deliberate in-container config; currently the networkd IPv6-token drop-in |
+| `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (both are ~60M image artifacts of `~/homelab-containers` since 2026-08-17) |
 
 ## Workflow
 
@@ -57,15 +56,17 @@ mise shims; the timers are yadm-managed `##h` alternates):
 
 ## Containers (systemd-nspawn on the UDM)
 
-- **adguard** (debian 12, 10.0.5.3): DNS for the whole house. Rootfs at
-  `/data/custom/machines/adguard` (software-only since 2026-08-17: state —
-  AdGuardHome.yaml, query-log/stats `data/`, updater's agh-backup — lives in
-  `/data/adguard`, wired by the `AdGuardHome.service.d/10-state-dir.conf`
-  drop-in setting `-c/-w`; journald capped by `journald.conf.d/00-size.conf`,
-  the old unbounded 4G journal was vacuumed). Rootfs is therefore wipeable,
-  ready for image-based deploys. Config backup: `backups/adguard/`.
+- **adguard** (alpine, 10.0.5.3): DNS for the whole house, built from
+  `~/homelab-containers/adguard` (alpine cutover 2026-08-17, previous debian
+  rootfs kept at `adguard.old` for rollback). State — AdGuardHome.yaml,
+  query-log/stats `data/`, agh-backup, userfilters — lives in `/data/adguard`
+  (the s6 run script passes `-c/-w`); the rootfs is a ~56M disposable image
+  artifact. The SLAAC IPv6 token (`::10.0.5.3`, see below) is set by the
+  image's ifup script via `ip token set` before host0 comes up — the old
+  systemd-networkd Token= drop-in is retired with the debian container.
+  Config backup: `backups/adguard/`.
   - IPv6: the container does SLAAC with a static interface token
-    (`containers/adguard/…/ipv6-token.conf`, `Token=static:::10.0.5.3`), so its
+    (`::10.0.5.3`), so its
     v6 addresses are always `<advertised prefix>::a00:503` and follow prefix
     changes automatically. When the ULA/GUA prefix changes, only the UniFi
     `dns-server` DHCPv6 option needs updating — nothing in the container.
@@ -106,13 +107,11 @@ timer), so version history lives in yadm alongside config history.
   silently diverge from the build definition and be reverted by the next
   deploy.
 
-- **AdGuardHome** (official /opt install, has a built-in updater — easiest is
-  the web UI update button; CLI equivalent):
-
-  ```bash
-  ssh gw 'chroot /data/custom/machines/adguard /opt/AdGuardHome/AdGuardHome --update'
-  ssh gw 'systemctl restart systemd-nspawn@adguard.service'
-  ```
+- **AdGuardHome**: bump `adguard_version` in
+  `~/homelab-containers/adguard/Justfile`, then `just deploy adguard` there
+  (validate + swap + DNS health check with auto-rollback). Do NOT use the
+  web-UI updater or `--update` — in-place binary changes are reverted by the
+  next image deploy.
 
 - After either: run `check-gw` (or wait for the daily timer) to verify.
 
@@ -147,21 +146,22 @@ secrets/keys listed per container should be sufficient.
   duplicated here (a short-lived `containers/caddy/` copy was removed
   2026-08-17); the split is: build repo owns what is inside the image,
   gw-config owns nspawn units, on_boot, runtime config, and backups.
-- adguard: debootstrap bookworm + AdGuardHome install script (installer
-  creates `/etc/systemd/system/AdGuardHome.service` — reference copy in
-  `backups/adguard/`, and enables it), run `./deploy.sh` to push the
-  `containers/adguard/` in-container config (networkd IPv6-token drop-in,
-  state-dir + journald drop-ins), restart the container. State: if
-  `/data/adguard` survived it just reattaches; otherwise restore
-  `backups/adguard/AdGuardHome.yaml` to `/data/adguard/` (stats/query log
-  are lost in that case).
+- adguard: NOT a recipe — build artifact of `~/homelab-containers/adguard`;
+  rebuild = `just deploy adguard` there. State: if `/data/adguard` survived
+  it just reattaches; otherwise restore `backups/adguard/AdGuardHome.yaml`
+  to `/data/adguard/` (stats/query log are lost in that case).
+  (`backups/adguard/AdGuardHome.service` is a debian-era relic, kept for
+  history.)
 
 ## Drift audit (last run 2026-08-16 — both containers clean)
 
 Answers "what was hand-edited in the containers beyond what this repo tracks",
 aconfmgr-style: baseline = package manager ownership, everything else is
 either repo-tracked, recipe-covered, or noise. Rerun after any ad-hoc ssh
-session you are not sure about.
+session you are not sure about. Since the 2026-08-17 image cutover both
+containers are alpine (use the apk method; the dpkg notes below document the
+debian-era adguard audit) and the stronger check is simply diffing the live
+rootfs against the build tar in `~/homelab-containers/<target>/build/`.
 
 - adguard (dpkg): `chroot /data/custom/machines/adguard dpkg -V` → empty
   (no packaged file modified). Orphan scan: all files minus
