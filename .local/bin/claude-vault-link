@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# claude-vault-link — bind a Claude Code project's auto-memory dir to an
+# Obsidian vault scope (<vault>/Claude/<scope>), moving any existing local
+# memories into the scope first.
+#
+# usage: claude-vault-link <scope-name> [project-dir]   (project-dir defaults to $PWD)
+#
+# Requires the per-machine bootstrap symlink:
+#   mkdir -p ~/.local/state/claude && ln -s <vault-path> ~/.local/state/claude/vault
+set -euo pipefail
+
+usage() { echo "usage: claude-vault-link <scope-name> [project-dir]" >&2; exit 2; }
+
+scope="${1:-}"
+[[ -n "$scope" && "$scope" != */* ]] || usage
+proj="$(realpath -s "${2:-$PWD}")"
+
+state_link="$HOME/.local/state/claude/vault"
+if [[ ! -L "$state_link" || ! -d "$state_link/Claude" ]]; then
+  echo "error: $state_link must be a symlink to the Obsidian vault (containing Claude/)" >&2
+  echo "bootstrap once per machine: mkdir -p ~/.local/state/claude && ln -s <vault-path> $state_link" >&2
+  exit 1
+fi
+
+# Claude Code project encoding: absolute path with '/' and '.' replaced by '-'
+enc="${proj//\//-}"
+enc="${enc//./-}"
+projdir="$HOME/.claude/projects/$enc"
+memdir="$projdir/memory"
+target="$state_link/Claude/$scope"
+
+if [[ -L "$memdir" ]]; then
+  if [[ "$(readlink -f "$memdir")" == "$(readlink -f "$target")" ]]; then
+    echo "ok: $memdir already linked to scope '$scope'"
+    exit 0
+  fi
+  echo "error: $memdir already links to '$(readlink "$memdir")', not scope '$scope'; refusing to relink" >&2
+  exit 1
+fi
+
+mkdir -p "$target"
+
+if [[ -d "$memdir" ]]; then
+  # Adopt existing local memories into the scope; refuse on any name collision
+  # (e.g. both sides have a MEMORY.md) — merge those by hand, then re-run.
+  shopt -s nullglob dotglob
+  for f in "$memdir"/*; do
+    if [[ -e "$target/$(basename "$f")" ]]; then
+      echo "error: collision: $target/$(basename "$f") already exists; merge manually, then re-run" >&2
+      exit 1
+    fi
+  done
+  for f in "$memdir"/*; do mv "$f" "$target/"; done
+  rmdir "$memdir"
+elif [[ -e "$memdir" ]]; then
+  echo "error: $memdir exists but is neither a directory nor a symlink" >&2
+  exit 1
+fi
+
+mkdir -p "$projdir"
+ln -s "$target" "$memdir"
+echo "linked: $memdir -> $target"
