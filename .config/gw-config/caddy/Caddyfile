@@ -20,9 +20,21 @@
 		reverse_proxy aetf-arch-homelab.home.arpa:9876
 	}
 
+	# adguard-alice is the primary (adguardhome-sync origin); dns.lan.ucw.phd
+	# stays pointed at it. Per-instance names for reaching a specific UI.
 	@dns host dns.lan.ucw.phd
 	handle @dns {
 		reverse_proxy 10.0.5.3
+	}
+
+	@dns_alice host dns-alice.lan.ucw.phd
+	handle @dns_alice {
+		reverse_proxy 10.0.5.3
+	}
+
+	@dns_bob host dns-bob.lan.ucw.phd
+	handle @dns_bob {
+		reverse_proxy 10.0.5.4
 	}
 
 	@gw host gw.lan.ucw.phd
