@@ -39,7 +39,13 @@
 
 	@gw host gw.lan.ucw.phd
 	handle @gw {
+		# UniFi OS rejects a WebSocket upgrade whose Origin does not match the
+		# request Host (HTTP 500 on /api/ws/*), which blanks the console UI.
+		# Caddy rewrites Host to the upstream for scheme-qualified upstreams,
+		# so pass the client's Host through explicitly like every other site
+		# here does by default.
 		reverse_proxy https://dmse.home.arpa {
+			header_up Host {host}
 			transport http {
 				tls
 				tls_insecure_skip_verify
