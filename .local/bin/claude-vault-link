@@ -22,9 +22,9 @@ if [[ ! -L "$state_link" || ! -d "$state_link/Claude" ]]; then
   exit 1
 fi
 
-# Claude Code project encoding: absolute path with '/' and '.' replaced by '-'
-enc="${proj//\//-}"
-enc="${enc//./-}"
+# Claude Code project encoding: every non-alphanumeric char in the absolute
+# path becomes '-' (verified for '/', '.', '+')
+enc="${proj//[^a-zA-Z0-9]/-}"
 projdir="$HOME/.claude/projects/$enc"
 memdir="$projdir/memory"
 target="$state_link/Claude/$scope"
