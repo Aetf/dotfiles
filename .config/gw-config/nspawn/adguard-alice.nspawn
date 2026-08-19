@@ -5,11 +5,13 @@ Boot=on
 # (219/CGROUP on next start — bitten 2026-08-17). Same combo as caddy.nspawn.
 KillSignal=SIGKILL
 Environment=S6_KILL_GRACETIME=0
-# Instance identity: the image's ifup oneshot reads this (with-contenv) and
-# does `ip token set` before host0 comes up, so the SLAAC address is always
-# <prefix>::a00:503. The IPv4 twin (10.0.5.3) is a UniFi DHCP reservation
-# keyed on this machine's veth MAC (derived from the machine name — renaming
-# the machine changes the MAC and orphans the reservation).
+# Instance identity, read by the image's net-setup oneshot (with-contenv):
+# static IPv4 + default route, and the SLAAC token set before host0 comes up
+# so the v6 address is always <prefix>::a00:503. Static (not DHCP): the
+# UniFi controller can't manage reservations for clients on the gateway's
+# own bridge, and the veth MAC changes with every machine rename.
+Environment=IPV4_CIDR=10.0.5.3/24
+Environment=IPV4_GATEWAY=10.0.5.1
 Environment=IPV6_TOKEN=::10.0.5.3
 Capability=all
 ResolvConf=off
