@@ -9,7 +9,7 @@
 # which is the stable path the systemd user units use.
 
 [tools]
-"vfox:Aetf/homelab-ops" = "c6ffbf133d8f3a775fa7969cd43ca276268ca7bd"
+"vfox:Aetf/homelab-ops" = "f2dccfdfa6af4e7cbfd75ce70af70f2a999a0ddc"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
 [tasks."projects:sync"]
@@ -21,10 +21,14 @@ td=$(mise where vfox:Aetf/thread-dashboard)
 podman build -q -t thread-dashboard "$td"
 ho=$(mise where vfox:Aetf/homelab-ops)
 podman build -q -t dmarc-check "$ho/dmarc-check"
+podman build -q -t adguardhome-sync "$ho/adguardhome-sync"
 systemctl --user daemon-reload
 # Pick up a new image (or a unit change) if the service is supposed to run.
 if systemctl --user is-enabled --quiet thread-dashboard.service 2>/dev/null; then
     systemctl --user restart thread-dashboard.service
+fi
+if systemctl --user is-active --quiet adguardhome-sync.service 2>/dev/null; then
+    systemctl --user restart adguardhome-sync.service
 fi
 # dmarc-check is a timer-driven oneshot; nothing to restart — the next timer
 # firing uses the freshly built image.
