@@ -1,0 +1,31 @@
+[Unit]
+Description=AdGuardHome config sync (adguard-alice -> adguard-bob)
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=localhost/adguardhome-sync:latest
+Exec=run
+# Non-secret config lives here; credentials (the shared `sync` user's
+# password, present in both instances' AdGuardHome.yaml) come from the
+# git-crypted env file.
+EnvironmentFile=%h/.config/adguardhome-sync/env
+Environment=ORIGIN_URL=http://10.0.5.3
+Environment=ORIGIN_USERNAME=sync
+Environment=REPLICA1_URL=http://10.0.5.4
+Environment=REPLICA1_USERNAME=sync
+Environment="CRON=*/15 * * * *"
+Environment=RUN_ON_START=true
+# No web dashboard; state is observable via `podman logs` / journal.
+Environment=API_PORT=0
+# AdGuard's DHCP server is unused here (UniFi owns DHCP), and instance
+# network identity must never be replicated.
+Environment=FEATURES_DHCP_SERVER_CONFIG=false
+Environment=FEATURES_DHCP_STATIC_LEASES=false
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target
