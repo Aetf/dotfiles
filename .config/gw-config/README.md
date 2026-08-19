@@ -35,7 +35,7 @@ Strategy:
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
 | `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
-| `backups/adguard/` | ← pulled from adguard container rootfs | AdGuardHome.yaml snapshot |
+| `backups/adguard-alice/`, `backups/adguard-bob/` | ← pulled from `/data/adguard-<instance>/` | AdGuardHome.yaml snapshots (alice = sync origin / source of truth) |
 | `backups/machines-manifest.txt` | ← generated | container inventory; rootfs NOT in repo (both are ~60M image artifacts of `~/homelab-containers` since 2026-08-17) |
 
 ## Workflow
@@ -56,18 +56,23 @@ mise shims; the timers are yadm-managed `##h` alternates):
 
 ## Containers (systemd-nspawn on the UDM)
 
-- **adguard** (alpine, 10.0.5.3): DNS for the whole house, built from
-  `~/homelab-containers/adguard` (alpine cutover 2026-08-17, previous debian
-  rootfs kept at `adguard.old` for rollback). State — AdGuardHome.yaml,
-  query-log/stats `data/`, agh-backup, userfilters — lives in `/data/adguard`
-  (the s6 run script passes `-c/-w`); the rootfs is a ~56M disposable image
-  artifact. The SLAAC IPv6 token (`::10.0.5.3`, see below) is set by the
-  image's ifup script via `ip token set` before host0 comes up — the old
-  systemd-networkd Token= drop-in is retired with the debian container.
-  Config backup: `backups/adguard/`.
-  - IPv6: the container does SLAAC with a static interface token
-    (`::10.0.5.3`), so its
-    v6 addresses are always `<advertised prefix>::a00:503` and follow prefix
+- **adguard-alice** (10.0.5.3) + **adguard-bob** (10.0.5.4): active-active
+  whole-house DNS, one shared image from `~/homelab-containers/adguard`
+  (dual-instance split 2026-08-18; alpine cutover 2026-08-17). Instance
+  identity is injected ONLY by the `.nspawn` unit env — `IPV4_CIDR`,
+  `IPV4_GATEWAY`, `IPV6_TOKEN` — consumed by the image's `net-setup` oneshot
+  (static config; no DHCP: the UniFi controller cannot manage reservations
+  for clients on the gateway's own bridge, and the veth MAC changes with any
+  machine rename). Per-instance state lives in `/data/adguard-<instance>` on
+  the host, bind-mounted onto the instance-agnostic container path
+  `/data/adguard`. alice is primary: `dns.lan.ucw.phd` points at it and
+  adguardhome-sync (homelab quadlet, every 15 min) replicates alice → bob;
+  both yamls carry the dedicated `sync` user. Per-instance UIs:
+  `dns-alice`/`dns-bob.lan.ucw.phd`. Config backups:
+  `backups/adguard-alice/`, `backups/adguard-bob/`.
+  - IPv6: SLAAC with a static interface token per instance
+    (`::10.0.5.3` / `::10.0.5.4`), so
+    v6 addresses are always `<advertised prefix>::a00:503/:504` and follow prefix
     changes automatically. When the ULA/GUA prefix changes, only the UniFi
     `dns-server` DHCPv6 option needs updating — nothing in the container.
   - AdGuard treats a client as "local" (eligible for private-PTR resolution
@@ -107,11 +112,13 @@ timer), so version history lives in yadm alongside config history.
   silently diverge from the build definition and be reverted by the next
   deploy.
 
-- **AdGuardHome**: bump `adguard_version` in
-  `~/homelab-containers/adguard/Justfile`, then `just deploy adguard` there
-  (validate + swap + DNS health check with auto-rollback). Do NOT use the
-  web-UI updater or `--update` — in-place binary changes are reverted by the
-  next image deploy.
+- **AdGuardHome**: renovate PRs bump `adguard_version` in
+  `~/homelab-containers/adguard/Justfile`; merge → autodeploy runs
+  `just deploy adguard instance=bob` then (after caddy) `instance=alice`
+  (bob is the canary; a failure holds alice on the known-good image; each
+  deploy validates + swaps + DNS health check with auto-rollback). Do NOT
+  use the web-UI updater or `--update` — in-place binary changes are
+  reverted by the next image deploy.
 
 - After either: run `check-gw` (or wait for the daily timer) to verify.
 
@@ -122,13 +129,16 @@ timer), so version history lives in yadm alongside config history.
 2. Once on_boot runs, `0-setup-system.sh` reinstalls systemd-container,
    restores `/etc/systemd/nspawn/` from `/data/gw-config/nspawn/`, links
    machines from `/data/custom/machines/` and starts them.
-3. Verify: `machinectl list` shows adguard+caddy; DNS works; then
+3. Verify: `machinectl list` shows adguard-alice+adguard-bob+caddy; DNS
+   works on 10.0.5.3 AND 10.0.5.4; then
    `./deploy.sh --check` from the homelab should be clean.
 4. Full gateway loss: restore UniFi config on replacement hardware from the
-   newest `backups/unifi/*.unf`, then redo steps above. caddy rootfs:
-   rebuild via `just deploy caddy` in `~/homelab-containers`. adguard
-   rootfs: from whatever offline copy exists — not in any repo (pruned-tar
-   backup still TODO; goes away once adguard is image-built too).
+   newest `backups/unifi/*.unf`, then redo steps above. All rootfs are
+   image artifacts of `~/homelab-containers`: `just deploy caddy`,
+   `just deploy adguard instance=alice` / `instance=bob` (first bring-up of
+   an instance: create `/data/adguard-<instance>/`, restore its
+   AdGuardHome.yaml from `backups/adguard-<instance>/`, deploy with
+   `health_check=no` only if the other instance is also down).
 
 ## Container rebuild recipes (if rootfs is lost)
 
@@ -146,12 +156,14 @@ secrets/keys listed per container should be sufficient.
   duplicated here (a short-lived `containers/caddy/` copy was removed
   2026-08-17); the split is: build repo owns what is inside the image,
   gw-config owns nspawn units, on_boot, runtime config, and backups.
-- adguard: NOT a recipe — build artifact of `~/homelab-containers/adguard`;
-  rebuild = `just deploy adguard` there. State: if `/data/adguard` survived
-  it just reattaches; otherwise restore `backups/adguard/AdGuardHome.yaml`
-  to `/data/adguard/` (stats/query log are lost in that case).
-  (`backups/adguard/AdGuardHome.service` is a debian-era relic, kept for
-  history.)
+- adguard-alice/-bob: NOT a recipe — build artifacts of
+  `~/homelab-containers/adguard`; rebuild = `just deploy adguard
+  instance=<x>` there. State: if `/data/adguard-<x>` survived it just
+  reattaches; otherwise restore `backups/adguard-<x>/AdGuardHome.yaml`
+  into it (stats/query log lost in that case) — or, for bob alone, an
+  empty dir + copied alice yaml + one adguardhome-sync run reconverges.
+  (`backups/adguard-alice/AdGuardHome.service` is a debian-era relic, kept
+  for history.)
 
 ## Drift audit (last run 2026-08-16 — both containers clean)
 
