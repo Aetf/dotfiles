@@ -1,17 +1,16 @@
 #!/usr/bin/env bash
 # Install/upgrade Moonlight on a Samsung Tizen TV.
 # Usage: samsung-moonlight-upgrade <tv-host>
+#
+# Mirrors the invocation HA used to run on the HAOS host: the kyrofrcode
+# image signs with the mounted certs and installs over sdb by itself.
 set -euo pipefail
 
 host=${1:?usage: samsung-moonlight-upgrade <tv-host>}
 certs=$HOME/.config/oddjob/secrets/samsung-certs
 
-# The image's entrypoint takes a single shell-command string; install.sh signs
-# the wgt with our cert profile and pushes it to the TV over sdb.
 exec podman run --rm --network=host \
     -v "$certs/author.p12:/certificates/author.p12:ro" \
     -v "$certs/distributor.p12:/certificates/distributor.p12:ro" \
-    -v "$certs/profile.xml:/home/moonlight/profile.xml:ro" \
-    -v "$certs/install.sh:/home/moonlight/install.sh:ro" \
-    ghcr.io/oneliberty/moonlight-chrome-tizen:samsung_wasm \
-    "/home/moonlight/install.sh \"$host\" apassword"
+    ghcr.io/kyrofrcode/moonlight-chrome-tizen:samsung_wasm \
+    "$host"
