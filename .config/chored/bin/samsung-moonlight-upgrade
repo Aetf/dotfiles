@@ -7,7 +7,7 @@
 set -euo pipefail
 
 host=${1:?usage: samsung-moonlight-upgrade <tv-host>}
-certs=$HOME/.config/oddjob/secrets/samsung-certs
+certs=$HOME/.config/chored/secrets/samsung-certs
 
 exec podman run --rm --network=host \
     -v "$certs/author.p12:/certificates/author.p12:ro" \

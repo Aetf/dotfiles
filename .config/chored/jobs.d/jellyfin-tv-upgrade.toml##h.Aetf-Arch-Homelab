@@ -1,7 +1,7 @@
 description = "Install/upgrade Jellyfin on a Samsung TV (args: <tv-host> <tag>)"
-command = ["/home/aetf/.config/oddjob/bin/samsung-jellyfin-upgrade"]
+command = ["/home/aetf/.config/chored/bin/samsung-jellyfin-upgrade"]
 allow-args = true
 # HA's shell_command has a 60s limit; detach and let the install run out its
-# course. Progress: journalctl --user -u 'oddjob-jellyfin-tv-upgrade-*'
+# course. Progress: journalctl --user -u 'chored-jellyfin-tv-upgrade-*'
 detach = true
 timeout = "15m"

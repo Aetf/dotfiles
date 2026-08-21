@@ -3,7 +3,7 @@
 **/mail.d/** filter=git-crypt diff=git-crypt
 .config/gmailctl/credentials.json filter=git-crypt diff=git-crypt
 .config/gmailctl/token.json filter=git-crypt diff=git-crypt
-.config/oddjob/secrets/** filter=git-crypt diff=git-crypt
+.config/chored/secrets/** filter=git-crypt diff=git-crypt
 .config/kube/config filter=git-crypt diff=git-crypt
 .config/gw-config/backups/** filter=git-crypt diff=git-crypt
 .config/gw-config/secrets/** filter=git-crypt diff=git-crypt

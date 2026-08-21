@@ -1,3 +1,0 @@
-description = "Health check: prove the SSH -> oddjob -> systemd-run chain works"
-command = ["echo", "pong"]
-timeout = "30s"

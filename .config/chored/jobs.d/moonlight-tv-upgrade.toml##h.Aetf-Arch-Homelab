@@ -1,7 +1,7 @@
 description = "Install/upgrade Moonlight on a Samsung TV (args: <tv-host>)"
-command = ["/home/aetf/.config/oddjob/bin/samsung-moonlight-upgrade"]
+command = ["/home/aetf/.config/chored/bin/samsung-moonlight-upgrade"]
 allow-args = true
 # HA's shell_command has a 60s limit; detach and let the install run out its
-# course. Progress: journalctl --user -u 'oddjob-moonlight-tv-upgrade-*'
+# course. Progress: journalctl --user -u 'chored-moonlight-tv-upgrade-*'
 detach = true
 timeout = "15m"
