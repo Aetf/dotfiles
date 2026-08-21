@@ -273,6 +273,11 @@ SystemdEnable --from-file /etc/systemd/system/jellyfin-discovery-relay.service
 CopyFile /etc/systemd/system/samsung-tv-relay.service
 SystemdEnable --from-file /etc/systemd/system/samsung-tv-relay.service
 
+# oddjob: Home Assistant runs declared jobs here (TV app installs, later
+# mail tasks) over a forced-command SSH key. Jobs live in
+# ~/.config/oddjob/jobs.d (yadm); the AUR package is ours (~/packages).
+AddPackage --foreign oddjob
+
 # qemu binfmt.d
 CopyFile /etc/binfmt.d/qemu-aarch64-static.conf
 CopyFile /etc/binfmt.d/qemu-aarch64_be-static.conf
