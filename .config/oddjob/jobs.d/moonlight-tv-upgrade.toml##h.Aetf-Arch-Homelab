@@ -1,0 +1,4 @@
+description = "Install/upgrade Moonlight on a Samsung TV (args: <tv-host>)"
+command = ["/home/aetf/.config/oddjob/bin/samsung-moonlight-upgrade"]
+allow-args = true
+timeout = "15m"

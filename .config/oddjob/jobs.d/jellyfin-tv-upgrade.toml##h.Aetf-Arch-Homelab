@@ -1,0 +1,4 @@
+description = "Install/upgrade Jellyfin on a Samsung TV (args: <tv-host> <tag>)"
+command = ["/home/aetf/.config/oddjob/bin/samsung-jellyfin-upgrade"]
+allow-args = true
+timeout = "15m"

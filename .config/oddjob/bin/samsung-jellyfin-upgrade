@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+# Install/upgrade Jellyfin on a Samsung Tizen TV.
+# Usage: samsung-jellyfin-upgrade <tv-host> <jellyfin-tizen-tag>
+set -euo pipefail
+
+host=${1:?usage: samsung-jellyfin-upgrade <tv-host> <tag>}
+tag=${2:?usage: samsung-jellyfin-upgrade <tv-host> <tag>}
+certs=$HOME/.config/oddjob/secrets/samsung-certs
+
+exec podman run --rm --network=host \
+    -v "$certs/author.p12:/certificates/author.p12:ro" \
+    -v "$certs/distributor.p12:/certificates/distributor.p12:ro" \
+    ghcr.io/georift/install-jellyfin-tizen \
+    "$host" Jellyfin-secondary "$tag" apassword
