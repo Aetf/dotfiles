@@ -1,20 +1,16 @@
-// Please refer to https://github.com/mbrt/gmailctl#configuration for docs about
-// the config format. Don't forget to change the configuration before to apply it
-// to your own inbox!
+// Auto-imported filters by 'gmailctl download'.
+//
+// WARNING: This functionality is experimental. Before making any
+// changes, check that no diff is detected with the remote filters by
+// using the 'diff' command.
 
-// Import the standard library
-local lib = import 'gmailctl.libsonnet';
-
-// Some useful variables on top
-// TODO: Put your email here
-local me = 'YOUR.EMAIL@gmail.com';
-local toMe = { to: me };
-
+// Uncomment if you want to use the standard library.
+// local lib = import 'gmailctl.libsonnet';
 {
   version: "v1alpha3",
   author: {
-    name: "Aetf",
-    email: "aetf@unlimited-code.works"
+    name: "YOUR NAME HERE (auto imported)",
+    email: "your-email@gmail.com"
   },
   // Note: labels management is optional. If you prefer to use the
   // GMail interface to add and remove labels, you can safely remove
@@ -25,6 +21,9 @@ local toMe = { to: me };
     },
     {
       name: "旅行/2021-07-04 缅因"
+    },
+    {
+      name: "旅行/2025-04-10 回国"
     },
     {
       name: "个人事物/20241115 H1B签证"
@@ -63,6 +62,9 @@ local toMe = { to: me };
       name: "个人事物"
     },
     {
+      name: "旅行/2025-09-22 SVL"
+    },
+    {
       name: "❄️Z-OldLabels/Aetf's Bot Message"
     },
     {
@@ -73,6 +75,9 @@ local toMe = { to: me };
     },
     {
       name: "旅行/2019-12-26 圣诞美国中南"
+    },
+    {
+      name: "旅行/2026-05-02 SymbioticLab 10周年"
     },
     {
       name: "个人事物/PS"
@@ -88,6 +93,9 @@ local toMe = { to: me };
     },
     {
       name: "❄️Z-OldLabels/XJTU/Reg"
+    },
+    {
+      name: "旅行/2025-07-30 Glacier National Park"
     },
     {
       name: "❄️Z-OldLabels/XJTU/推荐信"
@@ -125,6 +133,9 @@ local toMe = { to: me };
       name: "旅行/2019-03-02 MLSys20"
     },
     {
+      name: "旅行/2027-01-04 夏威夷"
+    },
+    {
       name: "❄️Z-OldLabels/Facebook/Intern2019",
       color: {
         background: "#4986e7",
@@ -142,6 +153,9 @@ local toMe = { to: me };
     },
     {
       name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Bytedance"
+    },
+    {
+      name: "旅行/2025-07-09 加州出差"
     },
     {
       name: "❄️Z-OldLabels/UMich"
@@ -172,6 +186,9 @@ local toMe = { to: me };
       name: "旅行/2023-04-28 毕业典礼"
     },
     {
+      name: "AWS Bills"
+    },
+    {
       name: "旅行/2019-7-4 Orlando"
     },
     {
@@ -187,10 +204,16 @@ local toMe = { to: me };
       name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Nvidia"
     },
     {
+      name: "旅行/2025-07-04 Olympic Nation Park"
+    },
+    {
       name: "❄️Z-OldLabels/事务/UCLA CSST"
     },
     {
       name: "旅行/2024-04-02 SVL出差"
+    },
+    {
+      name: "DMARC-Issue"
     },
     {
       name: "❄️Z-OldLabels/Job Application/Intern2021/Amazon"
@@ -200,6 +223,9 @@ local toMe = { to: me };
     },
     {
       name: "省钱"
+    },
+    {
+      name: "旅行/2026-04-18 加拿大周末"
     },
     {
       name: "个人事物/买房 Homebuying/Bay Equity",
@@ -219,6 +245,9 @@ local toMe = { to: me };
     },
     {
       name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Facebook"
+    },
+    {
+      name: "旅行/2026-10-30 夏威夷芳芳婚礼"
     },
     {
       name: "CarMaintenance"
@@ -242,6 +271,9 @@ local toMe = { to: me };
       name: "旅行/2024-11 加拿大和日本"
     },
     {
+      name: "个人事物/GreenCard"
+    },
+    {
       name: "❄️Z-OldLabels/UMich/EECS 598-009 Big Data"
     },
     {
@@ -258,6 +290,9 @@ local toMe = { to: me };
     },
     {
       name: "Auto Insurance"
+    },
+    {
+      name: "Auto Insurance/20250312-scratch-with-neighbor"
     },
     {
       name: "旅行/2021-12-29 新奥尔良"
@@ -286,6 +321,9 @@ local toMe = { to: me };
     },
     {
       name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Snap"
+    },
+    {
+      name: "GoodToGo"
     },
     {
       name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Dropbox"
@@ -318,6 +356,9 @@ local toMe = { to: me };
     },
     {
       name: "❄️Z-OldLabels/UMich/EECS 551 Auto Grader"
+    },
+    {
+      name: "旅行/2025-02-18 加州出差"
     },
     {
       name: "个人事物/买房 Homebuying",
@@ -977,6 +1018,102 @@ local toMe = { to: me };
         markRead: true,
         labels: [
           "Housing/Utility"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "schwab bank estatement"
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "Bank Statements"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "monthly (green dot|wealthfront) statement"
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "Bank Statements"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "\"credit card statement\" (\"ready\" or \"available\")"
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "Bank Statements"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "\"billing statement available\""
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "Bank Statements"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "\"autopay payment reminder\""
+      },
+      actions: {
+        archive: true,
+        markRead: true
+      }
+    },
+    {
+      filter: {
+        query: "\"Good To Go! statement\""
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "GoodToGo"
+        ]
+      }
+    },
+    {
+      filter: {
+        query: "\"Amazon web services invoice available\""
+      },
+      actions: {
+        archive: true,
+        labels: [
+          "AWS Bills"
+        ]
+      }
+    },
+    {
+      filter: {
+        from: "moomoo"
+      },
+      actions: {
+        archive: true,
+        markRead: true
+      }
+    },
+    {
+      filter: {
+        query: "\"Your statement for credit card\""
+      },
+      actions: {
+        archive: true,
+        category: "updates",
+        labels: [
+          "Bank Statements"
         ]
       }
     }
