@@ -9,6 +9,8 @@
 # which is the stable path the systemd user units use.
 
 [tools]
+# On xps gmailctl comes from pacman; homelab has no root, so pin it here.
+"ubi:mbrt/gmailctl" = "0.12.0"
 "vfox:Aetf/homelab-ops" = "f2dccfdfa6af4e7cbfd75ce70af70f2a999a0ddc"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
