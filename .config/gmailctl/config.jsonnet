@@ -1,1121 +1,471 @@
-// Auto-imported filters by 'gmailctl download'.
+// Gmail labels & filters, managed declaratively by gmailctl (Aetf/meta#10).
 //
-// WARNING: This functionality is experimental. Before making any
-// changes, check that no diff is detected with the remote filters by
-// using the 'diff' command.
+// Workflow: edit -> `gmailctl --config ~/.config/gmailctl diff` -> `apply`
+// -> yadm commit. Don't create filters in the Gmail web UI: the next apply
+// clobbers them (run `download` first to rescue anything created there).
+//
+// Labels listed here are authoritative too — removing one DELETES it in
+// Gmail (messages keep other labels but lose that one). ❄️Z-OldLabels/* are
+// frozen archival labels with no live traffic; keep them.
 
-// Uncomment if you want to use the standard library.
-// local lib = import 'gmailctl.libsonnet';
-{
-  version: "v1alpha3",
-  author: {
-    name: "YOUR NAME HERE (auto imported)",
-    email: "your-email@gmail.com"
+local label(name, bg=null, text=null) =
+  { name: name } +
+  (if bg == null then {} else { color: { background: bg, text: text } });
+
+// ---------------------------------------------------------------------------
+// Labels
+// ---------------------------------------------------------------------------
+
+local activeLabels = [
+  label('AWS Bills'),
+  label('Auto Insurance'),
+  label('Auto Insurance/20250312-scratch-with-neighbor'),
+  label('Bank Statements'),
+  label('CarMaintenance'),
+  label('DMARC-Issue'),
+  label('GoodToGo'),
+  label('Housing'),
+  label('Housing/Utility'),
+  label('Housing/Woodcreek'),
+  label('Housing/Woodcreek/HVAC upgrade'),
+  label('Insurance'),
+  label('Purchase'),
+  label('Registration', '#00ff00', '#000000'),
+  label('省钱'),
+];
+
+local personalLabels = [
+  label('个人事物'),
+  label('个人事物/20240810 Wedding', '#ffc8af', '#7a2e0b'),
+  label('个人事物/20241115 H1B签证'),
+  label('个人事物/GreenCard'),
+  label('个人事物/Offer'),
+  label('个人事物/PS'),
+  label('个人事物/买房 Homebuying', '#fbe983', '#594c05'),
+  label('个人事物/买房 Homebuying/Bay Equity', '#ffad46', '#ffffff'),
+  label('个人事物/买房 Homebuying/Fairway', '#42d692', '#094228'),
+  label('个人事物/买房 Homebuying/Redfin'),
+  label('个人事物/出国中介'),
+  label('个人事物/手机账单'),
+  label('个人事物/推荐信'),
+  label('个人事物/日本毕业旅行'),
+];
+
+local travelTrips = [
+  '2019-03-02 MLSys20',
+  '2019-7-4 Orlando',
+  '2019-08-24 塞尔维亚',
+  '2019-12-26 圣诞美国中南',
+  '2021-04-06 MLSys21',
+  '2021-07-04 缅因',
+  '2021-12-29 新奥尔良',
+  '2022-09-02 夏威夷Maui',
+  '2022-11-23 Portland 脱口秀',
+  '2022-12-20 Lake Tahoe 滑雪',
+  '2023-04-28 毕业典礼',
+  '2023-05-28 波特兰',
+  '2023-06-25 温哥华',
+  '2024-04-02 SVL出差',
+  '2024-07-04 加州婚纱照',
+  '2024-08 婚礼父母来美',
+  '2024-09-06 Niagara Falls',
+  '2024-11 加拿大和日本',
+  '2024-11-13 加州',
+  '2024-12-05 日本',
+  '2025-02-18 加州出差',
+  '2025-04-10 回国',
+  '2025-07-04 Olympic Nation Park',
+  '2025-07-09 加州出差',
+  '2025-07-30 Glacier National Park',
+  '2025-09-22 SVL',
+  '2026-04-18 加拿大周末',
+  '2026-05-02 SymbioticLab 10周年',
+  '2026-10-30 夏威夷芳芳婚礼',
+  '2027-01-04 夏威夷',
+];
+local travelLabels = [label('旅行')] + [label('旅行/' + t) for t in travelTrips];
+
+local frozenLabels = [
+  label('❄️Z-OldLabels'),
+  label("❄️Z-OldLabels/Aetf's Bot Message"),
+  label('❄️Z-OldLabels/Archlinux'),
+  label('❄️Z-OldLabels/AttachmentRemoved'),
+  label('❄️Z-OldLabels/Craigslist'),
+  label('❄️Z-OldLabels/Facebook/Intern2019', '#4986e7', '#ffffff'),
+  label('❄️Z-OldLabels/Google Scholar'),
+  label('❄️Z-OldLabels/Google/Fulltime2022', '#98d7e4', '#0d3b44'),
+  label('❄️Z-OldLabels/Google/Fulltime2022/Reloc'),
+  label('❄️Z-OldLabels/Google/Fulltime2022/ToSeattle'),
+  label('❄️Z-OldLabels/Google/Fulltime2022/Visa'),
+  label('❄️Z-OldLabels/Job Application'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Apple'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Bytedance'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Dropbox'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Facebook'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Microsoft'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Nvidia'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Snap'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Uber'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Done/Waymo'),
+  label('❄️Z-OldLabels/Job Application/Fulltime2022/Google'),
+  label('❄️Z-OldLabels/Job Application/Intern2021'),
+  label('❄️Z-OldLabels/Job Application/Intern2021/Amazon'),
+  label('❄️Z-OldLabels/kdevelop-devel'),
+  label('❄️Z-OldLabels/Mail & Package'),
+  label('❄️Z-OldLabels/Mozilla'),
+  label('❄️Z-OldLabels/Symbiotic', '#ff7537', '#ffffff'),
+  label('❄️Z-OldLabels/UMich'),
+  label('❄️Z-OldLabels/UMich/Dissertation', '#ffc8af', '#7a2e0b'),
+  label('❄️Z-OldLabels/UMich/EECS 489 Auto Grader'),
+  label('❄️Z-OldLabels/UMich/EECS 551 Auto Grader'),
+  label('❄️Z-OldLabels/UMich/EECS 598-009 Big Data'),
+  label('❄️Z-OldLabels/UMich/Health'),
+  label('❄️Z-OldLabels/UMich/rloopfma'),
+  label('❄️Z-OldLabels/XJTU'),
+  label('❄️Z-OldLabels/XJTU/Reg'),
+  label('❄️Z-OldLabels/XJTU/推荐信'),
+  label('❄️Z-OldLabels/事务'),
+  label('❄️Z-OldLabels/事务/Google奖学金'),
+  label('❄️Z-OldLabels/事务/LianLiFan RMA'),
+  label('❄️Z-OldLabels/事务/UCLA CSST'),
+  label('❄️Z-OldLabels/事务/sAohE'),
+  label('❄️Z-OldLabels/事务/网安'),
+];
+
+// ---------------------------------------------------------------------------
+// Rules
+// ---------------------------------------------------------------------------
+
+// One or-branch per bank's "statement is ready" notification wording.
+local statementQueries = [
+  '"Your credit card statement is ready"',
+  '"Your statement is ready for credit card"',
+  '"Your statement for credit card"',
+  '"Your statement is ready for account"',
+  '("credit card statement" ("ready" or "available"))',
+  '"Your statement is available online"',
+  '"You have a new statement online"',
+  '("Your statement is now available online" citi)',
+  '"Your Statement is Available in Mobile and Online Banking"',
+  '"Your deposit statement is available"',
+  '"billing statement available"',
+  '(american express "Important Notice" Statement)',
+  '(from:donotreply-comm@schwab.com "Your Schwab eStatement is Ready")',
+  '(schwab bank estatement)',
+  '(from:no-reply@icbc-us.com subject:"Statement Alert")',
+  '("citizens" access "monthly statement")',
+  '"sofi banking statement is available"',
+  '(monthly (green dot|wealthfront) statement)',
+];
+
+local financeRules = [
+  {
+    filter: { or: [{ query: q } for q in statementQueries] },
+    actions: {
+      archive: true,
+      markSpam: false,
+      markImportant: false,
+      category: 'updates',
+      labels: ['Bank Statements'],
+    },
   },
-  // Note: labels management is optional. If you prefer to use the
-  // GMail interface to add and remove labels, you can safely remove
-  // this section of the config.
-  labels: [
-    {
-      name: "旅行/2024-08 婚礼父母来美"
-    },
-    {
-      name: "旅行/2021-07-04 缅因"
-    },
-    {
-      name: "旅行/2025-04-10 回国"
-    },
-    {
-      name: "个人事物/20241115 H1B签证"
-    },
-    {
-      name: "❄️Z-OldLabels/Google Scholar"
-    },
-    {
-      name: "旅行/2023-05-28 波特兰"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Waymo"
-    },
-    {
-      name: "Housing/Woodcreek"
-    },
-    {
-      name: "❄️Z-OldLabels/事务/Google奖学金"
-    },
-    {
-      name: "Bank Statements"
-    },
-    {
-      name: "❄️Z-OldLabels/事务"
-    },
-    {
-      name: "个人事物/手机账单"
-    },
-    {
-      name: "❄️Z-OldLabels/Mozilla"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Apple"
-    },
-    {
-      name: "个人事物"
-    },
-    {
-      name: "旅行/2025-09-22 SVL"
-    },
-    {
-      name: "❄️Z-OldLabels/Aetf's Bot Message"
-    },
-    {
-      name: "个人事物/出国中介"
-    },
-    {
-      name: "个人事物/推荐信"
-    },
-    {
-      name: "旅行/2019-12-26 圣诞美国中南"
-    },
-    {
-      name: "旅行/2026-05-02 SymbioticLab 10周年"
-    },
-    {
-      name: "个人事物/PS"
-    },
-    {
-      name: "❄️Z-OldLabels/Mail \u0026 Package"
-    },
-    {
-      name: "❄️Z-OldLabels/XJTU"
-    },
-    {
-      name: "❄️Z-OldLabels/Google/Fulltime2022/ToSeattle"
-    },
-    {
-      name: "❄️Z-OldLabels/XJTU/Reg"
-    },
-    {
-      name: "旅行/2025-07-30 Glacier National Park"
-    },
-    {
-      name: "❄️Z-OldLabels/XJTU/推荐信"
-    },
-    {
-      name: "❄️Z-OldLabels/Symbiotic",
-      color: {
-        background: "#ff7537",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "Registration",
-      color: {
-        background: "#00ff00",
-        text: "#000000"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels/Archlinux"
-    },
-    {
-      name: "❄️Z-OldLabels/Google/Fulltime2022/Visa"
-    },
-    {
-      name: "个人事物/Offer"
-    },
-    {
-      name: "❄️Z-OldLabels/事务/sAohE"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/EECS 489 Auto Grader"
-    },
-    {
-      name: "旅行/2019-03-02 MLSys20"
-    },
-    {
-      name: "旅行/2027-01-04 夏威夷"
-    },
-    {
-      name: "❄️Z-OldLabels/Facebook/Intern2019",
-      color: {
-        background: "#4986e7",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done"
-    },
-    {
-      name: "个人事物/日本毕业旅行"
-    },
-    {
-      name: "旅行/2024-11-13 加州"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Bytedance"
-    },
-    {
-      name: "旅行/2025-07-09 加州出差"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich"
-    },
-    {
-      name: "个人事物/买房 Homebuying/Fairway",
-      color: {
-        background: "#42d692",
-        text: "#094228"
-      }
-    },
-    {
-      name: "Housing"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Uber"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/Health"
-    },
-    {
-      name: "Housing/Woodcreek/HVAC upgrade"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022"
-    },
-    {
-      name: "旅行/2023-04-28 毕业典礼"
-    },
-    {
-      name: "AWS Bills"
-    },
-    {
-      name: "旅行/2019-7-4 Orlando"
-    },
-    {
-      name: "❄️Z-OldLabels/事务/LianLiFan RMA"
-    },
-    {
-      name: "Housing/Utility"
-    },
-    {
-      name: "旅行/2019-08-24 塞尔维亚"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Nvidia"
-    },
-    {
-      name: "旅行/2025-07-04 Olympic Nation Park"
-    },
-    {
-      name: "❄️Z-OldLabels/事务/UCLA CSST"
-    },
-    {
-      name: "旅行/2024-04-02 SVL出差"
-    },
-    {
-      name: "DMARC-Issue"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Intern2021/Amazon"
-    },
-    {
-      name: "旅行/2022-09-02 夏威夷Maui"
-    },
-    {
-      name: "省钱"
-    },
-    {
-      name: "旅行/2026-04-18 加拿大周末"
-    },
-    {
-      name: "个人事物/买房 Homebuying/Bay Equity",
-      color: {
-        background: "#ffad46",
-        text: "#ffffff"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/rloopfma"
-    },
-    {
-      name: "❄️Z-OldLabels/Google/Fulltime2022/Reloc"
-    },
-    {
-      name: "❄️Z-OldLabels/事务/网安"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Facebook"
-    },
-    {
-      name: "旅行/2026-10-30 夏威夷芳芳婚礼"
-    },
-    {
-      name: "CarMaintenance"
-    },
-    {
-      name: "个人事物/买房 Homebuying/Redfin"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application"
-    },
-    {
-      name: "旅行/2024-12-05 日本"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Google"
-    },
-    {
-      name: "旅行/2021-04-06 MLSys21"
-    },
-    {
-      name: "旅行/2024-11 加拿大和日本"
-    },
-    {
-      name: "个人事物/GreenCard"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/EECS 598-009 Big Data"
-    },
-    {
-      name: "旅行/2022-11-23 Portland 脱口秀"
-    },
-    {
-      name: "❄️Z-OldLabels/Craigslist"
-    },
-    {
-      name: "旅行/2023-06-25 温哥华"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Intern2021"
-    },
-    {
-      name: "Auto Insurance"
-    },
-    {
-      name: "Auto Insurance/20250312-scratch-with-neighbor"
-    },
-    {
-      name: "旅行/2021-12-29 新奥尔良"
-    },
-    {
-      name: "旅行/2024-07-04 加州婚纱照"
-    },
-    {
-      name: "❄️Z-OldLabels/AttachmentRemoved"
-    },
-    {
-      name: "Purchase"
-    },
-    {
-      name: "旅行/2022-12-20 Lake Tahoe 滑雪"
-    },
-    {
-      name: "旅行/2024-09-06 Niagara Falls"
-    },
-    {
-      name: "个人事物/20240810 Wedding",
-      color: {
-        background: "#ffc8af",
-        text: "#7a2e0b"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Snap"
-    },
-    {
-      name: "GoodToGo"
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Dropbox"
-    },
-    {
-      name: "❄️Z-OldLabels/kdevelop-devel"
-    },
-    {
-      name: "❄️Z-OldLabels/Google/Fulltime2022",
-      color: {
-        background: "#98d7e4",
-        text: "#0d3b44"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels/Job Application/Fulltime2022/Done/Microsoft"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/Dissertation",
-      color: {
-        background: "#ffc8af",
-        text: "#7a2e0b"
-      }
-    },
-    {
-      name: "❄️Z-OldLabels"
-    },
-    {
-      name: "旅行"
-    },
-    {
-      name: "❄️Z-OldLabels/UMich/EECS 551 Auto Grader"
-    },
-    {
-      name: "旅行/2025-02-18 加州出差"
-    },
-    {
-      name: "个人事物/买房 Homebuying",
-      color: {
-        background: "#fbe983",
-        text: "#594c05"
-      }
-    },
-    {
-      name: "Insurance"
-    }
-  ],
-  rules: [
-    {
-      filter: {
-        query: "Archlinux"
-      },
-      actions: {
-        category: "updates",
-        labels: [
-          "❄️Z-OldLabels/Archlinux"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "update+zj4y=_j4yf9c@facebookmail.com"
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        category: "social"
-      }
-    },
-    {
-      filter: {
-        from: "scholaralerts-noreply@google.com"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Google Scholar"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "bugzilla-daemon@mozilla.org"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Mozilla"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "mosharaf group meeting"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Symbiotic"
-        ]
-      }
-    },
-    {
-      filter: {
-        subject: "[Reminder] Group meeting today",
-        isEscaped: true
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Symbiotic"
-        ]
-      }
-    },
-    {
-      filter: {
-        to: "symbiotic@umich.edu"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Symbiotic"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "symbiotic@umich.edu,"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Symbiotic"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "dealalerts@slickdeals.net"
-      },
-      actions: {
-        markRead: true,
-        labels: [
-          "省钱"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "admin@dealmoon.com"
-          },
-          {
-            subject: "即时折扣"
-          }
-        ]
-      },
-      actions: {
-        markRead: true,
-        labels: [
-          "省钱"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "facebook-recruiting@fb.com"
-      },
-      actions: {
-        labels: [
-          "❄️Z-OldLabels/Job Application"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "meemic"
-      },
-      actions: {
-        labels: [
-          "Auto Insurance"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "customerservice@e.progressive.com"
-      },
-      actions: {
-        labels: [
-          "Auto Insurance"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:kdevelop-devel.kde.org"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        labels: [
-          "❄️Z-OldLabels/kdevelop-devel"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "REVISION SUMMARY"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        labels: [
-          "❄️Z-OldLabels/kdevelop-devel"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "noreply@phabricator.kde.org"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        labels: [
-          "❄️Z-OldLabels/kdevelop-devel"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "list:kdevelop.kde.org"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        labels: [
-          "❄️Z-OldLabels/kdevelop-devel"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "Aetf's Bot Message",
-        isEscaped: true
-      },
-      actions: {
-        markSpam: false,
-        markImportant: true,
-        labels: [
-          "❄️Z-OldLabels/Aetf's Bot Message"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "CLOUDLAB.US: Profile updated from Git repository"
-      },
-      actions: {
-        archive: true,
-        markRead: true
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "billpay@billpay.bankofamerica.com"
-          },
-          {
-            subject: "new eBill",
-            isEscaped: true
-          }
-        ]
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        category: "updates"
-      }
-    },
-    {
-      filter: {
-        subject: "\"payment is scheduled for delivery\" | \"received your payment\"",
-        isEscaped: true
-      },
-      actions: {
-        markSpam: false,
-        markImportant: false,
-        category: "personal"
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "DTEEnergybill@dteenergy.com"
-          },
-          {
-            query: "DTE Energy bill is ready to view"
-          }
-        ]
-      },
-      actions: {
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "NOREPLY@notifications.dteenergy.com"
-          },
-          {
-            query: "dte energy payment received"
-          }
-        ]
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        category: "updates",
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "online.communications@alerts.comcast.net"
-          },
-          {
-            query: "\"your bill is ready to view\""
-          }
-        ]
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        category: "updates",
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "Michigan-BigData"
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        markSpam: false,
-        labels: [
-          "❄️Z-OldLabels/UMich/EECS 598-009 Big Data"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Your credit card statement is ready\" OR \"Your statement is ready for credit card\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Your statement is available online\" OR \"You have a new statement online\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Your Statement is Available in Mobile and Online Banking\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "american express \"Important Notice\" Statement"
-      },
-      actions: {
-        archive: true,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Your deposit statement is available\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "donotreply-comm@schwab.com"
-          },
-          {
-            query: "Your Schwab eStatement is Ready"
-          }
-        ]
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Your statement is now available online\" citi"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        to: "(unlimitedcodeworks.xyz (newegg OR sameto212 OR xavih886))",
-        isEscaped: true
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        markSpam: false,
-        markImportant: false,
-        forward: "fwd@jieyou.info"
-      }
-    },
-    {
-      filter: {
-        query: "\"Your statement is ready for account\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "-paypal -americanexpress",
-            isEscaped: true
-          },
-          {
-            query: "thank order -{recent rate survey}"
-          }
-        ]
-      },
-      actions: {
-        category: "updates",
-        labels: [
-          "Purchase"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "pugetsoundenergy@pse.com"
-          },
-          {
-            query: "energy bill"
-          }
-        ]
-      },
-      actions: {
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "puget sound energy \"energy bill is ready\""
-      },
-      actions: {
-        markSpam: false,
-        markImportant: false,
-        category: "updates",
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "master@unlimited-code.works"
-          },
-          {
-            query: "SMART"
-          }
-        ]
-      },
-      actions: {
-        markSpam: false,
-        markImportant: true,
-        category: "personal",
-        labels: [
-          "❄️Z-OldLabels/Aetf's Bot Message"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"citizens\" access \"monthly statement\""
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "to:junk@unlimitedcodeworks.xyz OR to:junk@unlimited-code.works"
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        markImportant: false,
-        category: "promotions"
-      }
-    },
-    {
-      filter: {
-        query: "\"sofi banking statement is available\""
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Metromile monthly statement available\""
-      },
-      actions: {
-        markSpam: false,
-        category: "updates",
-        labels: [
-          "Auto Insurance"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"We processed your payment\""
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        markImportant: false,
-        category: "updates"
-      }
-    },
-    {
-      filter: {
-        query: "\"renovate[bot]\""
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        markImportant: false,
-        category: "updates"
-      }
-    },
-    {
-      filter: {
-        and: [
-          {
-            from: "no-reply@icbc-us.com"
-          },
-          {
-            subject: "Statement Alert",
-            isEscaped: true
-          }
-        ]
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "woodcreek_mgr@outlook.com"
-      },
-      actions: {
-        labels: [
-          "Housing/Woodcreek"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "from:TrackingUpdates@fedex.com OR from:order-update@amazon.com OR from:auto-reply@usps.com OR from:USPSInformeddelivery@email.informeddelivery.usps.com OR from:mcinfo@ups.com OR (from:help@walmart.com  AND (subject:\"Out for delivery\" OR subject:\"shipped\" OR subject:\"delivered\") )"
-      },
-      actions: {
-        archive: true,
-        markSpam: false,
-        category: "updates",
-        labels: [
-          "❄️Z-OldLabels/Mail \u0026 Package"
-        ]
-      }
-    },
-    {
-      filter: {
-        subject: "\"city of bellevue\" \"invoice\"",
-        isEscaped: true
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        category: "updates",
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "noreply@republicservices.com"
-      },
-      actions: {
-        archive: true,
-        markRead: true,
-        labels: [
-          "Housing/Utility"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "schwab bank estatement"
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "monthly (green dot|wealthfront) statement"
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"credit card statement\" (\"ready\" or \"available\")"
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"billing statement available\""
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"autopay payment reminder\""
-      },
-      actions: {
-        archive: true,
-        markRead: true
-      }
-    },
-    {
-      filter: {
-        query: "\"Good To Go! statement\""
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "GoodToGo"
-        ]
-      }
-    },
-    {
-      filter: {
-        query: "\"Amazon web services invoice available\""
-      },
-      actions: {
-        archive: true,
-        labels: [
-          "AWS Bills"
-        ]
-      }
-    },
-    {
-      filter: {
-        from: "moomoo"
-      },
-      actions: {
-        archive: true,
-        markRead: true
-      }
-    },
-    {
-      filter: {
-        query: "\"Your statement for credit card\""
-      },
-      actions: {
-        archive: true,
-        category: "updates",
-        labels: [
-          "Bank Statements"
-        ]
-      }
-    }
-  ]
+  // Payment confirmations and autopay reminders: noise once autopay works.
+  {
+    filter: {
+      or: [
+        {
+          and: [
+            { from: 'billpay@billpay.bankofamerica.com' },
+            { subject: 'new eBill', isEscaped: true },
+          ],
+        },
+        { query: '"autopay payment reminder"' },
+        { query: '"We processed your payment"' },
+      ],
+    },
+    actions: {
+      archive: true,
+      markRead: true,
+      markImportant: false,
+      category: 'updates',
+    },
+  },
+  // Payment still in flight — deliberately left in the inbox.
+  {
+    filter: {
+      subject: '"payment is scheduled for delivery" | "received your payment"',
+      isEscaped: true,
+    },
+    actions: { markSpam: false, markImportant: false, category: 'personal' },
+  },
+  {
+    filter: { query: '"Amazon web services invoice available"' },
+    actions: { archive: true, labels: ['AWS Bills'] },
+  },
+  {
+    filter: { query: '"Good To Go! statement"' },
+    actions: { archive: true, labels: ['GoodToGo'] },
+  },
+  // Brokerage marketing/notice noise.
+  {
+    filter: { from: 'moomoo' },
+    actions: { archive: true, markRead: true },
+  },
+];
+
+local insuranceRules = [
+  {
+    filter: {
+      or: [
+        { from: 'meemic' },
+        { from: 'customerservice@e.progressive.com' },
+        { query: '"Metromile monthly statement available"' },
+      ],
+    },
+    actions: { markSpam: false, category: 'updates', labels: ['Auto Insurance'] },
+  },
+];
+
+local purchaseRules = [
+  // Order confirmations (excluding paypal/amex payment receipts).
+  {
+    filter: {
+      and: [
+        { from: '-paypal -americanexpress', isEscaped: true },
+        { query: 'thank order -{recent rate survey}' },
+      ],
+    },
+    actions: { category: 'updates', labels: ['Purchase'] },
+  },
+  // Carrier tracking updates.
+  {
+    filter: {
+      query: 'from:TrackingUpdates@fedex.com OR from:order-update@amazon.com OR from:auto-reply@usps.com OR from:USPSInformeddelivery@email.informeddelivery.usps.com OR from:mcinfo@ups.com OR (from:help@walmart.com  AND (subject:"Out for delivery" OR subject:"shipped" OR subject:"delivered") )',
+    },
+    actions: {
+      archive: true,
+      markSpam: false,
+      category: 'updates',
+      labels: ['❄️Z-OldLabels/Mail & Package'],
+    },
+  },
+];
+
+local dealsRules = [
+  {
+    filter: {
+      or: [
+        { from: 'dealalerts@slickdeals.net' },
+        { and: [{ from: 'admin@dealmoon.com' }, { subject: '即时折扣' }] },
+      ],
+    },
+    actions: { markRead: true, labels: ['省钱'] },
+  },
+];
+
+local housingRules = [
+  {
+    filter: { from: 'woodcreek_mgr@outlook.com' },
+    actions: { labels: ['Housing/Woodcreek'] },
+  },
+  // PSE bill — deliberately left in the inbox.
+  {
+    filter: {
+      or: [
+        { and: [{ from: 'pugetsoundenergy@pse.com' }, { query: 'energy bill' }] },
+        { query: '(puget sound energy "energy bill is ready")' },
+      ],
+    },
+    actions: {
+      markSpam: false,
+      markImportant: false,
+      category: 'updates',
+      labels: ['Housing/Utility'],
+    },
+  },
+  // Other utility notices: archive, they're on autopay.
+  {
+    filter: {
+      or: [
+        { query: '(subject:"city of bellevue" subject:"invoice")' },
+        { from: 'noreply@republicservices.com' },
+        {
+          and: [
+            { from: 'online.communications@alerts.comcast.net' },
+            { query: '"your bill is ready to view"' },
+          ],
+        },
+      ],
+    },
+    actions: {
+      archive: true,
+      markRead: true,
+      markSpam: false,
+      category: 'updates',
+      labels: ['Housing/Utility'],
+    },
+  },
+];
+
+local aliasRules = [
+  // Throwaway alias: straight to promotions, out of sight.
+  {
+    filter: { query: 'to:junk@unlimitedcodeworks.xyz OR to:junk@unlimited-code.works' },
+    actions: {
+      archive: true,
+      markRead: true,
+      markImportant: false,
+      category: 'promotions',
+    },
+  },
+  // Aliases used by family — hand off.
+  {
+    filter: {
+      to: '(unlimitedcodeworks.xyz (newegg OR sameto212 OR xavih886))',
+      isEscaped: true,
+    },
+    actions: {
+      archive: true,
+      markRead: true,
+      markSpam: false,
+      markImportant: false,
+      forward: 'fwd@jieyou.info',
+    },
+  },
+];
+
+local botRules = [
+  // Self-hosted infra mail (SMART reports etc.) — never spam, always important.
+  {
+    filter: {
+      or: [
+        { query: 'from:"Aetf\'s Bot Message"' },
+        { and: [{ from: 'master@unlimited-code.works' }, { query: 'SMART' }] },
+      ],
+    },
+    actions: {
+      markSpam: false,
+      markImportant: true,
+      category: 'personal',
+      labels: ["❄️Z-OldLabels/Aetf's Bot Message"],
+    },
+  },
+];
+
+local devRules = [
+  {
+    filter: { query: '"renovate[bot]"' },
+    actions: {
+      archive: true,
+      markRead: true,
+      markImportant: false,
+      category: 'updates',
+    },
+  },
+];
+
+// Michigan / school era. Dead or near-dead traffic; kept until deliberately
+// retired. Deletion candidates the next time this file is touched.
+local legacyRules = [
+  {
+    filter: { query: 'Archlinux' },
+    actions: { category: 'updates', labels: ['❄️Z-OldLabels/Archlinux'] },
+  },
+  {
+    filter: { from: 'scholaralerts-noreply@google.com' },
+    actions: { labels: ['❄️Z-OldLabels/Google Scholar'] },
+  },
+  {
+    filter: { from: 'bugzilla-daemon@mozilla.org' },
+    actions: { labels: ['❄️Z-OldLabels/Mozilla'] },
+  },
+  {
+    filter: { from: 'facebook-recruiting@fb.com' },
+    actions: { labels: ['❄️Z-OldLabels/Job Application'] },
+  },
+  {
+    filter: { from: 'update+zj4y=_j4yf9c@facebookmail.com' },
+    actions: { archive: true, markRead: true, category: 'social' },
+  },
+  {
+    filter: { query: 'CLOUDLAB.US: Profile updated from Git repository' },
+    actions: { archive: true, markRead: true },
+  },
+  {
+    filter: {
+      or: [
+        { query: '(mosharaf group meeting)' },
+        { query: 'subject:"[Reminder] Group meeting today"' },
+        { to: 'symbiotic@umich.edu' },
+        { from: 'symbiotic@umich.edu' },
+      ],
+    },
+    actions: { labels: ['❄️Z-OldLabels/Symbiotic'] },
+  },
+  {
+    filter: {
+      or: [
+        { query: 'list:kdevelop-devel.kde.org' },
+        { query: 'list:kdevelop.kde.org' },
+        { query: '(REVISION SUMMARY)' },
+        { from: 'noreply@phabricator.kde.org' },
+      ],
+    },
+    actions: { archive: true, markSpam: false, labels: ['❄️Z-OldLabels/kdevelop-devel'] },
+  },
+  {
+    filter: { query: 'Michigan-BigData' },
+    actions: {
+      archive: true,
+      markRead: true,
+      markSpam: false,
+      labels: ['❄️Z-OldLabels/UMich/EECS 598-009 Big Data'],
+    },
+  },
+  // DTE Energy (Michigan utility).
+  {
+    filter: {
+      or: [
+        {
+          and: [
+            { from: 'DTEEnergybill@dteenergy.com' },
+            { query: 'DTE Energy bill is ready to view' },
+          ],
+        },
+        {
+          and: [
+            { from: 'NOREPLY@notifications.dteenergy.com' },
+            { query: 'dte energy payment received' },
+          ],
+        },
+      ],
+    },
+    actions: {
+      archive: true,
+      markSpam: false,
+      category: 'updates',
+      labels: ['Housing/Utility'],
+    },
+  },
+];
+
+{
+  version: 'v1alpha3',
+  author: {
+    name: 'Aetf',
+    email: 'aetf@unlimited-code.works',
+  },
+  labels: activeLabels + personalLabels + travelLabels + frozenLabels,
+  rules:
+    financeRules
+    + insuranceRules
+    + purchaseRules
+    + dealsRules
+    + housingRules
+    + aliasRules
+    + botRules
+    + devRules
+    + legacyRules,
 }
