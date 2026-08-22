@@ -293,7 +293,7 @@ local housingRules = [
       markSpam: false,
       markImportant: false,
       category: 'updates',
-      labels: ['Housing/Utility', 'bot/pending/utility-bill'],
+      labels: ['Housing/Utility', 'bot/pending', 'bot/pending/utility-bill'],
     },
   },
   // Other utility notices: archive, they're on autopay.
@@ -315,7 +315,7 @@ local housingRules = [
       markRead: true,
       markSpam: false,
       category: 'updates',
-      labels: ['Housing/Utility', 'bot/pending/utility-bill'],
+      labels: ['Housing/Utility', 'bot/pending', 'bot/pending/utility-bill'],
     },
   },
 ];
