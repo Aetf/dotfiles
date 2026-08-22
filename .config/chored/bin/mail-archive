@@ -17,11 +17,16 @@ import hashlib
 import imaplib
 import pathlib
 import re
+import ssl
 import sys
 
-HOST, PORT = "192.168.80.238", 1993
+HOST, PORT = "aetf-arch-homelab.home.arpa", 1993
 ACCOUNT = "pfyu817@gmail.com"
 PASSWORD_FILE = pathlib.Path.home() / ".config/chored/secrets/imap-password"
+# The proxy serves a BackendCertificate from the cluster's private CA;
+# verify the chain against it. The SAN is the in-cluster service name, not
+# this LAN hostname, hence no hostname check.
+CA_FILE = pathlib.Path.home() / ".config/chored/kluster-ca.crt"
 DEST_BASE = pathlib.Path("/mnt/nas/Sync/Documents/legal/bills")
 PENDING_PREFIX = "bot/pending/"
 DONE, ERROR = "bot/done", "bot/error"
@@ -90,7 +95,9 @@ def main() -> int:
     pending = PENDING_PREFIX + rule
     dest_dir = DEST_BASE / rule
 
-    imap = imaplib.IMAP4(HOST, PORT)
+    ctx = ssl.create_default_context(cafile=str(CA_FILE))
+    ctx.check_hostname = False
+    imap = imaplib.IMAP4_SSL(HOST, PORT, ssl_context=ctx)
     imap.login(ACCOUNT, PASSWORD_FILE.read_text().strip())
     typ, _ = imap.select(f'"{pending}"')
     if typ != "OK":
