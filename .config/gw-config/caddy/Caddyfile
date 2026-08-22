@@ -68,6 +68,12 @@
 		reverse_proxy aetf-arch-homelab.home.arpa:8490
 	}
 
+	# go/<name> shortlinks (kluster golinks deployment, homelan LoadBalancer)
+	@go host go.lan.ucw.phd
+	handle @go {
+		reverse_proxy aetf-arch-homelab.home.arpa:8067
+	}
+
 	# Fallback for otherwise unhandled domains
 	handle {
 		abort
@@ -90,7 +96,6 @@ http://gw {
 	redir https://gw.lan.ucw.phd{uri} permanent
 }
 
-# go.home.arpa {
-# 	tls internal
-# 	reverse_proxy aetf-arch-homelab.home.arpa:12345
-# }
+http://go {
+	redir https://go.lan.ucw.phd{uri} permanent
+}
