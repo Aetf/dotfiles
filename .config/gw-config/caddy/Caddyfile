@@ -63,6 +63,11 @@
 		reverse_proxy aetf-arch-homelab.home.arpa:8480
 	}
 
+	@seedwatch host seedwatch.lan.ucw.phd
+	handle @seedwatch {
+		reverse_proxy aetf-arch-homelab.home.arpa:8490
+	}
+
 	# Fallback for otherwise unhandled domains
 	handle {
 		abort
