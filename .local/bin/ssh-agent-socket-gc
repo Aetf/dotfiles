@@ -1,50 +1,48 @@
 #!/usr/bin/env bash
-# Remove orphaned forwarded-agent sockets from ~/.ssh/agent.
+# Sweep orphaned SSH agent sockets, and keep ~/.ssh/ssh_auth_sock on a live one.
 #
-# OpenSSH >= 10 places each session's forwarded agent socket in ~/.ssh/agent
-# instead of a mkdtemp'd directory under /tmp. sshd only unlinks on a clean
-# exit, and unlike /tmp nothing else ever sweeps that directory, so every kill
-# -9, dropped link and reboot leaves a file behind for good.
+# OpenSSH 10 moved agent sockets out of /tmp and into ~/.ssh/agent, so that a
+# process confined to /tmp cannot ambiently reach the agent. The cost, called
+# out in the 10.1 release notes, is that the OS no longer sweeps stale sockets,
+# and ~/.ssh survives reboots, so they accumulate forever.
 #
-# Age is not a usable criterion: a socket's mtime never advances after bind, so
-# a session that has been up for a month looks exactly as stale as a corpse from
-# December. The only reliable signal is whether a process still has it bound,
-# which is what `ss -xl` reports.
+# `ssh-agent -u` is upstream's answer: it deletes sockets under ~/.ssh/agent
+# that are older than an hour and refuse a non-blocking connect, restricted to
+# ones whose embedded hostname hash matches this host. sshd's forwarded sockets
+# are tagged "sshd" rather than created by ssh-agent, but they are not
+# special-cased, so they are swept too. Not -uu: that ignores the hostname hash,
+# which only matters for a shared $HOME and would reach another host's live
+# sockets.
 #
-# This deliberately handles ~/.ssh/agent only. ~/.ssh/masters cannot be swept
-# the same way: ssh binds a ControlMaster socket to "<path>.<random>" and then
-# renames the file, so the bound path `ss` reports never matches the name on
-# disk and every live master would look orphaned. Bound ControlPersist expires
-# on its own.
+# The age guard is what makes this safe rather than the staleness test - a
+# socket's mtime never advances after bind, so a month-old live session looks
+# exactly as old as a corpse, and only the connect attempt tells them apart.
+#
+# ssh-agent resolves the directory from the passwd entry, not $HOME, so this
+# cannot be redirected at a scratch directory to test it.
 set -euo pipefail
 
-dir=${1:-$HOME/.ssh/agent}
-[[ -d $dir ]] || exit 0
-
-declare -A bound=()
-while read -r path; do
-    [[ -n $path ]] && bound[$path]=1
-done < <(ss -xlH | awk '{print $5}')
-
-shopt -s nullglob
-for sock in "$dir"/s.*; do
-    [[ -S $sock ]] || continue
-    [[ -v bound[$sock] ]] && continue
-    echo "removing orphaned agent socket: $sock"
-    rm -f -- "$sock"
-done
+ssh-agent -u
 
 # ~/.ssh/ssh_auth_sock is the fixed path every shell exports (see
-# zsh/env.d/10-ssh-agent.zsh); logins repoint it. It dangles once the session
-# that last claimed it ends, so hand it to another live agent if one is left.
-# Shells cope with a dangling link on their own, this just avoids the window.
+# zsh/env.d/10-ssh-agent.zsh); each login repoints it. It dangles once the
+# session that last claimed it ends. Shells cope with that on their own, this
+# just hands it to another live agent if one is around.
 stable=$HOME/.ssh/ssh_auth_sock
-if [[ -L $stable && ! -S $stable ]]; then
+dir=$HOME/.ssh/agent
+if [[ -L $stable && ! -S $stable && -d $dir ]]; then
+    declare -A bound=()
+    while read -r path; do
+        [[ -n $path ]] && bound[$path]=1
+    done < <(ss -xlH | awk '{print $5}')
+
+    shopt -s nullglob
     newest=""
     for sock in "$dir"/s.*; do
         [[ -S $sock && -v bound[$sock] ]] || continue
         [[ -z $newest || $sock -nt $newest ]] && newest=$sock
     done
+
     if [[ -n $newest ]]; then
         echo "repointing $stable at $newest"
         ln -sfn -- "$newest" "$stable"
