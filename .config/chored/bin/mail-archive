@@ -1,0 +1,121 @@
+#!/usr/bin/env python3
+"""Archive attachments from a bot/pending/<rule> Gmail label, then mark done.
+
+mail-task v0 (Aetf/meta#10): the label IS the work queue. gmailctl's server
+side filters apply bot/pending/<rule>; this script drains that folder over
+IMAP (through the emailproxy XOAUTH2 bridge), saves PDF attachments under
+DEST_BASE/<rule>/<year>/, and swaps the label to bot/done (bot/error on a
+per-message failure). State lives in Gmail, so re-runs are idempotent:
+already-archived files are recognised by size+content and skipped, and
+messages leave the queue only after a successful swap.
+
+Usage: mail-archive <rule>     (e.g. mail-archive utility-bill)
+"""
+import email
+import email.utils
+import hashlib
+import imaplib
+import pathlib
+import re
+import sys
+
+HOST, PORT = "192.168.80.238", 1993
+ACCOUNT = "pfyu817@gmail.com"
+PASSWORD_FILE = pathlib.Path.home() / ".config/chored/secrets/imap-password"
+DEST_BASE = pathlib.Path("/mnt/nas/Sync/Documents/legal/bills")
+PENDING_PREFIX = "bot/pending/"
+DONE, ERROR = "bot/done", "bot/error"
+
+
+def slug(text: str, max_len: int = 60) -> str:
+    text = re.sub(r"[^\w.-]+", "-", text, flags=re.UNICODE).strip("-.")
+    return text[:max_len] or "unnamed"
+
+
+def save_attachment(dest_dir: pathlib.Path, name: str, payload: bytes) -> str:
+    dest_dir.mkdir(parents=True, exist_ok=True)
+    target = dest_dir / name
+    if target.exists():
+        if target.stat().st_size == len(payload) and (
+            hashlib.sha256(target.read_bytes()).digest()
+            == hashlib.sha256(payload).digest()
+        ):
+            return f"already archived: {target}"
+        # Same name, different content: keep both.
+        stem, dot, ext = name.rpartition(".")
+        digest = hashlib.sha256(payload).hexdigest()[:8]
+        target = dest_dir / (f"{stem}-{digest}.{ext}" if dot else f"{name}-{digest}")
+    tmp = target.with_name(target.name + ".part")
+    tmp.write_bytes(payload)
+    tmp.rename(target)
+    return f"archived: {target}"
+
+
+def archive_message(msg: email.message.Message, dest_dir: pathlib.Path) -> int:
+    date = email.utils.parsedate_to_datetime(msg["Date"])
+    _, sender = email.utils.parseaddr(msg.get("From", ""))
+    domain = sender.rpartition("@")[2] or "unknown"
+    saved = 0
+    for i, part in enumerate(msg.walk()):
+        if part.get_content_type() != "application/pdf":
+            continue
+        payload = part.get_payload(decode=True)
+        if not payload:
+            continue
+        orig = part.get_filename() or f"attachment-{i}.pdf"
+        name = f"{date:%Y-%m-%d}-{slug(domain)}-{slug(orig)}"
+        if not name.lower().endswith(".pdf"):
+            name += ".pdf"
+        print(save_attachment(dest_dir / f"{date:%Y}", name, payload))
+        saved += 1
+    return saved
+
+
+def relabel(imap: imaplib.IMAP4, uid: bytes, add: str, remove: str) -> None:
+    # Adding first means a crash between the two leaves the message in both
+    # queues, which a re-run tolerates; the reverse order could lose it.
+    imap.uid("STORE", uid, "+X-GM-LABELS", f'("{add}")')
+    imap.uid("STORE", uid, "-X-GM-LABELS", f'("{remove}")')
+
+
+def main() -> int:
+    if len(sys.argv) != 2:
+        print(__doc__, file=sys.stderr)
+        return 2
+    rule = sys.argv[1]
+    pending = PENDING_PREFIX + rule
+    dest_dir = DEST_BASE / rule
+
+    imap = imaplib.IMAP4(HOST, PORT)
+    imap.login(ACCOUNT, PASSWORD_FILE.read_text().strip())
+    typ, _ = imap.select(f'"{pending}"')
+    if typ != "OK":
+        print(f"no such label folder: {pending}", file=sys.stderr)
+        return 1
+    _, data = imap.uid("SEARCH", None, "ALL")
+    uids = data[0].split()
+    print(f"{len(uids)} message(s) pending in {pending}")
+    failures = 0
+    for uid in uids:
+        try:
+            _, fetched = imap.uid("FETCH", uid, "(RFC822)")
+            msg = email.message_from_bytes(fetched[0][1])
+            saved = archive_message(msg, dest_dir)
+            print(f"uid {uid.decode()}: {msg.get('Subject', '')!r}: "
+                  f"{saved} attachment(s) -> done")
+            relabel(imap, uid, DONE, pending)
+        except Exception as err:  # noqa: BLE001 - per-message isolation
+            failures += 1
+            print(f"uid {uid.decode()}: FAILED: {err}", file=sys.stderr)
+            try:
+                relabel(imap, uid, ERROR, pending)
+            except Exception as relabel_err:  # noqa: BLE001
+                print(f"uid {uid.decode()}: relabel to error also failed: "
+                      f"{relabel_err}", file=sys.stderr)
+    imap.close()
+    imap.logout()
+    return 1 if failures else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

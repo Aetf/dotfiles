@@ -1,0 +1,4 @@
+description = "Archive PDF attachments from a bot/pending/<rule> Gmail label (args: <rule>)"
+command = ["/home/aetf/.config/chored/bin/mail-archive"]
+allow-args = true
+timeout = "5m"
