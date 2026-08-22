@@ -2,7 +2,7 @@
 
 ## --group --header --modified --accessed are for long mode, but is ignored in normal mode
 ## --links shows hardlink count
-alias ls='eza --classify --icons --links --group --header --modified --accessed --time-style=long-iso'
+alias ls='eza --hyperlink --classify --icons --links --group --header --modified --accessed --time-style=long-iso'
 alias ll='ls -l'
 alias la='ls -aa'
 alias lla='ls -aal'
