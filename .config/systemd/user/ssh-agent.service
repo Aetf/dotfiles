@@ -6,6 +6,9 @@ Type=simple
 # %t is $XDG_RUNTIME_DIR
 Environment=SSH_AUTH_SOCK=%t/ssh-agent.socket
 ExecStart=/usr/bin/ssh-agent -D -a $SSH_AUTH_SOCK
+# ssh-agent -D exits 2 on SIGTERM, so without this every stop leaves the unit
+# in the failed state.
+SuccessExitStatus=2
 Slice=background.slice
 
 [Install]
