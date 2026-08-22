@@ -1,0 +1,23 @@
+[Unit]
+Description=qBittorrent seed lifecycle reconciler (seedwatch)
+Wants=network-online.target
+After=network-online.target
+
+[Container]
+Image=localhost/seedwatch:latest
+# Host networking: reaches the qB WebUI on 127.0.0.1:9876 (localhost auth
+# bypass); the app listens on :8490 directly.
+Network=host
+# Read-only view of the seeding tree; seedwatch only ever stats files —
+# all deletion is delegated to qBittorrent over its API.
+Volume=/mnt/nas/Downloads:/mnt/nas/Downloads:ro
+Volume=%h/.config/seedwatch/config.toml:/config/config.toml:ro
+# Audit log of every (intended) mutation.
+Volume=seedwatch-data:/data
+
+[Service]
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=default.target

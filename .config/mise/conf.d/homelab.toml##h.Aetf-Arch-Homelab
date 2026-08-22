@@ -11,7 +11,7 @@
 [tools]
 # On xps gmailctl comes from pacman; homelab has no root, so pin it here.
 "ubi:mbrt/gmailctl" = "0.12.0"
-"vfox:Aetf/homelab-ops" = "34dafcd0fbea2281fee34a1f5f4e0291f0bd9df3"
+"vfox:Aetf/homelab-ops" = "4015906f8acc936501429b2182ab9a1a7b63adb8"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
 [tasks."projects:sync"]
@@ -24,6 +24,7 @@ podman build -q -t thread-dashboard "$td"
 ho=$(mise where vfox:Aetf/homelab-ops)
 podman build -q -t dmarc-check "$ho/dmarc-check"
 podman build -q -t adguardhome-sync "$ho/adguardhome-sync"
+podman build -q -t seedwatch "$ho/seedwatch"
 systemctl --user daemon-reload
 # Pick up a new image (or a unit change) if the service is supposed to run.
 if systemctl --user is-enabled --quiet thread-dashboard.service 2>/dev/null; then
@@ -31,6 +32,9 @@ if systemctl --user is-enabled --quiet thread-dashboard.service 2>/dev/null; the
 fi
 if systemctl --user is-active --quiet adguardhome-sync.service 2>/dev/null; then
     systemctl --user restart adguardhome-sync.service
+fi
+if systemctl --user is-active --quiet seedwatch.service 2>/dev/null; then
+    systemctl --user restart seedwatch.service
 fi
 # dmarc-check is a timer-driven oneshot; nothing to restart — the next timer
 # firing uses the freshly built image.
