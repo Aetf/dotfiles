@@ -85,6 +85,17 @@ local travelTrips = [
 ];
 local travelLabels = [label('旅行')] + [label('旅行/' + t) for t in travelTrips];
 
+// Aetf/meta#10 mail automation: gmailctl applies bot/pending/<rule>;
+// the processor picks work up by label, swaps to bot/done (or bot/error)
+// when finished. State lives in Gmail itself, so the pipeline is idempotent.
+local botLabels = [
+  label('bot'),
+  label('bot/pending'),
+  label('bot/pending/utility-bill'),
+  label('bot/done'),
+  label('bot/error'),
+];
+
 local frozenLabels = [
   label('❄️Z-OldLabels'),
   label("❄️Z-OldLabels/Aetf's Bot Message"),
@@ -282,7 +293,7 @@ local housingRules = [
       markSpam: false,
       markImportant: false,
       category: 'updates',
-      labels: ['Housing/Utility'],
+      labels: ['Housing/Utility', 'bot/pending/utility-bill'],
     },
   },
   // Other utility notices: archive, they're on autopay.
@@ -304,7 +315,7 @@ local housingRules = [
       markRead: true,
       markSpam: false,
       category: 'updates',
-      labels: ['Housing/Utility'],
+      labels: ['Housing/Utility', 'bot/pending/utility-bill'],
     },
   },
 ];
@@ -457,7 +468,7 @@ local legacyRules = [
     name: 'Aetf',
     email: 'aetf@unlimited-code.works',
   },
-  labels: activeLabels + personalLabels + travelLabels + frozenLabels,
+  labels: activeLabels + personalLabels + travelLabels + botLabels + frozenLabels,
   rules:
     financeRules
     + insuranceRules
