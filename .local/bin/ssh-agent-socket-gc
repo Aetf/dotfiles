@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+# Remove orphaned forwarded-agent sockets from ~/.ssh/agent.
+#
+# OpenSSH >= 10 places each session's forwarded agent socket in ~/.ssh/agent
+# instead of a mkdtemp'd directory under /tmp. sshd only unlinks on a clean
+# exit, and unlike /tmp nothing else ever sweeps that directory, so every kill
+# -9, dropped link and reboot leaves a file behind for good.
+#
+# Age is not a usable criterion: a socket's mtime never advances after bind, so
+# a session that has been up for a month looks exactly as stale as a corpse from
+# December. The only reliable signal is whether a process still has it bound,
+# which is what `ss -xl` reports.
+#
+# This deliberately handles ~/.ssh/agent only. ~/.ssh/masters cannot be swept
+# the same way: ssh binds a ControlMaster socket to "<path>.<random>" and then
+# renames the file, so the bound path `ss` reports never matches the name on
+# disk and every live master would look orphaned. Bound ControlPersist expires
+# on its own.
+set -euo pipefail
+
+dir=${1:-$HOME/.ssh/agent}
+[[ -d $dir ]] || exit 0
+
+declare -A bound=()
+while read -r path; do
+    [[ -n $path ]] && bound[$path]=1
+done < <(ss -xlH | awk '{print $5}')
+
+shopt -s nullglob
+for sock in "$dir"/s.*; do
+    [[ -S $sock ]] || continue
+    [[ -v bound[$sock] ]] && continue
+    echo "removing orphaned agent socket: $sock"
+    rm -f -- "$sock"
+done
+
+# ~/.ssh/ssh_auth_sock is the fixed path every shell exports (see
+# zsh/env.d/10-ssh-agent.zsh); logins repoint it. It dangles once the session
+# that last claimed it ends, so hand it to another live agent if one is left.
+# Shells cope with a dangling link on their own, this just avoids the window.
+stable=$HOME/.ssh/ssh_auth_sock
+if [[ -L $stable && ! -S $stable ]]; then
+    newest=""
+    for sock in "$dir"/s.*; do
+        [[ -S $sock && -v bound[$sock] ]] || continue
+        [[ -z $newest || $sock -nt $newest ]] && newest=$sock
+    done
+    if [[ -n $newest ]]; then
+        echo "repointing $stable at $newest"
+        ln -sfn -- "$newest" "$stable"
+    else
+        echo "no live agent left, removing dangling $stable"
+        rm -f -- "$stable"
+    fi
+fi

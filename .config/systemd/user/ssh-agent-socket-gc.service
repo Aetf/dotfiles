@@ -1,0 +1,7 @@
+[Unit]
+Description=Remove orphaned SSH forwarded-agent sockets
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/ssh-agent-socket-gc
+Slice=background.slice
