@@ -20,9 +20,16 @@
 #
 # ssh-agent resolves the directory from the passwd entry, not $HOME, so this
 # cannot be redirected at a scratch directory to test it.
+#
+# Only useful where sshd actually uses ~/.ssh/agent, i.e. OpenSSH >= 10. macOS
+# ships 9.x and keeps forwarded sockets in /tmp, which the OS sweeps on its own,
+# so there is nothing to do there - and neither ssh-agent -u nor ss exists.
 set -euo pipefail
 
-ssh-agent -u
+if ! ssh-agent -u; then
+    echo "ssh-agent has no -u (needs OpenSSH >= 10); nothing swept" >&2
+    exit 0
+fi
 
 # ~/.ssh/ssh_auth_sock is the fixed path every shell exports (see
 # zsh/env.d/10-ssh-agent.zsh); each login repoints it. It dangles once the
@@ -30,7 +37,7 @@ ssh-agent -u
 # just hands it to another live agent if one is around.
 stable=$HOME/.ssh/ssh_auth_sock
 dir=$HOME/.ssh/agent
-if [[ -L $stable && ! -S $stable && -d $dir ]]; then
+if [[ -L $stable && ! -S $stable && -d $dir ]] && command -v ss >/dev/null; then
     declare -A bound=()
     while read -r path; do
         [[ -n $path ]] && bound[$path]=1
