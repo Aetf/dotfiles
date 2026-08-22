@@ -71,11 +71,15 @@ def archive_message(msg: email.message.Message, dest_dir: pathlib.Path) -> int:
     return saved
 
 
-def relabel(imap: imaplib.IMAP4, uid: bytes, add: str, remove: str) -> None:
+def relabel(imap: imaplib.IMAP4, uid: bytes, add: str) -> None:
     # Adding first means a crash between the two leaves the message in both
     # queues, which a re-run tolerates; the reverse order could lose it.
+    # Gmail quirk: `-X-GM-LABELS` cannot remove the *selected* folder's own
+    # label; the way out of the queue is \Deleted (+ EXPUNGE at the end),
+    # which in Gmail semantics only strips this label — the message stays in
+    # All Mail with its other labels.
     imap.uid("STORE", uid, "+X-GM-LABELS", f'("{add}")')
-    imap.uid("STORE", uid, "-X-GM-LABELS", f'("{remove}")')
+    imap.uid("STORE", uid, "+FLAGS", r"(\Deleted)")
 
 
 def main() -> int:
@@ -103,15 +107,16 @@ def main() -> int:
             saved = archive_message(msg, dest_dir)
             print(f"uid {uid.decode()}: {msg.get('Subject', '')!r}: "
                   f"{saved} attachment(s) -> done")
-            relabel(imap, uid, DONE, pending)
+            relabel(imap, uid, DONE)
         except Exception as err:  # noqa: BLE001 - per-message isolation
             failures += 1
             print(f"uid {uid.decode()}: FAILED: {err}", file=sys.stderr)
             try:
-                relabel(imap, uid, ERROR, pending)
+                relabel(imap, uid, ERROR)
             except Exception as relabel_err:  # noqa: BLE001
                 print(f"uid {uid.decode()}: relabel to error also failed: "
                       f"{relabel_err}", file=sys.stderr)
+    imap.expunge()
     imap.close()
     imap.logout()
     return 1 if failures else 0
