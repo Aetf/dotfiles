@@ -14,12 +14,16 @@ grace_hours = 24
 interval_minutes = 60
 
 [reap]
-# dry-run: report and audit-log every intended action, mutate nothing.
-# Flip to false once the report has been vetted for a while.
-dry_run = true
+# dry-run reports and audit-logs every intended action without mutating;
+# vetted 2026-08-21 and switched live.
+dry_run = false
 default_ratio = 4.0
 
-# Per-tracker overrides, matched by hostname suffix, e.g.:
-# [reap.trackers."example.org"]
-# ratio = 2.0
-# or_seed_days = 30   # dead-tracker fallback: seeding this long also qualifies
+# Per-tracker overrides, matched by hostname suffix.
+# or_seed_days would add a dead-tracker fallback (seeding N days also
+# qualifies); deliberately unset for now.
+[reap.trackers."m-team.cc"]
+ratio = 4.0
+
+[reap.trackers."byr.pt"]
+ratio = 1.0
