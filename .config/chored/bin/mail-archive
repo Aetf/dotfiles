@@ -87,18 +87,10 @@ def relabel(imap: imaplib.IMAP4, uid: bytes, add: str) -> None:
     imap.uid("STORE", uid, "+FLAGS", r"(\Deleted)")
 
 
-def main() -> int:
-    if len(sys.argv) != 2:
-        print(__doc__, file=sys.stderr)
-        return 2
-    rule = sys.argv[1]
+def drain(imap: imaplib.IMAP4, rule: str) -> int:
+    """Processes every message in bot/pending/<rule>; returns failure count."""
     pending = PENDING_PREFIX + rule
     dest_dir = DEST_BASE / rule
-
-    ctx = ssl.create_default_context(cafile=str(CA_FILE))
-    ctx.check_hostname = False
-    imap = imaplib.IMAP4_SSL(HOST, PORT, ssl_context=ctx)
-    imap.login(ACCOUNT, PASSWORD_FILE.read_text().strip())
     typ, _ = imap.select(f'"{pending}"')
     if typ != "OK":
         print(f"no such label folder: {pending}", file=sys.stderr)
@@ -125,6 +117,58 @@ def main() -> int:
                       f"{relabel_err}", file=sys.stderr)
     imap.expunge()
     imap.close()
+    return failures
+
+
+def clear_parent(imap: imaplib.IMAP4) -> None:
+    """Strips the catch-all bot/pending label from already-drained messages.
+
+    Runs after every child queue is drained, so anything still carrying an
+    unprocessed child label keeps it and gets handled on the next sweep --
+    the parent label is only the notification hook for HA's single imap
+    entry, never the routing information.
+    """
+    parent = PENDING_PREFIX.rstrip("/")
+    typ, _ = imap.select(f'"{parent}"')
+    if typ != "OK":
+        return
+    _, data = imap.uid("SEARCH", None, "ALL")
+    for uid in data[0].split():
+        imap.uid("STORE", uid, "+FLAGS", r"(\Deleted)")
+    imap.expunge()
+    imap.close()
+
+
+def sweep(imap: imaplib.IMAP4) -> int:
+    """Drains every bot/pending/* child queue, then the catch-all parent."""
+    typ, data = imap.list('""', f'"{PENDING_PREFIX}*"')
+    folders = []
+    for line in data or []:
+        if not line:
+            continue
+        m = re.search(r'"([^"]+)"\s*$', line.decode())
+        if m and m.group(1).startswith(PENDING_PREFIX):
+            folders.append(m.group(1))
+    failures = 0
+    for folder in folders:
+        failures += drain(imap, folder[len(PENDING_PREFIX):])
+    clear_parent(imap)
+    return failures
+
+
+def main() -> int:
+    if len(sys.argv) != 2:
+        print(__doc__, file=sys.stderr)
+        return 2
+
+    ctx = ssl.create_default_context(cafile=str(CA_FILE))
+    ctx.check_hostname = False
+    imap = imaplib.IMAP4_SSL(HOST, PORT, ssl_context=ctx)
+    imap.login(ACCOUNT, PASSWORD_FILE.read_text().strip())
+    if sys.argv[1] == "--sweep":
+        failures = sweep(imap)
+    else:
+        failures = drain(imap, sys.argv[1])
     imap.logout()
     return 1 if failures else 0
 

@@ -1,0 +1,3 @@
+description = "Drain every bot/pending/* mail queue, then the catch-all bot/pending"
+command = ["/home/aetf/.config/chored/bin/mail-archive", "--sweep"]
+timeout = "10m"
