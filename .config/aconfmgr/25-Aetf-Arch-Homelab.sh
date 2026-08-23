@@ -31,6 +31,40 @@ CopyFile /etc/systemd/system/efi.mount.d/permission.conf
 # Enable periodic fstrim
 SystemdEnable util-linux /usr/lib/systemd/system/fstrim.timer
 
+# Root mount options. There is no fstab entry on this host, so the only place
+# to set these is a drop-in over the -.mount unit that
+# systemd-gpt-auto-generator produces. Options= replaces the string rather
+# than appending, so the generator's own ro,nodev,suid,exec are restated.
+#
+# noatime: this host runs k3s/containerd plus a root and a rootless podman
+# store, so small-file reads are constant. Under relatime such a read dirties
+# the inode, and on btrfs a dirty inode is a COW metadata write.
+cat >$(CreateFile /etc/systemd/system/-.mount.d/noatime.conf) <<EOF
+[Mount]
+Options=ro,nodev,suid,exec,noatime
+EOF
+
+# Background reclaim of under-used btrfs data block groups. Both knobs are 0
+# (off) by default, and with reclaim off, freed space stays trapped inside
+# partly-filled data chunks instead of returning to Device unallocated. Once
+# unallocated reaches zero the metadata block groups can no longer grow and
+# the filesystem hard-ENOSPCs -- df still reports free space at that point,
+# because that space is real but unreachable.
+#
+# periodic_reclaim has the kernel revisit under-used data block groups in the
+# background; bg_reclaim_threshold is the used-percentage below which a block
+# group is a candidate. The threshold is fixed: dynamic_reclaim, which would
+# let the kernel retune it against observed reclaim success, is left off. 75
+# therefore trades relocation IO for headroom unconditionally, and the
+# reclaim_{count,bytes,errors} counters next to these knobs are the way to
+# tell whether that trade is worth it -- lower to 50 if the IO is felt.
+#
+# Globbed over the fsid so a disk replacement cannot silently drop it.
+cat >$(CreateFile /etc/tmpfiles.d/btrfs-reclaim.conf) <<EOF
+w /sys/fs/btrfs/*/allocation/data/bg_reclaim_threshold - - - - 75
+w /sys/fs/btrfs/*/allocation/data/periodic_reclaim - - - - 1
+EOF
+
 
 # Now we config following the bootup sequence.
 # To boot the system, we use systemd-boot that comes with systemd.
@@ -288,3 +322,5 @@ CopyFile /etc/binfmt.d/qemu-armeb-static.conf
 AddPackage github-cli
 AddPackage google-cloud-cli
 AddPackage aws-cli-v2
+AddPackage immich-go
+AddPackage uv
