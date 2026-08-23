@@ -40,6 +40,8 @@ GLOBAL_CONFIG = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home())) / ".claud
 # entrypoints the resume picker hides (PROGRAMMATIC_ENTRYPOINTS)
 HIDDEN_ENTRYPOINTS = {"sdk-cli", "sdk-ts", "sdk-py"}
 
+WEB_SESSION_URL = "https://claude.ai/code/"
+
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 
 
@@ -336,8 +338,8 @@ def preflight(s: Session) -> dict:
 def bridge_session(debug_log: Path, timeout: float) -> str | None:
     """Wait for the bridge to report its cloud session id.
 
-    Remote Control sessions are list entries on claude.ai/code rather than
-    addressable pages, so the id is for identification, not a deep link.
+    The debug log prints it as an api.anthropic.com endpoint; the id itself is
+    what claude.ai/code addresses, hence WEB_SESSION_URL.
     """
     deadline = time.time() + timeout
     pat = re.compile(r"v2 session URL: \S*/(cse_\S+|session_\S+)")
@@ -381,8 +383,7 @@ def revive(s: Session, mode: str, name: str | None, wait: float) -> int:
 
     cse = bridge_session(debug_log, wait)
     if cse:
-        print(f"bridge session: {cse}")
-        print(f"\nOpen claude.ai/code and pick the Remote Control session named {name!r}.")
+        print(f"web session  : {WEB_SESSION_URL}{cse}")
     else:
         print(
             f"bridge session: not reported within {wait:.0f}s -- check "
