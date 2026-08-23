@@ -338,16 +338,17 @@ def preflight(s: Session) -> dict:
 def bridge_session(debug_log: Path, timeout: float) -> str | None:
     """Wait for the bridge to report its cloud session id.
 
-    The debug log prints it as an api.anthropic.com endpoint; the id itself is
-    what claude.ai/code addresses, hence WEB_SESSION_URL.
+    The same id appears under two prefixes -- the API endpoint spells it cse_,
+    the web app spells it session_ -- and only the latter resolves on
+    claude.ai/code, so the prefix is normalized here.
     """
     deadline = time.time() + timeout
-    pat = re.compile(r"v2 session URL: \S*/(cse_\S+|session_\S+)")
+    pat = re.compile(r"v2 session URL: \S*/(?:cse_|session_)(\S+)")
     while time.time() < deadline:
         if debug_log.exists():
             m = pat.search(debug_log.read_text(errors="replace"))
             if m:
-                return m.group(1)
+                return "session_" + m.group(1)
         time.sleep(1.0)
     return None
 
@@ -381,9 +382,16 @@ def revive(s: Session, mode: str, name: str | None, wait: float) -> int:
     print(f"cwd          : {workdir}")
     print(f"debug log    : {debug_log}")
 
+    # The bridge is minted under whatever account is currently logged in, and
+    # claude.ai reports another account's session as "session not found", so the
+    # account is part of the answer, not a detail.
+    me = current_identity()
+    print(f"account      : {me.get('emailAddress') or '?'}")
+
     cse = bridge_session(debug_log, wait)
     if cse:
         print(f"web session  : {WEB_SESSION_URL}{cse}")
+        print(f"\nOpen it in a browser signed in as {me.get('emailAddress') or 'that account'}.")
     else:
         print(
             f"bridge session: not reported within {wait:.0f}s -- check "
