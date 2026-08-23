@@ -88,20 +88,24 @@ CopyFile /etc/dracut.conf.d/btrfs.conf
 ## Make sure usb keyboard is usable early on
 CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
 
-## For wireless connection, iwd is used
-## MANUAL: connect and save wifi password
 AddPackage linux-firmware
-AddPackage iwd
-SystemdEnable iwd /usr/lib/systemd/system/iwd.service
-### Ignore iwd configs which is host specific
-IgnorePath '/etc/iwd'
-IgnorePath '/etc/iwd/*'
+
+## This host is wired-only and has no WiFi stack: no iwd, no wl* .network.
+## The one WiFi card, an AX210 at 05:00.0, belongs to the HAOS guest as the
+## ua-WifiBluetoothCard hostdev. That hostdev is managed='yes', so libvirt
+## hands the card back to the host driver every time the guest stops. Left to
+## itself the host then associates and takes a DHCP lease under the same
+## hostname the wired link uses, and the UDM -- which derives its home.arpa
+## records from DHCP hostnames -- repoints aetf-arch-homelab.home.arpa (and
+## the nas.home.arpa CNAME that Samba clients resolve through) at an address
+## that dies the moment the guest starts again. Blacklisting the driver is
+## what makes the handback inert; dropping iwd alone would not.
+CopyFile /etc/modprobe.d/no-wifi.conf
 
 ## Then systemd-networkd and systemd-resolvd are used to manage the interfaces.
 AddRole network-systemd
 ## Connectivity of the host itself
 CopyFile /etc/systemd/network/15-wired.network
-CopyFile /etc/systemd/network/25-wireless.network
 ## The network setup is a little bit involved: VMs are connected to VLAN 2.
 ## VMs are on a bridged network, where the uplink of the bridge is a vlan
 ## subinterface of the main ethernet interface.
