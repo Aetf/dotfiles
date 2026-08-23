@@ -1,0 +1,572 @@
+#!/usr/bin/env python3
+"""Find, vet and revive Claude Code sessions that `claude --resume` hides.
+
+Remote Control sessions are written to disk with entrypoint "sdk-cli", which the
+resume picker filters out (the filter guards listing only -- `claude --resume
+<uuid>` resolves the transcript directly and ignores it). So a dropped RC session
+is always recoverable; the hard part is identifying which transcript it is.
+
+Reviving carries one irreversible hazard. When a transcript carries a
+bridge-session record, Claude compares its ownerAccountUuid/ownerOrganizationUuid
+against oauthAccount in ~/.claude.json (both fields, exact match). A mismatch is
+adjudicated as restored_owner_mismatch and appends a permanent history-suppression
+entry, after which that transcript can never sync to the cloud again -- switching
+back to the owning account does not undo it. `preflight` predicts the verdict and
+`revive --same` refuses to run unless it passes.
+
+`revive --fork` sidesteps ownership entirely: --fork-session copies the transcript
+into a new session (verbatim context, no summarization), mints a fresh cloud
+conversation under whichever account is currently active, and leaves the source
+transcript untouched. Suppression is inherited only from an already-tainted source.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import re
+import subprocess
+import sys
+import time
+from dataclasses import dataclass, field
+from pathlib import Path
+
+CLAUDE_DIR = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home() / ".claude"))
+PROJECTS_DIR = CLAUDE_DIR / "projects"
+SESSIONS_DIR = CLAUDE_DIR / "sessions"
+GLOBAL_CONFIG = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home())) / ".claude.json"
+
+# entrypoints the resume picker hides (PROGRAMMATIC_ENTRYPOINTS)
+HIDDEN_ENTRYPOINTS = {"sdk-cli", "sdk-ts", "sdk-py"}
+
+UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
+
+
+def slugify(path: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9]", "-", str(path))
+
+
+def _line_around(blob: bytes, idx: int) -> bytes:
+    start = blob.rfind(b"\n", 0, idx) + 1
+    end = blob.find(b"\n", idx)
+    return blob[start:] if end == -1 else blob[start:end]
+
+
+def _parse(line: bytes) -> dict | None:
+    try:
+        obj = json.loads(line)
+    except Exception:
+        return None
+    return obj if isinstance(obj, dict) else None
+
+
+@dataclass
+class Session:
+    sid: str
+    path: Path
+    project: str
+    size: int
+    entrypoint: str = "?"
+    cwd: str = ""
+    title: str = ""
+    first_prompt: str = ""
+    last_ts: str = ""
+    turns: int = 0
+    owner_account: str | None = None
+    owner_org: str | None = None
+    tainted: bool = False
+    taint_causes: list[str] = field(default_factory=list)
+    live_pid: int | None = None
+
+    @property
+    def short(self) -> str:
+        return self.sid[:8]
+
+    @property
+    def hidden(self) -> bool:
+        return self.entrypoint in HIDDEN_ENTRYPOINTS
+
+    def to_dict(self) -> dict:
+        d = {k: v for k, v in self.__dict__.items()}
+        d["path"] = str(self.path)
+        d["short"] = self.short
+        d["hidden"] = self.hidden
+        return d
+
+
+def _clean(text: str, limit: int) -> str:
+    # Slash-command invocations arrive wrapped in a caveat block; the real
+    # request is the next prompt, so callers skip these entirely.
+    text = re.sub(r"\s+", " ", text).strip()
+    return text[:limit]
+
+
+def _first_real_prompt(blob: bytes, limit: int = 200) -> str:
+    for raw in blob.split(b"\n")[:400]:
+        if b'"type":"user"' not in raw:
+            continue
+        obj = _parse(raw)
+        if not obj or obj.get("type") != "user" or obj.get("isSidechain"):
+            continue
+        content = (obj.get("message") or {}).get("content")
+        if not isinstance(content, str) or not content.strip():
+            continue
+        if content.lstrip().startswith("<local-command-caveat>"):
+            continue
+        if content.lstrip().startswith("<system-reminder>"):
+            continue
+        return _clean(content, limit)
+    return ""
+
+
+def load_session(path: Path) -> Session | None:
+    try:
+        blob = path.read_bytes()
+    except OSError:
+        return None
+    if not blob:
+        return None
+
+    s = Session(sid=path.stem, path=path, project=path.parent.name, size=len(blob))
+    s.turns = blob.count(b'"type":"assistant"')
+
+    i = blob.find(b'"entrypoint":"')
+    if i != -1:
+        s.entrypoint = blob[i + 14 : blob.find(b'"', i + 14)].decode("utf-8", "replace")
+    i = blob.find(b'"cwd":"')
+    if i != -1:
+        s.cwd = blob[i + 7 : blob.find(b'"', i + 7)].decode("utf-8", "replace")
+    i = blob.rfind(b'"timestamp":"')
+    if i != -1:
+        s.last_ts = blob[i + 13 : blob.find(b'"', i + 13)].decode("utf-8", "replace")[:19]
+
+    i = blob.rfind(b'"aiTitle":"')
+    if i != -1:
+        obj = _parse(_line_around(blob, i))
+        if obj:
+            s.title = obj.get("aiTitle") or obj.get("customTitle") or ""
+    s.first_prompt = _first_real_prompt(blob)
+    if not s.title:
+        s.title = s.first_prompt[:60]
+
+    i = blob.rfind(b'"type":"bridge-session"')
+    if i != -1:
+        obj = _parse(_line_around(blob, i))
+        if obj:
+            s.owner_account = obj.get("ownerAccountUuid")
+            s.owner_org = obj.get("ownerOrganizationUuid")
+
+    # A bare substring match false-positives on assistant text that merely quotes
+    # the marker, so every candidate line is parsed and type-checked.
+    pos = blob.find(b'"history-suppression"')
+    while pos != -1:
+        obj = _parse(_line_around(blob, pos))
+        if obj and obj.get("type") == "history-suppression":
+            s.tainted = True
+            cause = obj.get("cause") or "?"
+            if cause not in s.taint_causes:
+                s.taint_causes.append(cause)
+        pos = blob.find(b'"history-suppression"', pos + 1)
+
+    return s
+
+
+def live_sessions() -> dict[str, int]:
+    """sessionId -> pid, for CLI processes still registered and alive."""
+    out: dict[str, int] = {}
+    if not SESSIONS_DIR.is_dir():
+        return out
+    for f in SESSIONS_DIR.glob("*.json"):
+        try:
+            obj = json.loads(f.read_text())
+        except Exception:
+            continue
+        pid, sid = obj.get("pid"), obj.get("sessionId")
+        if not pid or not sid or not Path(f"/proc/{pid}").exists():
+            continue
+        out[sid] = pid
+    return out
+
+
+def current_identity() -> dict:
+    try:
+        acct = json.loads(GLOBAL_CONFIG.read_text()).get("oauthAccount") or {}
+    except Exception:
+        return {}
+    return {
+        "accountUuid": acct.get("accountUuid"),
+        "organizationUuid": acct.get("organizationUuid"),
+        "emailAddress": acct.get("emailAddress"),
+    }
+
+
+_ACCOUNTS_CACHE: list[dict] | None = None
+
+
+def swap_accounts() -> list[dict]:
+    """Accounts known to claude-swap, for mapping owner uuids to a slot."""
+    global _ACCOUNTS_CACHE
+    if _ACCOUNTS_CACHE is not None:
+        return _ACCOUNTS_CACHE
+    _ACCOUNTS_CACHE = []
+    try:
+        p = subprocess.run(
+            ["claude-swap", "list", "--json"],
+            capture_output=True, text=True, timeout=30,
+        )
+        if p.returncode == 0:
+            _ACCOUNTS_CACHE = json.loads(p.stdout).get("accounts") or []
+    except Exception:
+        pass
+    return _ACCOUNTS_CACHE
+
+
+def describe_owner(s: Session) -> str:
+    if not s.owner_account:
+        return "-"
+    for a in swap_accounts():
+        if a.get("organizationUuid") == s.owner_org:
+            return f"{a['number']}:{a['email']}"
+    return s.owner_account[:8]
+
+
+def collect(project: str | None, include_all: bool) -> list[Session]:
+    if project:
+        dirs = [PROJECTS_DIR / (project if project.startswith("-") else slugify(project))]
+    else:
+        dirs = sorted(d for d in PROJECTS_DIR.iterdir() if d.is_dir())
+    live = live_sessions()
+    sessions = []
+    for d in dirs:
+        if not d.is_dir():
+            continue
+        for f in d.glob("*.jsonl"):
+            s = load_session(f)
+            if s is None:
+                continue
+            if not include_all and not s.hidden:
+                continue
+            s.live_pid = live.get(s.sid)
+            sessions.append(s)
+    sessions.sort(key=lambda s: s.last_ts, reverse=True)
+    return sessions
+
+
+def resolve(prefix: str) -> Session:
+    if "/" in prefix or prefix.endswith(".jsonl"):
+        s = load_session(Path(prefix))
+        if s is None:
+            sys.exit(f"cc-rc: cannot read transcript {prefix}")
+        s.live_pid = live_sessions().get(s.sid)
+        return s
+    matches = [
+        f
+        for d in PROJECTS_DIR.iterdir() if d.is_dir()
+        for f in d.glob(f"{prefix}*.jsonl")
+    ]
+    if not matches:
+        sys.exit(f"cc-rc: no session matching '{prefix}'")
+    if len(matches) > 1:
+        names = "\n  ".join(m.stem for m in matches)
+        sys.exit(f"cc-rc: '{prefix}' is ambiguous:\n  {names}")
+    s = load_session(matches[0])
+    if s is None:
+        sys.exit(f"cc-rc: cannot read transcript {matches[0]}")
+    s.live_pid = live_sessions().get(s.sid)
+    return s
+
+
+# ---------------------------------------------------------------- preflight
+
+VERDICT_OK = {"restored_owner_match", "restored_owner_unknown"}
+
+
+def preflight(s: Session) -> dict:
+    """Predict what reviving this session in place (--same) would do."""
+    me = current_identity()
+    r: dict = {
+        "sessionId": s.sid,
+        "tainted": s.tainted,
+        "taintCauses": s.taint_causes,
+        "livePid": s.live_pid,
+        "owner": {"accountUuid": s.owner_account, "organizationUuid": s.owner_org},
+        "current": me,
+    }
+
+    if s.live_pid:
+        r["verdict"] = "restored_pointer_held_locally"
+        r["sameAllowed"] = False
+        r["reason"] = f"pid {s.live_pid} is still running this session"
+        r["advice"] = f"stop pid {s.live_pid} first, or use --fork"
+    elif s.owner_account is None:
+        r["verdict"] = "restored_owner_unknown"
+        r["sameAllowed"] = True
+        r["reason"] = "transcript carries no bridge-session record; nothing to mismatch"
+        r["advice"] = "safe to revive --same (it will mint a fresh cloud session)"
+    elif (
+        me.get("accountUuid") == s.owner_account
+        and (me.get("organizationUuid") or None) == (s.owner_org or None)
+    ):
+        r["verdict"] = "restored_owner_match"
+        r["sameAllowed"] = True
+        r["reason"] = f"current login {me.get('emailAddress')} owns this conversation"
+        r["advice"] = "revive --same reattaches to the original cloud conversation"
+    else:
+        r["verdict"] = "restored_owner_mismatch"
+        r["sameAllowed"] = False
+        owner = describe_owner(s)
+        r["reason"] = (
+            f"owned by {owner}, currently logged in as {me.get('emailAddress')}"
+        )
+        r["advice"] = (
+            f"use --fork, or `claude-swap switch {owner.split(':')[0]}` first. "
+            "Running --same now would permanently suppress this transcript's cloud sync."
+        )
+
+    if s.tainted and r["verdict"] in VERDICT_OK:
+        r["reason"] += "; transcript already carries a history-suppression taint"
+        r["advice"] = "cloud backfill is permanently refused for this transcript -- use --fork or digest"
+    return r
+
+
+# ------------------------------------------------------------------ revive
+
+
+def bridge_session(debug_log: Path, timeout: float) -> str | None:
+    """Wait for the bridge to report its cloud session id.
+
+    Remote Control sessions are list entries on claude.ai/code rather than
+    addressable pages, so the id is for identification, not a deep link.
+    """
+    deadline = time.time() + timeout
+    pat = re.compile(r"v2 session URL: \S*/(cse_\S+|session_\S+)")
+    while time.time() < deadline:
+        if debug_log.exists():
+            m = pat.search(debug_log.read_text(errors="replace"))
+            if m:
+                return m.group(1)
+        time.sleep(1.0)
+    return None
+
+
+def revive(s: Session, mode: str, name: str | None, wait: float) -> int:
+    pf = preflight(s)
+    if mode == "same" and not pf["sameAllowed"]:
+        print(f"cc-rc: refusing --same: {pf['verdict']} -- {pf['reason']}", file=sys.stderr)
+        print(f"       {pf['advice']}", file=sys.stderr)
+        return 1
+    if mode == "fork" and pf["verdict"] == "restored_pointer_held_locally":
+        print(f"cc-rc: refusing: {pf['reason']}", file=sys.stderr)
+        return 1
+
+    name = name or (s.title or f"revived-{s.short}")[:60]
+    workdir = s.cwd if s.cwd and Path(s.cwd).is_dir() else str(Path.home())
+    debug_log = Path(f"/tmp/cc-rc-{s.short}-{int(time.time())}.log")
+
+    cmd = ["claude", "--resume", s.sid]
+    if mode == "fork":
+        cmd.append("--fork-session")
+    cmd += ["--remote-control", name, "--debug-file", str(debug_log)]
+
+    tmux_name = f"ccrc-{s.short}"
+    subprocess.run(
+        ["tmux", "new-session", "-d", "-s", tmux_name, "-c", workdir, *cmd],
+        check=True,
+    )
+    print(f"tmux session : {tmux_name}   (attach: tmux attach -t {tmux_name})")
+    print(f"mode         : {mode}  ({pf['verdict']})")
+    print(f"cwd          : {workdir}")
+    print(f"debug log    : {debug_log}")
+
+    cse = bridge_session(debug_log, wait)
+    if cse:
+        print(f"bridge session: {cse}")
+        print(f"\nOpen claude.ai/code and pick the Remote Control session named {name!r}.")
+    else:
+        print(
+            f"bridge session: not reported within {wait:.0f}s -- check "
+            f"`tmux attach -t {tmux_name}` (the session may still be starting)"
+        )
+    return 0
+
+
+# ------------------------------------------------------------------ digest
+
+
+def digest(s: Session, turns: int) -> str:
+    """Markdown handoff for continuing a dead session inside the current one."""
+    entries = []
+    for raw in s.path.read_bytes().split(b"\n"):
+        if b'"type":"user"' not in raw and b'"type":"assistant"' not in raw:
+            continue
+        obj = _parse(raw)
+        if not obj or obj.get("isSidechain"):
+            continue
+        if obj.get("type") not in ("user", "assistant"):
+            continue
+        entries.append(obj)
+
+    def text_of(obj: dict) -> str:
+        content = (obj.get("message") or {}).get("content")
+        if isinstance(content, str):
+            return content
+        if isinstance(content, list):
+            return "\n".join(
+                b.get("text", "") for b in content
+                if isinstance(b, dict) and b.get("type") == "text"
+            )
+        return ""
+
+    files: list[str] = []
+    for obj in entries:
+        content = (obj.get("message") or {}).get("content")
+        if not isinstance(content, list):
+            continue
+        for b in content:
+            if not isinstance(b, dict) or b.get("type") != "tool_use":
+                continue
+            p = (b.get("input") or {}).get("file_path")
+            if isinstance(p, str) and p not in files:
+                files.append(p)
+
+    out = [
+        f"# 接续会话：{s.title}",
+        "",
+        f"- session: `{s.sid}`",
+        f"- cwd: `{s.cwd}`",
+        f"- 最后活动: {s.last_ts}    助手轮数: {s.turns}",
+        "",
+        "## 最初的诉求",
+        "",
+        s.first_prompt or "(未能提取)",
+        "",
+    ]
+    if files:
+        out += ["## 触及过的文件", "", *(f"- `{p}`" for p in files[:40]), ""]
+
+    out += [f"## 最后 {turns} 轮往返", ""]
+    for obj in entries[-turns * 2 :]:
+        body = _clean(text_of(obj), 1200)
+        if not body or body.startswith("<local-command-caveat>"):
+            continue
+        who = "用户" if obj.get("type") == "user" else "助手"
+        out += [f"**{who}**: {body}", ""]
+    return "\n".join(out)
+
+
+# -------------------------------------------------------------------- cli
+
+
+def cmd_list(args) -> int:
+    sessions = collect(args.project, args.all)[: args.limit]
+    if args.json:
+        print(json.dumps([s.to_dict() for s in sessions], ensure_ascii=False, indent=2))
+        return 0
+    if not sessions:
+        print("(no matching sessions)")
+        return 0
+    print(f"{'ID':<9} {'TURNS':>5} {'SIZE':>6}  {'LAST ACTIVITY':<17} {'OWNER':<26} {'STATE':<8} TITLE")
+    for s in sessions:
+        state = "live" if s.live_pid else ("tainted" if s.tainted else "ok")
+        size = f"{s.size / 1048576:.1f}M" if s.size >= 1048576 else f"{s.size // 1024}K"
+        ts = s.last_ts.replace("T", " ")[:16]
+        print(
+            f"{s.short:<9} {s.turns:>5} {size:>6}  {ts:<17} {describe_owner(s):<26} "
+            f"{state:<8} {_clean(s.title, 60)}"
+        )
+    return 0
+
+
+def cmd_show(args) -> int:
+    s = resolve(args.session)
+    pf = preflight(s)
+    if args.json:
+        d = s.to_dict()
+        d["preflight"] = pf
+        print(json.dumps(d, ensure_ascii=False, indent=2))
+        return 0
+    print(f"session      : {s.sid}")
+    print(f"transcript   : {s.path}")
+    print(f"title        : {s.title}")
+    print(f"cwd          : {s.cwd}")
+    print(f"entrypoint   : {s.entrypoint}" + ("  (hidden from --resume picker)" if s.hidden else ""))
+    print(f"last activity: {s.last_ts}   turns: {s.turns}   size: {s.size / 1048576:.1f}M")
+    print(f"owner        : {describe_owner(s)}")
+    print(f"state        : " + ("live pid %d" % s.live_pid if s.live_pid else ("tainted (%s)" % ",".join(s.taint_causes) if s.tainted else "ok")))
+    print(f"verdict      : {pf['verdict']} -- {pf['reason']}")
+    print(f"advice       : {pf['advice']}")
+    print()
+    print("first prompt :")
+    print(f"  {s.first_prompt}")
+    return 0
+
+
+def cmd_preflight(args) -> int:
+    s = resolve(args.session)
+    pf = preflight(s)
+    if args.json:
+        print(json.dumps(pf, ensure_ascii=False, indent=2))
+    else:
+        print(f"verdict     : {pf['verdict']}")
+        print(f"reason      : {pf['reason']}")
+        print(f"--same      : {'allowed' if pf['sameAllowed'] else 'REFUSED'}")
+        print(f"--fork      : {'refused (session is live)' if pf['verdict'] == 'restored_pointer_held_locally' else 'always safe'}")
+        print(f"advice      : {pf['advice']}")
+    return 0 if pf["sameAllowed"] else 2
+
+
+def cmd_revive(args) -> int:
+    return revive(resolve(args.session), args.mode, args.name, args.wait)
+
+
+def cmd_digest(args) -> int:
+    print(digest(resolve(args.session), args.turns))
+    return 0
+
+
+def main() -> int:
+    p = argparse.ArgumentParser(
+        prog="cc-rc",
+        description="Find, vet and revive Claude Code sessions hidden from `claude --resume`.",
+    )
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    pl = sub.add_parser("list", help="list sessions (default: only those --resume hides)")
+    pl.add_argument("-p", "--project", help="project dir or cwd path (default: all)")
+    pl.add_argument("-n", "--limit", type=int, default=20)
+    pl.add_argument("-a", "--all", action="store_true", help="include terminal (cli) sessions")
+    pl.add_argument("--json", action="store_true")
+    pl.set_defaults(func=cmd_list)
+
+    ps = sub.add_parser("show", help="detail one session")
+    ps.add_argument("session", help="id prefix or transcript path")
+    ps.add_argument("--json", action="store_true")
+    ps.set_defaults(func=cmd_show)
+
+    pp = sub.add_parser("preflight", help="predict what reviving would do")
+    pp.add_argument("session")
+    pp.add_argument("--json", action="store_true")
+    pp.set_defaults(func=cmd_preflight)
+
+    pr = sub.add_parser("revive", help="relaunch the session with Remote Control enabled")
+    pr.add_argument("session")
+    pr.add_argument("--fork", dest="mode", action="store_const", const="fork", default="fork",
+                    help="new session id, fresh cloud conversation (default, always safe)")
+    pr.add_argument("--same", dest="mode", action="store_const", const="same",
+                    help="reuse the session id and reattach to the original cloud conversation")
+    pr.add_argument("--name", help="Remote Control session name (default: session title)")
+    pr.add_argument("--wait", type=float, default=90.0, help="seconds to wait for the web URL")
+    pr.set_defaults(func=cmd_revive)
+
+    pd = sub.add_parser("digest", help="emit a markdown handoff to continue in the current session")
+    pd.add_argument("session")
+    pd.add_argument("-t", "--turns", type=int, default=8)
+    pd.set_defaults(func=cmd_digest)
+
+    args = p.parse_args()
+    return args.func(args)
+
+
+if __name__ == "__main__":
+    sys.exit(main())
