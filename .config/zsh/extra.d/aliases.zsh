@@ -71,5 +71,5 @@ function gmailctl() {
 export work=/dev/shm/$USER/workspace
 alias work='cd ~work'
 
-alias oci='podman run --rm -it -v "$HOME/.config/oci:/oracle/.oci" ghcr.io/oracle/oci-cli:latest'
-alias b2='podman run --rm -it -v "$HOME/.config/b2:/root/.config/b2" docker.io/backblazeit/b2:latest'
+alias oci='podman run --rm -it --user 0:0 -e HOME=/oracle -v "$HOME/.config/oci:/oracle/.oci" ghcr.io/oracle/oci-cli:latest'
+alias b2='podman run --rm -it --user 0:0 -e HOME=/root -v "$HOME/.config/b2:/root/.config/b2" docker.io/backblazeit/b2:latest'
