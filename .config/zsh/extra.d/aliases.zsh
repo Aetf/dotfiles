@@ -71,5 +71,7 @@ function gmailctl() {
 export work=/dev/shm/$USER/workspace
 alias work='cd ~work'
 
-alias oci='podman run --rm -it --user 0:0 -e HOME=/oracle -v "$HOME/.config/oci:/oracle/.oci" ghcr.io/oracle/oci-cli:latest'
+# Mounted at the same path it has on the host, so one config file serves both
+# the CLI and the Python SDK (which reads key_file as a host path).
+alias oci='podman run --rm -it --user 0:0 -e HOME="$HOME" -e OCI_CLI_CONFIG_FILE="$HOME/.config/oci/config" -v "$HOME/.config/oci:$HOME/.config/oci" ghcr.io/oracle/oci-cli:latest'
 alias b2='podman run --rm -it --user 0:0 -e HOME=/root -v "$HOME/.config/b2:/root/.config/b2" docker.io/backblazeit/b2:latest'
