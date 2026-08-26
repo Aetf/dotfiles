@@ -74,6 +74,19 @@
 		reverse_proxy aetf-arch-homelab.home.arpa:8067
 	}
 
+	# APC UPS network management card (AP9631). The card only accepts SSL
+	# certificates in the Security Wizard's proprietary format and its TLS stack
+	# is stuck on TLSv1.2/ECDHE-RSA-AES128-SHA, so terminate a real certificate
+	# here and skip verification on the self-signed hop to the card.
+	@ups host ups.lan.ucw.phd
+	handle @ups {
+		reverse_proxy https://ups.home.arpa {
+			transport http {
+				tls_insecure_skip_verify
+			}
+		}
+	}
+
 	# Fallback for otherwise unhandled domains
 	handle {
 		abort
