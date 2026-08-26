@@ -96,6 +96,30 @@ local botLabels = [
   label('bot/error'),
 ];
 
+// GitHub notifications (from:notifications@github.com only — account mail from
+// noreply@github.com, e.g. login codes and billing, is deliberately untouched).
+// Repo routing comes from the List-ID header, which GitHub sets to
+// `OWNER/REPO <REPO.OWNER.github.com>`, so `list:REPO.OWNER.github.com` is an
+// exact per-repo match. Repos not listed here land in GitHub/Others; add one
+// here and its rule appears automatically.
+local githubOwner = 'Aetf';
+local githubRepos = [
+  'kluster',
+  'kluster-code',
+  'kluster-ops',
+  'ucw.nvim',
+  'chored',
+  'homelab-ops',
+  'hackrf-proxy',
+  'proflame',
+  'hass-proflame',
+  'hass-hackrf-proxy',
+];
+local githubLabels =
+  [label('GitHub')]
+  + [label('GitHub/' + r) for r in githubRepos]
+  + [label('GitHub/Others')];
+
 local frozenLabels = [
   label('❄️Z-OldLabels'),
   label("❄️Z-OldLabels/Aetf's Bot Message"),
@@ -365,6 +389,49 @@ local botRules = [
   },
 ];
 
+// GitHub notifications skip the inbox by default. The exception is mail that
+// wants an answer from me personally: GitHub cc's a <reason>@noreply.github.com
+// address on every notification, so `cc:mention@` / `cc:review_requested@`
+// identify those. Skipping the inbox has to be its own rule rather than an
+// action on the per-repo rules, because Gmail unions the actions of every
+// matching filter — an archive anywhere would win over the exception.
+local githubFrom = { from: 'notifications@github.com' };
+local githubWantsMe = {
+  or: [
+    { cc: 'mention@noreply.github.com' },
+    { cc: 'review_requested@noreply.github.com' },
+  ],
+};
+local githubRules =
+  [
+    // Parent label on everything: `label:GitHub` in Gmail does not match
+    // sub-labels, so without this there is no one-click "all GitHub mail".
+    {
+      filter: githubFrom,
+      actions: { markSpam: false, labels: ['GitHub'] },
+    },
+    {
+      filter: { and: [githubFrom, { not: githubWantsMe }] },
+      actions: { archive: true, markSpam: false, markImportant: false },
+    },
+    {
+      filter: {
+        and: [
+          githubFrom,
+          { not: { or: [{ list: r + '.' + githubOwner + '.github.com' } for r in githubRepos] } },
+        ],
+      },
+      actions: { labels: ['GitHub/Others'] },
+    },
+  ]
+  + [
+    {
+      filter: { and: [githubFrom, { list: r + '.' + githubOwner + '.github.com' }] },
+      actions: { labels: ['GitHub/' + r] },
+    }
+    for r in githubRepos
+  ];
+
 local devRules = [
   {
     filter: { query: '"renovate[bot]"' },
@@ -468,7 +535,7 @@ local legacyRules = [
     name: 'Aetf',
     email: 'aetf@unlimited-code.works',
   },
-  labels: activeLabels + personalLabels + travelLabels + botLabels + frozenLabels,
+  labels: activeLabels + personalLabels + travelLabels + botLabels + githubLabels + frozenLabels,
   rules:
     financeRules
     + insuranceRules
@@ -477,6 +544,7 @@ local legacyRules = [
     + housingRules
     + aliasRules
     + botRules
+    + githubRules
     + devRules
     + legacyRules,
 }
