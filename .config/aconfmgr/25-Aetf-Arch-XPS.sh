@@ -36,6 +36,9 @@ CopyFile /etc/dracut.conf.d/unused-modules.conf
 CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
 ### make sure resume from hibernation works
 CopyFile /etc/dracut.conf.d/resume-from-hibernate.conf
+### nvidia in the initrd breaks resume from hibernation (its freeze callback
+### needs the nvidia-* PM services, which aren't available pre-switch-root)
+CopyFile /etc/dracut.conf.d/omit-nvidia.conf
 
 ## kernel command lines
 CopyFile /etc/kernel/cmdline.d/block.conf
