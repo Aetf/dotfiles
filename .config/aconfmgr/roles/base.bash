@@ -4,6 +4,10 @@ AddPackage base
 # Enable ntp time sync
 SystemdEnable systemd /usr/lib/systemd/system/systemd-timesyncd.service
 
+# Console login on tty1 (systemd preset creates this on install; declare it so
+# it survives aconfmgr)
+CreateLink /etc/systemd/system/getty.target.wants/getty@tty1.service /usr/lib/systemd/system/getty@.service
+
 # For basic localization, we'll enable both en and ch, but en_US.UTF8 will be the default
 cat >> "$(GetPackageOriginalFile glibc /etc/locale.gen)" <<EOF
 C.UTF-8 UTF-8

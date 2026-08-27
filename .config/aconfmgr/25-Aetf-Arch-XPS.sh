@@ -59,12 +59,14 @@ AddPackage lvm2 # Logical Volume Manager 2 utilities
 AddPackage btrfs-progs # Btrfs filesystem utilities
 AddPackage xfsprogs # XFS filesystem utilities
 CopyFile /etc/fstab
+# / ships read-only (555) on current installs
+SetFileProperty / mode 555
 
 IsBootstrap && return 0
 
 AddRole network-nm
 # Additionally disable WiFi when connected to Ethernet
-CopyFile /etc/NetworkManager/dispatcher.d/99-wifi-auto-toggle
+CopyFile /etc/NetworkManager/dispatcher.d/99-wifi-auto-toggle 755
 SystemdEnable networkmanager /usr/lib/systemd/system/NetworkManager-dispatcher.service
 
 AddRole zerotier
@@ -210,7 +212,6 @@ AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired b
 AddPackage ventoy-bin # A new multiboot USB solution
 AddPackage github-cli # The GitHub CLI
 AddPackage --foreign dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
-AddPackage pulumi # Modern Infrastructure as Code
 AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
 AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets
 AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility

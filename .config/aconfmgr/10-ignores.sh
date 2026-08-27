@@ -45,6 +45,7 @@ IgnorePath '/etc/rancher/node/*'
 
 IgnorePath '/etc/ssl/*'
 IgnorePath '/etc/ca-certificates/*'
+IgnorePath '/etc/colord'    # created at runtime by colord, owned colord:colord
 
 IgnorePath '/etc/.*'
 IgnorePath '/etc/*-'
