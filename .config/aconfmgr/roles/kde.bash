@@ -1,7 +1,4 @@
 # Login
-CopyFile /etc/sddm.conf.d/hidpi.conf
-CopyFile /etc/sddm.conf.d/kde_settings.conf
-IgnorePath '/usr/share/sddm/themes/*'
 
 # Plasma DE
 AddPackage plasma-meta # Meta package to install KDE Plasma
