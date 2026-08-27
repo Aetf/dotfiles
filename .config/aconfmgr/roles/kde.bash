@@ -17,7 +17,7 @@ AddPackage plasma-systemmonitor # An interface for monitoring system sensors, pr
 AddPackage colord-kde # Interfaces and session daemon to colord for KDE
 AddPackage xdg-desktop-portal # Desktop integration portals for sandboxed apps
 AddPackage kio-gdrive # KIO Slave to access Google Drive
-AddPackage --foreign kdoctools5 # Documentation generation from docbook (for the help kioslave; moved to AUR with the KF5 retirement)
+AddPackage $FOREIGN kdoctools5 # Documentation generation from docbook (for the help kioslave; moved to AUR with the KF5 retirement)
 AddOptionalPackage kio-extras \
     kimageformats5 "thumbnails for additional image formats" `# Image format plugins for Qt5` \
     qt5-imageformats 'thumbnails for additional image formats' `# Plugins for additional image formats: TIFF, MNG, TGA, WBMP`
@@ -34,7 +34,7 @@ AddPackage flatpak # Linux application sandboxing and distribution framework (fo
 #AddPackage latte-dock-git # Latte is a dock based on plasma frameworks that provides an elegant and intuitive experience for your tasks and plasmoids
 AddPackage kvantum-theme-arc # Arc theme for Kvantum
 AddPackage papirus-icon-theme # Papirus icon theme
-AddPackage --foreign arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
+AddPackage $FOREIGN arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
 
 AddPackage syncthingtray-qt6 # Tray application for Syncthing
 AddPackage plasma6-applets-window-title
@@ -67,7 +67,7 @@ AddPackage qpwgraph # PipeWire Graph Qt GUI Interface
 
 # Devices
 AddPackage piper # GTK application to configure gaming mice
-AddPackage --foreign yubikey-manager-qt # Cross-platform application for configuring any YubiKey over all USB transports
+AddPackage $FOREIGN yubikey-manager-qt # Cross-platform application for configuring any YubiKey over all USB transports
 
 AddPackage cups
 AddPackage print-manager # A tool for managing print jobs and printers
@@ -134,8 +134,9 @@ AddPackage qview # qView is a Qt image viewer designed with minimalism and usabi
 
 AddPackage libreoffice-fresh # office
 
-AddPackage --foreign simplescreenrecorder # A feature-rich screen recorder that supports X11 and OpenGL.
+AddPackage $FOREIGN simplescreenrecorder # A feature-rich screen recorder that supports X11 and OpenGL.
 AddPackage spectacle # KDE screenshot capture utility
+AddPackage kcalc # Scientific Calculator
 AddPackage sqlitebrowser # SQLite Database browser is a light GUI editor for SQLite databases, built on top of Qt
 AddPackage wireshark-qt # Network traffic and protocol analyzer/sniffer - Qt GUI
 
@@ -148,7 +149,7 @@ AddOptionalPackage zathura \
 AddOptionalPackage poppler \
     poppler-data 'highly recommended encoding data to display PDF documents with certain encodings and characters' `# Encoding data for the poppler PDF rendering library`
 
-AddPackage --foreign zotero-bin # Zotero Standalone. Is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.
+AddPackage $FOREIGN zotero-bin # Zotero Standalone. Is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.
 AddPackage obsidian # A powerful knowledge base that works on top of a local folder of plain text Markdown files
 
 AddPackage yubikey-personalization-gui

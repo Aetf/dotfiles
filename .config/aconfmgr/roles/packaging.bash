@@ -43,6 +43,7 @@ sed -i -E 's/^#?PACKAGER=.+$/PACKAGER="Aetf <aetf@unlimited-code.works>"/g' "$f"
 AddPackage pacman-contrib # Contributed scripts and tools for pacman systems
 AddPackage devtools # Tools for Arch Linux package maintainers
 AddPackage debuginfod # Handle ELF object files and DWARF debugging information (debuginfod)
+AddPackage $FOREIGN asp # Arch Linux build source file management tool
 AddPackage $FOREIGN downgrade # Bash script for downgrading one or more packages to a version in your cache or the A.L.A.
 AddPackage namcap # A Pacman package analyzer
 

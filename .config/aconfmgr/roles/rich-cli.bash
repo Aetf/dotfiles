@@ -25,11 +25,13 @@ AddPackage hexyl # Colored command-line hex viewer
 AddPackage htop # Interactive process viewer
 AddPackage powertop # A tool to diagnose issues with power consumption and power management
 AddPackage iotop # View I/O usage of processes
+AddPackage $FOREIGN ps_mem # List processes by memory usage
 
 AddPackage lsof # Lists open files for running Unix processes
 
 AddPackage $FOREIGN rnr # A CLI tool to rename files and directories that supports regex.
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
+AddPackage lazygit # Simple terminal UI for git commands
 
 # Use polkit to provide some alternative to sudo, used by neovim
 AddPackage polkit
@@ -40,13 +42,15 @@ AddPackage cmctl
 AddPackage talosctl
 
 # Packages for managing emails
-#AddPackage $FOREIGN gmailctl
+AddPackage gmailctl # Declarative configuration for Gmail filters
 
 # Networking debugging
-#AddPackage $FOREIGN mdns-scan
+AddPackage mdns-scan # Scan mDNS/DNS-SD published services on the local network
 AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
 AddPackage socat # Multipurpose relay
 AddPackage openbsd-netcat
 AddPackage mtr # Combines the functionality of traceroute and ping into one tool (CLI version)
+AddPackage doggo # Command-line DNS Client for Humans
+AddPackage ldns # Fast DNS library supporting recent RFCs (drill)

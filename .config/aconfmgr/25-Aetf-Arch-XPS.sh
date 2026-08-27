@@ -75,7 +75,7 @@ AddRole pgp-physical
 AddRole ssh
 
 AddRole docker
-AddPackage --foreign podman-dnsname # name resolution for containers
+AddPackage $FOREIGN podman-dnsname # name resolution for containers
 AddPackage umoci # Umoci Modifies Open Container Images
 
 AddRole kde
@@ -148,7 +148,7 @@ SystemdMask systemd-rfkill.socket system
 
 # Touchpad
 AddPackage libinput # Input device management and event handling library
-AddPackage --foreign linux-3-finger-drag-git # Three-finger drag gestures for touchpads, as found on macOS
+AddPackage $FOREIGN linux-3-finger-drag-git # Three-finger drag gestures for touchpads, as found on macOS
 CreateLink /etc/systemd/system/multi-user.target.wants/three-finger-drag.service /usr/lib/systemd/system/three-finger-drag.service
 
 # Camera
@@ -211,7 +211,7 @@ AddPackage testdisk # Checks and undeletes partitions + PhotoRec, signature base
 AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired by pacgraph
 AddPackage ventoy-bin # A new multiboot USB solution
 AddPackage github-cli # The GitHub CLI
-AddPackage --foreign dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
+AddPackage $FOREIGN dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
 AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
 AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets
 AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility
@@ -221,14 +221,6 @@ AddPackage antigravity # Google Antigravity 2.0 multi-agent orchestration platfo
 AddPackage appimagelauncher # Helper for running and integrating AppImages
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddPackage claude-code # An agentic coding tool that lives in your terminal
-AddPackage doggo # Command-line DNS Client for Humans
-AddPackage gmailctl # Declarative configuration for Gmail filters
 AddPackage google-cloud-cli # A core set of command-line tools for the Google Cloud Platform.
 AddPackage googleworkspace-cli # Command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
-AddPackage kcalc # Scientific Calculator
-AddPackage lazygit # Simple terminal UI for git commands
-AddPackage ldns # Fast DNS library supporting recent RFCs (drill)
-AddPackage mdns-scan # Scan mDNS/DNS-SD published services on the local network
 AddPackage pdfannots-git # Extracts and formats text annotations from a PDF file
-AddPackage --foreign asp # Arch Linux build source file management tool
-AddPackage --foreign ps_mem # List processes by memory usage
