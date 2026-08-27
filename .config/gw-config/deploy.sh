@@ -20,6 +20,7 @@ mode=${1:---apply}
 # apply path iterate this same list so they can never diverge.
 pairs=(
     "on_boot.d/|/data/on_boot.d/"
+    "authorized_keys.d/|/data/gw-config/authorized_keys.d/"
     "nspawn/|/data/gw-config/nspawn/"
     "nspawn/|/etc/systemd/nspawn/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
