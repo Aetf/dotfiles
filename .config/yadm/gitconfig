@@ -1,0 +1,10 @@
+# Shared git config for the yadm repo itself, tracked by yadm.
+# Wired in via `include.path` in the repo config (see
+# bootstrap.d/04-gitconfig-include.sh); machine-specific state
+# (local.class, submodule registrations, remotes) stays in the
+# untracked repo.git/config.
+
+[alias]
+	# custom subcommands: yadm passes unknown commands through to git,
+	# so git aliases become yadm subcommands
+	ng = !yadm enter vim +Neogit
