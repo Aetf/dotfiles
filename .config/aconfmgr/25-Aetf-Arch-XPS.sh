@@ -59,8 +59,6 @@ AddPackage lvm2 # Logical Volume Manager 2 utilities
 AddPackage btrfs-progs # Btrfs filesystem utilities
 AddPackage xfsprogs # XFS filesystem utilities
 CopyFile /etc/fstab
-# / ships read-only (555) on current installs
-SetFileProperty / mode 555
 
 IsBootstrap && return 0
 
