@@ -73,6 +73,8 @@ AddRole pgp-physical
 AddRole ssh
 
 AddRole docker
+AddPackage --foreign podman-dnsname # name resolution for containers
+AddPackage umoci # Umoci Modifies Open Container Images
 
 AddRole kde
 SystemdEnable sddm /usr/lib/systemd/system/sddm.service
@@ -82,16 +84,20 @@ AddRole games
 
 AddRole latex
 # AddRole android-dev
+## just adb/fastboot + device udev rules, without the full android-dev role
+AddPackage android-tools # Android platform tools
+AddPackage android-udev # Udev rules to connect Android devices to your linux box
 AddRole rust-dev
 AddRole cpp-dev
 AddRole python-dev
 AddRole multimedia
+AddRole ntfs
 AddRole tzupdate
 
 # Login: fingerprint
 AddPackage fprintd # D-Bus service to access fingerprint readers
 AddPackage libfprint-2-tod1-xps9300-bin # Proprietary driver for the fingerprint reader on the Dell XPS 13 9300 - direct from Dell's Ubuntu repo
-# AddPackage howdy # Windows Hello for Linux
+AddPackage howdy # Windows Hello for Linux
 CopyFile /etc/pam.d/system-auth
 
 ## Use kernel_keyring to try login using disk encryption password
@@ -140,6 +146,8 @@ SystemdMask systemd-rfkill.socket system
 
 # Touchpad
 AddPackage libinput # Input device management and event handling library
+AddPackage --foreign linux-3-finger-drag-git # Three-finger drag gestures for touchpads, as found on macOS
+CreateLink /etc/systemd/system/multi-user.target.wants/three-finger-drag.service /usr/lib/systemd/system/three-finger-drag.service
 
 # Camera
 CopyFile /etc/udev/rules.d/83-webcam.rules
@@ -151,10 +159,16 @@ CopyFile /etc/tlp.d/cpu.conf
 CopyFile /etc/tlp.d/pci-pm.conf
 CopyFile /etc/tlp.d/rdw.conf
 SystemdEnable tlp /usr/lib/systemd/system/tlp.service
+AddPackage tlp-pd # Linux Advanced Power Management - Power Profiles Daemon (PPD API for powerdevil)
+SystemdEnable tlp-pd /usr/lib/systemd/system/tlp-pd.service
 
 CopyFile /etc/fan2go/fan2go.db 600
 CopyFile /etc/fan2go/fan2go.yaml
 CopyFile /etc/fancontrol
+## Dell fan control via dell_smm / BIOS
+AddPackage i8kutils # Fan control for Dell laptops
+SystemdEnable i8kutils /usr/lib/systemd/system/i8kmon.service
+AddPackage dell-bios-fan-control-git # A user space utility to set control of fans by bios on some Dell XPS Laptops.
 
 # Auto load sensor modules on boot
 SystemdEnable lm_sensors /usr/lib/systemd/system/lm_sensors.service
@@ -179,6 +193,18 @@ CopyFile /etc/firewalld/zones/libvirt.xml
 CopyFile /etc/firewalld/zones/trusted.xml
 CopyFile /etc/firewalld/zones/veth.xml
 
+# SDR
+AddPackage gqrx # Software defined radio receiver powered by GNU Radio and Qt.
+AddPackage inspectrum # Tool for analysing captured signals, primarily from software-defined radio receivers
+AddPackage rtl_433 # Program to decode radio transmissions from devices on the ISM bands (and other frequencies)
+AddPackage soapyhackrf-git # SoapySDR plugin for HackRF
+
+# Disk partitioning and rescue
+AddPackage ddrescue # GNU data recovery tool
+AddPackage gparted # A Partition Magic clone, frontend to GNU Parted
+AddPackage gptfdisk # A text-mode partitioning tool that works on GUID Partition Table (GPT) disks
+AddPackage testdisk # Checks and undeletes partitions + PhotoRec, signature based recovery tool
+
 # Additional apps
 AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired by pacgraph
 AddPackage ventoy-bin # A new multiboot USB solution
@@ -190,3 +216,18 @@ AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Sec
 AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility
 AddPackage syncthing
 AddPackage packwiz-git # A command line tool for creating minecraft modpacks.
+AddPackage antigravity # Google Antigravity 2.0 multi-agent orchestration platform
+AddPackage appimagelauncher # Helper for running and integrating AppImages
+AddPackage chromium # A web browser built for speed, simplicity, and security
+AddPackage claude-code # An agentic coding tool that lives in your terminal
+AddPackage doggo # Command-line DNS Client for Humans
+AddPackage gmailctl # Declarative configuration for Gmail filters
+AddPackage google-cloud-cli # A core set of command-line tools for the Google Cloud Platform.
+AddPackage googleworkspace-cli # Command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
+AddPackage kcalc # Scientific Calculator
+AddPackage lazygit # Simple terminal UI for git commands
+AddPackage ldns # Fast DNS library supporting recent RFCs (drill)
+AddPackage mdns-scan # Scan mDNS/DNS-SD published services on the local network
+AddPackage pdfannots-git # Extracts and formats text annotations from a PDF file
+AddPackage --foreign asp # Arch Linux build source file management tool
+AddPackage --foreign ps_mem # List processes by memory usage
