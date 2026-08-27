@@ -77,7 +77,7 @@ AddPackage $FOREIGN podman-dnsname # name resolution for containers
 AddPackage umoci # Umoci Modifies Open Container Images
 
 AddRole kde
-SystemdEnable sddm /usr/lib/systemd/system/sddm.service
+SystemdEnable plasma-login-manager /usr/lib/systemd/system/plasmalogin.service
 AddRole cjk
 
 AddRole games
