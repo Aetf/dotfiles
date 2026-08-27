@@ -119,7 +119,7 @@ AddPackage libva-utils # Intel VA-API Media Applications and Scripts for libva
 AddPackage vdpauinfo # Command line utility for querying the capabilities of a VDPAU device
 AddOptionalPackage mesa
 
-AddPackage nvidia-dkms # NVIDIA drivers - module sources
+AddPackage nvidia-open-dkms # NVIDIA open kernel modules - module sources (legacy nvidia-dkms is gone from the repos)
 AddPackage nvidia-prime # NVIDIA Prime Render Offload configuration and utilities
 AddPackage nvidia-utils
 CopyFile /etc/modprobe.d/nvidia-power.conf
@@ -183,7 +183,7 @@ CopyFile /etc/firewalld/zones/veth.xml
 AddPackage pacvis-git # Visualize pacman local database using Vis.js, inspired by pacgraph
 AddPackage ventoy-bin # A new multiboot USB solution
 AddPackage github-cli # The GitHub CLI
-AddPackage dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
+AddPackage --foreign dnscontrol-bin # Synchronize your DNS to multiple providers from a simple DSL (binary release)
 AddPackage pulumi # Modern Infrastructure as Code
 AddPackage kubectl # A command line tool for communicating with a Kubernetes API server
 AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Secrets

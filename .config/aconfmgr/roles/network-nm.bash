@@ -1,4 +1,4 @@
-AddPackage iptables-nft # Linux kernel packet control tool (using nft interface)
+AddPackage iptables # Linux kernel packet control tool (using nft interface)
 
 AddPackage networkmanager # Network connection manager and user applications
 AddPackage networkmanager-openconnect # NetworkManager VPN plugin for OpenConnect
