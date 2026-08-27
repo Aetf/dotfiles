@@ -302,6 +302,9 @@ AddRole docker
 # Remote log sink
 AddRole remote-log-sink
 
+# kluster physical stack host prep (libvirt service user; P4 adds the rest)
+AddRole kluster-host
+
 # Jellyfin discovery relay
 CopyFile /etc/systemd/system/jellyfin-discovery-relay.service
 SystemdEnable --from-file /etc/systemd/system/jellyfin-discovery-relay.service
