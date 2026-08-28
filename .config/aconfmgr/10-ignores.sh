@@ -74,3 +74,7 @@ IgnorePath '/etc/credstore.encrypted'
 
 # k3s generated access file
 IgnorePath '/etc/rancher/k3s/k3s.yaml'
+# libvirt rewrites domain XML (virsh edit, autostart links) at will; domains
+# are owned by libvirt itself and, for the kluster estate, by Pulumi import.
+IgnorePath '/etc/libvirt/qemu/*.xml'
+IgnorePath '/etc/libvirt/qemu/autostart/*'
