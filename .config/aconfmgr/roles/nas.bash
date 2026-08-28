@@ -63,7 +63,9 @@ EOF
 
 # Create NFS setup
 AddPackage nfs-utils # Support programs for Network File Systems
+# 192.168.70.10 is the kluster worker VM on the cluster VLAN, scoped to
+# that single host and reached through the host's own kvmbr1 leg.
 cat > "$(CreateFile /etc/exports.d/nas.exports)" <<EOF
-/mnt/nas 192.168.80.0/24(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000) 192.168.90.0/24(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000) fd1a:665f:8bcb::/48(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000)
+/mnt/nas 192.168.80.0/24(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000) 192.168.90.0/24(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000) 192.168.70.10(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000) fd1a:665f:8bcb::/48(rw,async,no_subtree_check,all_squash,anonuid=1000,anongid=10000)
 EOF
 SystemdEnable nfs-utils /usr/lib/systemd/system/nfs-server.service
