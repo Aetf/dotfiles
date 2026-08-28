@@ -62,10 +62,7 @@ function IsBootstrap() {
 # Always create the stamp in config
 CreateFile /.bootstrapped >/dev/null
 
-# Since packages in AUR local repo is not considered foreign, we need to change
-# the desired config depending on whether we are in bootstrap or not
-if IsBootstrap; then
-    FOREIGN="--foreign"
-else
-    FOREIGN=""
-fi
+# AUR packages are declared as `AddPackage $FOREIGN pkg`. Whether such a package
+# is actually native (already in [local-aur]) or foreign is decided per package
+# by the AddPackage wrapper in 00-helpers.sh.
+FOREIGN="--foreign"

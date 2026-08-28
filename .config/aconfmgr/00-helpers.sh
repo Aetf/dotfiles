@@ -23,6 +23,48 @@ function AddRole() {
     LogLeave ''
 }
 
+#
+# AddPackage [--foreign] PACKAGE...
+#
+# Wraps aconfmgr's AddPackage so that `--foreign` means "AUR package", not
+# "pacman must currently classify it as foreign".
+#
+# pacman calls a package foreign iff its name is in no sync db. paru's LocalRepo
+# publishes every AUR build into [local-aur], which is a sync db, so an AUR
+# package flips from foreign to native the moment it has been built once on this
+# machine. The declaration therefore has to follow the local-aur db per package:
+#
+#   * name in local-aur   -> declared native; apply installs it with pacman
+#   * name not there yet  -> declared foreign; apply builds it via the AUR helper,
+#                            paru adds it to local-aur, next evaluation sees native
+#
+# Both branches agree with `pacman -Qm` by construction, so there is never a
+# steady-state diff. A missing/empty local-aur (fresh machine) makes everything
+# foreign, which is exactly the bootstrap behaviour.
+#
+declare -A _local_aur_pkgs
+while IFS= read -r _p; do _local_aur_pkgs["$_p"]=1; done \
+    < <(pacman --sync --list --quiet local-aur 2>/dev/null || true)
+unset _p
+
+eval "$(declare -f AddPackage | sed '1s/^AddPackage/AconfAddPackage/')"
+
+function AddPackage() {
+    if [[ "$1" != "--foreign" ]]; then
+        AconfAddPackage "$@"
+        return
+    fi
+    shift
+    local pkg
+    for pkg in "$@"; do
+        if [[ -n "${_local_aur_pkgs[$pkg]:-}" ]]; then
+            AconfAddPackage "$pkg"
+        else
+            AconfAddPackage --foreign "$pkg"
+        fi
+    done
+}
+
 # AddOptionalPackage optional-for depent reason
 function AddOptionalPackage() {
     shift 1

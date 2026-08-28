@@ -317,7 +317,7 @@ SystemdEnable --from-file /etc/systemd/system/samsung-tv-relay.service
 # chored: Home Assistant runs declared jobs here (TV app installs, later
 # mail tasks) over a forced-command SSH key. Jobs live in
 # ~/.config/chored/jobs.d (yadm); the AUR package is ours (~/packages).
-AddPackage --foreign chored
+AddPackage $FOREIGN chored
 
 # qemu binfmt.d
 CopyFile /etc/binfmt.d/qemu-aarch64-static.conf
