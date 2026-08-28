@@ -1,5 +1,5 @@
 [Match]
-Name=enp7s0.7
+Name=kluster
 
 [Network]
 Bridge=kvmbr1
