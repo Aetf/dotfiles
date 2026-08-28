@@ -42,10 +42,10 @@ AddPackage cmctl
 AddPackage talosctl
 
 # Packages for managing emails
-AddPackage gmailctl # Declarative configuration for Gmail filters
+AddPackage $FOREIGN gmailctl # Declarative configuration for Gmail filters
 
 # Networking debugging
-AddPackage mdns-scan # Scan mDNS/DNS-SD published services on the local network
+AddPackage $FOREIGN mdns-scan # Scan mDNS/DNS-SD published services on the local network
 AddPackage traceroute # Tracks the route taken by packets over an IP network
 AddPackage nmap # Utility for network discovery and security auditing
 AddPackage iperf3 # TCP, UDP, and SCTP network bandwidth measurement tool
