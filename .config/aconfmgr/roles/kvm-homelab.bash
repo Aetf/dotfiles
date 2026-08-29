@@ -8,8 +8,13 @@ cat >$(CreateFile /etc/pacman.d/confs/no-libvirt-default-net.conf) <<EOF
 NoExtract = etc/libvirt/qemu/networks/default.xml
 EOF
 
-# Domain definitions are libvirt's own state, not configuration: virsh edit
-# and managed migrations rewrite them, and the HAOS domain is adopted by the
-# kluster physical stack (Pulumi import by UUID). Declaring the XML here would
-# put two owners on one file, so the whole directory is ignored instead
-# (see 10-ignores.sh).
+## HAOS domain (UUID 5e10948c-8934-4239-849c-b6b9104bfe3f). This declaration
+## is the domain's single owner: the kluster physical stack deliberately does
+## not manage libvirt domains (RFC-002 §13), so nothing else defines it.
+## The disk image lives under the nodatacow subvolume /var/lib/libvirt/kluster
+## (created by tmpfiles, see roles/kluster-host.bash). Recreation on a fresh
+## host = `virsh define` of this file. Intentional changes go through
+## `virsh edit` first, then are captured back here.
+CopyFile /etc/libvirt/qemu/haos.xml 600
+## Autostart
+CreateLink /etc/libvirt/qemu/autostart/haos.xml /etc/libvirt/qemu/haos.xml
