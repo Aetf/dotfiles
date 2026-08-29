@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 # Deploy gw-config to the UDM-SE gateway; --check does a dry-run diff only.
 #
-# The UDM's /etc is wiped by firmware updates. Everything managed here either
-# lives under /data (survives updates) or is reinstalled from /data at boot by
-# on_boot.d/0-setup-system.sh. This script pushes the yadm-managed sources of
-# truth to both places.
+# Everything managed here lives under /data (survives firmware updates) and is
+# converged into its live location (/etc/systemd/*, /var/lib/machines, ...) at
+# boot by the on_boot.d scripts. This script pushes the yadm-managed sources of
+# truth to both the /data copies and the live locations.
 #
 # --check reports drift as an actual diff (repo = source of truth): for text
 # files it prints a unified diff of the live copy on gw vs the repo copy; for
@@ -18,11 +18,18 @@ mode=${1:---apply}
 # Source-of-truth -> gateway destination. A trailing slash means directory sync
 # (with --delete); no trailing slash is a single file. Both the check and the
 # apply path iterate this same list so they can never diverge.
+# /data/custom/bin also holds hand-placed tools (nvim), and /etc/systemd/system
+# holds units we do not own — those destinations get single-file pushes, never
+# a directory sync whose --delete would take out the unmanaged neighbors.
 pairs=(
     "on_boot.d/|/data/on_boot.d/"
-    "authorized_keys.d/|/data/gw-config/authorized_keys.d/"
-    "nspawn/|/data/gw-config/nspawn/"
+    "bin/nspawn-bridge-watchdog.sh|/data/custom/bin/nspawn-bridge-watchdog.sh"
+    "units/|/data/custom/units/"
+    "nspawn/|/data/custom/nspawn/"
     "nspawn/|/etc/systemd/nspawn/"
+    "units/udm-boot.service|/etc/systemd/system/udm-boot.service"
+    "units/nspawn-bridge-watchdog.service|/etc/systemd/system/nspawn-bridge-watchdog.service"
+    "authorized_keys.d/|/data/custom/authorized_keys.d/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
     "secrets/cf_token|/data/caddy/secrets/cf_token"
 )
@@ -104,11 +111,13 @@ if [[ $mode == --check ]]; then
 fi
 
 # --apply
-ssh gw 'mkdir -p /data/gw-config/nspawn' 2>/dev/null
+ssh gw 'mkdir -p /data/custom/bin /data/custom/units /data/custom/nspawn /data/custom/authorized_keys.d' 2>/dev/null
 flags=(-rlpc --delete --itemize-changes)
 for p in "${pairs[@]}"; do
     rsync "${flags[@]}" "${p%%|*}" "gw:${p##*|}"
 done
 ssh gw 'chmod +x /data/on_boot.d/*.sh && systemctl daemon-reload' 2>/dev/null
-echo "Applied. Caddyfile changes additionally need:"
-echo "  ssh gw systemctl restart systemd-nspawn@caddy.service"
+echo "Applied. Some changes additionally need:"
+echo "  Caddyfile:      ssh gw systemctl restart systemd-nspawn@caddy.service"
+echo "  units/*:        ssh gw systemctl restart nspawn-bridge-watchdog"
+echo "  retired unit:   ssh gw systemctl disable --now <unit> + rm (deploy never deletes there)"

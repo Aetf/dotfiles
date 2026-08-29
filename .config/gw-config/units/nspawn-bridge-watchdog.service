@@ -1,0 +1,15 @@
+# Reattaches nspawn vb-* veths to their bridge when they fall off after a
+# container restart. Worker script lives in /data (survives firmware updates);
+# this unit is installed/enabled by on_boot.d/20-units.sh.
+[Unit]
+Description=Automated Bridge Watchdog for Systemd-Nspawn
+After=network.target
+
+[Service]
+ExecStart=/data/custom/bin/nspawn-bridge-watchdog.sh
+Restart=always
+RestartSec=5
+Nice=10
+
+[Install]
+WantedBy=multi-user.target

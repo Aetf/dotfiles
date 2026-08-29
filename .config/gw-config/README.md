@@ -12,26 +12,52 @@ file mtimes):
 | What | Survives firmware updates? |
 |---|---|
 | `/data` | always (documented) |
-| `/etc/systemd` (nspawn units, unit files, wants symlinks) | yes — upstream nspawn-container addon docs state: "When the firmware is updated, /data and /etc/systemd are preserved, but /var and /usr are deleted." Matches all six observed updates. |
-| dpkg/apt-installed packages (systemd-container, rsync, …) | **no — wiped every single update** (they live in /usr, /var); `dpkg.log` shows `install … <none>` reinstalls after each one |
-
-(This setup follows the `nspawn-container` addon from
-unifi-utilities/unifi-common-addons; written for UniFi OS 4.x, works
-unchanged on 5.x as of 5.1.19.)
+| `/etc/systemd` (nspawn units, unit files, wants symlinks), `/root` | yes — upstream nspawn-container addon docs state: "When the firmware is updated, /data and /etc/systemd are preserved, but /var and /usr are deleted." Matches all observed updates. |
+| `/usr` + `/var`: dpkg/apt-installed packages (systemd-container, rsync, …), their dpkg records, apt lists | **no — wiped every single update**; `dpkg.log` shows `install … <none>` reinstalls after each one. An update can also bump base packages (2026-08-28: systemd deb11u7→u8), so anything version-locked to base must be reinstalled at matching versions. |
 
 Strategy:
 
-1. all custom state lives in `/data` on the device,
-2. `on_boot.d` scripts idempotently reinstall packages (load-bearing at every
-   update) and restore `/etc` bits (insurance for major jumps/factory reset),
+1. all custom state lives under two `/data` roots: `/data/on_boot.d/` (the
+   upstream udm-boot entry point) and `/data/custom/` (everything else —
+   rootfs, unit sources, deb cache, keys),
+2. `on_boot.d` scripts converge the system every boot: reinstall packages
+   (load-bearing after every update) and restore `/etc` bits (insurance for
+   major jumps / factory reset),
 3. this repo mirrors the sources of truth and small backups.
+
+## Boot chain
+
+`udm-boot.service` (vendored verbatim from
+[unifi-utilities/unifi-common](https://github.com/unifi-utilities/unifi-common)
+in `units/`, pin commit in the file header) is self-contained: the
+run-everything-in-`/data/on_boot.d` logic is inlined in its `ExecStart`, so
+the single file in `/etc/systemd/system` is the whole hook — no /usr
+dependency, nothing else to install. It runs each script independently
+(a failing script does not stop the rest):
+
+| Script | Converges |
+|---|---|
+| `10-packages.sh` | dpkg set `systemd-container libnss-mymachines rsync` (the first two are version-locked to each other and to base systemd — one transaction). apt first (`apt-get update` — the lists are wiped too); on success refreshes the offline deb cache `/data/custom/dpkg/` from what was just downloaded (exactly the closure missing from the current firmware base); on failure installs from that cache. The cache is only consumed on a post-update boot without working apt, and can't go stale silently — every successful apt install rewrites it. |
+| `20-units.sh` | `/data/custom/units/*.service` → `/etc/systemd/system/`, enabled; changed units restarted (udm-boot itself only converged+enabled, never restarted — it is running the script). Retiring a unit is manual: `disable --now` + rm on the device. |
+| `30-nspawn-units.sh` | `/data/custom/nspawn/` → `/etc/systemd/nspawn/` as a true mirror (stale `*.nspawn` removed). Runs before machines start so containers never come up without bridge config. |
+| `40-machines.sh` | links `/data/custom/machines/<m>` → `/var/lib/machines/`, then converges every machine (skipping `*.old/.new/.failed` rollback copies) to enabled+running via `systemctl … systemd-nspawn@<m>` (equivalent to machinectl enable/start, but systemctl is in the firmware base so linking/enabling works even when 10- failed; machinectl commands remain fully usable). |
+| `50-authorized-keys.sh` | `/data/custom/authorized_keys.d/*.pub` appended into `/root/.ssh/authorized_keys` (append-only; hand-added keys untouched). |
+
+`nspawn-bridge-watchdog.service` (unit in `units/`, worker in
+`bin/nspawn-bridge-watchdog.sh` → `/data/custom/bin/`) re-attaches `vb-*`
+veths that fall off their bridge after a container restart.
 
 ## Layout
 
 | Path | Deployed to | Notes |
 |---|---|---|
-| `on_boot.d/` | `/data/on_boot.d/` | boot-time (re)install scripts |
-| `nspawn/` | `/data/gw-config/nspawn/` (mirror) **and** `/etc/systemd/nspawn/` (live) | `0-setup-system.sh` restores live copies from the mirror after firmware updates |
+| `on_boot.d/` | `/data/on_boot.d/` | boot-time convergence scripts (see Boot chain) |
+| `nspawn/` | `/data/custom/nspawn/` (source) **and** `/etc/systemd/nspawn/` (live) | `30-nspawn-units.sh` mirrors source → live at boot |
+| `units/` | `/data/custom/units/` (source) **and** `/etc/systemd/system/` (live, per-file — never `--delete` there) | `20-units.sh` converges at boot; restart `nspawn-bridge-watchdog` after changing it |
+| `bin/nspawn-bridge-watchdog.sh` | `/data/custom/bin/` (per-file — the dir also holds hand-placed tools) | watchdog worker |
+| `authorized_keys.d/` | `/data/custom/authorized_keys.d/` | restored by `50-authorized-keys.sh` |
+| — | `/data/custom/dpkg/` | offline deb cache, auto-refreshed by `10-packages.sh`, not repo-tracked |
+| — | `/data/custom/machines/` | container rootfs, deployed by `~/homelab-containers` `just deploy`, not repo-tracked |
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
 | `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
@@ -124,11 +150,16 @@ timer), so version history lives in yadm alongside config history.
 
 ## Firmware update recovery runbook
 
-1. udm-boot itself may need reinstall after major updates: unifios-utilities
-   package; cached debs in `/data/custom/dpkg/`.
-2. Once on_boot runs, `0-setup-system.sh` reinstalls systemd-container,
-   restores `/etc/systemd/nspawn/` from `/data/gw-config/nspawn/`, links
-   machines from `/data/custom/machines/` and starts them.
+1. Normal updates: nothing to do — udm-boot survives in `/etc/systemd/system`
+   and the on_boot.d chain reconverges everything (packages via apt, cache as
+   offline fallback). Check `systemctl status udm-boot` for per-script output.
+2. udm-boot hook dead (major jump / factory reset wiping `/etc`), offline-safe
+   one-liner (then reboot, or `systemctl start udm-boot`):
+
+   ```bash
+   ssh gw 'cp /data/custom/units/udm-boot.service /etc/systemd/system/ &&
+           systemctl daemon-reload && systemctl enable --now udm-boot'
+   ```
 3. Verify: `machinectl list` shows adguard-alice+adguard-bob+caddy; DNS
    works on 10.0.5.3 AND 10.0.5.4; then
    `./deploy.sh --check` from the homelab should be clean.
