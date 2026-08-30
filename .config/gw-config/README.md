@@ -109,9 +109,20 @@ mise shims; the timers are yadm-managed `##h` alternates):
   - Built from `~/homelab-containers/caddy` (see rebuild section below). Init
     inside the container is **s6-overlay** (3.2.1.0; NOT openrc, NOT from
     apk). Services are s6-rc.d definitions from the build repo's `rootfs/`:
-    `ifup` (oneshot), `sshd`, and `caddy` — whose `run` script also bridges
-    caddy's sd_notify READY=1 to s6 readiness via a background socat listener
-    (this is why `socat` is in the apk world).
+    `net-setup` (oneshot), `sshd`, and `caddy` — whose `run` script also
+    bridges caddy's sd_notify READY=1 to s6 readiness via a background socat
+    listener (this is why `socat` is in the apk world).
+  - Static addressing, same shape as the AdGuard pair: `net-setup` reads
+    `IPV4_CIDR` / `IPV4_GATEWAY` / `IPV6_TOKEN` out of PID 1's environment,
+    set by `Environment=` in `nspawn/caddy.nspawn`, and configures `host0`
+    itself (`iproute2-minimal`, because busybox `ip` has no `token`). The
+    caddy service depends on the oneshot, so a missing value keeps the proxy
+    down rather than bringing it up on the wrong address.
+  - The image bakes `/etc/resolv.conf` with public resolvers (9.9.9.9,
+    1.1.1.1, and their v6 peers), deliberately not the AdGuard instances:
+    the proxy stands in front of them, and ACME DNS-01 has to reach the
+    Cloudflare API by name across exactly the windows when whole-house DNS
+    is down or restarting.
   - caddy itself is NOT an apk package: xcaddy-built `/usr/bin/caddy` with the
     cloudflare DNS + caddy-l4 modules. Caddyfile path comes from
     `XDG_CONFIG_HOME=/data/caddy/config` set in `nspawn/caddy.nspawn`.
