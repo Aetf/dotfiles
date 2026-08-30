@@ -30,3 +30,7 @@ Bridge=br5
 
 [Files]
 Bind=/data:/data
+# The image bakes public resolvers, which cannot answer home.arpa — and every
+# reverse_proxy upstream in the Caddyfile is a home.arpa name. Site fact, so it
+# lives here rather than in the image, and survives a rootfs redeploy.
+Bind=/data/caddy/resolv.conf:/etc/resolv.conf

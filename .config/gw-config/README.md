@@ -59,6 +59,7 @@ veths that fall off their bridge after a container restart.
 | — | `/data/custom/dpkg/` | offline deb cache, auto-refreshed by `10-packages.sh`, not repo-tracked |
 | — | `/data/custom/machines/` | container rootfs, deployed by `~/homelab-containers` `just deploy`, not repo-tracked |
 | `caddy/Caddyfile` | `/data/caddy/config/caddy/Caddyfile` | restart caddy container after changes |
+| `caddy/resolv.conf` | `/data/caddy/resolv.conf` | bind-mounted onto `/etc/resolv.conf` by `nspawn/caddy.nspawn`; restart caddy container after changes |
 | `secrets/` | `/data/caddy/secrets/` (per-file pairs) | git-crypt encrypted in yadm; `--check` redacts content |
 | `backups/unifi/` | ← pulled from `/data/unifi/data/backup/autobackup/` | UniFi monthly .unf autobackups (`gw-backup-pull`) |
 | `backups/adguard-alice/`, `backups/adguard-bob/` | ← pulled from `/data/adguard-<instance>/` | AdGuardHome.yaml snapshots (alice = sync origin / source of truth) |
@@ -118,11 +119,14 @@ mise shims; the timers are yadm-managed `##h` alternates):
     itself (`iproute2-minimal`, because busybox `ip` has no `token`). The
     caddy service depends on the oneshot, so a missing value keeps the proxy
     down rather than bringing it up on the wrong address.
-  - The image bakes `/etc/resolv.conf` with public resolvers (9.9.9.9,
-    1.1.1.1, and their v6 peers), deliberately not the AdGuard instances:
-    the proxy stands in front of them, and ACME DNS-01 has to reach the
-    Cloudflare API by name across exactly the windows when whole-house DNS
-    is down or restarting.
+  - Resolver: `caddy/resolv.conf` here is bind-mounted over the image's own
+    (which bakes public resolvers) and names the gateway's dnsmasq,
+    `10.0.5.1`. It is the only resolver that answers both halves of what
+    caddy asks — authoritative for the `home.arpa` upstreams the Caddyfile
+    proxies to, and forwarding for ACME's Cloudflare API calls — while
+    still not being the AdGuard pair the proxy fronts. Exactly one entry:
+    musl races all listed nameservers and takes the first answer, so a
+    public resolver beside it would win with NXDOMAIN for `home.arpa`.
   - caddy itself is NOT an apk package: xcaddy-built `/usr/bin/caddy` with the
     cloudflare DNS + caddy-l4 modules. Caddyfile path comes from
     `XDG_CONFIG_HOME=/data/caddy/config` set in `nspawn/caddy.nspawn`.

@@ -31,6 +31,7 @@ pairs=(
     "units/nspawn-bridge-watchdog.service|/etc/systemd/system/nspawn-bridge-watchdog.service"
     "authorized_keys.d/|/data/custom/authorized_keys.d/"
     "caddy/Caddyfile|/data/caddy/config/caddy/Caddyfile"
+    "caddy/resolv.conf|/data/caddy/resolv.conf"
     "secrets/cf_token|/data/caddy/secrets/cf_token"
 )
 
