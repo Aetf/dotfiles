@@ -9,3 +9,4 @@
 .config/gw-config/secrets/** filter=git-crypt diff=git-crypt
 .config/dmarc-check/env filter=git-crypt diff=git-crypt
 .config/adguardhome-sync/env filter=git-crypt diff=git-crypt
+.config/deepseek/env filter=git-crypt diff=git-crypt
