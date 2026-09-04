@@ -1,3 +1,4 @@
+@~/.claude/HOST.md
 @~/.local/state/claude/vault/Claude/global/GLOBAL.md
 
 # 记忆系统（Obsidian vault 直连）
@@ -15,9 +16,11 @@
 - **全局**（跨项目、跨机器都适用的 user/feedback 类：语言偏好、工作方式规则等）→ 写 `Claude/global/`，并在 `Claude/global/GLOBAL.md` 追加一行 `@~/.local/state/claude/vault/Claude/global/<file>.md`（该文件每个会话经本文件 import 加载，不走召回）。
 - **项目/领域事实** → 写本项目 scope，照常维护该 scope 的 MEMORY.md 索引。
 
-## 内容规范：fact doc，不是操作历史
+## 记忆的写法
 
-- 记录事实、约束、根因、可复用方法、坑；不记录"当时做了什么"的过程叙事。判据：三个月后读它能直接指导行动，而不是复述一段历史。
+正文遵守 [[../global/feedback-docs-as-built]] 的 fact doc 纪律（一切产出文字通用）。记忆特有的几条：
+
 - 状态与结论可带绝对日期戳（如 "2026-08-18 竣工"）；知识过时就地改写并留一行指针；确认错误的记忆直接删除。
-- 记忆现在是**多机共享**的：只对某台机器成立的事实要标明机器名（如【机器:Aetf-Arch-Homelab】）。
+- 记忆**多机共享**：只对某台机器成立的事实要标明机器名（如【机器:Aetf-Arch-Homelab】）。本机身份见 `~/.claude/HOST.md`。
 - 互链用 `[[wikilink]]`；跨 scope 用相对形式如 `[[../home/xxx]]`。中文为主、英文术语照写。
+- **MEMORY.md 是目录不是摘要**：每条一行 `- [标题](file.md) — 一句话说明这里面是什么`，不要把结论抄进索引。它每个会话全额加载，密度要低。

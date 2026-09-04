@@ -1,0 +1,9 @@
+# 本机：Aetf-Arch-XPS
+
+本文件由 yadm 按主机名分发，是"我跑在哪台机器上"的静态答案，不需要再跑 `hostnamectl` 确认。若内容与实际明显不符（新机器、alt 未生效），才去核实。
+
+- **角色**：Dell XPS 17 9700 笔记本，Arch Linux + KDE Plasma，用户的日常交互机。yakuake/konsole、refind、睡眠/休眠、paru `~/packages.local` 都是本机的事实。
+- **有 sudo**（wheel 组），有图形会话——但需要密码的操作仍交给用户在自己的终端跑。
+- **vault**：`~/.local/state/claude/vault` → `~/sync/Notes`（Syncthing 源端）。
+- **可达的其它机器**：`ssh archvps`、`ssh mac`、`ssh mcsh`。homelab 无 ssh alias，用主机名/IP。
+- **服务器类事实不属于本机**：k3s/kluster、ZFS `nas` 池、qBittorrent/Jellyfin/immich、UPS、aconfmgr 的 homelab 侧全部在 Aetf-Arch-Homelab 上。记忆索引里绝大多数 `homelab-*`/`kluster-*` 条目在本机不成立，要动它们必须 ssh 过去、在那一端取证。
