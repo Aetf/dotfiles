@@ -1,13 +1,15 @@
 {
+{% if yadm.hostname == "Aetf-Arch-Homelab" %}
   "permissions": {
     "allow": [
-      "Bash(gh pr * --repo Aetf/kluster *)",
-      "Bash(gh issue * --repo Aetf/kluster *)",
-      "Bash(gh pr * --repo Aetf/teahouse *)",
-      "Bash(gh issue * --repo Aetf/teahouse *)"
+      "Bash(gh pr create --repo Aetf/kluster *)",
+      "Bash(gh pr comment --repo Aetf/kluster *)",
+      "Bash(gh pr merge --repo Aetf/kluster *)",
+      "Bash(gh pr create --repo Aetf/teahouse *)",
+      "Bash(gh pr comment --repo Aetf/teahouse *)",
+      "Bash(gh pr merge --repo Aetf/teahouse *)"
     ]
   },
-  "model": "fable[1m]",
   "enabledPlugins": {
     "unifi-network@unifi-plugins": true
   },
@@ -20,6 +22,8 @@
     }
   },
   "effortLevel": "medium",
+{% endif %}
+  "model": "fable[1m]",
   "theme": "auto",
   "remoteControlAtStartup": true,
   "inputNeededNotifEnabled": true,
