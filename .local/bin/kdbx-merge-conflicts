@@ -1,0 +1,184 @@
+#!/usr/bin/env python3
+"""Merge Syncthing sync-conflict copies of a KeePassXC database back into it.
+
+Syncthing renames a losing replica to ``<name>.sync-conflict-<date>-<time>-<id>.kdbx``
+instead of overwriting it, so the diverged edits survive but sit outside the database.
+``keepassxc-cli merge`` folds them back in: entry-level three-way merge keyed on UUID
+and modification time, no plaintext ever leaving the process.
+
+The database password is read once and handed to each ``keepassxc-cli`` invocation on
+stdin, so it never appears in argv, the environment, or this script's output.
+"""
+
+from __future__ import annotations
+
+import argparse
+import getpass
+import hashlib
+import os
+import shutil
+import subprocess
+import sys
+import time
+from pathlib import Path
+
+CONFLICT_MARK = ".sync-conflict-"
+
+
+def log(msg: str) -> None:
+    print(msg, file=sys.stderr, flush=True)
+
+
+def find_conflicts(db: Path) -> list[Path]:
+    """Sibling conflict copies of *db*, oldest first (the marker embeds a timestamp)."""
+    pattern = f"{db.stem}{CONFLICT_MARK}*{db.suffix}"
+    return sorted(db.parent.glob(pattern))
+
+
+def digest(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def dedupe(paths: list[Path]) -> tuple[list[Path], dict[Path, Path]]:
+    """Split *paths* into ones to merge and byte-identical duplicates mapped to their twin.
+
+    Syncthing produces one conflict file per losing sync, so a device that stayed
+    offline for several rounds leaves several copies of the same bytes; merging any
+    one of them is enough.
+    """
+    seen: dict[str, Path] = {}
+    unique: list[Path] = []
+    dups: dict[Path, Path] = {}
+    for p in paths:
+        d = digest(p)
+        if d in seen:
+            dups[p] = seen[d]
+        else:
+            seen[d] = p
+            unique.append(p)
+    return unique, dups
+
+
+def read_password(password_file: Path | None) -> bytes:
+    if password_file is None:
+        return getpass.getpass("Database password: ").encode() + b"\n"
+    data = password_file.read_bytes()
+    # A password file written by an editor ends in a newline that is not part of the
+    # password; keepassxc-cli reads one line, so hand it exactly one.
+    return data.split(b"\n", 1)[0] + b"\n"
+
+
+def merge(db: Path, source: Path, password: bytes, key_file: Path | None, dry_run: bool) -> bool:
+    cmd = ["keepassxc-cli", "merge", "--same-credentials"]
+    if key_file is not None:
+        cmd += ["--key-file", str(key_file)]
+    if dry_run:
+        cmd.append("--dry-run")
+    cmd += [str(db), str(source)]
+    proc = subprocess.run(cmd, input=password, stdout=None, stderr=None)
+    return proc.returncode == 0
+
+
+def backup(db: Path, backup_dir: Path | None) -> Path:
+    stamp = time.strftime("%Y%m%d-%H%M%S")
+    target_dir = backup_dir or db.parent
+    target_dir.mkdir(parents=True, exist_ok=True)
+    dest = target_dir / f"{db.stem}.pre-merge-{stamp}{db.suffix}"
+    shutil.copy2(db, dest)
+    return dest
+
+
+def main() -> int:
+    ap = argparse.ArgumentParser(
+        description="Merge Syncthing sync-conflict copies into a KeePassXC database.",
+    )
+    ap.add_argument("database", type=Path, help="the .kdbx to merge into")
+    ap.add_argument(
+        "conflicts",
+        nargs="*",
+        type=Path,
+        help="conflict copies to merge (default: every sibling .sync-conflict-* copy)",
+    )
+    ap.add_argument(
+        "--password-file",
+        type=Path,
+        help="file whose first line is the database password (default: prompt)",
+    )
+    ap.add_argument("--key-file", type=Path, help="key file, if the database uses one")
+    ap.add_argument(
+        "-n", "--dry-run", action="store_true",
+        help="only report what each merge would change; leave every file alone",
+    )
+    ap.add_argument(
+        "--no-backup", action="store_true",
+        help="skip the pre-merge copy of the database",
+    )
+    ap.add_argument("--backup-dir", type=Path, help="where to put the pre-merge copy (default: next to the database)")
+    group = ap.add_mutually_exclusive_group()
+    group.add_argument("--remove", action="store_true", help="delete merged conflict files without asking")
+    group.add_argument("--keep", action="store_true", help="keep merged conflict files without asking")
+    args = ap.parse_args()
+
+    db: Path = args.database
+    if not db.is_file():
+        log(f"error: no such database: {db}")
+        return 1
+
+    conflicts = list(args.conflicts) if args.conflicts else find_conflicts(db)
+    missing = [p for p in conflicts if not p.is_file()]
+    if missing:
+        log("error: no such file: " + ", ".join(str(p) for p in missing))
+        return 1
+    if not conflicts:
+        log(f"no sync-conflict copies next to {db}, nothing to do")
+        return 0
+
+    log(f"hashing {len(conflicts)} conflict copies to skip identical ones…")
+    unique, dups = dedupe(conflicts)
+    for dup, twin in dups.items():
+        log(f"  {dup.name}: identical to {twin.name}, skipping")
+
+    password = read_password(args.password_file)
+    if args.key_file is not None and not args.key_file.is_file():
+        log(f"error: no such key file: {args.key_file}")
+        return 1
+
+    if not args.dry_run and not args.no_backup:
+        dest = backup(db, args.backup_dir)
+        log(f"backed up {db.name} to {dest}")
+
+    for i, source in enumerate(unique, 1):
+        verb = "checking" if args.dry_run else "merging"
+        log(f"[{i}/{len(unique)}] {verb} {source.name} (unlocking twice, a few seconds each)…")
+        if not merge(db, source, password, args.key_file, args.dry_run):
+            log(f"error: keepassxc-cli failed on {source.name}; stopping, no conflict files removed")
+            return 1
+
+    if args.dry_run:
+        log("dry run: database and conflict files unchanged")
+        return 0
+
+    if args.keep:
+        return 0
+    if args.remove:
+        remove = True
+    elif sys.stdin.isatty():
+        answer = input(f"Delete {len(conflicts)} merged conflict file(s)? [y/N] ")
+        remove = answer.strip().lower() in ("y", "yes")
+    else:
+        log(f"keeping {len(conflicts)} conflict file(s); pass --remove to delete them")
+        return 0
+
+    if remove:
+        for p in conflicts:
+            os.remove(p)
+        log(f"deleted {len(conflicts)} conflict file(s)")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
