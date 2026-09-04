@@ -7,5 +7,5 @@
 - **vault**：`~/.local/state/claude/vault` → `/mnt/nas/Sync/Notes`。
 - **ssh**：`~/.ssh/config` 与 `~/.ssh/config.d/` 里列出的别名都可用——`gw`（网关）、`xps`/`laptop`、`haos`、`archvps`、`rpi`、`3dp`、`github`、`homelab`/`homelabzt`（本机自己）。
 - **ssh 认证**：本机有自己的 `~/.ssh/id_ed25519`（已加到 GitHub 账号），**harness 已把 `SSH_AUTH_SOCK` 置空**（`~/.claude/settings.json` 的 `env`），所以裸 `ssh`/`git push` 自然走本机 key，不需要再写 `GIT_SSH_COMMAND`。转发进来的 agent 属于用户的交互会话，Claude 不碰它——那个 socket 在 XPS 休眠后会绑着但上游已断，任何用到它的 ssh 会无限挂住。
-  - **唯一例外 `archvps`**：它的 authorized_keys 目前只有转发来的那把 key，本机 key 进不去。要连它得显式 `SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock ssh archvps …` 并加 `timeout`。把本机公钥加进去之后这条例外就没了。
+  - 转发 agent 不是任何目标的必需品：所有 ssh 别名都认本机 key（`archvps` 的 authorized_keys 2026-09-03 已补上）。
 - **桌面类事实不属于本机**：KDE/Plasma、yakuake/konsole、refind、睡眠/休眠、paru packages.local 全是 XPS 的事实。记忆索引里带【XPS】的条目在本机不成立，本机的配置文件也不能拿来代答 XPS 的问题（配置靠人工同步 ≠ 两边一致）。
