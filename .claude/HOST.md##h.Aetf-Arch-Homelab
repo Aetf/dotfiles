@@ -1,9 +1,11 @@
 # 本机：Aetf-Arch-Homelab
 
-本文件由 yadm 按主机名分发，是"我跑在哪台机器上"的静态答案，不需要再跑 `hostnamectl` 确认。若内容与实际明显不符（新机器、alt 未生效），才去核实。
+本文件由 yadm 按主机名分发，是"我跑在哪台机器上"的静态答案，不必再跑 `hostnamectl` 确认。只有内容与实际明显不符（新机器、alt 未生效）才去核实。
 
-- **角色**：家庭服务器，Arch Linux（LTS 内核），ASUS ROG Maximus Z690 Hero。无桌面、无 tty。Claude 常驻此机，绝大多数运维会话在这里跑。详见 [[homelab-server-overview]]。
-- **无 sudo**：连 `sudo -n true` 这类探测都会累计 pam_faillock 并锁住用户账号。一切 root 操作给用户命令、自己不执行。见 [[no-sudo-access]]。
+- **角色**：家庭服务器，Arch Linux（LTS 内核）。无桌面、无 tty。Claude 常驻此机，绝大多数运维会话在这里跑。详见 [[homelab-server-overview]]。
+- **不能用 sudo**：会话没有 tty，密码提示必然失败，而失败会累计 pam_faillock 锁住用户账号——连 `sudo -n true` 这种探测也算。一切 root 操作给用户命令、自己不执行。见 [[no-sudo-access]]。
 - **vault**：`~/.local/state/claude/vault` → `/mnt/nas/Sync/Notes`。
-- **可达的其它机器**：`ssh xps`（Aetf-Arch-XPS 笔记本，KDE 桌面）、`ssh archvps`（k3s 另一节点，**远端 shell 是 fish**）、`ssh haos`（Home Assistant OS）。
-- **桌面类事实不属于本机**：KDE/Plasma、yakuake/konsole、refind、睡眠/休眠、paru packages.local 全部是 XPS 的事实。记忆索引里带【XPS】标注的条目在本机不成立，本机的配置文件也不能拿来代答 XPS 的问题（yadm 共享 ≠ 两边一致）。
+- **ssh**：`~/.ssh/config` 与 `~/.ssh/config.d/` 里列出的别名都可用——`gw`（网关）、`xps`/`laptop`、`haos`、`archvps`、`rpi`、`3dp`、`github`、`homelab`/`homelabzt`（本机自己）。
+- **ssh 认证**：本机有自己的 `~/.ssh/id_ed25519`（已加到 GitHub 账号），**harness 已把 `SSH_AUTH_SOCK` 置空**（`~/.claude/settings.json` 的 `env`），所以裸 `ssh`/`git push` 自然走本机 key，不需要再写 `GIT_SSH_COMMAND`。转发进来的 agent 属于用户的交互会话，Claude 不碰它——那个 socket 在 XPS 休眠后会绑着但上游已断，任何用到它的 ssh 会无限挂住。
+  - **唯一例外 `archvps`**：它的 authorized_keys 目前只有转发来的那把 key，本机 key 进不去。要连它得显式 `SSH_AUTH_SOCK=$HOME/.ssh/ssh_auth_sock ssh archvps …` 并加 `timeout`。把本机公钥加进去之后这条例外就没了。
+- **桌面类事实不属于本机**：KDE/Plasma、yakuake/konsole、refind、睡眠/休眠、paru packages.local 全是 XPS 的事实。记忆索引里带【XPS】的条目在本机不成立，本机的配置文件也不能拿来代答 XPS 的问题（配置靠人工同步 ≠ 两边一致）。
