@@ -1,1 +1,7 @@
 HOST.md
+settings.local.json
+projects/
+history.jsonl
+shell-snapshots/
+todos/
+statsig/

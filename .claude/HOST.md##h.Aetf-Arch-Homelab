@@ -6,6 +6,6 @@
 - **不能用 sudo**：会话没有 tty，密码提示必然失败，而失败会累计 pam_faillock 锁住用户账号——连 `sudo -n true` 这种探测也算。一切 root 操作给用户命令、自己不执行。见 [[no-sudo-access]]。
 - **vault**：`~/.local/state/claude/vault` → `/mnt/nas/Sync/Notes`。
 - **ssh**：`~/.ssh/config` 与 `~/.ssh/config.d/` 里列出的别名都可用——`gw`（网关）、`xps`/`laptop`、`haos`、`archvps`、`rpi`、`3dp`、`github`、`homelab`/`homelabzt`（本机自己）。
-- **ssh 认证**：本机有自己的 `~/.ssh/id_ed25519`（已加到 GitHub 账号），**harness 已把 `SSH_AUTH_SOCK` 置空**（`~/.claude/settings.json` 的 `env`），所以裸 `ssh`/`git push` 自然走本机 key，不需要再写 `GIT_SSH_COMMAND`。转发进来的 agent 属于用户的交互会话，Claude 不碰它——那个 socket 在 XPS 休眠后会绑着但上游已断，任何用到它的 ssh 会无限挂住。
+- **ssh 认证**：本机有自己的 `~/.ssh/id_ed25519`（已加到 GitHub 账号），**harness 已把 `SSH_AUTH_SOCK` 置空**（`~/.claude/settings.local.json` 的 `env`，机器本地、不进 yadm），所以裸 `ssh`/`git push` 自然走本机 key，不需要再写 `GIT_SSH_COMMAND`。转发进来的 agent 属于用户的交互会话，Claude 不碰它——那个 socket 在 XPS 休眠后会绑着但上游已断，任何用到它的 ssh 会无限挂住。
   - 转发 agent 不是任何目标的必需品：所有 ssh 别名都认本机 key（`archvps` 的 authorized_keys 2026-09-03 已补上）。
 - **桌面类事实不属于本机**：KDE/Plasma、yakuake/konsole、refind、睡眠/休眠、paru packages.local 全是 XPS 的事实。记忆索引里带【XPS】的条目在本机不成立，本机的配置文件也不能拿来代答 XPS 的问题（配置靠人工同步 ≠ 两边一致）。

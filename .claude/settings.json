@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr * --repo Aetf/kluster *)",
+      "Bash(gh issue * --repo Aetf/kluster *)",
+      "Bash(gh pr * --repo Aetf/teahouse *)",
+      "Bash(gh issue * --repo Aetf/teahouse *)"
+    ]
+  },
+  "model": "fable[1m]",
+  "enabledPlugins": {
+    "unifi-network@unifi-plugins": true
+  },
+  "extraKnownMarketplaces": {
+    "unifi-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "sirkirby/unifi-mcp"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "theme": "auto",
+  "remoteControlAtStartup": true,
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true
+}
