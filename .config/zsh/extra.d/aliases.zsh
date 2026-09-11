@@ -75,3 +75,8 @@ alias work='cd ~work'
 # the CLI and the Python SDK (which reads key_file as a host path).
 alias oci='podman run --rm -it --user 0:0 -e HOME="$HOME" -e OCI_CLI_CONFIG_FILE="$HOME/.config/oci/config" -v "$HOME/.config/oci:$HOME/.config/oci" ghcr.io/oracle/oci-cli:latest'
 alias b2='podman run --rm -it --user 0:0 -e HOME=/root -v "$HOME/.config/b2:/root/.config/b2" docker.io/backblazeit/b2:latest'
+
+# Deepseek Claude
+function deepseek() {
+  (source $XDG_CONFIG_HOME/deepseek/env; claude "$@")
+}
