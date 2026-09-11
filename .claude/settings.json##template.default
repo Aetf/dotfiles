@@ -2,12 +2,10 @@
 {% if yadm.hostname == "Aetf-Arch-Homelab" %}
   "permissions": {
     "allow": [
-      "Bash(gh pr create --repo Aetf/kluster *)",
-      "Bash(gh pr comment --repo Aetf/kluster *)",
-      "Bash(gh pr merge --repo Aetf/kluster *)",
-      "Bash(gh pr create --repo Aetf/teahouse *)",
-      "Bash(gh pr comment --repo Aetf/teahouse *)",
-      "Bash(gh pr merge --repo Aetf/teahouse *)"
+      "Bash(gh pr * --repo Aetf/kluster *)",
+      "Bash(gh pr * --repo Aetf/teahouse *)",
+      "Bash(gh issue * --repo Aetf/kluster *)",
+      "Bash(gh issue * --repo Aetf/teahouse *)"
     ]
   },
   "enabledPlugins": {
@@ -26,6 +24,7 @@
   "model": "fable[1m]",
   "theme": "auto",
   "remoteControlAtStartup": true,
+  "autoContinueAtUsageLimit": true,
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true
 }
