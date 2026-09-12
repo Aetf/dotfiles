@@ -18,6 +18,15 @@ back to the owning account does not undo it. `preflight` predicts the verdict an
 into a new session (verbatim context, no summarization), mints a fresh cloud
 conversation under whichever account is currently active, and leaves the source
 transcript untouched. Suppression is inherited only from an already-tainted source.
+
+Revived sessions are launched through `claude-session`, the same launcher the HA
+button uses: one systemd user service per session (cgroup-killed on exit,
+private /tmp) in a window of the `claude-rc` tmux session.
+
+Archived state lives only server-side. `list` hides sessions whose cloud
+conversation is archived; the mapping needs the transcript's bridge-session
+record (present for sessions started with --remote-control, absent for the
+workers of a `claude rc` server), so unmapped sessions are always shown.
 """
 
 from __future__ import annotations
@@ -26,9 +35,10 @@ import argparse
 import json
 import os
 import re
+import ssl
 import subprocess
 import sys
-import time
+import urllib.request
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -41,6 +51,8 @@ GLOBAL_CONFIG = Path(os.environ.get("CLAUDE_CONFIG_DIR", Path.home())) / ".claud
 HIDDEN_ENTRYPOINTS = {"sdk-cli", "sdk-ts", "sdk-py"}
 
 WEB_SESSION_URL = "https://claude.ai/code/"
+CREDENTIALS = CLAUDE_DIR / ".credentials.json"
+CODE_SESSIONS_API = "https://api.anthropic.com/v1/code/sessions"
 
 UUID_RE = re.compile(r"^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$")
 
@@ -77,6 +89,8 @@ class Session:
     turns: int = 0
     owner_account: str | None = None
     owner_org: str | None = None
+    bridge_id: str | None = None
+    cloud_status: str | None = None
     tainted: bool = False
     taint_causes: list[str] = field(default_factory=list)
     live_pid: int | None = None
@@ -158,6 +172,7 @@ def load_session(path: Path) -> Session | None:
         if obj:
             s.owner_account = obj.get("ownerAccountUuid")
             s.owner_org = obj.get("ownerOrganizationUuid")
+            s.bridge_id = obj.get("bridgeSessionId")
 
     # A bare substring match false-positives on assistant text that merely quotes
     # the marker, so every candidate line is parsed and type-checked.
@@ -188,6 +203,45 @@ def live_sessions() -> dict[str, int]:
         if not pid or not sid or not Path(f"/proc/{pid}").exists():
             continue
         out[sid] = pid
+    return out
+
+
+def cloud_statuses() -> dict[str, str]:
+    """bridgeSessionId -> cloud status ("active"/"archived") for the logged-in account.
+
+    Uses the OAuth token Claude Code itself holds. Honors HTTPS_PROXY plus
+    NODE_EXTRA_CA_CERTS so it also works under the claude-swap pin proxy.
+    """
+    try:
+        tok = json.loads(CREDENTIALS.read_text())["claudeAiOauth"]["accessToken"]
+    except Exception:
+        return {}
+    ctx = ssl.create_default_context()
+    extra_ca = os.environ.get("NODE_EXTRA_CA_CERTS")
+    if extra_ca and Path(extra_ca).is_file():
+        ctx.load_verify_locations(extra_ca)
+    headers = {
+        "Authorization": f"Bearer {tok}",
+        "anthropic-beta": "oauth-2025-04-20",
+        "anthropic-version": "2023-06-01",
+    }
+    out: dict[str, str] = {}
+    cursor = None
+    for _ in range(50):  # pages of 100
+        url = f"{CODE_SESSIONS_API}?limit=100" + (f"&cursor={cursor}" if cursor else "")
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=20, context=ctx) as r:
+                body = json.load(r)
+        except Exception as e:
+            print(f"cc-rc: cloud status unavailable: {e}", file=sys.stderr)
+            return out
+        for item in body.get("data") or []:
+            if item.get("id"):
+                out[item["id"]] = item.get("status") or "?"
+        cursor = body.get("next_cursor")
+        if not cursor:
+            break
     return out
 
 
@@ -233,12 +287,13 @@ def describe_owner(s: Session) -> str:
     return s.owner_account[:8]
 
 
-def collect(project: str | None, include_all: bool) -> list[Session]:
+def collect(project: str | None, include_all: bool, include_archived: bool = False) -> list[Session]:
     if project:
         dirs = [PROJECTS_DIR / (project if project.startswith("-") else slugify(project))]
     else:
         dirs = sorted(d for d in PROJECTS_DIR.iterdir() if d.is_dir())
     live = live_sessions()
+    cloud = cloud_statuses()
     sessions = []
     for d in dirs:
         if not d.is_dir():
@@ -250,9 +305,20 @@ def collect(project: str | None, include_all: bool) -> list[Session]:
             if not include_all and not s.hidden:
                 continue
             s.live_pid = live.get(s.sid)
+            if s.bridge_id:
+                s.cloud_status = cloud.get(s.bridge_id)
+            if s.cloud_status == "archived" and not include_archived:
+                continue
             sessions.append(s)
     sessions.sort(key=lambda s: s.last_ts, reverse=True)
     return sessions
+
+
+def _annotate(s: Session) -> Session:
+    s.live_pid = live_sessions().get(s.sid)
+    if s.bridge_id:
+        s.cloud_status = cloud_statuses().get(s.bridge_id)
+    return s
 
 
 def resolve(prefix: str) -> Session:
@@ -260,8 +326,7 @@ def resolve(prefix: str) -> Session:
         s = load_session(Path(prefix))
         if s is None:
             sys.exit(f"cc-rc: cannot read transcript {prefix}")
-        s.live_pid = live_sessions().get(s.sid)
-        return s
+        return _annotate(s)
     matches = [
         f
         for d in PROJECTS_DIR.iterdir() if d.is_dir()
@@ -275,8 +340,7 @@ def resolve(prefix: str) -> Session:
     s = load_session(matches[0])
     if s is None:
         sys.exit(f"cc-rc: cannot read transcript {matches[0]}")
-    s.live_pid = live_sessions().get(s.sid)
-    return s
+    return _annotate(s)
 
 
 # ---------------------------------------------------------------- preflight
@@ -335,24 +399,6 @@ def preflight(s: Session) -> dict:
 # ------------------------------------------------------------------ revive
 
 
-def bridge_session(debug_log: Path, timeout: float) -> str | None:
-    """Wait for the bridge to report its cloud session id.
-
-    The same id appears under two prefixes -- the API endpoint spells it cse_,
-    the web app spells it session_ -- and only the latter resolves on
-    claude.ai/code, so the prefix is normalized here.
-    """
-    deadline = time.time() + timeout
-    pat = re.compile(r"v2 session URL: \S*/(?:cse_|session_)(\S+)")
-    while time.time() < deadline:
-        if debug_log.exists():
-            m = pat.search(debug_log.read_text(errors="replace"))
-            if m:
-                return "session_" + m.group(1)
-        time.sleep(1.0)
-    return None
-
-
 def revive(s: Session, mode: str, name: str | None, wait: float) -> int:
     pf = preflight(s)
     if mode == "same" and not pf["sameAllowed"]:
@@ -365,39 +411,21 @@ def revive(s: Session, mode: str, name: str | None, wait: float) -> int:
 
     name = name or (s.title or f"revived-{s.short}")[:60]
     workdir = s.cwd if s.cwd and Path(s.cwd).is_dir() else str(Path.home())
-    debug_log = Path(f"/tmp/cc-rc-{s.short}-{int(time.time())}.log")
 
-    cmd = ["claude", "--resume", s.sid]
+    cmd = ["claude-session", "--cwd", workdir, "--name", name,
+           "--resume", s.sid, "--wait", str(int(wait))]
     if mode == "fork":
-        cmd.append("--fork-session")
-    cmd += ["--remote-control", name, "--debug-file", str(debug_log)]
-
-    tmux_name = f"ccrc-{s.short}"
-    subprocess.run(
-        ["tmux", "new-session", "-d", "-s", tmux_name, "-c", workdir, *cmd],
-        check=True,
-    )
-    print(f"tmux session : {tmux_name}   (attach: tmux attach -t {tmux_name})")
-    print(f"mode         : {mode}  ({pf['verdict']})")
-    print(f"cwd          : {workdir}")
-    print(f"debug log    : {debug_log}")
-
+        cmd.append("--fork")
+    print(f"mode         : {mode}  ({pf['verdict']})", flush=True)
     # The bridge is minted under whatever account is currently logged in, and
     # claude.ai reports another account's session as "session not found", so the
     # account is part of the answer, not a detail.
     me = current_identity()
-    print(f"account      : {me.get('emailAddress') or '?'}")
-
-    cse = bridge_session(debug_log, wait)
-    if cse:
-        print(f"web session  : {WEB_SESSION_URL}{cse}")
-        print(f"\nOpen it in a browser signed in as {me.get('emailAddress') or 'that account'}.")
-    else:
-        print(
-            f"bridge session: not reported within {wait:.0f}s -- check "
-            f"`tmux attach -t {tmux_name}` (the session may still be starting)"
-        )
-    return 0
+    print(f"account      : {me.get('emailAddress') or '?'}", flush=True)
+    rc = subprocess.run(cmd).returncode
+    if rc == 0:
+        print(f"\nOpen the web session in a browser signed in as {me.get('emailAddress') or 'that account'}.")
+    return rc
 
 
 # ------------------------------------------------------------------ digest
@@ -468,7 +496,7 @@ def digest(s: Session, turns: int) -> str:
 
 
 def cmd_list(args) -> int:
-    sessions = collect(args.project, args.all)[: args.limit]
+    sessions = collect(args.project, args.all, args.archived)[: args.limit]
     if args.json:
         print(json.dumps([s.to_dict() for s in sessions], ensure_ascii=False, indent=2))
         return 0
@@ -477,7 +505,14 @@ def cmd_list(args) -> int:
         return 0
     print(f"{'ID':<9} {'TURNS':>5} {'SIZE':>6}  {'LAST ACTIVITY':<17} {'OWNER':<26} {'STATE':<8} TITLE")
     for s in sessions:
-        state = "live" if s.live_pid else ("tainted" if s.tainted else "ok")
+        if s.live_pid:
+            state = "live"
+        elif s.cloud_status == "archived":
+            state = "archived"
+        elif s.tainted:
+            state = "tainted"
+        else:
+            state = "ok" if s.cloud_status else "ok?"
         size = f"{s.size / 1048576:.1f}M" if s.size >= 1048576 else f"{s.size // 1024}K"
         ts = s.last_ts.replace("T", " ")[:16]
         print(
@@ -503,6 +538,7 @@ def cmd_show(args) -> int:
     print(f"last activity: {s.last_ts}   turns: {s.turns}   size: {s.size / 1048576:.1f}M")
     print(f"owner        : {describe_owner(s)}")
     print(f"state        : " + ("live pid %d" % s.live_pid if s.live_pid else ("tainted (%s)" % ",".join(s.taint_causes) if s.tainted else "ok")))
+    print(f"cloud        : " + (f"{s.bridge_id}  {s.cloud_status or '?'}" if s.bridge_id else "- (no bridge-session record; status unknown)"))
     print(f"verdict      : {pf['verdict']} -- {pf['reason']}")
     print(f"advice       : {pf['advice']}")
     print()
@@ -545,6 +581,7 @@ def main() -> int:
     pl.add_argument("-p", "--project", help="project dir or cwd path (default: all)")
     pl.add_argument("-n", "--limit", type=int, default=20)
     pl.add_argument("-a", "--all", action="store_true", help="include terminal (cli) sessions")
+    pl.add_argument("--archived", action="store_true", help="include sessions archived on claude.ai")
     pl.add_argument("--json", action="store_true")
     pl.set_defaults(func=cmd_list)
 
