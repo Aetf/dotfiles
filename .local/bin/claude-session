@@ -14,8 +14,9 @@
 #     shim (-F ~/.ssh/config) is put first on PATH inside the service;
 #   * the tmux socket must not live in /tmp -> environment.d sets
 #     TMUX_TMPDIR=$XDG_RUNTIME_DIR;
-#   * rootless podman cannot nest in a single-uid userns; use podman-remote
-#     over podman.socket if a session needs containers.
+#   * rootless podman cannot nest in a single-uid userns, and the full client
+#     wrecks the host's rootless state when it tries -> the podman shim next to
+#     the ssh one forces podman-remote over the user's podman.socket.
 #
 # Callers: chored job `claude-session` (HA button), cc-rc revive, and humans.
 #

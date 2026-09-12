@@ -1,0 +1,14 @@
+#!/bin/sh
+# Inside a claude-session service (single-uid userns), the full podman client
+# cannot validate the host's rootless state: it decides the live pause process
+# "is not a pause process", deletes /run/user/1000/libpod/tmp/pause.pid and the
+# running containers' userdata/conmon.pid, and starts a pause process of its
+# own that dies with the service -- leaving host podman unable to join its own
+# namespace ("unable to create a new pause process"). `podman --remote` still
+# runs that local init; only the podman-remote binary skips it entirely.
+# So podman here is always the REST client talking to the user's podman.socket
+# (systemctl --user enable --now podman.socket). Containers it starts live on
+# the host, outside this session's cgroup, and do not die with it.
+CONTAINER_HOST="${CONTAINER_HOST:-unix://$XDG_RUNTIME_DIR/podman/podman.sock}"
+export CONTAINER_HOST
+exec /usr/bin/podman-remote "$@"
