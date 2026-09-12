@@ -1,0 +1,7 @@
+description = "Start a Claude Code session in tmux `claude-rc`, remote-controllable from claude.ai (args: <dir under ~> [name])"
+command = ["/home/aetf/.local/bin/claude-session"]
+allow-args = true
+# HA's shell_command has a 60s limit; the launcher itself waits up to 90s for
+# the bridge URL and logs it to journald: journalctl --user -u 'chored-claude-session-*'
+detach = true
+timeout = "3m"
