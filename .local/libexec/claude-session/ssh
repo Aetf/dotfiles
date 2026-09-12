@@ -1,0 +1,7 @@
+#!/bin/sh
+# Inside a claude-session service, files owned by root show up as nobody
+# (single-uid user namespace) and ssh refuses /etc/ssh/ssh_config.d/* on its
+# owner check. -F skips the system-wide config entirely; ~/.ssh/config still
+# includes everything that matters. This directory is only on PATH inside the
+# service, so plain shells are unaffected.
+exec /usr/bin/ssh -F "$HOME/.ssh/config" "$@"

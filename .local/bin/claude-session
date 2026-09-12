@@ -1,0 +1,151 @@
+#!/usr/bin/env bash
+# claude-session -- launch an interactive Claude Code session as its own
+# systemd user service inside a tmux window of the `claude-rc` session.
+#
+# Every session is one transient service (`claude-<name>-<ts>.service`):
+#   * KillMode=control-group  -- when claude exits, every process it left
+#     behind (tail, nvim, test runners, poll loops) dies with the unit;
+#   * PrivateTmp=yes          -- the session gets its own /tmp, destroyed with
+#     the unit, so scratch files never accumulate on the host.
+# PrivateTmp in the user manager implies a single-uid user namespace. Three
+# consequences are handled here or elsewhere:
+#   * root-owned files read fine but show owner 65534, and ssh rejects
+#     /etc/ssh/ssh_config.d on that -> ~/.local/libexec/claude-session/ssh
+#     shim (-F ~/.ssh/config) is put first on PATH inside the service;
+#   * the tmux socket must not live in /tmp -> environment.d sets
+#     TMUX_TMPDIR=$XDG_RUNTIME_DIR;
+#   * rootless podman cannot nest in a single-uid userns; use podman-remote
+#     over podman.socket if a session needs containers.
+#
+# Callers: chored job `claude-session` (HA button), cc-rc revive, and humans.
+#
+# Usage:
+#   claude-session [DIR [NAME]] [--cwd DIR] [--name NAME] [--resume UUID [--fork]]
+#                  [--wait SECS] [-- extra claude args]
+#
+# DIR/NAME positionals exist for the chored job (`claude-session <dir> [name]`
+# from HA); flags are the same thing spelled out.
+#
+# Prints the unit name, tmux window and (unless --wait 0) the claude.ai/code
+# URL once the bridge reports it.
+
+set -euo pipefail
+
+TMUX_SESSION=claude-rc
+LOG_DIR="$HOME/.cache/claude-session"
+SHIM_DIR="$HOME/.local/libexec/claude-session"
+CLAUDE_BIN=/usr/bin/claude
+
+die() { printf 'claude-session: %s\n' "$*" >&2; exit 1; }
+
+# ---------------------------------------------------------------- _run
+# Executed by tmux inside the new window (via `zsh -l` so env.d PATH applies).
+# argv: DIR UNIT -- claude args...
+if [[ ${1:-} == _run ]]; then
+    shift
+    dir=$1 unit=$2; shift 2
+    [[ ${1:-} == -- ]] && shift
+    exec systemd-run --user --pty --wait --collect --quiet \
+        --unit "$unit" \
+        --working-directory "$dir" \
+        --service-type exec \
+        -p KillMode=control-group -p TimeoutStopSec=15s \
+        -p PrivateTmp=yes \
+        -E PATH="$SHIM_DIR:$PATH" \
+        -E TERM="${TERM:-tmux-256color}" \
+        -E COLORTERM="${COLORTERM:-truecolor}" \
+        -E LANG="${LANG:-C.UTF-8}" \
+        "$CLAUDE_BIN" "$@"
+fi
+
+# ---------------------------------------------------------------- launcher
+dir=$PWD name="" resume="" fork=0 wait=90
+extra=() pos=()
+while (( $# )); do
+    case $1 in
+        --cwd)       dir=$2; shift 2 ;;
+        --name)      name=$2; shift 2 ;;
+        --resume)    resume=$2; shift 2 ;;
+        --fork)      fork=1; shift ;;
+        --wait)      wait=$2; shift 2 ;;
+        --)          shift; extra=("$@"); break ;;
+        -h|--help)   sed -n '2,/^$/p' "$0" | sed 's/^# \{0,1\}//'; exit 0 ;;
+        -*)          die "unknown argument: $1" ;;
+        *)           pos+=("$1"); shift ;;
+    esac
+done
+(( ${#pos[@]} > 2 )) && die "too many positional arguments: ${pos[*]}"
+(( ${#pos[@]} >= 1 )) && dir=${pos[0]}
+(( ${#pos[@]} == 2 )) && name=${pos[1]}
+
+# The HA/chored path passes an arbitrary string; keep it inside $HOME.
+dir=$(realpath -e -- "${dir/#\~/$HOME}") || die "no such directory"
+[[ $dir == "$HOME" || $dir == "$HOME"/* ]] || die "cwd must be under $HOME: $dir"
+[[ -d $dir ]] || die "not a directory: $dir"
+
+if [[ -n $resume ]]; then
+    [[ $resume =~ ^[0-9a-f-]{36}$ ]] || die "--resume expects a session UUID"
+    : "${name:=$(basename -- "$dir")-${resume:0:8}}"
+elif [[ -z $name ]]; then
+    name=$(basename -- "$dir")
+    [[ $dir == "$HOME" ]] && name=home
+fi
+(( fork )) && [[ -z $resume ]] && die "--fork requires --resume"
+
+unit="claude-$(printf %s "$name" | tr -c 'A-Za-z0-9_.-' '-' | head -c 40)-$(date +%s)"
+mkdir -p "$LOG_DIR"
+log="$LOG_DIR/$unit.log"
+
+args=("--debug-file" "$log" "--remote-control" "$name")
+[[ -n $resume ]] && args+=("--resume" "$resume")
+(( fork )) && args+=("--fork-session")
+args+=("${extra[@]}")
+
+# tmux runs window commands through sh -c; hand it a login zsh so PATH/env
+# come from env.d, then re-enter this script in _run mode.
+inner="exec $(printf '%q' "$0") _run $(printf '%q ' "$dir" "$unit" -- "${args[@]}")"
+cmd="exec zsh -lc $(printf '%q' "$inner")"
+
+if tmux has-session -t "=$TMUX_SESSION" 2>/dev/null; then
+    out=$(tmux new-window -d -P -F '#{session_name}:#{window_index} #{window_id}' \
+              -t "$TMUX_SESSION:" -c "$dir" -n "$name" "$cmd")
+else
+    out=$(tmux new-session -d -P -F '#{session_name}:#{window_index} #{window_id}' \
+              -s "$TMUX_SESSION" -c "$dir" -n "$name" "$cmd")
+fi
+win=${out%% *} winid=${out##* }
+
+echo "unit        : $unit"
+echo "tmux window : $win   (tmux attach -t $TMUX_SESSION)"
+echo "cwd         : $dir"
+echo "debug log   : $log"
+
+(( wait > 0 )) || exit 0
+
+# The bridge id is recorded in the transcript as a bridge-session line; the
+# transcript is found via the service's main pid -> ~/.claude/sessions/<pid>.json.
+# The API spells the id cse_, claude.ai/code needs session_; same id.
+echo "waiting for the bridge session id (usually well under a minute)…"
+slug=$(printf %s "$dir" | tr -c 'A-Za-z0-9' '-')
+deadline=$(( $(date +%s) + wait ))
+while (( $(date +%s) < deadline )); do
+    pid=$(systemctl --user show -p MainPID --value "$unit" 2>/dev/null || echo 0)
+    if (( pid > 0 )) && [[ -r $HOME/.claude/sessions/$pid.json ]]; then
+        sid=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("sessionId",""))' "$HOME/.claude/sessions/$pid.json")
+        t="$HOME/.claude/projects/$slug/$sid.jsonl"
+        if [[ -n $sid && -r $t ]]; then
+            id=$(grep -o '"bridgeSessionId":"cse_[A-Za-z0-9]*"' "$t" | tail -1 | sed 's/.*cse_//; s/"$//')
+            if [[ -n $id ]]; then
+                echo "session id  : $sid"
+                echo "web session : https://claude.ai/code/session_$id"
+                exit 0
+            fi
+        fi
+    fi
+    # window gone == claude exited (unit may not exist yet right after launch)
+    tmux list-windows -t "$TMUX_SESSION" -F '#{window_id}' 2>/dev/null | grep -qx "$winid" \
+        || die "session window closed before the bridge came up; see $log"
+    sleep 1
+done
+echo "bridge id not reported within ${wait}s; check tmux window $win or $log"
+exit 1
