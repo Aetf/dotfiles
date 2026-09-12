@@ -45,6 +45,12 @@ if [[ ${1:-} == _run ]]; then
     shift
     dir=$1 unit=$2; shift 2
     [[ ${1:-} == -- ]] && shift
+    # The claude-swap pin proxy wires HTTPS_PROXY into ~/.claude.json, which
+    # claude reads at startup; a stale wiring (proxy died, e.g. across a reboot)
+    # makes Remote Control fail with "session creation failed". --ensure repairs
+    # or unwires it, is silent, and is a no-op when no pin is set. It must run
+    # outside the service: the wiring has to be right before claude starts.
+    cswap pin --ensure || true
     exec systemd-run --user --pty --wait --collect --quiet \
         --unit "$unit" \
         --working-directory "$dir" \
