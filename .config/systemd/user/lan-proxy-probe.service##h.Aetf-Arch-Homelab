@@ -1,0 +1,13 @@
+[Unit]
+Description=Reachability probe for *.lan.ucw.phd via the gateway caddy (captures on failure)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/.local/share/mise/shims/lan-proxy-probe
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=default.target

@@ -2,6 +2,11 @@
 Description=Samsung TV Relay
 Wants=network-online.target
 After=network-online.target nss-lookup.target
+# The bind/target names below are DHCP-registered on the gateway's dnsmasq,
+# which lags network-online by a few seconds after a reboot; socat exits
+# immediately on a failed lookup. Never give up restarting: the default
+# 5-in-10s start limit turned that lag into a permanent failure (2026-09-12).
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
@@ -22,7 +27,7 @@ ExecStart=/bin/bash -c "\
   wait"
 
 Restart=always
-RestartSec=1
+RestartSec=5
 
 [Install]
 WantedBy=multi-user.target
