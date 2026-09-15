@@ -37,23 +37,32 @@ fi
 # just hands it to another live agent if one is around.
 stable=$HOME/.ssh/ssh_auth_sock
 dir=$HOME/.ssh/agent
-if [[ -L $stable && ! -S $stable && -d $dir ]] && command -v ss >/dev/null; then
-    declare -A bound=()
-    while read -r path; do
-        [[ -n $path ]] && bound[$path]=1
-    done < <(ss -xlH | awk '{print $5}')
 
+# A socket is "usable" iff a bounded ssh-add -l neither refuses (orphan file,
+# exit >=2 or ENOENT) nor hangs (a session whose client vanished stays LISTEN
+# and never answers - the timeout is what tells that apart from a live agent,
+# which ss -xl cannot). rc 0 (keys) and 1 (no keys) both mean the agent spoke.
+usable() {
+    local rc
+    SSH_AUTH_SOCK=$1 timeout 5 ssh-add -l >/dev/null 2>&1
+    rc=$?
+    [[ $rc -eq 0 || $rc -eq 1 ]]
+}
+
+# Repoint the fixed symlink whenever it does not currently resolve to a usable
+# agent - dangling, or pointing at a stale/hung socket (today's failure mode).
+if [[ -L $stable ]] && ! usable "$stable" && [[ -d $dir ]]; then
     shopt -s nullglob
     newest=""
     for sock in "$dir"/s.*; do
-        [[ -S $sock && -v bound[$sock] ]] || continue
+        [[ -S $sock ]] && usable "$sock" || continue
         [[ -z $newest || $sock -nt $newest ]] && newest=$sock
     done
 
     if [[ -n $newest ]]; then
         echo "repointing $stable at $newest"
         ln -sfn -- "$newest" "$stable"
-    else
+    elif [[ ! -S $stable ]]; then
         echo "no live agent left, removing dangling $stable"
         rm -f -- "$stable"
     fi
