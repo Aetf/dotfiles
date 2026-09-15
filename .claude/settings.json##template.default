@@ -20,6 +20,10 @@
     }
   },
   "effortLevel": "medium",
+  "env": {
+    "//": "Headless: no ssh-agent here. Empty means 'no agent'; env.d honors an explicit-empty and leaves it, so ssh uses ~/.ssh/id_ed25519 directly. See ssh-agent-forwarding-architecture memory.",
+    "SSH_AUTH_SOCK": ""
+  },
 {% endif %}
   "model": "fable[1m]",
   "theme": "auto",
