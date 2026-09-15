@@ -19,4 +19,13 @@ cat > "$(CreateFile /etc/ssh/sshd_config.d/allow-uds-unlink.conf)" <<EOF
 StreamLocalBindUnlink yes
 EOF
 
+# Tear down sessions whose client vanished (laptop slept, link dropped) so
+# sshd-session exits and unlinks the agent socket it forwarded into
+# ~/.ssh/agent. Otherwise that socket keeps listening but never answers, and
+# every ssh that resolves ~/.ssh/ssh_auth_sock to it hangs.
+cat > "$(CreateFile /etc/ssh/sshd_config.d/keepalive.conf)" <<EOF
+ClientAliveInterval 30
+ClientAliveCountMax 3
+EOF
+
 SystemdEnable openssh /usr/lib/systemd/system/sshd.service
