@@ -1,0 +1,28 @@
+#!/bin/sh
+# Enable cgroup v2 io.cost on the disk that backs the k3s data dir, where
+# the embedded etcd keeps its WAL. Without io.cost the IOWeight= on
+# k3s.service is inert on an nvme running the "none" scheduler, and any
+# tenant writing at full speed (container image builds, cargo target dirs
+# in an emptyDir on the same disk) pushes etcd fdatasync into the seconds:
+# the controllers lose their leases and k3s exits.
+#
+# Only enable=1 is written, deliberately. In auto mode the kernel picks its
+# cost model per device class and keeps re-selecting between the SSD
+# presets from the observed vrate; setting any latency target or vrate
+# bound freezes that selection and would need per-device numbers from a
+# resctl-bench run, which the iocost-benchmarks project has no entry for
+# on this disk model. Weight sharing alone is what protects etcd.
+#
+# The disk is resolved from the mount rather than pinned by major:minor
+# (renumbers across kernel/enumeration changes) or by fs UUID (belongs to
+# the partition, and io.cost is a whole-device knob). Takes the immediate
+# parent only: a data dir on a stacked dm/md device gets that device, not
+# the disks below it.
+set -eu
+
+datadir=${1:-/var/lib/rancher/k3s}
+src=$(findmnt -no SOURCE --target "$datadir")
+src=${src%%\[*}                      # btrfs reports /dev/X[/subvol]
+parent=$(lsblk -dno PKNAME "$src")   # empty when src is a whole disk
+[ -n "$parent" ] && src=/dev/$parent
+echo "$(lsblk -dno MAJ:MIN "$src") enable=1 ctrl=auto" > /sys/fs/cgroup/io.cost.qos
