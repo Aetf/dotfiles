@@ -254,7 +254,11 @@ cat >$(CreateFile /etc/systemd/system/k3s.service.d/override.conf) <<EOF
 # the boot race against zfs mounting (zfs-mount-generator provides
 # mnt-nas.mount) and kubelet would bind-mount empty directories into pods
 # -- same race qbittorrent-nox hit on the 2026-07-02 boot.
-RequiresMountsFor=/mnt/nas
+# /var/lib/scratch is the nas/scratch dataset behind the local-path-scratch
+# StorageClass (kluster-code src/local-path): same race, and worse, a miss
+# would land CI runner scratch on the root nvme -- the disk this class
+# exists to keep them off.
+RequiresMountsFor=/mnt/nas /var/lib/scratch
 EOF
 
 # FUTURE: there's no fan driver for the motherboard yet
