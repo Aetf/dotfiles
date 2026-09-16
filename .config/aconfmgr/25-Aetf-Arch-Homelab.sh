@@ -206,9 +206,25 @@ disable:
 cluster-init: true
 
 kubelet-arg: []
+# Leader election is a liveness check against the local apiserver, and losing
+# it is fatal: k3s exits as a whole, taking kubelet and the apiserver down with
+# it. On this single-server cluster the lease has nothing to arbitrate, so the
+# upstream 15s/10s budget only turns an etcd stall (root nvme saturated by a
+# tenant, see the k3s.service IOWeight override) into a full restart -- which
+# is itself an IO burst. 60s/40s rides out a stall; a real deadlock still
+# trips it. All three elected components must agree or the strictest one
+# still exits the process.
 kube-controller-manager-arg:
   - "node-monitor-grace-period=120s"
   - "node-monitor-period=10s"
+  - "leader-elect-lease-duration=60s"
+  - "leader-elect-renew-deadline=40s"
+kube-scheduler-arg:
+  - "leader-elect-lease-duration=60s"
+  - "leader-elect-renew-deadline=40s"
+kube-cloud-controller-manager-arg:
+  - "leader-elect-lease-duration=60s"
+  - "leader-elect-renew-deadline=40s"
 
 # =====================
 # api server networking
@@ -239,6 +255,28 @@ cat >$(CreateFile /etc/systemd/system/k3s.service.d/override.conf) <<EOF
 # mnt-nas.mount) and kubelet would bind-mount empty directories into pods
 # -- same race qbittorrent-nox hit on the 2026-07-02 boot.
 RequiresMountsFor=/mnt/nas
+
+[Service]
+# Embedded etcd keeps its WAL on the root nvme, the only SSD in the box, and
+# shares it with every pod's emptyDir and container layers. A tenant writing
+# at full speed (CI runners building images) pushes etcd fdatasync into the
+# seconds, the controllers lose their leases and k3s exits. io.cost (enabled
+# on the device by tmpfiles.d/iocost-nvme.conf) is what makes weights mean
+# anything on an nvme with the "none" scheduler; this weight then puts k3s
+# ahead of everything else in system.slice, and system.slice already splits
+# the device evenly with kubepods.slice at the root.
+IOWeight=1000
+EOF
+
+# Enable cgroup v2 io.cost on the root nvme so IOWeight= is enforced (the
+# "none" scheduler has no notion of weight itself). The latency targets let
+# io.cost scale the device's cost model against what it actually observes,
+# so a DRAM-less SSD with its SLC cache exhausted still gets throttled
+# before its queue depth turns into multi-second fsyncs. The major:minor is
+# the device's, not the filesystem's: a disk replacement that changes it
+# must update this line (cat /sys/block/nvme0n1/dev).
+cat >$(CreateFile /etc/tmpfiles.d/iocost-nvme.conf) <<EOF
+w /sys/fs/cgroup/io.cost.qos - - - - 259:0 enable=1 ctrl=auto rpct=95 rlat=5000 wpct=95 wlat=5000 min=50 max=150
 EOF
 
 # FUTURE: there's no fan driver for the motherboard yet
