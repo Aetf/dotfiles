@@ -39,6 +39,15 @@ SystemdEnable --name zfs-scrub-monthly@nas.timer zfs-utils /usr/lib/systemd/syst
 # ashift=12 sets the sector size to be 4k rather than 512B default.
 # MANUAL: sudo zpool create -o ashift=12 -m /mnt/nas nas raidz2 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1KD44 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1PHHH /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1Q6M8 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1Q7SB
 # MANUAL: auto mount cache: mkdir /etc/zfs/zfs-list.cache && touch /etc/zfs/zfs-list.cache/nas && zfs set canmount=on nas
+#
+# Datasets besides the pool root, with the properties that are not defaults.
+# nas/scratch backs the k8s local-path-scratch StorageClass (kluster-code
+# src/local-path): per-pod volumes a job may fill at full speed (CI runner
+# image stores, cargo targets), kept off the root nvme that etcd lives on.
+# local-path enforces no size, so the refquota is the only bound; it is
+# mounted outside /mnt/nas because it is not NAS content and must not be
+# exported or shared. k3s orders itself after this mount (see the host file).
+# MANUAL: zfs create -o mountpoint=/var/lib/scratch -o refquota=50G -o compression=lz4 -o atime=off nas/scratch
 
 # For hdparm
 AddPackage hdparm
