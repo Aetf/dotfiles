@@ -9,6 +9,6 @@ Type=oneshot
 TimeoutStartSec=600
 ExecStart=/usr/bin/podman run --rm \
     --env-file %h/.config/dmarc-check/env \
-    --volume %h/.claude/.credentials.json:/root/.claude/.credentials.json:rw \
+    --volume %h/.config/claude/.credentials.json:/root/.claude/.credentials.json:rw \
     --volume dmarc-check-data:/state \
     localhost/dmarc-check:latest

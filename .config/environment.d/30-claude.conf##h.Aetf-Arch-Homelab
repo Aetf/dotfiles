@@ -1,0 +1,5 @@
+# One project identity for every cwd on this machine: sessions, --resume and
+# scratchpads all live in $CLAUDE_CONFIG_DIR/projects/homelab/. Memory is not
+# affected (autoMemoryDirectory in settings.json routes it to the vault).
+# Only honoured when CLAUDE_CONFIG_DIR is also set (10-xdg-dirs.conf).
+CLAUDE_CODE_PROJECT_DIR_NAME=homelab

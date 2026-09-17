@@ -25,6 +25,7 @@
     "SSH_AUTH_SOCK": ""
   },
 {% endif %}
+  "autoMemoryDirectory": "~/.local/state/claude/vault/Claude/memory",
   "model": "fable[1m]",
   "theme": "auto",
   "remoteControlAtStartup": true,

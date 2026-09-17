@@ -8,7 +8,7 @@ is always recoverable; the hard part is identifying which transcript it is.
 
 Reviving carries one irreversible hazard. When a transcript carries a
 bridge-session record, Claude compares its ownerAccountUuid/ownerOrganizationUuid
-against oauthAccount in ~/.claude.json (both fields, exact match). A mismatch is
+against oauthAccount in $CLAUDE_CONFIG_DIR/.claude.json (both fields, exact match). A mismatch is
 adjudicated as restored_owner_mismatch and appends a permanent history-suppression
 entry, after which that transcript can never sync to the cloud again -- switching
 back to the owning account does not undo it. `preflight` predicts the verdict and
