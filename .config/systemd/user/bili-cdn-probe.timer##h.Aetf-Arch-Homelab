@@ -1,0 +1,11 @@
+[Unit]
+Description=Daily refresh of the Bilibili CDN steering
+
+[Timer]
+# Early morning: the probe saturates a connection per edge for a few minutes.
+OnCalendar=*-*-* 05:17:00
+RandomizedDelaySec=900
+Persistent=true
+
+[Install]
+WantedBy=timers.target

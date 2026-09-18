@@ -1,0 +1,9 @@
+[Unit]
+Description=Re-measure Bilibili CDN edges and refresh the AdGuard steering
+# The rewrites hand clients a fixed edge IP, so a retired or degraded edge stays
+# in front of every player until this runs again. A failed run changes nothing.
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/mise/shims/bili-cdn-probe --apply
