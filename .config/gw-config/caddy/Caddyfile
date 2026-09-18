@@ -2,6 +2,23 @@
 	email "aetf@unlimited-code.works"
 	debug
 	admin unix//data/caddy/data/caddy/caddy-admin.sock
+
+	# AdGuard answers upos-hz-mirrorakam.akamaized.net with this proxy so the
+	# plain-HTTP site block below can re-home app video traffic (see there).
+	# Browsers fetch the same name over HTTPS; there is no certificate for a
+	# third-party name here, so pass those connections through to the real
+	# Akamai edge untouched, before Caddy's own TLS gets to see them.
+	servers :443 {
+		listener_wrappers {
+			layer4 {
+				@akam tls sni upos-hz-mirrorakam.akamaized.net upos-sz-mirrorakam.akamaized.net
+				route @akam {
+					proxy {l4.tls.server_name}:443
+				}
+			}
+			tls
+		}
+	}
 }
 
 *.lan.ucw.phd {
@@ -111,4 +128,24 @@ http://gw {
 
 http://go {
 	redir https://go.lan.ucw.phd{uri} permanent
+}
+
+# Bilibili CDN steering for the TV / mobile apps. Overseas, Bilibili hands
+# each media stream to either Akamai or one of its cloud mirrors at random,
+# and the apps fetch Akamai's share over plain HTTP; from here Akamai is the
+# slowest edge by far (single connection ~8 Mbps vs 40+ on the mirrors, i.e.
+# below 1080p60). AdGuard points the Akamai name at this proxy and the request
+# is forwarded as-is to a mirror: the URL signature (upsig) covers only the
+# query parameters listed in uparams, never the host, and the mirrors ignore
+# Akamai's hdnts token. Client headers must pass through unchanged — app-signed
+# URLs are refused with a browser Referer, so nothing is added here. Which
+# mirror is fastest is measured by homelab-ops bili-cdn-probe; the HTTPS half
+# of the traffic is steered by that script's AdGuard rules instead.
+http://upos-hz-mirrorakam.akamaized.net {
+	reverse_proxy upos-sz-mirrorcosov.bilivideo.com upos-sz-mirroraliov.bilivideo.com {
+		lb_policy first
+		fail_duration 30s
+		header_up Host {http.reverse_proxy.upstream.host}
+		flush_interval -1
+	}
 }
