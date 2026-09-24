@@ -47,7 +47,13 @@ SystemdEnable --name zfs-scrub-monthly@nas.timer zfs-utils /usr/lib/systemd/syst
 # local-path enforces no size, so the refquota is the only bound; it is
 # mounted outside /mnt/nas because it is not NAS content and must not be
 # exported or shared. k3s orders itself after this mount (see the host file).
-# MANUAL: zfs create -o mountpoint=/var/lib/scratch -o refquota=50G -o compression=lz4 -o atime=off nas/scratch
+# sync=disabled because everything on it is disposable: CI tools fsync
+# heavily (uv installing interpreters, cargo's SQLite global cache), and each
+# fsync is a ZIL commit that waits on a cache flush from every disk in the
+# raidz2, so it goes at the pace of the slowest disk. With the WD140EDGZ in
+# the pool, that stalled CI jobs for minutes with no output. Losing the last
+# few seconds of writes on a crash is fine for data that is thrown away anyway.
+# MANUAL: zfs create -o mountpoint=/var/lib/scratch -o refquota=50G -o compression=lz4 -o atime=off -o sync=disabled nas/scratch
 
 # For hdparm
 AddPackage hdparm
