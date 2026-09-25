@@ -302,7 +302,8 @@ SystemdEnable apcupsd /usr/lib/systemd/system/apcupsd.service
 
 # Misc apps
 AddPackage qbittorrent-nox git-crypt nethogs
-AddPackage claude-code # An agentic coding tool that lives in your terminal
+AddRole claude-code
+CopyFile /etc/claude-code/managed-settings.d/20-homelab.json
 SystemdEnable --name qbittorrent-nox@aetf.service qbittorrent-nox /usr/lib/systemd/system/qbittorrent-nox@.service
 cat >$(CreateFile /etc/systemd/system/qbittorrent-nox@aetf.service.d/override.conf) <<EOF
 [Unit]

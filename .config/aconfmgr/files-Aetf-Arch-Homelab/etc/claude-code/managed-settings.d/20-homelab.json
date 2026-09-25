@@ -1,0 +1,25 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(gh pr * --repo Aetf/kluster *)",
+      "Bash(gh pr * --repo Aetf/teahouse *)",
+      "Bash(gh issue * --repo Aetf/kluster *)",
+      "Bash(gh issue * --repo Aetf/teahouse *)"
+    ]
+  },
+  "enabledPlugins": {
+    "unifi-network@unifi-plugins": true
+  },
+  "extraKnownMarketplaces": {
+    "unifi-plugins": {
+      "source": {
+        "source": "github",
+        "repo": "sirkirby/unifi-mcp"
+      }
+    }
+  },
+  "env": {
+    "//": "Headless: no ssh-agent here. Empty means 'no agent'; env.d honors an explicit-empty and leaves it, so ssh uses ~/.ssh/id_ed25519 directly. See ssh-agent-forwarding-architecture memory.",
+    "SSH_AUTH_SOCK": ""
+  }
+}

@@ -218,7 +218,7 @@ AddPackage packwiz-git # A command line tool for creating minecraft modpacks.
 AddPackage antigravity # Google Antigravity 2.0 multi-agent orchestration platform
 AddPackage appimagelauncher # Helper for running and integrating AppImages
 AddPackage chromium # A web browser built for speed, simplicity, and security
-AddPackage claude-code # An agentic coding tool that lives in your terminal
+AddRole claude-code
 AddPackage google-cloud-cli # A core set of command-line tools for the Google Cloud Platform.
 AddPackage googleworkspace-cli # Command-line tool for Drive, Gmail, Calendar, Sheets, Docs, Chat, Admin, and more
 AddPackage pdfannots-git # Extracts and formats text annotations from a PDF file
