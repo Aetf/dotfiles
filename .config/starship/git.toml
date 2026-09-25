@@ -1,0 +1,29 @@
+# Appended to base.toml outside jj workspaces: starship's native git modules,
+# formatted like p10k lean's git status (branch, or @commit when detached).
+
+[git_branch]
+format = '[$branch(:$remote_branch)]($style) '
+style = 'fg:76'
+
+[git_commit]
+format = '[@$hash]($style) '
+style = 'fg:76'
+commit_hash_length = 8
+
+[git_state]
+format = '[$state( $progress_current/$progress_total)]($style) '
+style = 'fg:196'
+
+[git_status]
+format = '($ahead_behind$stashed$conflicted$staged$modified$renamed$deleted$typechanged$untracked)'
+ahead = '[⇡${count}](fg:76) '
+behind = '[⇣${count}](fg:76) '
+diverged = '[⇣${behind_count} ⇡${ahead_count}](fg:76) '
+stashed = '[*${count}](fg:76) '
+conflicted = '[~${count}](fg:196) '
+staged = '[+${count}](fg:178) '
+modified = '[!${count}](fg:178) '
+renamed = '[»${count}](fg:178) '
+deleted = '[✘${count}](fg:178) '
+typechanged = '[!${count}](fg:178) '
+untracked = '[?${count}](fg:39) '

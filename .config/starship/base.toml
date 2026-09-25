@@ -1,0 +1,163 @@
+# Starship prompt, styled after the powerlevel10k lean config this replaced.
+#
+# This file is not read by starship directly: ~/.config/zsh/config.d/starship.zsh
+# concatenates it with jj.toml (inside a jj workspace) or git.toml (elsewhere),
+# plus any fragments other configs register, and points STARSHIP_CONFIG at the
+# result. Keep top-level keys here; fragments may only add tables they own.
+#
+# Only the first line comes from starship. The prompt character on the second
+# line is drawn by zsh so it can follow zsh-vi-mode without rerunning starship.
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+# Left: directory and VCS. Right, after the dotted filler: duration, jobs,
+# language versions, user@host (ssh/root only), vim :sh marker.
+# ${custom} and ${env_var} collect modules defined by fragments.
+format = """ $directory\
+$git_branch$git_commit$git_state$git_status\
+${custom}\
+$fill \
+$cmd_duration$jobs\
+$python$conda$nodejs$rust$golang$java$lua$ruby$perl$php$haskell$julia$elixir$erlang$dotnet$dart\
+${env_var}\
+$username$hostname\
+"""
+
+[fill]
+symbol = '·'
+style = 'fg:242'
+
+[directory]
+truncation_length = 100
+truncate_to_repo = false
+format = '[$path]($style)[$read_only]($read_only_style) '
+repo_root_format = '[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style) '
+style = 'fg:31'
+before_repo_root_style = 'fg:31'
+repo_root_style = 'bold fg:39'
+read_only = " \uF023"
+
+[cmd_duration]
+min_time = 3000
+format = '[$duration]($style) '
+style = 'fg:101'
+
+[jobs]
+symbol = "\uF013"
+style = 'fg:70'
+symbol_threshold = 1
+number_threshold = 1000000
+format = '[$symbol$number]($style) '
+
+[username]
+format = '[$user]($style)'
+style_user = 'fg:180'
+style_root = 'bold fg:178'
+
+[hostname]
+format = '[@$hostname]($style) '
+style = 'fg:180'
+
+[env_var.VIMRUNTIME]
+format = "[\uE62B]($style) "
+style = 'fg:34'
+
+# Language versions: p10k's nerd-font icons and per-tool colors.
+[python]
+detect_extensions = []
+detect_files = []
+detect_folders = []
+symbol = "\uE73C "
+format = '[${symbol}$virtualenv ]($style)'
+style = 'fg:37'
+
+[conda]
+symbol = "\uE73C "
+format = '[$symbol$environment]($style) '
+style = 'fg:37'
+
+[nodejs]
+symbol = "\uE617 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:70'
+
+[rust]
+symbol = "\uE7A8 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:37'
+
+[golang]
+symbol = "\uE626 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:37'
+
+[java]
+symbol = "\uE738 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:32'
+
+[lua]
+symbol = "\uE620 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:32'
+
+[ruby]
+symbol = "\uF219 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:168'
+
+[perl]
+symbol = "\uE769 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:67'
+
+[php]
+symbol = "\uE608 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:99'
+
+[haskell]
+symbol = "\uE61F "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:172'
+
+[julia]
+symbol = "\uE624 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:70'
+
+[elixir]
+symbol = "\uE62D "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:129'
+
+[erlang]
+symbol = "\uE7B1 "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:125'
+
+[dotnet]
+symbol = "\uE77F "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:134'
+
+[dart]
+symbol = "F "
+format = '[$symbol($version )]($style)'
+version_format = '${raw}'
+style = 'fg:38'
