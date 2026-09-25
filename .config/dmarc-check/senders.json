@@ -1,0 +1,10 @@
+{
+  "unlimited-code.works": {
+    "notes": "All legitimate mail for this domain is sent through Google: hosts and the cluster relay authenticate to smtp.gmail.com as the Google Workspace account, and Google signs it DKIM d=unlimited-code.works (selector google). The website is served through Cloudflare and sends no mail. No other ESP, web host, CRM, or mailing list sends as this domain.",
+    "own_auth_domains": {
+      "unlimited-code.works": "the domain's own DKIM key / envelope domain",
+      "gmail.com": "a consumer Gmail account using a verified send-as alias of this domain; only we can verify send-as here, so this is our mail sent through the wrong account"
+    },
+    "own_networks": {}
+  }
+}

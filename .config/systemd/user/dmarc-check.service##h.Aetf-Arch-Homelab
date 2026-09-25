@@ -10,5 +10,6 @@ TimeoutStartSec=600
 ExecStart=/usr/bin/podman run --rm \
     --env-file %h/.config/dmarc-check/env \
     --volume %h/.config/claude/.credentials.json:/root/.claude/.credentials.json:rw \
+    --volume %h/.config/dmarc-check/senders.json:/config/senders.json:ro \
     --volume dmarc-check-data:/state \
     localhost/dmarc-check:latest

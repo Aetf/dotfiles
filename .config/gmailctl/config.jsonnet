@@ -22,7 +22,10 @@ local activeLabels = [
   label('Auto Insurance/20250312-scratch-with-neighbor'),
   label('Bank Statements'),
   label('CarMaintenance'),
-  label('DMARC-Issue'),
+  label('DMARC'),
+  label('DMARC/Reports'),
+  label('DMARC/Notices'),
+  label('DMARC/Action'),
   label('GoodToGo'),
   label('Housing'),
   label('Housing/Utility'),
@@ -389,6 +392,27 @@ local botRules = [
   },
 ];
 
+// DMARC. Aggregate reports (rua=dmarc-reports@) are machine input: labelled
+// and kept out of the inbox. The label is dmarc-check's work queue (homelab-ops
+// dmarc-check: it triages unread reports under DMARC/Reports and marks them
+// read). Its summaries carry a List-Id naming their tier: a notice (failures
+// the published policy already handles) is filed unread outside the inbox;
+// only an action lands in the inbox.
+local dmarcRules = [
+  {
+    filter: { to: 'dmarc-reports@unlimited-code.works' },
+    actions: { archive: true, markSpam: false, labels: ['DMARC/Reports'] },
+  },
+  {
+    filter: { list: 'notice.dmarc-check.invalid' },
+    actions: { archive: true, markSpam: false, labels: ['DMARC/Notices'] },
+  },
+  {
+    filter: { list: 'action.dmarc-check.invalid' },
+    actions: { markSpam: false, markImportant: true, labels: ['DMARC/Action'] },
+  },
+];
+
 // GitHub notifications skip the inbox by default. The exception is mail that
 // wants an answer from me personally: GitHub cc's a <reason>@noreply.github.com
 // address on every notification, so `cc:mention@` / `cc:review_requested@`
@@ -544,6 +568,7 @@ local legacyRules = [
     + housingRules
     + aliasRules
     + botRules
+    + dmarcRules
     + githubRules
     + devRules
     + legacyRules,

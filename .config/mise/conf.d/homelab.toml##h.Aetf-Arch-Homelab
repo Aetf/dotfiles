@@ -11,7 +11,7 @@
 [tools]
 # On xps gmailctl comes from pacman; homelab has no root, so pin it here.
 "ubi:mbrt/gmailctl" = "0.12.0"
-"vfox:Aetf/homelab-ops" = "bda1ebdbe747de183e0eeb1de06f917f311de807"
+"vfox:Aetf/homelab-ops" = "7a1996ddac030239a049882ca1bdf54ce7892cf5"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
 [tasks."projects:sync"]
@@ -19,12 +19,31 @@ description = "Idempotent post-install sync: build container images from pinned 
 run = """
 #!/usr/bin/env bash
 set -euo pipefail
-td=$(mise where vfox:Aetf/thread-dashboard)
-podman build -q -t thread-dashboard "$td"
+# Images run on this host, so build them for this host's architecture —
+# explicitly. The local store keeps one image per base tag (python:3.13-slim,
+# alpine:3, ...), and a cross build (`--platform linux/arm64` for the gateway
+# or the cloud pool) re-points that tag at the foreign variant; a build
+# without --platform then silently reuses it and yields an image that only
+# runs under qemu. With --platform, podman pulls the matching variant when
+# the local one does not match. The arch check turns any regression into a
+# failed sync instead of a slow emulated service.
+# The raw blocks keep mise's Tera templating off podman's Go templates.
+platform="linux/$(podman info --format '{% raw %}{{.Host.Arch}}{% endraw %}')"
+build() {
+    local tag=$1 ctx=$2 arch
+    echo "building $tag for $platform from $ctx"
+    podman build -q --platform "$platform" -t "$tag" "$ctx" >/dev/null
+    arch=$(podman image inspect "localhost/$tag" --format '{% raw %}{{.Os}}/{{.Architecture}}{% endraw %}')
+    if [[ $arch != "$platform" ]]; then
+        echo "ERROR: localhost/$tag is $arch, expected $platform" >&2
+        exit 1
+    fi
+}
+build thread-dashboard "$(mise where vfox:Aetf/thread-dashboard)"
 ho=$(mise where vfox:Aetf/homelab-ops)
-podman build -q -t dmarc-check "$ho/dmarc-check"
-podman build -q -t adguardhome-sync "$ho/adguardhome-sync"
-podman build -q -t seedwatch "$ho/seedwatch"
+build dmarc-check "$ho/dmarc-check"
+build adguardhome-sync "$ho/adguardhome-sync"
+build seedwatch "$ho/seedwatch"
 systemctl --user daemon-reload
 # Pick up a new image (or a unit change) if the service is supposed to run.
 if systemctl --user is-enabled --quiet thread-dashboard.service 2>/dev/null; then
