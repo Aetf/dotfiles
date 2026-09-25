@@ -4,13 +4,6 @@ if [[ "$ZPROF" = true ]]; then
     zmodload zsh/zprof
 fi
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.config/zsh/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
 # initial hash definition for zinit
 declare -A ZINIT
 ZINIT[HOME_DIR]="$XDG_DATA_HOME/zsh/zinit"
@@ -52,6 +45,10 @@ zmodload zdharma_continuum/zinit &>/dev/null
         zinit depth'1' lucid ${1/#[0-9][a-c]/wait"${1}"} "${@:2}";
     }
 
+    # Release asset patterns for tools installed from GitHub releases (from'gh-r')
+    declare -A toolinfo
+    source "$ZDOTDIR/toolinfo.zsh"
+
     ##################
     #    Annexes     #
     # Config source  #
@@ -65,8 +62,28 @@ zmodload zdharma_continuum/zinit &>/dev/null
             $ZDOTDIR/config.d
         # for the fbin/sbin ice
         @zdharma-continuum/zinit-annex-bin-gem-node
-        # And then the powerlevel10k prompt, with fast gitstatus, config is in $ZDOTDIR/config.d/purepower.zsh
-        @romkatv/powerlevel10k
+    )
+    if [ ! -z "${toolinfo[starship]}" ]; then
+        early+=(
+            # starship prompt, config in ~/.config/starship and $ZDOTDIR/config.d/starship.zsh.
+            # The full init script is generated at install/update so startup doesn't fork starship.
+            from'gh-r' bpick"${toolinfo[starship]}"
+            as'command' pick'starship'
+            atclone'./starship init zsh --print-full-init >| init.zsh' atpull'%atclone'
+            src'init.zsh' atload'_prompt_starship_setup'
+                @starship/starship
+        )
+    fi
+    if [ ! -z "${toolinfo[jj-starship]}" ]; then
+        early+=(
+            # jj status for starship (~/.config/starship/jj.toml); on PATH directly
+            # rather than via an sbin shim, since starship runs it on every prompt
+            from'gh-r' bpick"${toolinfo[jj-starship]}"
+            as'command' pick'jj-starship'
+                @dmmulroy/jj-starship
+        )
+    fi
+    early+=(
         # vi-mode
         @jeffreytse/zsh-vi-mode
     )
@@ -85,9 +102,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
     ##################
     # this block is mostly used to download and install binary tools
     # for this, a separate table is sourced to determine the correct
-    # variant to pick
-    declare -A toolinfo
-    source "$ZDOTDIR/toolinfo.zsh"
+    # variant to pick (toolinfo, sourced above)
 
     local wait0a=(
         as'completion' blockf
