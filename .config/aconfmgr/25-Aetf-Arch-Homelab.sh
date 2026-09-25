@@ -158,7 +158,7 @@ cat >> "$(GetPackageOriginalFile s-nail /etc/mail.rc)" <<EOF
 set v15-compat
 source /etc/mail.d/google.rc
 EOF
-CopyFile /etc/mail.d/google.rc 640 root aetf
+CopyFile /etc/mail.d/google.rc 640 "" aetf
 ### smartd by default will not select account
 CopyFile /usr/local/bin/smartd-mail 755
 
