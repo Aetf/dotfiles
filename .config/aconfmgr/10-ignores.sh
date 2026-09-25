@@ -67,6 +67,11 @@ IgnorePath '/etc/cups/*'
 IgnorePath '/etc/printcap'
 
 IgnorePath '/etc/audit/audit.rules'
+# Unowned directories created by audit's tmpfiles.d at boot and after pacman
+# transactions
+IgnorePath '/etc/audisp'
+IgnorePath '/etc/audit/plugins.d'
+IgnorePath '/etc/audit/rules.d'
 
 # systemd-creds, see https://systemd.io/CREDENTIALS/
 IgnorePath '/etc/credstore'
