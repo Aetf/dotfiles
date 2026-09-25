@@ -37,7 +37,10 @@ SystemdEnable --name zfs-scrub-monthly@nas.timer zfs-utils /usr/lib/systemd/syst
 
 # MANUAL: create pool and touch /etc/zfs/zfs-list.cache/<pool-name>
 # ashift=12 sets the sector size to be 4k rather than 512B default.
-# MANUAL: sudo zpool create -o ashift=12 -m /mnt/nas nas raidz2 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1KD44 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1PHHH /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1Q6M8 /dev/disk/by-id/ata-ST8000VN004-3CP101_WWZ1Q7SB
+# The pool is two 4-disk raidz2 vdevs (4x 16T, and 4x 14T of mixed models).
+# autoexpand=on lets a vdev grow once all its disks are replaced with larger
+# ones, so capacity is upgraded in place by `zpool replace`, one vdev at a time.
+# MANUAL: sudo zpool create -o ashift=12 -o autoexpand=on -m /mnt/nas nas raidz2 /dev/disk/by-id/ata-ST16000NT001-3LV101_ZRS1ZC21 /dev/disk/by-id/ata-ST16000NT001-3LV101_ZRS1YF7Q /dev/disk/by-id/ata-ST16000NT001-3LV101_ZRS1WCQE /dev/disk/by-id/ata-ST16000NT001-3LV101_ZRS1WALC raidz2 /dev/disk/by-id/ata-ST14000NE0008-2JK101_ZHZ68JKA /dev/disk/by-id/ata-ST14000NE0008-2JK101_ZHZ68JNJ /dev/disk/by-id/ata-ST14000NE0008-2RX103_QV1ZEBLA /dev/disk/by-id/ata-WDC_WD140EDGZ-11B1PA0_Y6G2MYYC
 # MANUAL: auto mount cache: mkdir /etc/zfs/zfs-list.cache && touch /etc/zfs/zfs-list.cache/nas && zfs set canmount=on nas
 #
 # Datasets besides the pool root, with the properties that are not defaults.

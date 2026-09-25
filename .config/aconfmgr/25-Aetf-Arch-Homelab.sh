@@ -182,6 +182,15 @@ AddRole sdr
 # Mount multiple disks here
 AddRole nas
 
+# The four 8T disks that used to form raidz2-0 of the nas pool stay in the
+# JBOD out of any pool. The enclosure cannot power individual bays off, so
+# they spin down after 30 minutes idle (hdparm -S 241) instead of wearing and
+# heating the enclosure for nothing. Matched by serial so the rule never
+# touches a disk that is in use.
+cat >$(CreateFile /etc/udev/rules.d/69-idle-disk-spindown.rules) <<'EOF'
+ACTION=="add|change", SUBSYSTEM=="block", ENV{DEVTYPE}=="disk", ENV{ID_SERIAL}=="ST8000VN004-3CP101_WWZ1KD44|ST8000VN004-3CP101_WWZ1PHHH|ST8000VN004-3CP101_WWZ1Q6M8|ST8000VN004-3CP101_WWZ1Q7SB", RUN+="/usr/bin/hdparm -S 241 /dev/%k"
+EOF
+
 # Samba service
 AddRole samba
 
