@@ -32,6 +32,7 @@ AddPackage lsof # Lists open files for running Unix processes
 AddPackage $FOREIGN rnr # A CLI tool to rename files and directories that supports regex.
 AddPackage dua-cli # A tool to conveniently learn about the disk usage of directories, fast!
 AddPackage lazygit # Simple terminal UI for git commands
+AddPackage jujutsu
 
 # Use polkit to provide some alternative to sudo, used by neovim
 AddPackage polkit
@@ -40,6 +41,7 @@ AddPackage polkit
 AddPackage k9s
 AddPackage cmctl
 AddPackage talosctl
+AddPackage helm
 
 # Packages for managing emails
 AddPackage $FOREIGN gmailctl # Declarative configuration for Gmail filters
