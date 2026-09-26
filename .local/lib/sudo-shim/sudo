@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+# sudo shim, first on PATH. Inside tmux with no controlling terminal (agents,
+# editor job runners), sudo has nowhere to prompt; there it adds -A so the
+# password is asked by sudo-askpass in a floating pane of the calling window.
+# Everywhere else it is plain sudo.
+real=/usr/bin/sudo
+
+no_tty() { ! (exec 3<>/dev/tty) 2>/dev/null; }
+
+# sudo rejects -A together with -S, so find -S with sudo's own option grammar
+# (src/parse_args.c): a naive scan would also match an option's argument.
+wants_stdin() {
+    local opts
+    opts=$(getopt -q -o '+Aa:BbC:c:D:Eeg:Hh::iKklNnPp:R:r:SsT:t:U:u:Vv' \
+        -l 'background,preserve-env::,edit,set-home,login,remove-timestamp,list,preserve-groups,shell,other-user:,validate,askpass,auth-type:,bell,close-from:,login-class:,chdir:,group:,help,host:,reset-timestamp,no-update,non-interactive,prompt:,chroot:,role:,stdin,command-timeout:,type:,user:,version' \
+        -- "$@") || return 1   # sudo itself will report the bad usage
+    eval "set -- $opts"
+    # getopt emits every option's argument as its own word ('' when an optional
+    # one is absent), so skip those words.
+    while (($#)); do
+        case $1 in
+        --) return 1 ;;
+        -S | --stdin) return 0 ;;
+        -[aCcDghpRrTtUu] | --preserve-env | --other-user | --auth-type | --close-from | \
+            --login-class | --chdir | --group | --host | --prompt | --chroot | --role | \
+            --command-timeout | --type | --user) shift ;;
+        esac
+        shift
+    done
+    return 1
+}
+
+if [[ -n ${TMUX-} && -n ${TMUX_PANE-} ]] && no_tty && ! wants_stdin "$@"; then
+    SUDO_ASKPASS=$HOME/.local/bin/sudo-askpass exec "$real" -A "$@"
+fi
+exec "$real" "$@"

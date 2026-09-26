@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+# SUDO_ASKPASS helper. Inside tmux it asks in a floating pane opened in the
+# window of $TMUX_PANE (the pane sudo was started from); outside tmux it fails.
+# sudo runs the helper with the invoking user's environment, so
+# TMUX and TMUX_PANE are intact. The password goes to stdout, nothing else does.
+set -euo pipefail
+
+if [[ ${1-} == --pane ]]; then
+    # Runs inside the floating pane: --pane <fifo> <prompt>.
+    # Open the FIFO first: however this process dies (Ctrl-C, kill-pane), the
+    # write end closes and the reader sees EOF instead of blocking forever.
+    exec 3>"$2"
+    # The bell marks the window in status lines of sessions not looking at it.
+    printf '\a%s' "$3"
+    IFS= read -rs pw || exit 1
+    printf '%s\n' "$pw" >&3
+    exit 0
+fi
+
+prompt=${1:-Password: }
+
+if [[ -n ${TMUX-} && -n ${TMUX_PANE-} ]] &&
+    info=$(tmux display-message -p -t "$TMUX_PANE" '#{window_width} #{window_height} #{window_id}' 2>/dev/null); then
+    read -r ww wh wid <<<"$info"
+    # A window linked into several sessions (grouped sessions) resolves to any of
+    # them via the pane id; name it after the session the shell was started in,
+    # whose id is the last field of $TMUX.
+    # An unknown target still exits 0 with empty formats, hence the check.
+    src="\$${TMUX##*,}:$wid"
+    [[ -n $(tmux display-message -p -t "$src" '#{session_name}' 2>/dev/null) ]] || src=$TMUX_PANE
+    where=$(tmux display-message -p -t "$src" '#{session_name}:#{window_index} (#{window_name})')
+    w=$(( ${#prompt} + 20 )); (( w > ww )) && w=$ww
+    h=3
+
+    dir=$(mktemp -d)
+    fifo=$dir/pw
+    mkfifo -m 600 "$fifo"
+    pane=
+    # The pane is usually gone by now; kill-pane is for when sudo is interrupted.
+    trap 'rm -rf "$dir"; [[ -z $pane ]] || tmux kill-pane -t "$pane" 2>/dev/null || true' EXIT
+
+    # Several arguments after the options make tmux exec the command directly,
+    # so the prompt and path need no shell quoting.
+    pane=$(tmux new-pane -t "$TMUX_PANE" -P -F '#{pane_id}' \
+        -x "$w" -y "$h" -X $(( (ww - w) / 2 )) -Y $(( (wh - h) / 2 )) \
+        "$(readlink -f -- "$0")" --pane "$fifo" "$prompt")
+
+    # Clients showing another window would not notice the pane; tell them where it is.
+    tmux list-clients -F '#{client_name} #{window_id}' | while read -r client cwid; do
+        [[ $cwid == "$wid" ]] ||
+            tmux display-message -l -c "$client" -d 5000 "sudo is waiting for a password in $where" || true
+    done
+
+    IFS= read -r pw <"$fifo" || exit 1
+    printf '%s\n' "$pw"
+    exit 0
+fi
+
+# Not in tmux: nowhere to ask.
+exit 1

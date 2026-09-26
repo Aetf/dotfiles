@@ -24,6 +24,12 @@ if [ -d $HOME/.local/bin ]; then
     uappend path $HOME/.local/bin
 fi
 
+# Holds only the sudo shim, which must shadow /usr/bin/sudo; the rest of
+# ~/.local/bin stays behind the system paths.
+if [ -d $HOME/.local/lib/sudo-shim ]; then
+    uprepend path $HOME/.local/lib/sudo-shim
+fi
+
 if [ -d $XDG_DATA_HOME/zsh/zinit/polaris/bin ]; then
     uprepend path $XDG_DATA_HOME/zsh/zinit/polaris/bin
 fi
