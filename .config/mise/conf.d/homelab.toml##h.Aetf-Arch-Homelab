@@ -11,7 +11,7 @@
 [tools]
 # On xps gmailctl comes from pacman; homelab has no root, so pin it here.
 "ubi:mbrt/gmailctl" = "0.12.0"
-"vfox:Aetf/homelab-ops" = "7a1996ddac030239a049882ca1bdf54ce7892cf5"
+"vfox:Aetf/homelab-ops" = "e03012da738bb7a2ab9fccd053d3c6e8200b6322"
 "vfox:Aetf/thread-dashboard" = "f10582602817406b3f5a40cda25bc04e3649a027"
 
 [tasks."projects:sync"]
