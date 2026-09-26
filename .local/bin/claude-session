@@ -16,7 +16,11 @@
 #     TMUX_TMPDIR=$XDG_RUNTIME_DIR;
 #   * rootless podman cannot nest in a single-uid userns, and the full client
 #     wrecks the host's rootless state when it tries -> the podman shim next to
-#     the ssh one forces podman-remote over the user's podman.socket.
+#     the ssh one forces podman-remote over the user's podman.socket. PATH alone
+#     is not enough: scripts that exec /usr/bin/podman, or run podman under
+#     `env -i` (execvp falls back to /bin:/usr/bin), reach the real binary. So
+#     the shim is also bind-mounted over /usr/bin/podman inside the service --
+#     there is no full podman client in a session at all.
 #
 # Callers: chored job `claude-session` (HA button), cc-rc revive, and humans.
 #
@@ -58,6 +62,7 @@ if [[ ${1:-} == _run ]]; then
         --service-type exec \
         -p KillMode=control-group -p TimeoutStopSec=15s \
         -p PrivateTmp=yes \
+        -p BindReadOnlyPaths="$SHIM_DIR/podman:/usr/bin/podman" \
         -E PATH="$SHIM_DIR:$PATH" \
         -E TERM="${TERM:-tmux-256color}" \
         -E COLORTERM="${COLORTERM:-truecolor}" \

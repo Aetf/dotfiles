@@ -9,6 +9,9 @@
 # So podman here is always the REST client talking to the user's podman.socket
 # (systemctl --user enable --now podman.socket). Containers it starts live on
 # the host, outside this session's cgroup, and do not die with it.
-CONTAINER_HOST="${CONTAINER_HOST:-unix://$XDG_RUNTIME_DIR/podman/podman.sock}"
+# claude-session also bind-mounts this file over /usr/bin/podman, so callers
+# that bypass PATH land here too -- including under `env -i`, hence the
+# XDG_RUNTIME_DIR fallback.
+CONTAINER_HOST="${CONTAINER_HOST:-unix://${XDG_RUNTIME_DIR:-/run/user/$(id -u)}/podman/podman.sock}"
 export CONTAINER_HOST
 exec /usr/bin/podman-remote "$@"
