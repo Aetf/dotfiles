@@ -7,6 +7,9 @@ alias ll='ls -l'
 alias la='ls -aa'
 alias lla='ls -aal'
 alias p='paru'
+# unar picks the format from the content and only adds a wrapper directory
+# when the archive has more than one top-level entry
+(( $+commands[unar] )) && alias x='unar'
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
     alias open='xdg-open'

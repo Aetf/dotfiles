@@ -88,15 +88,6 @@ zmodload zdharma_continuum/zinit &>/dev/null
         @jeffreytse/zsh-vi-mode
     )
 
-    ######################
-    # Trigger-load block #
-    ######################
-    local triggers=(
-        # use svn mode to download multiple files selectively
-        trigger-load'!x' svn
-            OMZ::plugins/extract
-    )
-
     ##################
     # Wait'0a' block #
     ##################
@@ -264,7 +255,6 @@ zmodload zdharma_continuum/zinit &>/dev/null
     # light mode disables tracking of what plugin does and disables plugin
     # unloading, but is faster.
     zt light-mode for "${early[@]}"
-    zt light-mode for "${triggers[@]}"
     zt 0a light-mode for "${wait0a[@]}"
     zt 0b light-mode for "${wait0b[@]}"
     zt 0c light-mode for "${wait0c[@]}"
