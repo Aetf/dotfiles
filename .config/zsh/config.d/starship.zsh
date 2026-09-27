@@ -55,10 +55,20 @@ function _prompt_update_char() {
     _prompt_char="%F{$_prompt_color}$sym%f "
 }
 
+# Render starship's line one column narrower than the terminal (p10k's
+# ZLE_RPROMPT_INDENT=1 margin): Konsole's "Clear Scrollback and Reset" nudges
+# the pty to COLUMNS+1 and back without resizing its screen, and a full-width
+# line rendered in that window wraps and pushes the second line down. -h hides
+# COLUMNS' special meaning, so zle keeps the real width.
+function _prompt_render_line() {
+    local -h COLUMNS=$((COLUMNS - 1))
+    _prompt_line=${(e)_prompt_starship_cmd}
+}
+
 function _prompt_render() {
     # $? is still the last command's status in every precmd hook.
     if (( $? )); then _prompt_color=196; else _prompt_color=76; fi
-    _prompt_line=${(e)_prompt_starship_cmd}
+    _prompt_render_line
     _prompt_update_char
     PROMPT=$'${_prompt_line}\n${_prompt_char}'
 }
@@ -72,7 +82,7 @@ function _prompt_transient() {
 # The first line holds a width-dependent filler; redraw it for the new width.
 function TRAPWINCH() {
     [[ -n $_prompt_starship_cmd ]] && zle || return 0
-    _prompt_line=${(e)_prompt_starship_cmd}
+    _prompt_render_line
     zle .reset-prompt
     return 0
 }
