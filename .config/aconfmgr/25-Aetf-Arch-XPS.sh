@@ -215,7 +215,7 @@ AddPackage kubeseal # A Kubernetes controller and tool for one-way encrypted Sec
 AddPackage pamtester # Tiny program to test the pluggable authentication modules (PAM) facility
 AddPackage syncthing
 AddPackage packwiz-git # A command line tool for creating minecraft modpacks.
-AddPackage antigravity # Google Antigravity 2.0 multi-agent orchestration platform
+AddPackage $FOREIGN antigravity # Google Antigravity 2.0 multi-agent orchestration platform
 AddPackage appimagelauncher # Helper for running and integrating AppImages
 AddPackage chromium # A web browser built for speed, simplicity, and security
 AddRole claude-code
