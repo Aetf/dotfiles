@@ -78,6 +78,7 @@ AddPackage umoci # Umoci Modifies Open Container Images
 
 AddRole kde
 SystemdEnable plasma-login-manager /usr/lib/systemd/system/plasmalogin.service
+CopyFile /etc/plasmalogin.conf # greeter wallpaper, set from System Settings
 AddRole cjk
 
 AddRole games
