@@ -3,7 +3,6 @@ AddPackage ffmpeg # Complete solution to record, convert and stream audio and vi
 AddOptionalPackage ffmpeg \
     intel-media-sdk "Intel QuickSync support" `# Legacy API for hardware video acceleration on Intel GPUs (Broadwell to Rocket Lake)` \
     ladspa "LADSPA filters" `#Linux Audio Developer's Simple Plugin API (LADSPA)`
-AddPackage $FOREIGN untrunc-git # restore a damaged (truncated) mp4, m4v, mov, 3gp video
 
 AddPackage imagemagick # An image viewing/manipulation program
 AddPackage kwave # A sound editor
