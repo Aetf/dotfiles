@@ -2,7 +2,9 @@
 # sudo shim, first on PATH. Inside tmux with no controlling terminal (agents,
 # editor job runners), sudo has nowhere to prompt; there it adds -A so the
 # password is asked by sudo-askpass in a floating pane of the calling window.
-# Everywhere else it is plain sudo.
+# Everywhere else it is plain sudo. That password is cached across calls only
+# where sudoers sets timestamp_type=global (aconfmgr's base role declares it);
+# otherwise sudo keys a tty-less cache by parent PID and asks on every call.
 real=/usr/bin/sudo
 
 no_tty() { ! (exec 3<>/dev/tty) 2>/dev/null; }

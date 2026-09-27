@@ -19,6 +19,15 @@ echo "LANG=en_US.UTF-8" > "$(CreateFile /etc/locale.conf)"
 
 # Make sure users in wheel group can sudo
 CopyFile /etc/sudoers.d/00-basic
+# One sudo credential cache per user instead of per tty; users still never
+# share one. The sudo shim in ~/.local/lib/sudo-shim authenticates tty-less
+# callers (agents, editor jobs) through askpass, and without a tty sudo keys the
+# cache by parent PID, which is a new shell on every call, so each call would
+# prompt again. The price: authenticating anywhere lets every session of that
+# user sudo without a prompt for timestamp_timeout.
+cat >"$(CreateFile /etc/sudoers.d/10-timestamp)" <<'EOF'
+Defaults timestamp_type=global
+EOF
 
 # Basic system
 AddPackage zsh # A very advanced and programmable command interpreter (shell) for UNIX
