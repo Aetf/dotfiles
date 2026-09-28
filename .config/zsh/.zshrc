@@ -65,7 +65,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
     )
     if [ ! -z "${toolinfo[starship]}" ]; then
         early+=(
-            # starship prompt, config in ~/.config/starship and $ZDOTDIR/config.d/starship.zsh.
+            # starship prompt, config in ~/.config/starship and $ZDOTDIR/config.d/20-starship/.
             # The full init script is generated at install/update so startup doesn't fork starship.
             from'gh-r' bpick"${toolinfo[starship]}"
             as'command' pick'starship'

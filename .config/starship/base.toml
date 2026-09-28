@@ -1,9 +1,10 @@
 # Starship prompt, styled after the powerlevel10k lean config this replaced.
 #
-# This file is not read by starship directly: ~/.config/zsh/config.d/starship.zsh
-# concatenates it with jj.toml (inside a jj workspace) or git.toml (elsewhere),
-# plus any fragments other configs register, and points STARSHIP_CONFIG at the
-# result. Keep top-level keys here; fragments may only add tables they own.
+# This file is not read by starship directly:
+# ~/.config/zsh/config.d/20-starship/starship.zsh concatenates it with jj.toml
+# (inside a jj workspace) or git.toml (elsewhere), plus any fragments other
+# configs register, and points STARSHIP_CONFIG at the result. Keep top-level
+# keys here; fragments may only add tables they own.
 #
 # Only the first line comes from starship. The prompt character on the second
 # line is drawn by zsh so it can follow zsh-vi-mode without rerunning starship.

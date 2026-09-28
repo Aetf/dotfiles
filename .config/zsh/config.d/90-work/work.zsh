@@ -1,4 +1,4 @@
-# load work
+# load work, after the numbered configs it extends
 () {
     local candidates=(
         "$XDG_CONFIG_HOME/work/zsh/index.zsh"
