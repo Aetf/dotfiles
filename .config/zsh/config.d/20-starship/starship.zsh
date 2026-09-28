@@ -6,6 +6,8 @@
 #                              the fragments other configs register
 #   prompt.zsh                 the zsh prompt drawn around starship
 #   async-prompt-segments.zsh  prompt segments computed in the background
+#   prompt-vcs.zsh             the VCS segment
 source ${0:A:h}/config.zsh
 source ${0:A:h}/prompt.zsh
 source ${0:A:h}/async-prompt-segments.zsh
+source ${0:A:h}/prompt-vcs.zsh

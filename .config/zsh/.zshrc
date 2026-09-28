@@ -76,8 +76,8 @@ zmodload zdharma_continuum/zinit &>/dev/null
     fi
     if [ ! -z "${toolinfo[jj-starship]}" ]; then
         early+=(
-            # jj status for starship (~/.config/starship/jj.toml); on PATH directly
-            # rather than via an sbin shim, since starship runs it on every prompt
+            # jj status for the prompt (config.d/20-starship/prompt-vcs.zsh); on PATH directly
+            # rather than via an sbin shim, since it runs on every prompt
             from'gh-r' bpick"${toolinfo[jj-starship]}"
             as'command' pick'jj-starship'
                 @dmmulroy/jj-starship

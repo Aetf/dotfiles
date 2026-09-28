@@ -1,10 +1,9 @@
 # Starship prompt, styled after the powerlevel10k lean config this replaced.
 #
 # This file is not read by starship directly:
-# ~/.config/zsh/config.d/20-starship/config.zsh concatenates it with jj.toml
-# (inside a jj workspace) or git.toml (elsewhere), plus any fragments other
-# configs register, and points STARSHIP_CONFIG at the result. Keep top-level
-# keys here; fragments may only add tables they own.
+# ~/.config/zsh/config.d/20-starship/config.zsh concatenates it with the
+# fragments other configs register and points STARSHIP_CONFIG at the result.
+# Keep top-level keys here; fragments may only add tables they own.
 #
 # Only the first line comes from starship. The prompt character on the second
 # line is drawn by zsh so it can follow zsh-vi-mode without rerunning starship.
@@ -14,18 +13,24 @@
 add_newline = false
 
 # Left: directory, the work fragment's CitC client (${env_var.STARSHIP_CITC},
-# empty where unset), VCS, fragments' ${custom} modules. Right, after the
-# dotted filler: failed exit status, duration, jobs, language versions,
-# fragments' ${env_var} modules, user@host (ssh/root only), vim :sh marker.
+# empty where unset), fragments' ${custom} modules, then VCS state last: it is
+# computed in the background (config.d/20-starship/prompt-vcs.zsh) and appears
+# after the first draw, which moves nothing else. Right, after the dotted
+# filler: failed exit status, duration, jobs, language versions, fragments'
+# ${env_var} modules, user@host (ssh/root only), vim :sh marker.
 format = """ $directory\
-${env_var.STARSHIP_CITC}$git_branch$git_commit$git_state$git_status\
-${custom}\
+${env_var.STARSHIP_CITC}${custom}${env_var.STARSHIP_VCS}\
 $fill \
 $status$cmd_duration$jobs\
 $python$conda$nodejs$rust$golang$java$lua$ruby$perl$php$haskell$julia$elixir$erlang$dotnet$dart\
 ${env_var}\
 $username$hostname\
 """
+
+# VCS state, with its colors already applied
+# (config.d/20-starship/prompt-vcs.zsh).
+[env_var.STARSHIP_VCS]
+format = '$env_value '
 
 [fill]
 symbol = '·'
