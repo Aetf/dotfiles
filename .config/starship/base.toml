@@ -13,14 +13,14 @@
 
 add_newline = false
 
-# Left: directory and VCS. Right, after the dotted filler: duration, jobs,
-# language versions, user@host (ssh/root only), vim :sh marker.
+# Left: directory and VCS. Right, after the dotted filler: failed exit status,
+# duration, jobs, language versions, user@host (ssh/root only), vim :sh marker.
 # ${custom} and ${env_var} collect modules defined by fragments.
 format = """ $directory\
 $git_branch$git_commit$git_state$git_status\
 ${custom}\
 $fill \
-$cmd_duration$jobs\
+$status$cmd_duration$jobs\
 $python$conda$nodejs$rust$golang$java$lua$ruby$perl$php$haskell$julia$elixir$erlang$dotnet$dart\
 ${env_var}\
 $username$hostname\
@@ -39,6 +39,20 @@ style = 'fg:31'
 before_repo_root_style = 'fg:31'
 repo_root_style = 'bold fg:39'
 read_only = " \uF023"
+
+# Shown only for signals (`✘ INT`) and pipelines with a failed stage
+# (`✘ 1|0`); a plain failure only turns the prompt character red.
+# success_style colors a pipeline whose last stage succeeded.
+[status]
+disabled = false
+format = '([✘ $signal_name]($style) )'
+pipestatus = true
+pipestatus_format = '[$symbol$pipestatus]($style) '
+pipestatus_segment_format = '$status'
+pipestatus_separator = '|'
+symbol = '✘ '
+style = 'fg:160'
+success_style = 'fg:70'
 
 [cmd_duration]
 min_time = 3000
