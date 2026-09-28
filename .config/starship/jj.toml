@@ -1,7 +1,7 @@
 # Appended to base.toml inside jj workspaces. jj-starship replaces the git
 # modules, which in a colocated repo would describe jj's detached git HEAD.
-# config.d/20-starship/starship.zsh already decided this is a jj workspace,
-# hence `when = true`.
+# config.d/20-starship/config.zsh already decided this is a jj workspace, hence
+# `when = true`.
 
 [custom.jj]
 when = true
