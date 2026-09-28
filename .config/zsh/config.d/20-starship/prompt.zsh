@@ -63,11 +63,14 @@ function TRAPWINCH() {
 
 function _prompt_starship_setup() {
     # `starship init` set PROMPT to its `$(starship prompt ...)` command; keep
-    # that as the renderer, adding --profile while starship_profile is set
-    # (config.zsh). It is expanded inside the command substitution on each
-    # render. The right prompt is unused, so drop its second fork.
+    # that as the renderer, adding --profile while starship_profile is set and
+    # exporting starship_env first (both from config.zsh). They are expanded
+    # inside the command substitution on each render, so the exports stay in
+    # that subshell. The right prompt is unused, so drop its second fork.
     local profile_arg='${starship_profile:+--profile=$starship_profile}'
+    local env_cmd='(( ${#starship_env} )) && export "${starship_env[@]}"; '
     _prompt_starship_cmd=${PROMPT/ prompt / prompt $profile_arg }
+    _prompt_starship_cmd=${_prompt_starship_cmd/#\$\(/\$( $env_cmd}
     RPROMPT=
     add-zsh-hook precmd _prompt_render  # after starship's precmd sets its variables
     add-zle-hook-widget line-finish _prompt_transient

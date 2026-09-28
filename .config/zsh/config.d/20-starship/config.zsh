@@ -8,8 +8,11 @@
 # starship_profile: when set, starship renders that [profiles] entry of
 # base.toml instead of format (e.g. nolang, for directories where scanning is
 # slow).
+# starship_env: NAME=VALUE pairs exported only into the starship process, for
+# inputs that should not leak into commands the user runs (e.g. GIT_DIR to
+# skip repository discovery where there is none).
 
-typeset -ga starship_fragments
+typeset -ga starship_fragments starship_env
 typeset -g starship_profile
 typeset -g _starship_src=${XDG_CONFIG_HOME:-$HOME/.config}/starship
 typeset -g _starship_out=${XDG_CACHE_HOME:-$HOME/.cache}/starship
