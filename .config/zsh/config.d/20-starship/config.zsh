@@ -4,8 +4,13 @@
 # configs register their own fragments (tables only) with
 # `starship_fragments+=(path)`. The file is rebuilt before a prompt when a
 # fragment is newer or the list changed.
+#
+# starship_profile: when set, starship renders that [profiles] entry of
+# base.toml instead of format (e.g. nolang, for directories where scanning is
+# slow).
 
 typeset -ga starship_fragments
+typeset -g starship_profile
 typeset -g _starship_src=${XDG_CONFIG_HOME:-$HOME/.config}/starship
 typeset -g _starship_out=${XDG_CACHE_HOME:-$HOME/.cache}/starship
 typeset -g _starship_built  # fragment list the cached config was built from

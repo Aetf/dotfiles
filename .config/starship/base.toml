@@ -27,6 +27,22 @@ ${env_var}\
 $username$hostname\
 """
 
+# The same line without python and the language modules. Those list the
+# current directory, which on network filesystems is slow and overruns
+# scan_timeout (starship then warns on stderr). starship renders only the
+# modules its format names, so this profile never scans. Configs select it
+# by setting starship_profile=nolang (config.d/20-starship/config.zsh).
+# Keep in sync with format.
+[profiles]
+nolang = """ $directory\
+${env_var.STARSHIP_CITC}${custom}${env_var.STARSHIP_VCS}\
+$fill \
+$status$cmd_duration$jobs\
+$conda\
+${env_var}\
+$username$hostname\
+"""
+
 # VCS state, with its colors already applied
 # (config.d/20-starship/prompt-vcs.zsh).
 [env_var.STARSHIP_VCS]
