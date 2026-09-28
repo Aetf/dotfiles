@@ -13,11 +13,12 @@
 
 add_newline = false
 
-# Left: directory and VCS. Right, after the dotted filler: failed exit status,
-# duration, jobs, language versions, user@host (ssh/root only), vim :sh marker.
-# ${custom} and ${env_var} collect modules defined by fragments.
+# Left: directory, the work fragment's CitC client (${env_var.STARSHIP_CITC},
+# empty where unset), VCS, fragments' ${custom} modules. Right, after the
+# dotted filler: failed exit status, duration, jobs, language versions,
+# fragments' ${env_var} modules, user@host (ssh/root only), vim :sh marker.
 format = """ $directory\
-$git_branch$git_commit$git_state$git_status\
+${env_var.STARSHIP_CITC}$git_branch$git_commit$git_state$git_status\
 ${custom}\
 $fill \
 $status$cmd_duration$jobs\
@@ -39,6 +40,15 @@ style = 'fg:31'
 before_repo_root_style = 'fg:31'
 repo_root_style = 'bold fg:39'
 read_only = " \uF023"
+
+# Fragments append their own rules with [[directory.substitutions]]. TOML only
+# lets later [[...]] blocks extend a key that is already an array of tables,
+# and starship rejects an empty block, so this no-op rule holds the key.
+# Add base rules here in the same form; an inline array would break fragments.
+[[directory.substitutions]]
+from = '^'
+to = ''
+regex = true
 
 # Shown only for signals (`✘ INT`) and pipelines with a failed stage
 # (`✘ 1|0`); a plain failure only turns the prompt character red.
