@@ -3,7 +3,8 @@
 # starship draws only the first line, once per precmd, into $_prompt_line. The
 # prompt character on the second line is drawn by zsh from zsh-vi-mode's mode,
 # so mode switches and the transient prompt only re-expand variables instead
-# of rerunning starship.
+# of rerunning starship. prompt_starship_redraw reruns starship and redraws in
+# place, for inputs that change after precmd.
 # _prompt_starship_setup runs after `starship init` (zinit atload in .zshrc).
 
 autoload -Uz add-zsh-hook add-zle-hook-widget
@@ -45,11 +46,18 @@ function _prompt_transient() {
     zle .reset-prompt
 }
 
-# The first line holds a width-dependent filler; redraw it for the new width.
-function TRAPWINCH() {
+# Rerun starship for the first line and redraw the prompt in place, for inputs
+# that change after precmd (window size, background segments). No-op outside
+# zle.
+function prompt_starship_redraw() {
     [[ -n $_prompt_starship_cmd ]] && zle || return 0
     _prompt_render_line
     zle .reset-prompt
+}
+
+# The first line holds a width-dependent filler; redraw it for the new width.
+function TRAPWINCH() {
+    prompt_starship_redraw
     return 0
 }
 
