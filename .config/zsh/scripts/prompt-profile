@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+# Measure prompt latency hook by hook in a fresh interactive zsh.
+#
+# Usage: prompt-profile [options] [label=]dir...
+#   -n N     prompts to time in each directory after the cd (default 5)
+#   -i SECS  wait between prompts (default 3: longer than the srcfs negative
+#            lookup cache, so each prompt pays for lookups as in real use)
+#   -w SECS  wait for the shell to finish starting, turbo plugins included
+#            (default 8)
+#   -s CMD   shell to start (default "zsh -l"), e.g. a wrapper that sets up
+#            an isolated HOME
+#   -o LOG   raw log (default $XDG_CACHE_HOME/prompt-profile/<time>.log)
+#   -r LOG   only print the summary of an existing log
+#
+# The shell runs in a private tmux server. prompt-profile.zsh is sourced in
+# it, then for each directory: cd, wait, and press Enter N times. Commands are
+# typed with a leading space to keep them out of history (hist_ignore_space).
+#
+# Summary per directory, in ms: cd (chpwd hooks), p1 (the prompt after the
+# cd), p2, steady (mean of p3 onwards), then async redraws (count, mean).
+# Hooks averaging 3 ms or more are listed by name.
+set -euo pipefail
+
+here=$(cd "$(dirname "$0")" && pwd)
+count=5 interval=3 warmup=8 shell='zsh -l' log= report=
+
+summarize() {
+    awk '
+    function add(key, i,   kv) {
+        n[key]++
+        for (i = 3; i <= NF; i++) {
+            split($i, kv, "=")
+            sum[key, kv[1]] += kv[2]
+            if (!((key, kv[1]) in seen)) { seen[key, kv[1]] = 1; names[key] = names[key] " " kv[1] }
+        }
+    }
+    function show(title, key,   out, m, k, i) {
+        if (!n[key]) { printf "   %-7s -\n", title; return }
+        out = sprintf("   %-7s %7.1f ", title, sum[key, "total"] / n[key])
+        m = split(names[key], k, " ")
+        for (i = 1; i <= m; i++)
+            if (k[i] != "total" && sum[key, k[i]] / n[key] >= 3)
+                out = out sprintf(" %s=%.0f", k[i], sum[key, k[i]] / n[key])
+        print out
+    }
+    !($1 in order) { order[$1] = ++labels; label[labels] = $1 }
+    $2 == "cd" || $2 == "p1" || $2 == "p2" || $2 == "redraw" { add($1 SUBSEP $2); next }
+    $2 ~ /^p[0-9]+$/ { add($1 SUBSEP "steady") }
+    END {
+        for (l = 1; l <= labels; l++) {
+            x = label[l]
+            print "== " x
+            show("cd", x SUBSEP "cd"); show("p1", x SUBSEP "p1")
+            show("p2", x SUBSEP "p2"); show("steady", x SUBSEP "steady")
+            r = x SUBSEP "redraw"
+            if (n[r]) printf "   redraw  n=%d mean=%.1f\n", n[r], sum[r, "total"] / n[r]
+            else print "   redraw  n=0"
+        }
+    }' "$1"
+}
+
+while getopts 'n:i:w:s:o:r:h' opt; do
+    case $opt in
+        n) count=$OPTARG ;;
+        i) interval=$OPTARG ;;
+        w) warmup=$OPTARG ;;
+        s) shell=$OPTARG ;;
+        o) log=$OPTARG ;;
+        r) report=$OPTARG ;;
+        *) sed -n '2,/^set /{/^set /d;s/^# \{0,1\}//;p;}' "$0"; exit 2 ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+if [[ -n $report ]]; then
+    summarize "$report"
+    exit
+fi
+(( $# )) || { echo "prompt-profile: no directories (-h for help)" >&2; exit 2; }
+
+if [[ -z $log ]]; then
+    log=${XDG_CACHE_HOME:-$HOME/.cache}/prompt-profile/$(date +%Y%m%d-%H%M%S).log
+fi
+mkdir -p "$(dirname "$log")"
+: > "$log"
+
+server=prompt-profile-$$
+tm() { tmux -L "$server" -f /dev/null "$@"; }
+type_line() { tm send-keys -t profile " $1" Enter; }
+trap 'tm kill-server 2>/dev/null || true' EXIT
+
+tm new-session -d -s profile -x 200 -y 50 "$shell"
+sleep "$warmup"
+type_line "PROMPT_PROFILE_LOG=$(printf %q "$log"); source $(printf %q "$here")/prompt-profile.zsh"
+sleep 1
+for spec in "$@"; do
+    label=${spec%%=*} dir=${spec#*=}
+    [[ $spec == *=* ]] || label=$(basename "$dir")
+    type_line "PROMPT_PROFILE_LABEL=$(printf %q "$label"); cd $(printf %q "$dir")"
+    sleep "$interval"
+    for (( i = 0; i < count; i++ )); do
+        tm send-keys -t profile Enter
+        sleep "$interval"
+    done
+done
+
+echo "log: $log"
+summarize "$log"
