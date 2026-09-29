@@ -62,6 +62,13 @@ function TRAPWINCH() {
 }
 
 function _prompt_starship_setup() {
+    # Without starship's init (missing or empty init.zsh) PROMPT is not its
+    # command and prompt_subst is unset, so the prompt below would render as
+    # literal variable names. Keep zsh's default prompt instead.
+    if (( ! $+functions[prompt_starship_precmd] )); then
+        print -u2 "starship init not loaded; run: zinit update starship/starship"
+        return
+    fi
     # `starship init` set PROMPT to its `$(starship prompt ...)` command; keep
     # that as the renderer, adding --profile while starship_profile is set and
     # exporting starship_env first (both from config.zsh). They are expanded

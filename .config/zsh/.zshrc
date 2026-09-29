@@ -67,9 +67,13 @@ zmodload zdharma_continuum/zinit &>/dev/null
         early+=(
             # starship prompt, config in ~/.config/starship and $ZDOTDIR/config.d/20-starship/.
             # The full init script is generated at install/update so startup doesn't fork starship.
+            # It replaces init.zsh only when starship printed something: a binary that fails to
+            # run (e.g. blocked by endpoint security on first install) would otherwise leave an
+            # empty init.zsh behind until the next `zinit update`.
             from'gh-r' bpick"${toolinfo[starship]}"
             as'command' pick'starship'
-            atclone'./starship init zsh --print-full-init >| init.zsh' atpull'%atclone'
+            atclone'./starship init zsh --print-full-init >| init.zsh.tmp && [[ -s init.zsh.tmp ]] && mv -f init.zsh.tmp init.zsh && rm -f init.zsh.zwc; rm -f init.zsh.tmp'
+            atpull'%atclone'
             src'init.zsh' atload'_prompt_starship_setup'
                 @starship/starship
         )
