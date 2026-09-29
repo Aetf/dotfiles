@@ -7,8 +7,8 @@
 #            lookup cache, so each prompt pays for lookups as in real use)
 #   -w SECS  wait for the shell to finish starting, turbo plugins included
 #            (default 8)
-#   -s CMD   shell to start (default "zsh -l"), e.g. a wrapper that sets up
-#            an isolated HOME
+#   -s CMD   shell to start (default "zsh -l"), e.g.
+#            'dotfiles-sandbox shell DIR' for an isolated HOME
 #   -o LOG   raw log (default $XDG_CACHE_HOME/prompt-profile/<time>.log)
 #   -r LOG   only print the summary of an existing log
 #

@@ -1,0 +1,171 @@
+#!/usr/bin/env bash
+# An isolated copy of these dotfiles, for trying changes side by side with
+# the real setup: a separate HOME with its own yadm repo, submodule clones,
+# zinit and state, entered through `env -i` so nothing leaks in from the
+# calling shell.
+#
+# Usage:
+#   dotfiles-sandbox create [options] DIR
+#     -y REPO        yadm repo to clone (default: the current one); its
+#                    branch, remote URLs, local.* settings (yadm alt) and
+#                    sparse checkout are carried over
+#     -s PATH[=SRC]  clone the submodule at PATH (relative to HOME) from SRC
+#                    (default: the real checkout at ~/PATH, so unpushed
+#                    commits come along), keeping SRC's remote URLs;
+#                    repeatable
+#     -z             copy the current zinit home instead of installing every
+#                    plugin on the first start; paths into it are rewritten
+#     -c PATH        copy ~/PATH into the sandbox; repeatable
+#     -l PATH        symlink PATH in the sandbox to ~/PATH (e.g. a daemon
+#                    socket); repeatable
+#   dotfiles-sandbox shell DIR [zsh args...]
+#     Start a login zsh in the sandbox. Also usable as the shell of
+#     prompt-profile: prompt-profile -s 'dotfiles-sandbox shell DIR' ...
+#
+# DIR/home is the sandbox HOME and DIR/run its XDG_RUNTIME_DIR. The runtime
+# dir stays empty, so env.d/01-import-systemd-env.zsh cannot reach the
+# systemd user bus and import the real XDG_* variables. MISE_CEILING_PATHS
+# keeps mise from reading the real ~/.config/mise as a parent directory's
+# config.
+#
+# To bring changes back, pull from the sandbox repos, e.g.
+#   yadm pull DIR/home/.local/share/yadm/repo.git main
+#   git -C ~/.config/work pull DIR/home/.config/work main
+set -euo pipefail
+
+die() { echo "dotfiles-sandbox: $*" >&2; exit 2; }
+usage() { sed -n '2,/^set /{/^set /d;s/^# \{0,1\}//;p;}' "$0"; exit 2; }
+
+# Run a command with the sandbox as HOME and little else from this shell.
+in_sandbox() {
+    env -i HOME="$home" USER="$USER" LOGNAME="$USER" PATH="$PATH" \
+        LANG="${LANG:-en_US.UTF-8}" XDG_RUNTIME_DIR="$dir/run" "$@"
+}
+
+# Point a clone's origin at the source repo's origin.
+copy_remote() {
+    local src=$1 dst=$2 url
+    url=$(git --git-dir="$src" config --get remote.origin.url) || return 0
+    git --git-dir="$dst" remote set-url origin "$url"
+    url=$(git --git-dir="$src" config --get remote.origin.pushurl) &&
+        git --git-dir="$dst" remote set-url --push origin "$url"
+    return 0
+}
+
+setup_yadm() {
+    local src=$1 yadm dst=$home/.local/share/yadm/repo.git key value
+    yadm=$(command -v yadm) || die "yadm not found"
+    src=$(git --git-dir="$src" rev-parse --absolute-git-dir)
+    # A clone into an empty HOME has no conflicts; a non-zero status is
+    # about the bootstrap and alt steps, which run again below.
+    in_sandbox "$yadm" clone --no-bootstrap "$src" >/dev/null 2>&1 || true
+    [[ -d $dst ]] || die "yadm clone of $src failed"
+    local -a g=(git --git-dir="$dst" --work-tree="$home")
+    # yadm clone restores files one by one from quoted `git ls-files`
+    # output, which leaves names with non-ASCII characters missing.
+    (cd "$home" && "${g[@]}" checkout -- .)
+    copy_remote "$src" "$dst"
+    { git --git-dir="$src" config --get-regexp '^local\.' || true; } |
+        while read -r key value; do "${g[@]}" config "$key" "$value"; done
+    if [[ $(git --git-dir="$src" config --bool core.sparseCheckout) == true &&
+          -f $src/info/sparse-checkout ]]; then
+        cp "$src/info/sparse-checkout" "$dst/info/sparse-checkout"
+        "${g[@]}" config core.sparseCheckout true
+        "${g[@]}" read-tree -mu HEAD
+    fi
+    in_sandbox "$yadm" alt >/dev/null
+}
+
+setup_submodule() {
+    local path=${1%%=*} src=$HOME/${1%%=*}
+    [[ $1 == *=* ]] && src=${1#*=}
+    [[ -e $home/$path && -n $(ls -A "$home/$path") ]] &&
+        die "$path is not empty in the sandbox"
+    rmdir "$home/$path" 2>/dev/null || true
+    git clone -q "$src" "$home/$path"
+    copy_remote "$(git -C "$src" rev-parse --absolute-git-dir)" \
+        "$home/$path/.git"
+}
+
+# Copy zinit and rewrite paths into the real one: bin shims and other text
+# files that embed it, and absolute symlinks.
+setup_zinit() {
+    local real=${XDG_DATA_HOME:-$HOME/.local/share}/zsh/zinit
+    local copy=$home/.local/share/zsh/zinit f target
+    [[ -d $real ]] || die "no zinit home at $real"
+    mkdir -p "$(dirname "$copy")"
+    cp -a "$real" "$copy"
+    { grep -rlIF --exclude-dir=.git "$real" "$copy" || true; } |
+        while read -r f; do
+            sed -i.bak "s#$real#$copy#g" "$f" && rm -f "$f.bak"
+        done
+    find "$copy" -type l | while read -r f; do
+        target=$(readlink "$f")
+        case $target in
+            "$real"/*) ln -sfn "$copy${target#"$real"}" "$f" ;;
+        esac
+    done
+}
+
+create() {
+    local yadm_src=${XDG_DATA_HOME:-$HOME/.local/share}/yadm/repo.git zinit=0
+    local -a subs=() copies=() links=()
+    local opt p
+    while getopts 'y:s:zc:l:h' opt; do
+        case $opt in
+            y) yadm_src=$OPTARG ;;
+            s) subs+=("$OPTARG") ;;
+            z) zinit=1 ;;
+            c) copies+=("$OPTARG") ;;
+            l) links+=("$OPTARG") ;;
+            *) usage ;;
+        esac
+    done
+    shift $((OPTIND - 1))
+    (( $# == 1 )) || usage
+    [[ ! -e $1 || -z $(ls -A "$1") ]] || die "$1 is not empty"
+    umask 022
+    mkdir -p "$1"
+    dir=$(cd "$1" && pwd) home=$dir/home
+    mkdir -p "$home" "$dir/run"
+    chmod 700 "$dir/run"
+
+    setup_yadm "$yadm_src"
+    for p in ${subs[@]+"${subs[@]}"}; do setup_submodule "$p"; done
+    (( zinit )) && setup_zinit
+    for p in ${copies[@]+"${copies[@]}"}; do
+        mkdir -p "$(dirname "$home/$p")"
+        cp -a "$HOME/$p" "$home/$p"
+    done
+    for p in ${links[@]+"${links[@]}"}; do
+        mkdir -p "$(dirname "$home/$p")"
+        ln -sfn "$HOME/$p" "$home/$p"
+    done
+    echo "created $dir; enter with: $0 shell $dir"
+}
+
+shell() {
+    (( $# >= 1 )) || usage
+    [[ -d $1/home ]] || die "$1 is not a sandbox"
+    dir=$(cd "$1" && pwd) home=$dir/home
+    shift
+    local zsh
+    zsh=$(command -v zsh) || die "zsh not found"
+    exec env -i \
+        HOME="$home" USER="$USER" LOGNAME="$USER" \
+        LANG="${LANG:-en_US.UTF-8}" \
+        TERM="${TERM:-xterm-256color}" \
+        ${COLORTERM:+COLORTERM="$COLORTERM"} \
+        PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin \
+        XDG_RUNTIME_DIR="$dir/run" \
+        SHELL="$zsh" \
+        MISE_CEILING_PATHS="$dir" \
+        "$zsh" -l "$@"
+}
+
+dir= home=
+case ${1-} in
+    create) shift; create "$@" ;;
+    shell) shift; shell "$@" ;;
+    *) usage ;;
+esac
