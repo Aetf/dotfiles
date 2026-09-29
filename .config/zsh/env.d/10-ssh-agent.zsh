@@ -11,7 +11,7 @@
 # what gets repointed on each login. Everything resolves it at connect time,
 # which fixes already-running processes too - no environment update needed.
 #
-# Three things are deliberately structural here, not probed:
+# These are deliberately structural, not probed:
 #
 # - An explicitly empty SSH_AUTH_SOCK means "no agent" and is left alone. ssh
 #   itself reads it that way. This is how tool runners (Claude Code's Bash
@@ -22,12 +22,20 @@
 #   socket would strand every tmux pane on a socket that dies with it - and
 #   when the command was `ssh <this very host>`, the forwarded socket chains
 #   back to the symlink itself and every agent request loops forever.
+# - A session opened from this machine never claims the symlink either: its
+#   socket chains back through the local ssh client, whose agent is the
+#   symlink. SSH_CONNECTION shows it as source address = destination address,
+#   whichever alias of this host was used, since the kernel sources a
+#   connection to a local address from that address. A connection relayed
+#   through a local port (a reverse tunnel) looks the same, so such a session
+#   does not repoint the symlink either; it uses the symlink if live, else its
+#   own socket.
 # - Liveness is `-S` (the file exists), never a connect(). A socket whose
 #   sshd-session is still alive but whose client vanished accepts connections
 #   and never answers; probing it from here would queue one dead connection
 #   per shell start until its backlog fills and connect() itself blocks -
 #   turning "ssh hangs" into "every zsh hangs". That state is prevented at the
-#   source (sshd ClientAlive, ssh ServerAlive, ForwardAgent no to oneself) and
+#   source (sshd ClientAlive, ssh ServerAlive, no claim from this machine) and
 #   swept by ssh-agent-socket-gc, which can afford a timeout.
 #
 # Anything else that already works is left alone: the macOS Keychain agent,
@@ -47,6 +55,12 @@
     case ${SSH_AUTH_SOCK-} in
         ($HOME/.ssh/agent/s.*|/tmp/ssh-*/agent.*|/private/tmp/ssh-*/agent.*)
             if [[ -S $SSH_AUTH_SOCK ]]; then
+                local -a conn=(${=SSH_CONNECTION-})
+                if [[ -n ${conn[1]-} && $conn[1] == ${conn[3]-} ]]; then
+                    # Opened from this machine: leave the symlink alone.
+                    [[ -S $stable ]] && export SSH_AUTH_SOCK=$stable
+                    return
+                fi
                 # Spawned directly by sshd. Claim the socket and forget the path
                 # it arrived under; nothing downstream should ever see it.
                 ln -sfn -- $SSH_AUTH_SOCK $stable
