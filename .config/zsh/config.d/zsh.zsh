@@ -54,8 +54,12 @@ zstyle ':zle:*' word-chars ':-._~?&%+#'
 zstyle ':zle:backward-kill-word' word-style normal
 zstyle ':zle:kill-word' word-style normal
 
-# A fancier eol mark
-export PROMPT_EOL_MARK=$'\u23ce'  # ⏎
+# A fancier eol mark. $'\u....' fails with "character not in range" unless the
+# locale's codeset is UTF-8.
+zmodload zsh/langinfo 2>/dev/null
+if [[ ${langinfo[CODESET]-} == UTF-8 ]]; then
+    export PROMPT_EOL_MARK=$'\u23ce'  # ⏎
+fi
 
 # Fuzzy tab completion
 # 0 -- vanilla completion (abc => abc)
