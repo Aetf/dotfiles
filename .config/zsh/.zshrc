@@ -148,7 +148,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
         wait0a+=(
             # fd the better find
             from'gh-r' bpick"${toolinfo[fd]}"
-            mv'*/_fd -> _fd'
+            mv'*/autocomplete/_fd -> _fd'
             sbin'*/fd'
                 @sharkdp/fd
         )
@@ -158,6 +158,7 @@ zmodload zdharma_continuum/zinit &>/dev/null
         wait0a+=(
             # ripgrep the better grep
             from'gh-r' bpick"${toolinfo[ripgrep]}"
+            mv'*/complete/_rg -> _rg'
             sbin'*/rg'
                 @BurntSushi/ripgrep
         )
