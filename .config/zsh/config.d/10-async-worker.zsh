@@ -6,6 +6,9 @@
 #   `<callback> <job> <exit status> <stdout> <stderr>` in the shell. A job name
 #   runs once at a time: submitting it while it runs queues one rerun with the
 #   latest args, so the last request is always answered.
+#   A result can be lost without the worker reporting an error, which would
+#   block the job name for good. Submitting a job that has been running for
+#   more than $worker_job_timeout seconds restarts the worker instead.
 # worker_idle_functions
 #   Called after all results the worker had ready have been handled, e.g. to
 #   redraw the prompt once for several results.
@@ -15,7 +18,11 @@
 #   made during startup wait for it. Call this after defining job functions
 #   later; running jobs are rerun in the new worker.
 
+zmodload -i zsh/datetime
+
 typeset -ga worker_idle_functions
+typeset -gi worker_job_timeout=60
+# _worker_running maps a job to the time it was sent.
 typeset -gA _worker_callback _worker_args _worker_running _worker_pending
 typeset -gi _worker_started=0 _worker_ready=0
 
@@ -25,6 +32,10 @@ function worker_submit() {
     shift 2
     if (( ! _worker_ready || ${+_worker_running[$job]} )); then
         _worker_pending[$job]=${(j: :)${(q)@}}
+        if (( ${+_worker_running[$job]} &&
+              EPOCHSECONDS - _worker_running[$job] > worker_job_timeout )); then
+            worker_restart
+        fi
         return 0
     fi
     _worker_send $job "$@"
@@ -39,7 +50,7 @@ function _worker_send() {
     fi
     shift
     _worker_args[$job]=${(j: :)${(q)@}}
-    _worker_running[$job]=1
+    _worker_running[$job]=$EPOCHSECONDS
     async_job shell_worker $job "$@"
 }
 
