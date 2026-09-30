@@ -277,10 +277,12 @@ local purchaseRules = [
     },
     actions: { category: 'updates', labels: ['Purchase'] },
   },
-  // Carrier tracking updates.
+  // Carrier tracking updates. The label is the folder the HA Mail and
+  // Packages integration scans, so the sender list must cover every address
+  // its const.py SENSOR_DATA lists for the carriers enabled there.
   {
     filter: {
-      query: 'from:TrackingUpdates@fedex.com OR from:order-update@amazon.com OR from:auto-reply@usps.com OR from:USPSInformeddelivery@email.informeddelivery.usps.com OR from:mcinfo@ups.com OR (from:help@walmart.com  AND (subject:"Out for delivery" OR subject:"shipped" OR subject:"delivered") )',
+      query: 'from:TrackingUpdates@fedex.com OR from:order-update@amazon.com OR from:shipment-tracking@amazon.com OR from:thehub@amazon.com OR from:amazonlockers@amazon.com OR from:auto-reply@usps.com OR from:auto-reply@tracking.usps.com OR from:USPSInformeddelivery@email.informeddelivery.usps.com OR from:mcinfo@ups.com OR from:pkginfo@ups.com OR from:NoReply.ODD@dhl.com OR from:donotreply_odd@dhl.com OR (from:help@walmart.com  AND (subject:"Out for delivery" OR subject:"shipped" OR subject:"delivered") )',
     },
     actions: {
       archive: true,
