@@ -1,0 +1,36 @@
+#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+
+[user]
+name = "Aetf"
+email = "aetf@unlimited-code.works"
+
+[git]
+push-new-bookmark = true
+
+[aliases]
+# Shorten standard commands
+st = ["status"]
+ci = ["commit"]
+d = ["diff"]
+hist = ["log"]
+amend = ["squash", "--into", "@-"]
+fetch = ["git", "fetch"]
+sy = ["sync"]
+# Fetch, then rebase the current branch onto the remote version of its
+# bookmark (the nearest bookmark in ::@). A local bookmark that diverged from
+# the remote is left conflicted by the fetch; the rebase makes its local side a
+# descendant of the remote, and jj resolves the conflict on its own.
+sync = ["util", "exec", "--", "sh", "-c", '''
+set -eu
+names=$(jj log --no-graph -r 'heads(::@ & bookmarks())' \
+  -T 'local_bookmarks.map(|b| b.name()).join("\n") ++ "\n"' | sed '/^$/d')
+if [ "$(printf '%s\n' "$names" | grep -c .)" -ne 1 ]; then
+  echo "jj sync: need exactly one bookmark at heads(::@ & bookmarks()), found: ${names:-none}" >&2
+  exit 1
+fi
+remote="tracked_remote_bookmarks(exact:\"$names\")"
+echo "jj sync: fetching…"
+jj git fetch
+echo "jj sync: rebasing onto the remote of $names"
+jj rebase -b @ -d "exactly($remote, 1)"
+''']
