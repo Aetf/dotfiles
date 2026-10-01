@@ -3,25 +3,80 @@
 # window of $TMUX_PANE (the pane sudo was started from); outside tmux it fails.
 # sudo runs the helper with the invoking user's environment, so
 # TMUX and TMUX_PANE are intact. The password goes to stdout, nothing else does.
+#
+# The pane is centred in the window, and stays centred when the window is
+# resized (a client attaches or its terminal changes size). tmux can place a
+# floating pane only when creating it, so a window-resized hook replaces the
+# pane with one at the new centre; the replacement opens the password FIFO
+# before the old pane is killed, so the reader never sees EOF. Input typed into
+# the old pane before the move is lost.
 set -euo pipefail
 
+self=$(readlink -f -- "$0")
+
 if [[ ${1-} == --pane ]]; then
-    # Runs inside the floating pane: --pane <fifo> <prompt>.
-    # Open the FIFO first: however this process dies (Ctrl-C, kill-pane), the
-    # write end closes and the reader sees EOF instead of blocking forever.
+    # Runs inside the floating pane: --pane <fifo> <prompt> [bell].
+    # Whoever placed the pane waits on this channel before relying on it, so
+    # signal it once the FIFO is open, or on the way out if that never happens.
+    signalled=
+    signal() { [[ -n $signalled ]] || { signalled=1; tmux wait-for -S "sudo-askpass-$TMUX_PANE"; }; }
+    trap signal EXIT
+    trap 'exit 1' HUP INT TERM
+    # However this process dies (Ctrl-C, kill-pane), the write end closes; once
+    # no pane holds it the reader sees EOF instead of blocking forever.
     exec 3>"$2"
+    signal
     # The bell marks the window in status lines of sessions not looking at it.
-    printf '\a%s' "$3"
+    [[ ${4-} != bell ]] || printf '\a'
+    printf '%s' "$3"
     IFS= read -rs pw || exit 1
     printf '%s\n' "$pw" >&3
+    exit 0
+fi
+
+# place <target> <fifo> <prompt> [bell]: open the prompt pane centred in the
+# window of <target> and print its id, unless it is already there (<target> is
+# then a pane at that spot).
+place() {
+    local ww wh pl pt w h=3 x y
+    read -r ww wh pl pt < <(tmux display-message -p -t "$1" \
+        '#{window_width} #{window_height} #{pane_left} #{pane_top}')
+    # Leave room for the pane's border on both sides.
+    w=$(( ${#3} + 20 )); (( w > ww - 2 )) && w=$(( ww - 2 ))
+    x=$(( (ww - w) / 2 )) y=$(( (wh - h) / 2 ))
+    [[ ${4-} == bell || $pl != "$x" || $pt != "$y" ]] || return 1
+    # Several arguments after the options make tmux exec the command directly,
+    # so the prompt and path need no shell quoting.
+    tmux new-pane -t "$1" -P -F '#{pane_id}' -x "$w" -y "$h" -X "$x" -Y "$y" \
+        "$self" --pane "$2" "$3" "${4-}"
+}
+
+# alive <pane>: an unknown target still exits 0 with empty formats.
+alive() { [[ $(tmux display-message -p -t "$1" '#{pane_id}' 2>/dev/null) == "$1" ]]; }
+
+if [[ ${1-} == --move ]]; then
+    # Run by the window-resized hook: --move <dir>. The lock orders moves
+    # against each other and against the asker's cleanup, which removes
+    # <dir>/pane once no pane should exist.
+    dir=$2
+    exec 9>"$dir/lock" 2>/dev/null || exit 0
+    flock 9
+    [[ -e $dir/pane ]] || exit 0
+    old=$(<"$dir/pane")
+    new=$(place "$old" "$dir/pw" "$(<"$dir/prompt")") || exit 0
+    # Bounded only to survive a pane killed before its traps run (SIGKILL).
+    timeout 10 tmux wait-for "sudo-askpass-$new" || true
+    if alive "$new"; then
+        printf '%s\n' "$new" >"$dir/pane"
+        tmux kill-pane -t "$old" 2>/dev/null || true
+    fi
     exit 0
 fi
 
 prompt=${1:-Password: }
 
 if [[ -n ${TMUX-} && -n ${TMUX_PANE-} ]] &&
-    info=$(tmux display-message -p -t "$TMUX_PANE" '#{window_width} #{window_height} #{window_id}' 2>/dev/null); then
-    read -r ww wh wid <<<"$info"
+    wid=$(tmux display-message -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null) && [[ -n $wid ]]; then
     # A window linked into several sessions (grouped sessions) resolves to any of
     # them via the pane id; name it after the session the shell was started in,
     # whose id is the last field of $TMUX.
@@ -29,21 +84,38 @@ if [[ -n ${TMUX-} && -n ${TMUX_PANE-} ]] &&
     src="\$${TMUX##*,}:$wid"
     [[ -n $(tmux display-message -p -t "$src" '#{session_name}' 2>/dev/null) ]] || src=$TMUX_PANE
     where=$(tmux display-message -p -t "$src" '#{session_name}:#{window_index} (#{window_name})')
-    w=$(( ${#prompt} + 20 )); (( w > ww )) && w=$ww
-    h=3
 
     dir=$(mktemp -d)
     fifo=$dir/pw
     mkfifo -m 600 "$fifo"
-    pane=
-    # The pane is usually gone by now; kill-pane is for when sudo is interrupted.
-    trap 'rm -rf "$dir"; [[ -z $pane ]] || tmux kill-pane -t "$pane" 2>/dev/null || true' EXIT
+    printf '%s' "$prompt" >"$dir/prompt"
+    # A global hook under an index unique to this asker: a window-level hook
+    # would leave an empty array behind that shadows the global ones.
+    hook="window-resized[$$]"
+    cleanup() {
+        # Waits out a move in progress, and keeps later ones from starting.
+        exec 9>"$dir/lock"
+        flock 9
+        tmux set-hook -u -gw "$hook" 2>/dev/null || true
+        if [[ -e $dir/pane ]]; then
+            # The pane is usually gone by now; this is for when sudo is interrupted.
+            tmux kill-pane -t "$(<"$dir/pane")" 2>/dev/null || true
+            rm -f "$dir/pane"
+        fi
+        rm -rf "$dir"
+    }
+    trap cleanup EXIT
 
-    # Several arguments after the options make tmux exec the command directly,
-    # so the prompt and path need no shell quoting.
-    pane=$(tmux new-pane -t "$TMUX_PANE" -P -F '#{pane_id}' \
-        -x "$w" -y "$h" -X $(( (ww - w) / 2 )) -Y $(( (wh - h) / 2 )) \
-        "$(readlink -f -- "$0")" --pane "$fifo" "$prompt")
+    # Hold the read end for the whole exchange, so a replacement pane's open
+    # never blocks. The read-write descriptor only lets the read-only open
+    # return before the first pane opens the FIFO; dropping it once the pane
+    # has opened its end (or died) leaves the panes as the only writers.
+    exec 5<>"$fifo" 4<"$fifo"
+    pane=$(place "$TMUX_PANE" "$fifo" "$prompt" bell)
+    printf '%s\n' "$pane" >"$dir/pane"
+    tmux wait-for "sudo-askpass-$pane"
+    exec 5>&-
+    tmux set-hook -gw "$hook" "if-shell -F '#{==:#{window_id},$wid}' \"run-shell -b '$self --move $dir'\""
 
     # Clients showing another window would not notice the pane; tell them where it is.
     tmux list-clients -F '#{client_name} #{window_id}' | while read -r client cwid; do
@@ -51,7 +123,7 @@ if [[ -n ${TMUX-} && -n ${TMUX_PANE-} ]] &&
             tmux display-message -l -c "$client" -d 5000 "sudo is waiting for a password in $where" || true
     done
 
-    IFS= read -r pw <"$fifo" || exit 1
+    IFS= read -r pw <&4 || exit 1
     printf '%s\n' "$pw"
     exit 0
 fi
