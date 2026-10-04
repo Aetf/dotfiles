@@ -17,6 +17,7 @@ local label(name, bg=null, text=null) =
 // ---------------------------------------------------------------------------
 
 local activeLabels = [
+  label('Alerts'),
   label('AWS Bills'),
   label('Auto Insurance'),
   label('Auto Insurance/20250312-scratch-with-neighbor'),
@@ -415,6 +416,27 @@ local dmarcRules = [
   },
 ];
 
+// kluster Alertmanager (kluster-code src/mon): warning and critical alerts,
+// relayed through smtp.gmail.com as aetf@ (which rewrites the From) and
+// forwarded here. Gmail files them as spam on its own, so they are pinned to
+// the inbox. Alertmanager's subjects start with [FIRING:n] or [RESOLVED].
+local alertRules = [
+  {
+    filter: {
+      and: [
+        {
+          or: [
+            { from: 'aetf@unlimited-code.works' },
+            { from: 'alertmanager@unlimited-code.works' },
+          ],
+        },
+        { or: [{ subject: 'FIRING' }, { subject: 'RESOLVED' }] },
+      ],
+    },
+    actions: { markSpam: false, markImportant: true, category: 'personal', labels: ['Alerts'] },
+  },
+];
+
 // GitHub notifications skip the inbox by default. The exception is mail that
 // wants an answer from me personally: GitHub cc's a <reason>@noreply.github.com
 // address on every notification, so `cc:mention@` / `cc:review_requested@`
@@ -571,6 +593,7 @@ local legacyRules = [
     + aliasRules
     + botRules
     + dmarcRules
+    + alertRules
     + githubRules
     + devRules
     + legacyRules,
