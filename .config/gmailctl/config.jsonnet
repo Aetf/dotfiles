@@ -417,9 +417,10 @@ local dmarcRules = [
 ];
 
 // kluster Alertmanager (kluster-code src/mon): warning and critical alerts,
-// relayed through smtp.gmail.com as aetf@ (which rewrites the From) and
-// forwarded here. Gmail files them as spam on its own, so they are pinned to
-// the inbox. Alertmanager's subjects start with [FIRING:n] or [RESOLVED].
+// sent as the kluster@ alias through smtp.gmail.com and forwarded here. Gmail
+// files them as spam on its own, so they are pinned to the inbox. aetf@ is
+// what Gmail rewrites the From to when kluster@ is not a send-as alias.
+// Alertmanager's subjects start with [FIRING:n] or [RESOLVED].
 local alertRules = [
   {
     filter: {
@@ -427,7 +428,7 @@ local alertRules = [
         {
           or: [
             { from: 'aetf@unlimited-code.works' },
-            { from: 'alertmanager@unlimited-code.works' },
+            { from: 'kluster@unlimited-code.works' },
           ],
         },
         { or: [{ subject: 'FIRING' }, { subject: 'RESOLVED' }] },
