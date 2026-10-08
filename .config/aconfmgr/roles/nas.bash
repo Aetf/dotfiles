@@ -57,6 +57,14 @@ SystemdEnable --name zfs-scrub-monthly@nas.timer zfs-utils /usr/lib/systemd/syst
 # the pool, that stalled CI jobs for minutes with no output. Losing the last
 # few seconds of writes on a crash is fine for data that is thrown away anyway.
 # MANUAL: zfs create -o mountpoint=/var/lib/scratch -o refquota=50G -o compression=lz4 -o atime=off -o sync=disabled nas/scratch
+#
+# nas/build holds host-side build output from interactive and agent sessions
+# (cargo targets, per-task jj workspaces): the root nvme is DRAM-less and its
+# write latency stalls etcd's fdatasync, so heavy compile writes stay off it.
+# Same reasoning as nas/scratch for sync=disabled and for living outside
+# /mnt/nas (disposable, not NAS content, not exported); owned by aetf because
+# user sessions write it, not pods. The refquota is the only bound.
+# MANUAL: zfs create -o mountpoint=/var/lib/build -o refquota=200G -o compression=lz4 -o atime=off -o sync=disabled nas/build && chown aetf:aetf /var/lib/build
 
 # For hdparm
 AddPackage hdparm
