@@ -141,6 +141,26 @@ AddRole zerotier
 
 # And reachable via ssh
 AddRole ssh
+## kluster's libvirt session (the `physical` stack) dials this host over the
+## overlay on port 22: pulumi-libvirt 0.5.4 wraps terraform-provider-libvirt
+## v0.8.1, whose qemu+ssh dial mangles a port given in the URI (upstream
+## dmacvicar/terraform-provider-libvirt#1116, fixed in v0.8.3). So sshd also
+## listens on 22, on the overlay address alone; 59901 stays the main port. Once
+## a pulumi-libvirt release carries the fix, kluster dials 59901 and this goes
+## (Aetf/kluster-ops#519). Naming any ListenAddress turns off `Port`'s
+## all-address default, so 59901 is listed explicitly for both families.
+cat >"$(CreateFile /etc/ssh/sshd_config.d/overlay-port-22.conf)" <<EOF
+ListenAddress 10.144.180.10:22
+ListenAddress 0.0.0.0:59901
+ListenAddress [::]:59901
+EOF
+## sshd starts before ZeroTier assigns 10.144.180.10, and a bind to an address
+## the host does not hold yet fails and is not retried. Allowing a non-local
+## bind holds the listener from boot; it carries traffic once the address
+## exists. Waiting for ZeroTier instead would make sshd depend on the overlay.
+cat >"$(CreateFile /etc/sysctl.d/60-nonlocal-bind.conf)" <<EOF
+net.ipv4.ip_nonlocal_bind = 1
+EOF
 
 # Disk management
 AddPackage smartmontools
