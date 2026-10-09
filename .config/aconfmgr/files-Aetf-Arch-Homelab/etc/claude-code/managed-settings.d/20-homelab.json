@@ -8,8 +8,7 @@
     ],
     "additionalDirectories": [
       "/var/lib/build"
-    ],
-    "//": "additionalDirectories: build output lives on nas/build (/var/lib/build, see roles/nas.bash) and is reached through symlinks such as ~/teahouse/.claude/worktrees; Claude Code checks the resolved path, so without this every Edit/Write in an agent workspace asks for approval."
+    ]
   },
   "enabledPlugins": {
     "unifi-network@unifi-plugins": true
