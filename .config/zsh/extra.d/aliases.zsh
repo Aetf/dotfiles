@@ -81,5 +81,8 @@ alias b2='podman run --rm -it --user 0:0 -e HOME=/root -v "$HOME/.config/b2:/roo
 
 # Deepseek Claude
 function deepseek() {
-  (source $XDG_CONFIG_HOME/deepseek/env; claude "$@")
+  (source $XDG_CONFIG_HOME/claude-code-keys/deepseek.env; claude "$@")
+}
+function cc-api() {
+  (source $XDG_CONFIG_HOME/claude-code-keys/claude-api.env; claude "$@")
 }
