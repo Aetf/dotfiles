@@ -40,6 +40,10 @@ CopyFile /etc/dracut.conf.d/resume-from-hibernate.conf
 ### needs the nvidia-* PM services, which aren't available pre-switch-root)
 CopyFile /etc/dracut.conf.d/omit-nvidia.conf
 
+## suspend-then-hibernate on battery, hibernate at critical battery
+CopyFile /etc/systemd/sleep.conf.d/hibernate-delay.conf
+CopyFile /etc/UPower/UPower.conf.d/50-hibernate-on-critical.conf
+
 ## kernel command lines
 CopyFile /etc/kernel/cmdline.d/block.conf
 CopyFile /etc/kernel/cmdline.d/disable-audit.conf
