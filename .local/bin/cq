@@ -10,7 +10,7 @@
 # skills load exactly as in any session.
 #
 # Usage:
-#   cq [-m MODEL] [PROMPT...]            new session
+#   cq [-k KEYS] [-m MODEL] [PROMPT...]  new session
 #   cq -c [-m MODEL] [PROMPT...]         continue the last cq session
 #   cq -r SESSION_ID [-m MODEL] [PROMPT...]
 #                                        fork any session (e.g. a stalled RC session)
@@ -18,8 +18,11 @@
 # With a PROMPT, run that one turn and exit; without one, read turns from a
 # prompt line by line (Ctrl-D quits). Every turn continues the same session.
 #
-# The key is read from $CQ_KEY_FILE (default ~/.config/anthropic/keys/cq); with
-# no key cq refuses to run rather than fall back to the subscription.
+# Credentials come from ~/.config/claude-code-keys/KEYS.env (yadm, git-crypt;
+# default KEYS=claude-api): every KEY=VALUE line there is passed to claude, so
+# a file can also point it at another endpoint (e.g. -k deepseek). A file that
+# sets neither ANTHROPIC_API_KEY nor ANTHROPIC_AUTH_TOKEN is refused, so cq
+# never falls back to the subscription login.
 #
 # `-r` always forks: the original transcript may belong to a live process, and
 # two processes appending to one session corrupt it. `--continue` is never used:
@@ -28,7 +31,8 @@
 
 set -euo pipefail
 
-KEY_FILE=${CQ_KEY_FILE:-$HOME/.config/anthropic/keys/cq}
+KEYS_DIR=${CQ_KEYS_DIR:-$HOME/.config/claude-code-keys}
+keys=claude-api
 STATE_DIR=${XDG_STATE_HOME:-$HOME/.local/state}/cq
 LAST=$STATE_DIR/last-session
 PERMISSION_MODE=${CQ_PERMISSION_MODE:-auto}
@@ -37,10 +41,11 @@ die() { printf 'cq: %s\n' "$*" >&2; exit 1; }
 usage() { sed -n '/^# Usage:/,/^# With a PROMPT/p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2; }
 
 session="" fork=0 model=()
-while getopts ':cr:m:h' opt; do
+while getopts ':ck:r:m:h' opt; do
     case $opt in
         c) [[ -r $LAST ]] || die "no previous cq session ($LAST)"
            session=$(<"$LAST") ;;
+        k) keys=$OPTARG ;;
         r) session=$OPTARG fork=1 ;;
         m) model=(--model "$OPTARG") ;;
         h) usage ;;
@@ -49,7 +54,8 @@ while getopts ':cr:m:h' opt; do
 done
 shift $((OPTIND - 1))
 
-[[ -s $KEY_FILE ]] || die "no API key at $KEY_FILE (create one in the Console org linked to the Max plan)"
+KEY_FILE=$KEYS_DIR/$keys.env
+[[ -r $KEY_FILE ]] || die "no credentials file $KEY_FILE"
 command -v claude >/dev/null || die "claude not on PATH"
 command -v jq >/dev/null || die "jq not on PATH"
 mkdir -p "$STATE_DIR"
@@ -63,7 +69,16 @@ envv=()
 for v in "${passthrough[@]}"; do
     [[ -n ${!v:-} ]] && envv+=("$v=${!v}")
 done
-envv+=("ANTHROPIC_API_KEY=$(<"$KEY_FILE")")
+auth=0
+while IFS= read -r line || [[ -n $line ]]; do
+    line=${line#export }
+    [[ $line =~ ^([A-Za-z_][A-Za-z0-9_]*)=(.*)$ ]] || continue
+    name=${BASH_REMATCH[1]} value=${BASH_REMATCH[2]}
+    [[ $value =~ ^\"(.*)\"$ || $value =~ ^\'(.*)\'$ ]] && value=${BASH_REMATCH[1]}
+    envv+=("$name=$value")
+    [[ $name == ANTHROPIC_API_KEY || $name == ANTHROPIC_AUTH_TOKEN ]] && [[ -n $value ]] && auth=1
+done <"$KEY_FILE"
+(( auth )) || die "$KEY_FILE sets neither ANTHROPIC_API_KEY nor ANTHROPIC_AUTH_TOKEN"
 
 # stream-json events -> readable text. Lines starting with \x1e carry the
 # session id back to the shell instead of being printed.
