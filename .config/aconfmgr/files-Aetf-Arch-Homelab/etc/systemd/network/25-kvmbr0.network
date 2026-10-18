@@ -9,7 +9,7 @@ MulticastDNS=no
 IPv6AcceptRA=yes
 
 # This link also gets a default route from DHCP/RA. Keep it strictly behind
-# enp7s0 (metric 10): with equal metrics the kernel picks whichever route was
+# the wired NIC (15-wired.network, metric 10): with equal metrics the kernel picks whichever route was
 # installed last, so replies to routed (non-directly-connected) sources would
 # leave through whichever VLAN won at boot. 1024 keeps it as a fallback only.
 [DHCPv4]

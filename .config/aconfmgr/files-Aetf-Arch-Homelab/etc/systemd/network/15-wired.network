@@ -1,5 +1,10 @@
 [Match]
-Name=enp7s0
+# The onboard I225-V, matched by its burned-in MAC rather than by name: the
+# predictable name encodes the PCI bus number, which shifts whenever a card is
+# added or moved (2026-10: enp7s0 became enp11s0). PermanentMACAddress, not
+# MACAddress: the iot/kluster VLANs on this link inherit its MAC, and only the
+# physical device carries a permanent one.
+PermanentMACAddress=50:eb:f6:b5:79:fd
 
 [Network]
 DHCP=yes

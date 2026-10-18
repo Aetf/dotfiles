@@ -35,8 +35,8 @@ TMPFILES
 # The worker VM's network (homelab-host.md §2): VLAN 7 tagged on the
 # physical NIC, bridged as kvmbr1, with a host leg at 192.168.70.2 so
 # host<->worker NFS traffic stays on the box instead of hairpinning
-# through the UDM. Same mechanism as the HAOS iot/kvmbr0 pair; enp7s0
-# keeps its untagged address and the default route. 15-wired.network
+# through the UDM. Same mechanism as the HAOS iot/kvmbr0 pair; the wired
+# NIC keeps its untagged address and the default route. 15-wired.network
 # carries the matching VLAN= association.
 CopyFile /etc/systemd/network/13-kluster.netdev
 CopyFile /etc/systemd/network/12-kvmbr1.netdev

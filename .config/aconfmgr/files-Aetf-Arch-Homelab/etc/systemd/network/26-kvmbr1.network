@@ -3,7 +3,7 @@ Name=kvmbr1
 
 [Network]
 # Host leg on the cluster VLAN (no DHCP server exists there). No Gateway=:
-# the untagged LAN on enp7s0 owns the default route.
+# the untagged LAN on the wired NIC (15-wired.network) owns the default route.
 Address=192.168.70.2/24
 
 IPForward=no
