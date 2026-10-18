@@ -166,13 +166,6 @@ or other application using the libvirt API.
       <alias name='ua-WifiBluetoothCard'/>
       <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
     </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <vendor id='0x10c4'/>
-        <product id='0xea60'/>
-      </source>
-      <address type='usb' bus='0' port='1'/>
-    </hostdev>
     <watchdog model='itco' action='reset'/>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
