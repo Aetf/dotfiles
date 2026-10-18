@@ -91,7 +91,7 @@ CopyFile /etc/dracut.conf.d/force-usb-keyboard.conf
 AddPackage linux-firmware
 
 ## This host is wired-only and has no WiFi stack: no iwd, no wl* .network.
-## The one WiFi card, an AX210 at 05:00.0, belongs to the HAOS guest as the
+## The one WiFi card, an AX210 at 09:00.0, belongs to the HAOS guest as the
 ## ua-WifiBluetoothCard hostdev. That hostdev is managed='yes', so libvirt
 ## hands the card back to the host driver every time the guest stops. Left to
 ## itself the host then associates and takes a DHCP lease under the same

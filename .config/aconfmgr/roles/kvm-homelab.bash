@@ -15,6 +15,12 @@ EOF
 ## (created by tmpfiles, see roles/kluster-host.bash). Recreation on a fresh
 ## host = `virsh define` of this file. Intentional changes go through
 ## `virsh edit` first, then are captured back here.
+## The PCI hostdevs name host bus addresses, and those follow the slot layout:
+## moving or adding a card renumbers the buses. The hostdevs are managed='yes'
+## and the domain autostarts, so a stale address makes libvirt detach whatever
+## host device now sits there (after the 2026-10 slot move, the old WiFi
+## address was the SAS HBA). Recheck them with `lspci` after any card change,
+## before libvirt starts.
 CopyFile /etc/libvirt/qemu/haos.xml 600
 ## Autostart
 CreateLink /etc/libvirt/qemu/autostart/haos.xml /etc/libvirt/qemu/haos.xml
