@@ -277,9 +277,9 @@ kubelet-arg: []
 # Leader election is a liveness check against the local apiserver, and losing
 # it is fatal: k3s exits as a whole, taking kubelet and the apiserver down with
 # it. On this single-server cluster the lease has nothing to arbitrate, so the
-# upstream 15s/10s budget only turns an etcd stall (root nvme saturated by a
-# tenant, see roles/k8s.bash) into a full restart -- which
-# is itself an IO burst. 60s/40s rides out a stall; a real deadlock still
+# upstream 15s/10s budget only turns an etcd stall (its disk saturated, as
+# the root 980 was before etcd moved to the fast pool) into a full restart --
+# which is itself an IO burst. 60s/40s rides out a stall; a real deadlock still
 # trips it. All three elected components must agree or the strictest one
 # still exits the process.
 kube-controller-manager-arg:
