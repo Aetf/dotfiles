@@ -52,16 +52,24 @@ EOF
 # because that space is real but unreachable.
 #
 # periodic_reclaim has the kernel revisit under-used data block groups in the
-# background; bg_reclaim_threshold is the used-percentage below which a block
-# group is a candidate. The threshold is fixed: dynamic_reclaim, which would
-# let the kernel retune it against observed reclaim success, is left off. 75
-# therefore trades relocation IO for headroom unconditionally, and the
-# reclaim_{count,bytes,errors} counters next to these knobs are the way to
-# tell whether that trade is worth it -- lower to 50 if the IO is felt.
+# background. dynamic_reclaim derives the used-percentage below which a block
+# group gets relocated from how short Device unallocated is of a 10-chunk
+# target: 0 (no relocation at all) while unallocated holds 10 chunks or more,
+# rising as it drains. The same threshold gates both the periodic sweep and
+# the relocate-on-free path (btrfs_calc_reclaim_threshold in 6.18), and
+# bg_reclaim_threshold is ignored while dynamic_reclaim is on.
+#
+# A fixed threshold is the wrong shape for this disk. It relocates every
+# block group that drops below it on free, whatever the headroom, so a large
+# delete (image GC, a pacman cache sweep) turns into a relocation storm; on
+# the DRAM-less 980 a storm of ~3000 write IOPS took average write latency
+# from 2 ms to ~95 ms, which is the latency the k3s data on this disk cannot
+# ride out. Reclaim is only worth its IO when unallocated is actually short.
+# reclaim_{count,bytes,errors} next to these knobs show what it does.
 #
 # Globbed over the fsid so a disk replacement cannot silently drop it.
 cat >$(CreateFile /etc/tmpfiles.d/btrfs-reclaim.conf) <<EOF
-w /sys/fs/btrfs/*/allocation/data/bg_reclaim_threshold - - - - 75
+w /sys/fs/btrfs/*/allocation/data/dynamic_reclaim - - - - 1
 w /sys/fs/btrfs/*/allocation/data/periodic_reclaim - - - - 1
 EOF
 
