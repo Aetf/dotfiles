@@ -1,0 +1,119 @@
+#!/usr/bin/env bash
+# cq — headless Claude Code on the Max plan's monthly API credit, for when the
+# subscription's usage limits are exhausted.
+#
+# Interactive sessions (terminal, Remote Control, the Claude app) always draw on
+# the subscription. `claude -p` run with an API key from the Console organization
+# linked to the plan is billed as Agent SDK usage and draws on the monthly API
+# credit instead (support.claude.com/en/articles/17154008). cq runs `claude -p`
+# that way against the normal config dir, so CLAUDE.md, the vault memory and the
+# skills load exactly as in any session.
+#
+# Usage:
+#   cq [-m MODEL] [PROMPT...]            new session
+#   cq -c [-m MODEL] [PROMPT...]         continue the last cq session
+#   cq -r SESSION_ID [-m MODEL] [PROMPT...]
+#                                        fork any session (e.g. a stalled RC session)
+#                                        and continue the fork
+# With a PROMPT, run that one turn and exit; without one, read turns from a
+# prompt line by line (Ctrl-D quits). Every turn continues the same session.
+#
+# The key is read from $CQ_KEY_FILE (default ~/.config/anthropic/keys/cq); with
+# no key cq refuses to run rather than fall back to the subscription.
+#
+# `-r` always forks: the original transcript may belong to a live process, and
+# two processes appending to one session corrupt it. `--continue` is never used:
+# all directories share one project here, so "the most recent session" would be
+# whatever RC session ran last.
+
+set -euo pipefail
+
+KEY_FILE=${CQ_KEY_FILE:-$HOME/.config/anthropic/keys/cq}
+STATE_DIR=${XDG_STATE_HOME:-$HOME/.local/state}/cq
+LAST=$STATE_DIR/last-session
+PERMISSION_MODE=${CQ_PERMISSION_MODE:-auto}
+
+die() { printf 'cq: %s\n' "$*" >&2; exit 1; }
+usage() { sed -n '/^# Usage:/,/^# With a PROMPT/p' "$0" | sed 's/^# \{0,1\}//' >&2; exit 2; }
+
+session="" fork=0 model=()
+while getopts ':cr:m:h' opt; do
+    case $opt in
+        c) [[ -r $LAST ]] || die "no previous cq session ($LAST)"
+           session=$(<"$LAST") ;;
+        r) session=$OPTARG fork=1 ;;
+        m) model=(--model "$OPTARG") ;;
+        h) usage ;;
+        *) usage ;;
+    esac
+done
+shift $((OPTIND - 1))
+
+[[ -s $KEY_FILE ]] || die "no API key at $KEY_FILE (create one in the Console org linked to the Max plan)"
+command -v claude >/dev/null || die "claude not on PATH"
+command -v jq >/dev/null || die "jq not on PATH"
+mkdir -p "$STATE_DIR"
+
+# A claude started inside a Claude Code session inherits its messaging socket and
+# session variables and attaches to the parent session. Start from an empty
+# environment and pass through only what the CLI needs.
+passthrough=(HOME USER LOGNAME SHELL PATH LANG LC_ALL TERM XDG_RUNTIME_DIR
+             CLAUDE_CONFIG_DIR CLAUDE_CODE_PROJECT_DIR_NAME TMUX_TMPDIR)
+envv=()
+for v in "${passthrough[@]}"; do
+    [[ -n ${!v:-} ]] && envv+=("$v=${!v}")
+done
+envv+=("ANTHROPIC_API_KEY=$(<"$KEY_FILE")")
+
+# stream-json events -> readable text. Lines starting with \x1e carry the
+# session id back to the shell instead of being printed.
+render='
+def dim: "\u001b[2m" + . + "\u001b[0m";
+if .type == "system" and .subtype == "init" then
+  "\u001eSID " + .session_id, ("session " + .session_id + " · " + .model + " · " + .permissionMode | dim)
+elif .type == "assistant" then
+  .message.content[]? |
+  if .type == "text" then .text
+  elif .type == "tool_use" then ("▸ " + .name + " " + (.input | tostring | .[0:160])) | dim
+  else empty end
+elif .type == "result" then
+  "\u001eSID " + .session_id,
+  (if .is_error then ("error: " + (.result // .subtype)) else empty end),
+  ("· " + .subtype + " · $" + ((.total_cost_usd // 0) * 1000 | round / 1000 | tostring)
+     + " · " + (.num_turns | tostring) + " turns" | dim)
+else empty end'
+
+turn() { # $1 = prompt
+    local args=(-p "$1" --output-format stream-json --verbose
+                --permission-mode "$PERMISSION_MODE" "${model[@]}")
+    if [[ -n $session ]]; then
+        args+=(--resume "$session")
+        (( fork )) && args+=(--fork-session)
+    fi
+    local line rc
+    while IFS= read -r line; do
+        if [[ $line == $'\x1e'SID\ * ]]; then
+            session=${line#$'\x1e'SID }
+        else
+            printf '%s\n' "$line"
+        fi
+    done < <(env -i "${envv[@]}" claude "${args[@]}" | jq -r --unbuffered "$render")
+    wait $! && rc=0 || rc=$?
+    if [[ -n $session ]]; then
+        printf '%s\n' "$session" >"$LAST"
+        fork=0   # later turns continue the fork itself
+    fi
+    return "$rc"
+}
+
+if (( $# )); then
+    turn "$*"
+    exit
+fi
+
+while IFS= read -r -e -p 'cq> ' prompt; do
+    [[ -n ${prompt//[[:space:]]/} ]] || continue
+    history -s -- "$prompt"
+    turn "$prompt" || printf 'cq: turn failed (exit %s)\n' "$?" >&2
+done
+echo
