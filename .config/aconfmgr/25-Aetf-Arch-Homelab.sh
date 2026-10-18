@@ -219,6 +219,37 @@ cat >$(CreateFile /etc/udev/rules.d/69-idle-disk-spindown.rules) <<'EOF'
 ACTION=="add|change", SUBSYSTEM=="block", ENV{DEVTYPE}=="disk", ENV{ID_SERIAL}=="ST8000VN004-3CP101_WWZ1KD44|ST8000VN004-3CP101_WWZ1PHHH|ST8000VN004-3CP101_WWZ1Q6M8|ST8000VN004-3CP101_WWZ1Q7SB", RUN+="/usr/bin/hdparm -S 241 /dev/%k"
 EOF
 
+# The fast pool: a single-disk ZFS pool on the PM983 (enterprise NVMe with
+# DRAM and power-loss protection, so a cache flush is close to free) that
+# holds the latency-sensitive k3s state, the embedded etcd and the local-path
+# PVs (cnpg databases, prometheus, app configs). Nothing else writes to this
+# disk. The root btrfs on the DRAM-less 980 takes every other write burst
+# (build output, image pulls, pacman, block group relocation), and any of
+# those used to push etcd fdatasync into the seconds and make k3s exit.
+#
+# ZFS rather than fixed partitions: space between the datasets moves by
+# setting quota/reservation, in both directions, with no repartitioning. k3s
+# already cannot start without ZFS (the nas pool), so this is no new failure
+# mode. Datasets:
+# - fast/etcd, mounted at the k3s etcd data dir. Its reservation holds etcd's
+#   space whatever the PVs do: local-path enforces no size, so a runaway PV
+#   can fill fast/storage up to the pool but never into etcd's share.
+# - fast/storage, mounted at /mnt/storage, whose k8s-storage/ is the
+#   local-path PV root (kluster-code src/local-path). Same layout as
+#   aetf-arch-vps, where /mnt/storage is also a separate disk, and PV
+#   hostPaths stay valid across the move.
+# recordsize=16K fits the page-sized random writes of bbolt and postgres.
+# acltype/xattr=sa let rsync -aHAX carry ACLs and xattrs over faithfully.
+# IOWeight= does nothing here: ZFS issues writes from its own kernel threads,
+# so cgroup io accounting never sees them. Isolation comes from the disk.
+# The last ~34 GiB of the disk stay unpartitioned as room for a possible SLOG
+# for the nas pool. A vdev cannot shrink, so that room is set aside up front.
+# MANUAL: printf 'label: gpt\nsize=860GiB, type=6A898CC3-1DD2-11B2-99A6-080020736631, name=fast\n' | sfdisk /dev/disk/by-id/nvme-SAMSUNG_MZ1LB960HAJQ-00007_S435NA0MA12910
+# MANUAL: touch /etc/zfs/zfs-list.cache/fast && zpool create -o ashift=12 -o autotrim=on -O compression=lz4 -O atime=off -O acltype=posix -O xattr=sa -O recordsize=16K -O mountpoint=none fast /dev/disk/by-id/nvme-SAMSUNG_MZ1LB960HAJQ-00007_S435NA0MA12910-part1
+# MANUAL: zfs create -o mountpoint=/var/lib/rancher/k3s/server/db -o reservation=8G fast/etcd
+# MANUAL: zfs create -o mountpoint=/mnt/storage fast/storage
+SystemdEnable --name zfs-scrub-monthly@fast.timer zfs-utils /usr/lib/systemd/system/zfs-scrub-monthly@.timer
+
 # Samba service
 AddRole samba
 
@@ -295,7 +326,11 @@ cat >$(CreateFile /etc/systemd/system/k3s.service.d/override.conf) <<EOF
 # StorageClass (kluster-code src/local-path): same race, and worse, a miss
 # would land CI runner scratch on the root nvme -- the disk this class
 # exists to keep them off.
-RequiresMountsFor=/mnt/nas /var/lib/scratch
+# The etcd data dir and /mnt/storage are datasets of the fast pool (see
+# above). Starting without them is the worst of these misses: k3s would find
+# an empty etcd dir and, with cluster-init, bootstrap a brand-new empty
+# cluster, and the local-path PVs would come up empty.
+RequiresMountsFor=/mnt/nas /var/lib/scratch /var/lib/rancher/k3s/server/db /mnt/storage
 EOF
 
 # FUTURE: there's no fan driver for the motherboard yet
