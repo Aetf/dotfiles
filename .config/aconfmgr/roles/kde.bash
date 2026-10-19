@@ -33,7 +33,7 @@ AddPackage kvantum-theme-arc # Arc theme for Kvantum
 AddPackage papirus-icon-theme # Papirus icon theme
 AddPackage $FOREIGN arc-gtk-theme # A flat theme with transparent elements for GTK 2,3,4 and Gnome-Shell
 
-AddPackage syncthingtray-qt6 # Tray application for Syncthing
+AddPackage syncthingtray # Tray application for Syncthing
 AddPackage plasma6-applets-window-title
 AddPackage plasma-applet-window-buttons
 
