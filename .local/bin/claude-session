@@ -126,6 +126,10 @@ else
               -s "$TMUX_SESSION" -c "$dir" -n "$name" "$cmd")
 fi
 win=${out%% *} winid=${out##* }
+# -n turns automatic-rename off for the window; turn it back on so the window
+# follows the pane title claude sets (its /rename or generated session title)
+# through the global automatic-rename-format. NAME shows until the first title.
+tmux set-option -w -t "$winid" automatic-rename on
 
 echo "unit        : $unit"
 echo "tmux window : $win   (tmux attach -t $TMUX_SESSION)"
