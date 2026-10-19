@@ -67,3 +67,18 @@ if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
     add-zle-hook-widget -Uz zle-line-init zle_application_mode_start
     add-zle-hook-widget -Uz zle-line-finish zle_application_mode_stop
 fi
+
+# Ctrl+K clears the screen and the scrollback, like Konsole's Ctrl+Shift+K,
+# and keeps the line being edited. ED 3 (\e[3J) drops the scrollback in both
+# Konsole and tmux. It is written after the screen is already cleared:
+# clearing a non-empty screen scrolls it into tmux's history
+# (scroll-on-clear), so the reverse order would leave the old screen there.
+# It is bound in the shell rather than in tmux so other programs (nvim) still
+# receive C-k. zsh-vi-mode replaces the viins keymap when it loads, after this
+# file, hence the deferred bindkey.
+function clear-screen-and-scrollback {
+    print -n '\e[H\e[2J\e[3J' >$TTY
+    zle clear-screen
+}
+zle -N clear-screen-and-scrollback
+zvm_after_init_commands+=('bindkey -M viins "^K" clear-screen-and-scrollback')
