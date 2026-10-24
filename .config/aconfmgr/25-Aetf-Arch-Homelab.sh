@@ -90,6 +90,57 @@ CreateLink /etc/pixmaps/oemlogo.bmp /usr/share/systemd/bootctl/splash-arch.bmp
 CopyFile /etc/dracut.conf.d/unused-modules.conf
 ## Load nvme kernel module even we don't install nvme-cli package
 CopyFile /etc/dracut.conf.d/nvme.conf
+## PCIe ASPM L1 on the Arc A380's links only: it idles at ~18 W without it and
+## ~0.3 W with it (the card's own energy counter; ~13 W at the UPS). BIOS has
+## Native ASPM on, so it leaves every link off for the OS to decide, and under
+## the kernel's default policy sysfs can only turn states off, never on beyond
+## what the BIOS left. So the policy goes to powersave, after pinning off every
+## state that is off now on all other links -- a state written 0 in sysfs stays
+## off under any policy -- which keeps the 980, the HBA and the HAOS USB card
+## exactly as they were. The A380 is found by device ID and its links by its
+## sysfs path, since slot moves change the PCI addresses.
+cat >$(CreateFile /usr/local/bin/aspm-a380 755) <<'EOF'
+#!/bin/sh
+set -eu
+gpu=
+for d in /sys/bus/pci/devices/*; do
+    [ "$(cat $d/vendor):$(cat $d/device)" = 0x8086:0x56a5 ] && gpu=$(readlink -f $d) && break
+done
+[ -n "$gpu" ] || { echo "no Arc A380 found, leaving ASPM alone"; exit 0; }
+targets=
+p=$gpu
+while :; do
+    case ${p##*/} in pci*) break;; esac
+    [ -e "$p/link/l1_aspm" ] && targets="$targets ${p##*/}"
+    p=${p%/*}
+done
+for l in /sys/bus/pci/devices/*/link; do
+    d=$(basename $(dirname $l))
+    case " $targets " in *" $d "*) continue;; esac
+    for a in $l/*; do
+        # Upstream ports have an empty link/: the attributes sit on the
+        # downstream end of each link.
+        [ -e "$a" ] || continue
+        [ "$(cat $a)" = 0 ] && echo 0 > $a
+    done
+done
+echo powersave > /sys/module/pcie_aspm/parameters/policy
+for d in $targets; do echo "$d l1_aspm=$(cat /sys/bus/pci/devices/$d/link/l1_aspm)"; done
+EOF
+cat >$(CreateFile /etc/systemd/system/aspm-a380.service) <<'EOF'
+[Unit]
+Description=Enable PCIe ASPM L1 on the Arc A380's links only
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/local/bin/aspm-a380
+
+[Install]
+WantedBy=multi-user.target
+EOF
+SystemdEnable --from-file /etc/systemd/system/aspm-a380.service
+
 ## i915 in the initramfs: the IP KVM console (on the iGPU) gets its real driver
 ## from the initramfs stage on, instead of only after switch-root, so the
 ## console there -- a dracut emergency shell included -- does not depend on
