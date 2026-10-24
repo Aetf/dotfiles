@@ -90,6 +90,11 @@ CreateLink /etc/pixmaps/oemlogo.bmp /usr/share/systemd/bootctl/splash-arch.bmp
 CopyFile /etc/dracut.conf.d/unused-modules.conf
 ## Load nvme kernel module even we don't install nvme-cli package
 CopyFile /etc/dracut.conf.d/nvme.conf
+## i915 in the initramfs: the IP KVM console (on the iGPU) gets its real driver
+## from the initramfs stage on, instead of only after switch-root, so the
+## console there -- a dracut emergency shell included -- does not depend on
+## simpledrm's firmware framebuffer
+CopyFile /etc/dracut.conf.d/early-kms.conf
 ## Make sure btrfs is included
 AddPackage btrfs-progs # Btrfs filesystem utilities
 CopyFile /etc/dracut.conf.d/btrfs.conf
