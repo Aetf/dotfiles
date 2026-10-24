@@ -127,6 +127,54 @@ CopyFile /etc/systemd/network/25-kvmbr0.network
 ### Connect iot interface to bridge
 CopyFile /etc/systemd/network/20-iot-kvmbr0.network
 
+## Instrumentation for an intermittent boot-time resolved fault (systemd 262):
+## /run/systemd/resolve/resolv.conf -- kubelet's resolv.conf, so CoreDNS's
+## upstream -- gets written with "No DNS servers known" while networkd has
+## already published the DHCP servers, and is not rewritten after resolved
+## learns them. Debug logging plus a per-second trace of the first minutes after
+## boot show when resolved's in-memory servers and the written file diverge.
+## Remove this whole block once a faulty boot has been captured.
+cat >$(CreateFile /etc/systemd/system/systemd-resolved.service.d/debug-log.conf) <<'EOF'
+[Service]
+Environment=SYSTEMD_LOG_LEVEL=debug
+EOF
+cat >$(CreateFile /usr/local/bin/resolved-boot-trace 755) <<'EOF'
+#!/bin/sh
+# Once a second for the first minutes after boot, record what resolved holds in
+# memory against what it last wrote to the uplink resolv.conf, alongside
+# networkd's per-link state files; link/address events are logged as they
+# happen. Output: /var/log/resolved-boot-trace/<boot id>/.
+dir=/var/log/resolved-boot-trace/$(cat /proc/sys/kernel/random/boot_id)
+mkdir -p "$dir"
+timeout 240 ip -ts -o monitor link address > "$dir/ip-monitor.log" 2>&1 &
+end=$(( $(cut -d. -f1 /proc/uptime) + 240 ))
+while [ "$(cut -d. -f1 /proc/uptime)" -lt "$end" ]; do
+    f=/run/systemd/resolve/resolv.conf
+    echo "== uptime $(cut -d' ' -f1 /proc/uptime)"
+    echo "file mtime=$(stat -c %y "$f" 2>/dev/null) nameservers=$(grep -c '^nameserver' "$f" 2>/dev/null)"
+    for l in /run/systemd/netif/links/*; do
+        echo "netif $(basename "$l") mtime=$(stat -c %y "$l") $(grep -E '^(ADMIN_STATE|OPER_STATE|DNS)=' "$l" | tr '\n' ' ')"
+    done
+    resolvectl dns 2>&1 | grep -E ':.*[0-9]'
+    sleep 1
+done > "$dir/trace.log" 2>&1
+wait
+EOF
+cat >$(CreateFile /etc/systemd/system/resolved-boot-trace.service) <<'EOF'
+[Unit]
+Description=Trace systemd-resolved DNS state for the first minutes after boot
+After=systemd-resolved.service dbus.socket
+Wants=systemd-resolved.service
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/resolved-boot-trace
+
+[Install]
+WantedBy=multi-user.target
+EOF
+SystemdEnable --from-file /etc/systemd/system/resolved-boot-trace.service
+
 # The last thing is to setup pacman and install packages for AUR
 AddRole packaging
 
