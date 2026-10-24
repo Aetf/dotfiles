@@ -1,0 +1,10 @@
+[Unit]
+Description=Podman API Socket for teahouse sessions
+Documentation=man:podman-system-service(1)
+
+[Socket]
+ListenStream=%t/podman-teahouse/podman.sock
+SocketMode=0660
+
+[Install]
+WantedBy=sockets.target

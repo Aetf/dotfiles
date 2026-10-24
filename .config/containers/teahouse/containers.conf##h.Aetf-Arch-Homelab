@@ -1,0 +1,14 @@
+# Loaded through CONTAINERS_CONF_OVERRIDE by podman-teahouse.service, on top of
+# the normal containers.conf chain. Static dir, volumes and the libpod DB
+# default to paths under graphroot, so they follow storage.conf.
+[engine]
+# Per-instance: the alive file here decides when this instance's state is
+# refreshed after a reboot. The pause process stays per-user regardless.
+tmp_dir = "/run/user/1000/podman-teahouse/libpod/tmp"
+# File locks under tmp_dir/locks instead of the per-user SHM segment the host
+# instance uses. With a shared segment, each instance re-claims its own lock
+# IDs only when its first request after boot triggers a refresh; the host's
+# quadlet containers, created at boot, can take those IDs first, and this
+# instance's refresh then fails on every request until a renumber -- which
+# frees the host's locks too.
+lock_type = "file"

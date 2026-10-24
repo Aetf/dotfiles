@@ -1,0 +1,29 @@
+# A second podman API service for teahouse sessions (CONTAINER_HOST points at
+# its socket), so their containers, volumes and image builds write to
+# nas/build instead of the root nvme. It shares the per-user pause process and
+# the SHM lock segment with the host podman; lock IDs come from one shared
+# bitmap, so the two never collide. Never run `podman system renumber` on
+# either: it frees every lock in the segment, including the other instance's.
+[Unit]
+Description=Podman API Service for teahouse sessions
+Requires=podman-teahouse.socket
+After=podman-teahouse.socket
+RequiresMountsFor=/var/lib/build
+Documentation=man:podman-system-service(1)
+StartLimitIntervalSec=0
+
+[Service]
+Delegate=true
+Type=exec
+KillMode=process
+Environment=CONTAINERS_STORAGE_CONF=%h/.config/containers/teahouse/storage.conf
+Environment=CONTAINERS_CONF_OVERRIDE=%h/.config/containers/teahouse/containers.conf
+# Image pulls and builds stage through TMPDIR (default /var/tmp, on the root
+# disk); podman does not create it.
+Environment=TMPDIR=/var/lib/build/teahouse/containers/tmp
+ExecStartPre=/usr/bin/mkdir -p ${TMPDIR}
+Environment=LOGGING="--log-level=info"
+ExecStart=/usr/bin/podman $LOGGING system service
+
+[Install]
+WantedBy=default.target

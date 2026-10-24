@@ -1,0 +1,15 @@
+# Storage for podman-teahouse.service: teahouse's containers, volumes and the
+# images it builds or pulls live on nas/build, off the root nvme. Images the
+# host store already has are used read-only from there instead of copied.
+[storage]
+driver = "overlay"
+graphroot = "/var/lib/build/teahouse/containers"
+# Separate from the host instance's runroot; this also gives the instance its
+# own netavark state (IPAM) and rootless network namespace.
+runroot = "/run/user/1000/podman-teahouse/storage"
+
+[storage.options]
+# The host store is read-locked, never written. A host `podman image prune`
+# can still remove an image a teahouse container was created from; recreate
+# the container (or pull the image here) if that happens.
+additionalimagestores = ["/home/aetf/.local/share/containers/storage"]
