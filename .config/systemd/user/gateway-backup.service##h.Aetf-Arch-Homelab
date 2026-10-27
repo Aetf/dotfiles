@@ -1,0 +1,6 @@
+[Unit]
+Description=Pull UDM-SE backups into ~/.config/gw-backups
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/mise/shims/gateway-backup-pull

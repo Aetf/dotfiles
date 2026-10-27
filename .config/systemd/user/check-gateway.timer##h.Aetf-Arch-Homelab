@@ -1,0 +1,10 @@
+[Unit]
+Description=Daily read of the UDM-SE against its declaration, certificates and backup copies
+
+[Timer]
+OnCalendar=*-*-* 08:23:00
+RandomizedDelaySec=600
+Persistent=true
+
+[Install]
+WantedBy=timers.target

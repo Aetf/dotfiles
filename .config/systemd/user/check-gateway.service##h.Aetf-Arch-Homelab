@@ -1,0 +1,6 @@
+[Unit]
+Description=Daily read of the UDM-SE against its declaration, certificates and backup copies
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/share/mise/shims/check-gateway

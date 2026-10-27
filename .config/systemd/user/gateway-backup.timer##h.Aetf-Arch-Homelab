@@ -1,5 +1,5 @@
 [Unit]
-Description=Weekly pull of UDM-SE config backups
+Description=Weekly pull of UDM-SE backups
 
 [Timer]
 OnCalendar=Mon *-*-* 07:41:00
