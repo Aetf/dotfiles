@@ -305,6 +305,9 @@ SystemdEnable lm_sensors /usr/lib/systemd/system/lm_sensors.service
 # Many familiar cli tools
 AddRole rich-cli
 
+# Google Drive remotes (~/.config/rclone) for moving documents in and out of Drive
+AddPackage rclone # Sync files to and from Google Drive, S3, Swift, Cloudfiles, Dropbox and Google Cloud Storage
+
 # Rust is a must on any system, especially for rust-scripts
 AddRole rust-dev
 
