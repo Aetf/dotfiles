@@ -356,6 +356,7 @@ SystemdEnable --name zfs-scrub-monthly@fast.timer zfs-utils /usr/lib/systemd/sys
 
 # Samba service
 AddRole samba
+AddRole jiahui-photos
 
 # Windows VM
 AddRole kvm
@@ -368,7 +369,7 @@ AddRole k8s
 cat >$(CreateFile /etc/rancher/k3s/config.yaml) <<EOF
 ---
 # k3s deployment
-write-kubeconfig-mode: "644"
+write-kubeconfig-mode: "600"
 disable:
 - traefik
 - local-storage
