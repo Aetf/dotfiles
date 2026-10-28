@@ -1,0 +1,4 @@
+description = "Manage ssh keys of the jiahui photo account (args: add <base64> <label> | list | remove <label>)"
+command = ["/home/aetf/.config/chored/bin/jiahui-ssh-key"]
+allow-args = true
+timeout = "30s"

@@ -1,0 +1,97 @@
+#!/usr/bin/env python3
+"""Manage the ssh keys of the `jiahui` account (aconfmgr role jiahui-photos).
+
+    jiahui-ssh-key add <base64> <label>   install an ssh-ed25519 key
+    jiahui-ssh-key list
+    jiahui-ssh-key remove <label>
+
+One key per label: adding a label that exists replaces its key, so
+re-provisioning a laptop never piles up keys. At most MAX_KEYS are kept; the
+oldest goes first. sshd reads the file through AuthorizedKeysCommand, which is
+why it lives outside ~jiahui and is writable by this job (runs as aetf).
+
+HA calls `add` after Jiahui approves the request on her phone. The arguments
+come from a LAN webhook, so they are validated again here.
+"""
+
+import os
+import re
+import subprocess
+import sys
+import tempfile
+from pathlib import Path
+
+KEYS = Path("/var/lib/jiahui-photos/authorized_keys")
+MAX_KEYS = 3
+B64 = re.compile(r"[A-Za-z0-9+/]+={0,2}")
+LABEL = re.compile(r"[a-z0-9-]{1,32}")
+
+
+def die(msg: str) -> None:
+    print(f"jiahui-ssh-key: {msg}", file=sys.stderr)
+    sys.exit(1)
+
+
+def read_entries() -> list[tuple[str, str]]:
+    """(base64, label) per key line, in file order (oldest first)."""
+    out = []
+    for line in KEYS.read_text().splitlines():
+        parts = line.split()
+        if len(parts) == 4 and parts[0] == "restrict" and parts[1] == "ssh-ed25519":
+            out.append((parts[2], parts[3]))
+    return out
+
+
+def write_entries(entries: list[tuple[str, str]]) -> None:
+    body = "".join(f"restrict ssh-ed25519 {b64} {label}\n" for b64, label in entries)
+    fd, tmp = tempfile.mkstemp(dir=KEYS.parent, prefix=".authorized_keys.")
+    with os.fdopen(fd, "w") as f:
+        f.write(body)
+    os.chmod(tmp, 0o644)
+    os.replace(tmp, KEYS)
+
+
+def fingerprint(b64: str) -> str:
+    r = subprocess.run(["ssh-keygen", "-l", "-f", "-"], input=f"ssh-ed25519 {b64}\n",
+                       capture_output=True, text=True)
+    if r.returncode != 0 or "(ED25519)" not in r.stdout:
+        die("not a valid ssh-ed25519 public key")
+    return r.stdout.split()[1]
+
+
+def add(b64: str, label: str) -> None:
+    if not B64.fullmatch(b64) or not LABEL.fullmatch(label):
+        die("bad arguments: want <base64> <label>, label matching [a-z0-9-]{1,32}")
+    fp = fingerprint(b64)
+    entries = [e for e in read_entries() if e[1] != label]
+    entries.append((b64, label))
+    for old_b64, old_label in entries[:-MAX_KEYS]:
+        print(f"evicted {old_label} {fingerprint(old_b64)} (keeping at most {MAX_KEYS})")
+    write_entries(entries[-MAX_KEYS:])
+    print(f"added {label} {fp}")
+
+
+def remove(label: str) -> None:
+    entries = read_entries()
+    kept = [e for e in entries if e[1] != label]
+    if len(kept) == len(entries):
+        die(f"no key labelled {label}")
+    write_entries(kept)
+    print(f"removed {label}")
+
+
+def main() -> None:
+    match sys.argv[1:]:
+        case ["add", b64, label]:
+            add(b64, label)
+        case ["list"]:
+            for b64, label in read_entries():
+                print(label, fingerprint(b64))
+        case ["remove", label]:
+            remove(label)
+        case _:
+            die("usage: add <base64> <label> | list | remove <label>")
+
+
+if __name__ == "__main__":
+    main()
