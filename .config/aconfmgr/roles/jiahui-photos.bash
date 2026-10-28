@@ -48,6 +48,11 @@ cat > "$(CreateFile /usr/local/lib/jiahui-photos/shell 755)" <<'EOF'
 # ForceCommand for user jiahui (aconfmgr role jiahui-photos): run the ssh
 # command in a sandbox that sees only what photo work needs.
 set -euo pipefail
+# Her own files in immich's storage (originals as immich stores them), so
+# health scans see what actually landed in the library. The id is her immich
+# user id; storage is laid out per user.
+IMMICH=/mnt/nas/Immich
+IMMICH_USER=ecb26aed-1627-4a94-81b8-6e29de1da01f
 if [[ -z ${SSH_ORIGINAL_COMMAND:-} ]]; then
     echo "This account only runs commands: ssh homelab-photos '<command>'" >&2
     exit 2
@@ -63,6 +68,8 @@ exec /usr/bin/bwrap \
     --ro-bind /mnt/nas/Photos /mnt/nas/Photos \
     --ro-bind /mnt/nas/Media /mnt/nas/Media \
     --ro-bind /mnt/nas/homelab-skills /mnt/nas/homelab-skills \
+    --ro-bind "$IMMICH/library/$IMMICH_USER" "$IMMICH/library/$IMMICH_USER" \
+    --ro-bind "$IMMICH/upload/$IMMICH_USER" "$IMMICH/upload/$IMMICH_USER" \
     --bind "$HOME" "$HOME" --chdir "$HOME" \
     --unshare-pid --unshare-ipc --unshare-uts \
     --die-with-parent --new-session \
