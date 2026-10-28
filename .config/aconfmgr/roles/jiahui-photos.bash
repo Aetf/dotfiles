@@ -18,7 +18,7 @@
 AddPackage bubblewrap # Unprivileged sandboxing tool
 
 cat > "$(CreateFile /etc/sysusers.d/jiahui.conf)" <<EOF
-u jiahui 1001:1001 "Jiahui (photo work over ssh)" /home/jiahui /bin/bash
+u jiahui 1001 "Jiahui (photo work over ssh)" /home/jiahui /bin/bash
 EOF
 
 cat > "$(CreateFile /etc/tmpfiles.d/jiahui-photos.conf)" <<EOF
