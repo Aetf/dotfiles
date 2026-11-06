@@ -21,6 +21,9 @@ IPv6AcceptRA=yes
 # generally (getent/ssh), and lets the remote syslog sink name files by sender
 # hostname (rpi) instead of IP. Covers iot/default-LAN/lab subnets.
 Domains=~90.168.192.in-addr.arpa ~80.168.192.in-addr.arpa ~5.0.10.in-addr.arpa
+# This link is the host's one resolver. Route-only domains take the default
+# route away from a link unless it is stated, and the other links carry none.
+DNSDefaultRoute=yes
 
 # Associate any VLAN netdev to be created
 VLAN=iot

@@ -13,4 +13,5 @@ IPv6AcceptRA=yes
 # RA is accepted for the SLAAC address only; the demoted metric keeps any
 # default route it carries below the untagged link's (metric 10).
 [IPv6AcceptRA]
+UseDNS=no
 RouteMetric=1024

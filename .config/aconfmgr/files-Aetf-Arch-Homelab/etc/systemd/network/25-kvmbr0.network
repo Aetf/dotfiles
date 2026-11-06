@@ -1,6 +1,8 @@
 [Match]
 Name=kvmbr0
 
+# The IoT bridge is here for the HAOS VM. The host keeps a leg on it and takes
+# no resolver from it: the wired link is the host's one source (15-wired.network).
 [Network]
 DHCP=yes
 
@@ -13,9 +15,12 @@ IPv6AcceptRA=yes
 # installed last, so replies to routed (non-directly-connected) sources would
 # leave through whichever VLAN won at boot. 1024 keeps it as a fallback only.
 [DHCPv4]
+UseDNS=no
 RouteMetric=1024
 Hostname=Aetf-Arch-Homelab-IoT
 [DHCPv6]
+UseDNS=no
 Hostname=Aetf-Arch-Homelab-IoT
 [IPv6AcceptRA]
+UseDNS=no
 RouteMetric=1024
