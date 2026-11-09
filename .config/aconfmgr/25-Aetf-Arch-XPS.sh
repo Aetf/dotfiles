@@ -29,6 +29,9 @@ CreateLink /etc/refind.d/overlay/oemlogo.bmp /etc/pixmaps/oemlogo.bmp
 CreateLink /etc/refind.d/overlay/refind-theme-regular /usr/share/refind/themes/refind-theme-regular/
 
 ## configure dracut for initramfs
+### UKIs on the ESP are the only boot path; mask dracut's stock hooks that maintain /boot/initramfs-*.img
+CreateLink /etc/pacman.d/hooks/60-dracut-remove.hook /dev/null
+CreateLink /etc/pacman.d/hooks/90-dracut-install.hook /dev/null
 CopyFile /etc/dracut.conf.d/early-kms.conf
 CopyFile /etc/dracut.conf.d/blacklist-nouveau.conf
 CopyFile /etc/dracut.conf.d/unused-modules.conf
