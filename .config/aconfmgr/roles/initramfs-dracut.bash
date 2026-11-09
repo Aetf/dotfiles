@@ -25,4 +25,9 @@ if ! IsBootstrap; then
     CreateLink /etc/pacman.d/hooks/65-mkmm-tmpfs-post.hook /usr/share/mkmm/65-mkmm-tmpfs-post.hook
     CreateLink /etc/pacman.d/hooks/10-mkmm-tmpfs-pre.hook /usr/share/mkmm/10-mkmm-tmpfs-pre.hook
     SystemdEnable mkmm /usr/lib/systemd/system/mkmm-bleach.service
+    # DKMS records builds for the mkmm-restored kernel; forget them at boot so they cannot
+    # resurrect its module tree later (see the script header)
+    CopyFile /usr/local/bin/dkms-forget-gone-kernels 755
+    CopyFile /etc/systemd/system/dkms-forget-gone-kernels.service
+    SystemdEnable --from-file /etc/systemd/system/dkms-forget-gone-kernels.service
 fi

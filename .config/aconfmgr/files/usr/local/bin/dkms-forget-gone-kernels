@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# Forget DKMS state of kernels whose module tree is gone.
+#
+# When the running kernel is upgraded away, mkmm restores its module tree
+# (headers included) into a tmpfs, so the DKMS hook treats it as an installed
+# kernel: it builds upgraded modules for it, records them, and backs up the
+# copies they replace under /var/lib/dkms/<module>/original_module/<kver>.
+# The tmpfs disappears at reboot but the records and backups stay. A later
+# `dkms remove -k <kver>` then restores the backups into a new
+# /usr/lib/modules/<kver> that no package owns and mkmm-bleach refuses to
+# delete.
+#
+# Runs at boot before mkmm-bleach: for every DKMS build whose kernel is neither
+# running nor has an installed module tree, drop the backups first (so nothing
+# is restored), then unregister the build.
+#
+# This layer exists only for the mkmm/DKMS interaction; delete it, its unit and
+# its role entries once either side stops leaving that state behind.
+set -euo pipefail
+
+running=$(uname -r)
+mapfile -t lines < <(dkms status 2>/dev/null)
+
+for line in "${lines[@]}"; do
+    [[ $line =~ ^([^/]+)/([^,]+),\ ([^,]+),\ [^:]+:\ (built|installed) ]] || continue
+    mod=${BASH_REMATCH[1]} ver=${BASH_REMATCH[2]} kver=${BASH_REMATCH[3]}
+    [[ $kver == "$running" ]] && continue
+    [[ -d /usr/lib/modules/$kver/kernel ]] && continue
+
+    echo "Forgetting $mod/$ver built for removed kernel $kver"
+    rm -rf -- "/var/lib/dkms/$mod/original_module/$kver"
+    dkms remove --no-depmod "$mod/$ver" -k "$kver" >/dev/null ||
+        echo "WARNING: dkms remove $mod/$ver -k $kver failed" >&2
+done

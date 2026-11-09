@@ -1,0 +1,10 @@
+[Unit]
+Description=Forget DKMS modules of removed kernels
+Before=mkmm-bleach.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/dkms-forget-gone-kernels
+
+[Install]
+WantedBy=basic.target
