@@ -1,28 +1,49 @@
 #!/usr/bin/env python
 """
-Build and install unified kernel image
+Build unified kernel images (UKI) for the installed kernels and install them into the ESP.
+
+Every kernel package gets two images under <ESP>/EFI/Linux: Arch-<pkgbase>.efi
+(hostonly) and Arch-<pkgbase>-fallback.efi (generic). Both are built in a
+staging directory on the root filesystem; the ESP is touched only after both
+built successfully, so a failed build leaves the existing images in place.
+
+The ESP cannot hold three images at once. Images are therefore swapped one at
+a time, fallback first: at most two images of a kernel occupy the ESP at any
+moment, and at least one bootable image is always present.
+
+Images whose pkgbase no longer belongs to an installed kernel package are
+removed from the ESP.
+
+Without --hook, images are rebuilt for every installed kernel. With --hook,
+changed paths are read from stdin (pacman NeedsTargets): a changed
+usr/lib/modules/<kver>/pkgbase rebuilds that kernel, any other target (dracut,
+firmware, DKMS sources, ...) rebuilds every installed kernel.
 """
-from __future__ import print_function, division, absolute_import
 import argparse
 import glob
 import os
 import re
-import sys
+import shutil
 import subprocess as sp
+import sys
+import tempfile
 from contextlib import contextmanager
 from itertools import chain
 
 
 ESP_MOUNTPOINT = '/efi'
+UKI_DIR = os.path.join(ESP_MOUNTPOINT, 'EFI/Linux')
 DRACUT_CONF_DIR = '/etc/dracut.conf.d'
+STAGING_PARENT = '/var/tmp'
+PKGBASE_TARGET = re.compile(r'^/?usr/lib/modules/([^/]+)/pkgbase$')
 
 
-def msg(msg):
-    print('==> {}'.format(msg), flush=True)
+def msg(text):
+    print('==> {}'.format(text), flush=True)
 
 
-def msg2(msg):
-    print('--> {}'.format(msg), flush=True)
+def msg2(text):
+    print('--> {}'.format(text), flush=True)
 
 
 def get_conf_lines(base, preset, conf_dir=DRACUT_CONF_DIR):
@@ -40,135 +61,174 @@ def get_conf_lines(base, preset, conf_dir=DRACUT_CONF_DIR):
                     yield line
 
 
-def get_cmdline(preset='normal'):
-    cmdline = []
-
-    for line in get_conf_lines('cmdline.d', preset, conf_dir='/etc/kernel'):
-        if line:
-            cmdline.append(line)
-
-    # normalize trailing/leading spaces as well as condense multiple spaces to one.
-    return ' '.join(cmdline)
+def get_cmdline(preset):
+    return ' '.join(get_conf_lines('cmdline.d', preset, conf_dir='/etc/kernel'))
 
 
-def get_install(preset='normal'):
+def gather_files(path):
+    if not os.path.isdir(path):
+        return [path]
+    files = []
+    for dirpath, _dirnames, filenames in os.walk(path):
+        files += [os.path.join(dirpath, filename) for filename in filenames]
+    return files
+
+
+def get_install(preset):
     files = []
     for line in get_conf_lines('install.d', preset):
         files += gather_files(line)
     return files
 
 
-def gather_files(path):
-    files = []
-    if os.path.isdir(path):
-        for dirpath, dirnames, filenames in os.walk(path):
-            for dirname in dirnames:
-                files += gather_files(os.path.join(dirpath, dirname))
-            files += [os.path.join(dirpath, filename) for filename in filenames]
-    else:
-        files += [path]
-    return files
+class Kernel:
+    def __init__(self, kver, pkgbase):
+        self.kver = kver
+        self.pkgbase = pkgbase
 
-
-def call_dracut(*args, hostonly, cmdline, install_files, name_parts, kver):
-    cmd = [
-        'dracut',
-        '-H' if hostonly else '-N',
-        '--force',
-        '--kernel-cmdline', cmdline,
-    ]
-    for ifile in install_files:
-        cmd += [
-            '--install', ifile,
+    def images(self):
+        """(preset, hostonly, ESP file name), in the order they are swapped into the ESP."""
+        return [
+            ('fallback', False, 'Arch-{}-fallback.efi'.format(self.pkgbase)),
+            ('normal', True, 'Arch-{}.efi'.format(self.pkgbase)),
         ]
-    name = '-'.join(name_parts)
-    cmd += [
-        os.path.join(ESP_MOUNTPOINT, 'EFI/Linux', 'Arch-{}.efi'.format(name)),
-        '--kver', kver,
-    ]
-    cmd += args
-    return sp.check_call(cmd)
 
 
-def gen(pkgbase_path, args):
-    with open(os.path.join('/', pkgbase_path)) as f:
-        pkgbase = f.read().strip()
+def installed_kernels():
+    """Kernels whose module directory belongs to a package.
 
-    # pkgbase_path = "usr/lib/modules/linux-x.x.x/pkgbase"
-    kver = os.path.basename(os.path.dirname(pkgbase_path))
+    The ownership check skips module trees that are present but not installed,
+    such as the running kernel's modules restored by mkmm after an upgrade.
+    """
+    kernels = {}
+    for path in glob.glob('/usr/lib/modules/*/pkgbase'):
+        owned = sp.run(['pacman', '-Qqo', path], stdout=sp.DEVNULL, stderr=sp.DEVNULL).returncode == 0
+        if not owned:
+            continue
+        kver = os.path.basename(os.path.dirname(path))
+        with open(path) as f:
+            kernels[kver] = Kernel(kver, f.read().strip())
+    return kernels
 
-    msg("Generating hostonly image for {} {}".format(pkgbase, kver))
-    cmdline = get_cmdline('normal')
-    msg2("Kernel command line: " + cmdline)
-    call_dracut(
-        *args.dracut_args,
-        hostonly=True,
-        cmdline=cmdline,
-        install_files=get_install('normal'),
-        name_parts=[pkgbase],
-        kver=kver,
-    )
 
-    msg("Generating fallback image for {} {}".format(pkgbase, kver))
-    cmdline = get_cmdline('fallback')
-    msg2("Kernel command line: " + cmdline)
-    call_dracut(
-        *args.dracut_args,
-        hostonly=False,
-        cmdline=cmdline,
-        install_files=get_install('fallback'),
-        name_parts=[pkgbase, 'fallback'],
-        kver=kver,
-    )
+def kernels_to_build(args, installed):
+    if not args.hook:
+        return list(installed.values())
+    wanted = set()
+    for line in sys.stdin:
+        line = line.strip()
+        if not line:
+            continue
+        m = PKGBASE_TARGET.match(line)
+        if m is None:
+            return list(installed.values())
+        if m.group(1) in installed:
+            wanted.add(m.group(1))
+    return [installed[kver] for kver in sorted(wanted)]
+
+
+def build_image(kernel, preset, hostonly, output, dracut_args):
+    cmdline = get_cmdline(preset)
+    msg('Building {} image for {} {}'.format(preset, kernel.pkgbase, kernel.kver))
+    msg2('Kernel command line: ' + cmdline)
+    cmd = ['dracut', '-H' if hostonly else '-N', '--force', '--kernel-cmdline', cmdline]
+    for ifile in get_install(preset):
+        cmd += ['--install', ifile]
+    cmd += [output, '--kver', kernel.kver]
+    cmd += dracut_args
+    sp.check_call(cmd)
+
+
+def fsync_path(path):
+    fd = os.open(path, os.O_RDONLY)
+    try:
+        os.fsync(fd)
+    finally:
+        os.close(fd)
+
+
+def swap_into_esp(staged, name):
+    """Replace UKI_DIR/name with staged, holding at most one extra image on the ESP."""
+    dest = os.path.join(UKI_DIR, name)
+    # The partial copy carries a non-.efi name, so nothing treats it as a boot entry.
+    partial = dest + '.new'
+    if os.path.exists(partial):
+        os.remove(partial)
+
+    new_size = os.path.getsize(staged)
+    old_size = os.path.getsize(dest) if os.path.exists(dest) else 0
+    free = shutil.disk_usage(UKI_DIR).free
+    if free + old_size < new_size:
+        raise SystemExit(
+            'ERROR: {} needs {} MiB but the ESP has only {} MiB free after removing the old image; '
+            'keeping the old image'.format(name, new_size >> 20, (free + old_size) >> 20))
+
+    if old_size:
+        msg2('rm {}'.format(dest))
+        os.remove(dest)
+    msg2('install {}'.format(dest))
+    shutil.copyfile(staged, partial)
+    fsync_path(partial)
+    os.replace(partial, dest)
+    fsync_path(UKI_DIR)
+
+
+def remove_orphans(installed):
+    pkgbases = {k.pkgbase for k in installed.values()}
+    for path in glob.glob(os.path.join(UKI_DIR, 'Arch-*.efi')):
+        name = os.path.basename(path)[len('Arch-'):-len('.efi')]
+        if name.endswith('-fallback'):
+            name = name[:-len('-fallback')]
+        if name not in pkgbases:
+            msg2('rm {} (no installed kernel package {})'.format(path, name))
+            os.remove(path)
+    for path in glob.glob(os.path.join(UKI_DIR, '*.efi.new')):
+        msg2('rm {} (leftover partial copy)'.format(path))
+        os.remove(path)
 
 
 @contextmanager
 def mount_esp(mountpoint):
-    EFI = os.path.join(mountpoint, 'EFI')
-    if os.path.isdir(EFI):
+    if os.path.isdir(os.path.join(mountpoint, 'EFI')):
         yield
-    else:
-        msg("Mounting ESP partition at {}".format(mountpoint))
-        sp.check_call(['mount-esp', mountpoint])
-        try:
-            yield
-        finally:
-            msg("Unmounting ESP partition at {}".format(mountpoint))
-            sp.check_call(['umount', mountpoint])
-
-
-def gather_pkgbase_lines(args):
-    """Gather pkgbase file lines either from stdin or using current install kernel"""
-    if args.hook:
-        # generate for package installed kernel
-        ptn = re.compile(r'usr/lib/modules/[^/]+/pkgbase')
-        for line in sys.stdin:
-            line = line.strip()
-            if ptn.match(line):
-                yield line
-    else:
-        # generate for currently installed kernel
-        for pkgbase_path in glob.glob('/usr/lib/modules/*/pkgbase'):
-            yield pkgbase_path
+        return
+    msg('Mounting ESP partition at {}'.format(mountpoint))
+    sp.check_call(['mount-esp', mountpoint])
+    try:
+        yield
+    finally:
+        msg('Unmounting ESP partition at {}'.format(mountpoint))
+        sp.check_call(['umount', mountpoint])
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser(description='Build and install unified kernel images')
     parser.add_argument('--hook', action='store_true',
-                        help='Run as packman hook, receiving changed files via stdin')
+                        help='Run as pacman hook, receiving changed files via stdin')
     parser.add_argument('dracut_args', metavar='DRACUT_ARGS', nargs=argparse.REMAINDER,
                         help='Additional arguments to pass to dracut')
     args = parser.parse_args()
-    args.dracut_args = [arg for arg in args.dracut_args if arg != '--']
+    dracut_args = [arg for arg in args.dracut_args if arg != '--']
 
-    with mount_esp(ESP_MOUNTPOINT):
-        try:
-            os.makedirs(os.path.join(ESP_MOUNTPOINT, 'EFI/Linux'))
-        except FileExistsError:
-            pass
+    installed = installed_kernels()
+    kernels = kernels_to_build(args, installed)
 
-        for line in gather_pkgbase_lines(args):
-            gen(line, args)
+    with tempfile.TemporaryDirectory(prefix='dracut-uki.', dir=STAGING_PARENT) as staging:
+        built = []
+        for kernel in kernels:
+            images = []
+            for preset, hostonly, name in kernel.images():
+                staged = os.path.join(staging, name)
+                build_image(kernel, preset, hostonly, staged, dracut_args)
+                images.append((staged, name))
+            built.append(images)
+
+        with mount_esp(ESP_MOUNTPOINT):
+            os.makedirs(UKI_DIR, exist_ok=True)
+            for images in built:
+                for staged, name in images:
+                    swap_into_esp(staged, name)
+            remove_orphans(installed)
 
 
 if __name__ == '__main__':

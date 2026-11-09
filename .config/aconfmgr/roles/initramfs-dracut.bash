@@ -3,10 +3,8 @@ CopyFile /usr/local/bin/mount-esp 755
 AddPackage dracut
 AddOptionalPackage dracut \
     pigz 'faster gzip compression' `# Parallel implementation of the gzip file compressor`
-CopyFile /etc/pacman.d/hooks/60-dracut-remove-uki.hook
 CopyFile /etc/pacman.d/hooks/90-dracut-install-uki.hook
 CopyFile /usr/local/bin/dracut-install-uki 755
-CopyFile /usr/local/bin/dracut-remove-uki 755
 CopyFile /etc/dracut.conf.d/defaults.conf
 CopyFile /etc/dracut.conf.d/uefi.conf
 
