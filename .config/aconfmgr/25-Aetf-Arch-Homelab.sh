@@ -250,6 +250,8 @@ IsBootstrap && return 0
 
 # The server will join the zerotier-one network
 AddRole zerotier
+# ...and refuses the overlay's home routes (kluster ops#728).
+CopyFile /etc/systemd/system/zerotier-one.service.d/kluster-allow-managed.conf
 
 # And reachable via ssh
 AddRole ssh
